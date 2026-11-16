@@ -130,7 +130,7 @@ The quick references below are technique examples, not permission to launch ever
 3. If packing, dynamic loading, anti-analysis, virtualization or a static dead end blocks the Evidence question, record the failed path and internally pivot to the smallest permitted dynamic, unpack, dump or hook observation.
 4. Reconcile static and dynamic Evidence; if the runtime path is blocked, preserve the unknown and return to a narrower static question.
 5. Build the behavior model and regression inventory before changing code or starting independent reconstruction.
-6. Only after behavior Evidence is sufficient, hand off a bounded goal to reconstruction/Spec Kit and validate with differential tests.
+6. Only after behavior Evidence is sufficient, hand off a bounded goal to reconstruction with enhanced REA and validate with differential tests.
 7. Report Evidence, unknowns, failed paths, cleanup and authorization-surface coverage; do not infer business success from a tool result.
 
 ## Quick reference examples (bounded only)

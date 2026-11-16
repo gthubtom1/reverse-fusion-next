@@ -1,3 +1,5 @@
+> v2适配：本文旧Spec/Craft/旧case格式指令为历史参考，当前case-v2、宿主实现和增强比较遵循上级SKILL及根RULES；Spec仅可选。O/C/N证据审查方法仍适用。
+
 # Spec Kit 原生衔接 / Spec Kit workflow
 
 Spec Kit MUST使用官方包，本skill指导成果项目的constitution、原生规格与任务，保留官方模板主体，不另建SDD系统。当前宿主命令安装/注册及版本解析归本仓库 [AGENT-BOOTSTRAP](../../../docs/AGENT-BOOTSTRAP.md)，项目入口归 [HOST-PROJECT-CONNECTION](../../../docs/HOST-PROJECT-CONNECTION.md)。旧安装只读，仓库自有受控适配按已记录能力缺口维护。

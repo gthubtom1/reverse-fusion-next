@@ -4,7 +4,7 @@ description: Routes reverse engineering, exploitation, penetration testing, malw
 ---
 # Reverse Engineering Skills Master Control
 
-本目录保留增强Reverse领域技能。当前默认入口是仓库venv的 `reverse_fusion bridge`，按根 `RULES.md` 读返回的领域正文。有效路由源为仓库根 `components/reverse-core/routing.json`，`skills/config/routing.json`只保留上游基线。原生master-route是兼容工具，不是第二默认入口。完整部署见 [AGENT-BOOTSTRAP](../docs/AGENT-BOOTSTRAP.md)，复刻实现见 [NATIVE-COMPONENTS](../docs/NATIVE-COMPONENTS.md)。
+本目录保留增强Reverse领域技能。当前默认入口是仓库venv的 `rea_enhanced open`，按根 `RULES.md` 读返回的领域正文。有效路由源为仓库根 `components/reverse-core/routing.json`，`skills/config/routing.json`只保留上游基线。原生master-route是兼容工具，不是第二默认入口。完整部署见 [AGENT-BOOTSTRAP](../docs/AGENT-BOOTSTRAP.md)，复刻实现见 [NATIVE-COMPONENTS](../docs/NATIVE-COMPONENTS.md)。
 
 ## CRITICAL: 路由执行契约（按任务模式执行）
 
@@ -15,7 +15,7 @@ description: Routes reverse engineering, exploitation, penetration testing, malw
 
 ### 执行模式 hot path
 
-1. `NOW`：先用共享 `reverse_fusion bridge` 定PRIMARY并保存原始目标；兼容的 `scripts/master-route.ps1` / `.sh`同样读取 `components/reverse-core/routing.json`。疑难再读 `routing.md` 三轴附录。
+1. `NOW`：先用共享 `rea_enhanced open` 定PRIMARY并保存原始目标；兼容的 `scripts/master-route.ps1` / `.sh`同样读取 `components/reverse-core/routing.json`。疑难再读 `routing.md` 三轴附录。
 2. `NEXT`：平台原生 `case-init` 落地当前分析项目的 `work/<case>/scope.md`；**auth 未 granted 禁止对目标 ACT**。本地离线样本使用 `offline-sample` preset + explicit sample；Force 不得绕过硬门。
 3. `ACT`：打开 PRIMARY `SKILL.md`，执行其 ACTION REQUIRED。
 4. `NEXT`：工具路径只认 `tool-index.md`；缺工具只在已批准的 bootstrap 计划内调用平台原生 bootstrap。
@@ -69,7 +69,7 @@ provider、工具、方法、子代理/委派、是否 fact-check、报告/汇�
 | **技术文档编写** | `docs-generator/` | 任务完成后自动生成逆向报告、渗透报告、CTF writeup、签名逆向报告 |
 | **Evidence 图审查** | `case-review/` | 校验 scope、Evidence→Finding→Path 可追溯性、workitems、timeline 与 artifact hash |
 | **浏览器与桌面自动化** | `browser-automation/` | 浏览器操作（Playwright）+ Windows 桌面应用操作（OpenReverse UIA/CUA）+ 网络观察 |
-| **证据驱动复刻与验证** | `reconstruction/` | 已确认行为→规格→独立实现→原版对照；复用官方 REA 和 Spec Kit，追版保留我方设计 |
+| **证据驱动复刻与验证** | `reconstruction/` | 已确认行为→规格→独立实现→原版对照；复用官方 REA 和增强比较，追版保留我方设计 |
 | **跨版本符号迁移** | `binary-diff/` | 有旧版符号迁移到新版、缺 PDB 推导、程序更新后批量迁移函数名；旧上游/我方成果/新上游三方追版 |
 | **N-day 补丁差分→利用** | `patch-diff-exploit/` | 从厂商补丁定位漏洞点、写 PoC、N-day 武器化（与 binary-diff 分工：本 skill 偏攻击侧） |
 | **RE→利用链** | `pwn-chain/` | 从逆向走到可用 exploit：栈/堆/内核 pwn、pwntools、libc-database、CTF 到真实远程的稳定化 |
@@ -114,7 +114,7 @@ provider、工具、方法、子代理/委派、是否 fact-check、报告/汇�
 
 遇到逆向、CTF、抓包、前端签名、APK 改包、二进制分析类任务时，先按这个顺序进入：
 
-1. 共享 `reverse_fusion bridge` → PRIMARY（`components/reverse-core/routing.json`）；原生master-route保留兼容入口
+1. 共享 `rea_enhanced open` → PRIMARY（`components/reverse-core/routing.json`）；原生master-route保留兼容入口
 2. 平台原生 `case-init` → `scope.md`
 3. 打开 PRIMARY `SKILL.md`
 4. 疑难时读 `routing.md`，需要本机路径时读 `tool-index.md`
@@ -204,7 +204,7 @@ bash <package-root>/skills/scripts/bootstrap-reverse.sh 工具名 --mcp-host=non
 
 ## 持续维护与组合使用
 
-本增强版保留领域方法与扩展链。已有PRIMARY先完成分析，再用同一个共享router进入 [复刻技能](reconstruction/SKILL.md)；REA接受具体分析委派。Pi/Codex/Claude安装与资源定位由本仓库 [部署入口](../docs/AGENT-BOOTSTRAP.md) 和 [宿主项目接入](../docs/HOST-PROJECT-CONNECTION.md) 维护，不调用旧外部安装仓库。当前宿主推理，真实native Craft负责复刻写入与检查。
+本增强版保留领域方法与扩展链。已有PRIMARY先完成分析，再用同一个共享router进入 [复刻技能](reconstruction/SKILL.md)；REA接受具体分析委派。Pi/Codex/Claude安装与资源定位由本仓库 [部署入口](../docs/AGENT-BOOTSTRAP.md) 和 [宿主项目接入](../docs/HOST-PROJECT-CONNECTION.md) 维护，不调用旧外部安装仓库。当前宿主原生实现与构建，增强REA独立比较，不运行Craft、不强制Spec。
 
 用户要求“到网上补充知识”时，先读 [知识可信等级](references/knowledge-confidence.md)、[领域覆盖基线](references/domain-coverage-baseline.md)、[第一批来源清单](references/distillation-sources.md) 与 [第二批高难领域来源登记](references/distillation-sources-batch-2.md)、[第三批高难逆向增量来源登记](references/distillation-sources-batch-3.md) 与 [外部蒸馏来源登记](references/distillation-sources-batch-4.md)，比较旧文再蒸馏到所属 references；实际研究经验沿原 field-journal 回写。来源核对、结构检查和技术复现分别记录。历史存量未复核，不以文件数量宣布全领域成功。
 

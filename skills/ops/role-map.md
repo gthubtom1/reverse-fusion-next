@@ -12,7 +12,7 @@
 - **实现型 Worker 只能在行为 Evidence handoff 被主代理接收后进入 `reconstruction/`**。没有目标身份、已观察行为、成功标准和未决 unknowns 的 Evidence handoff，不得开始独立实现或复刻。
 - 任何 handoff 都必须携带：现有 `case_id`（仅 pre-case 只读规划/维护可写 `n/a` 并说明原因）、目标 identity 与 hash（或明确说明缺失原因）、`carry_forward_refs`、current phase、一个 Evidence question、allowed actions、write scope、budget、cleanup 和 acceptance。涉及目标动作时必须引用并读取现有 scope/授权；字段或引用缺失时阻断并退回主代理补齐，不创建假 case，也不由 Worker 猜测。
 - 子代理不得递归委派、创建第二 router、case、timeline、workitem 或 Evidence ledger；未改变的权威状态通过原文件/条目引用传递。
-- **R46当前实现owner**：当前宿主负责推理与候选内容，按 [native执行交接](../reconstruction/references/execution-backend.md)调用真实Craft写入/检查；只有一个冻结批次writer，不另启Pi Builder或控制LLM。主代理保留Spec tasks和Evidence接收权，实际lease/check/cleanup/finish不能由候选状态替代。历史外接Pi version1仅供来源追溯，不是当前后端。普通Worker的no-recursive不变。
+- **当前实现owner**：当前宿主唯一推理和原生写入者，按reconstruction记录依据、依赖和真实独立比较。不启第二模型，不运行Craft、不强制Spec。
 - 同一目标的重型 provider 必须串行。timeout 或 provider failure 后，先取消并验证 cleanup，再记录失败并切换 provider；cleanup 未确认时不得启动替代 provider。
 
 ## 角色表
@@ -23,7 +23,7 @@
 | **reverse-operator** | Reverse Operator / 逆向执行 Worker | `cre` 的 bounded executor 标签；按 handoff 做有限逆向动作，只能在明确 write scope 内产出原始结果 | 由当前 PRIMARY 指定的逆向 skill |
 | **reverse-reviewer** | Reverse Reviewer / 逆向审查 Worker | 只读核对 handoff、Evidence、产物、unknowns 和 acceptance；不执行目标动作、不写权威状态 | `case-review/` 或对应只读审查路径 |
 | **planner / scout** | Planner / Scout / 规划与侦察顾问 | 只提供 advisory 计划、线索和拆分建议；不拥有 scope、route、case 或 Evidence 决策权 | 由 lead 指定；不得自行路由 |
-| **implementation-worker** | Implementation Worker / 实现职责 | 仅接收主代理已接收的行为Evidence后进入`reconstruction/`；当前宿主推理并通过真实native Craft执行，范围受handoff限制，不另启模型或取得Spec tasks/Evidence接收权 | `reconstruction/`；当前native执行交接 |
+| **implementation-worker** | 实现职责 | 当前宿主按依据原生实现，独立比较，不另启模型 | reconstruction/ |
 | **cie** | 情报收集 | 资产发现、暴露面、关系 | `pentest-tools/`（recon）；浏览器 → `browser-automation/`；云面 → `cloud-k8s/` |
 | **cpe** | 渗透验证 | 扫描、利用验证、影响确认 | `pentest-tools/`；API → `api-security/`；AD → `windows-ad/`；无线 → `wifi-wireless/`；库 → `database-security/`；SSO → `identity-federation/`；OT → `ot-ics/` |
 | **cre** | 逆向分析 | 作为 bounded reverse executor 执行二进制/固件/移动/前端逻辑分析；结果须经 lead 接收后才进入下一阶段 | `ida-reverse/` `ghidra-reverse/` `binary-ninja-reverse/` `radare2/` `apk-reverse/` `mobile-reverse/` `macos-reverse/` `js-reverse/` `browser-extension-reverse/` `dotnet-reverse/` `go-rust-reverse/` `firmware-pentest/` `hardware-security/` `malware-analysis/` `protocol-reverse/` `thick-client/` `reverse-engineering/` |

@@ -1,17 +1,17 @@
 # reverse-skill 身份宣言（相对 Z3r0）
 
-> 本文件保留增强Reverse方法包相对Z3r0的来源身份。集成到Reverse Fusion后，当前入口、必装REA/官方Spec/nativeCraft与宿主适配以仓库根RULES和 [AGENT-BOOTSTRAP](../../docs/AGENT-BOOTSTRAP.md) 为准；下表不是另一套产品安装流程。
+> 本文件保留增强Reverse方法包相对Z3r0的来源身份。集成到Reverse Fusion后，当前入口、Reverse方法/增强REA与宿主适配以仓库根RULES和 [AGENT-BOOTSTRAP](../../docs/AGENT-BOOTSTRAP.md) 为准；下表不是另一套产品安装流程。
 
 ## 我们是
 
 | 维度 | reverse-skill |
 |------|----------------|
 | 形态 | **Skill 路由包** — 给任意 AI 客户端（Claude/Cursor/Codex…）用的方法论 + 工具自举 |
-| 入口 | 当前 `RULES.md` → 共享 `reverse_fusion bridge` → 子skill；master-route保留兼容工具 |
+| 入口 | 当前 `RULES.md` → 共享 `rea_enhanced open` → 子skill；master-route保留兼容工具 |
 | 工具真相 | `tool-index.md` + `bootstrap-manifest.json`（本机路径，不猜） |
 | 进化 | `field-journal/` 脱敏经验回写 |
 | 产物 | Markdown 报告 + `work/<case>/` 本地作战目录（gitignore） |
-| 部署 | clone只取得资料；当前产品按根bootstrap实际安装REA/官方Spec/nativeCraft及宿主入口；无强制PG/UI/Docker池 |
+| 部署 | clone只取得资料；当前产品按根bootstrap实际安装Reverse方法/增强REA及宿主入口；无强制PG/UI/Docker池 |
 
 ## 我们不是
 

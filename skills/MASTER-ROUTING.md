@@ -1,6 +1,6 @@
 # reverse-skill PRIMARY 快路径
 
-> 当前默认入口为仓库venv的 `reverse_fusion bridge`。下列原生master-route是兼容工具，读取仓库根有效源 `components/reverse-core/routing.json`；`skills/config/routing.json`是只读上游基线。平台只改变执行入口，不改变routing semantics。
+> 当前默认入口为仓库venv的 `rea_enhanced open`。下列原生master-route是兼容工具，读取仓库根有效源 `components/reverse-core/routing.json`；`skills/config/routing.json`是只读上游基线。平台只改变执行入口，不改变routing semantics。
 
 ## 只读路由
 
@@ -143,7 +143,7 @@ python3 skills/case-review/scripts/review_case.py work/<case> --verify-hashes --
 
 混合目标如“分析 APK 后复刻”先保持原领域 PRIMARY。完成可追溯分析后，在同一项目中用明确的阶段任务重新调用原 `master-route`，例如 `reconstruction implementation` 或 `reconstruction verification`；进入 [reconstruction](reconstruction/SKILL.md)。原话与目标身份不改写，新阶段结果追加到同一 case 的 timeline/notes，不重置 scope。
 
-“跟随更新/追版”先进入已有 [binary-diff](binary-diff/SKILL.md)，读取旧上游、我方成果、新上游三方记录，再把需更新的规格/实现任务交给 reconstruction。位置相似不等于语义不变，旧通过记录不等于新版通过。REA连接状态不决定PRIMARY；完整部署必装真实REA，复刻保留原生Evidence。宿主安装见 [本仓库部署入口](../docs/AGENT-BOOTSTRAP.md)，真实Spec/Craft交接见 [NATIVE-COMPONENTS](../docs/NATIVE-COMPONENTS.md)。
+“跟随更新/追版”先进入已有 [binary-diff](binary-diff/SKILL.md)，读取旧上游、我方成果、新上游三方记录，再把需更新的规格/实现任务交给 reconstruction。位置相似不等于语义不变，旧通过记录不等于新版通过。REA连接状态不决定PRIMARY；完整部署必装真实REA，复刻保留原生Evidence。宿主安装见 [本仓库部署入口](../docs/AGENT-BOOTSTRAP.md)，当前组件合同见 [NATIVE-COMPONENTS](../docs/NATIVE-COMPONENTS.md)。
 
 ## 读序
 

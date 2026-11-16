@@ -46,7 +46,7 @@ A file, credential or device identity that only the user possesses usually needs
 
 ## Internal choices and progress
 
-The agent selects REA, providers, Static/Dynamic, unpack/dump/IAT, hooks, Java/native, subagents and verification methods within scope. These are never operator menus. Grilling is used only for an explicit interview request or an unresolved material goal/scope/product/delivery decision. Load its official instructions unchanged; facts come from analysis. Existing answers continue to apply. Spec Kit starts in the independent deliverable project after behavior Evidence handoff.
+The agent selects REA, providers, Static/Dynamic, unpack/dump/IAT, hooks, Java/native, subagents and verification methods within scope. These are never operator menus. Grilling is used only for an explicit interview request or an unresolved material goal/scope/product/delivery decision. Load its official instructions unchanged; facts come from analysis. Existing answers continue to apply. Current host implements after evidence review; Spec is optional and Craft is not used.
 
 After a material result or blocker, report briefly in the user's language:
 
