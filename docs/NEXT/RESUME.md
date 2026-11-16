@@ -1,23 +1,18 @@
 # 从这里恢复
 
-用户已批准在独立目录开发下一代，避免直接改动当前1.4.0。目标不是减少组件名字，
-而是保留Reverse方法和REA实际能力，自己实现有依据的分析→实现→独立比较→修正循环，
-最终运行不依赖Craft，不强制Spec。
+当前独立项目Reverse Fusion Next 2.1.0，工程与本机清洁部署已验收。
+先读REQUIREMENTS.md、STATUS.json、DECISIONS.md、FINAL-AUDIT.md和ACCEPTANCE.md，
+再看JOURNAL最后一项。旧S0–S6与旧RF记录是历史，不重启其任务或重复旧迁移脚本。
 
-恢复顺序：REQUIREMENTS.md → STATUS.json → DECISIONS.md → PLAN.md → JOURNAL.md最后一项。
-按STATUS唯一next_action继续，先核Git差异和已有检查。不要根据旧“全部完成”重启RF-36。
+仓库D:/Project/reverse-next；origin=https://github.com/gthubtom1/reverse-fusion-next.git；main。
+旧D:/Project/reverse和旧master冻结于022e61b803e41569cac1f116ebca2245b9c9b1f8。
+本地baseline远端及baseline/rf-1.4.0保留；误发旧分支的历史保存在独立项目和本地archive标签。
 
-目录：D:/Project/reverse-next；原仓库：D:/Project/reverse；Git对象独立。
-审查基线分支codex/rea-next；baseline远端指向本机旧仓库。
-本轮正在把origin从旧项目分支迁至独立reverse-fusion-next项目，实际remote以git为准。
-冻结标签baseline/rf-1.4.0及baseline清单保存回退身份。
+当前架构为Reverse方法＋增强REA，宿主唯一推理编码，Craft无运行依赖、Spec可选。
+实际代码/测试/公共合同身份由release-check确认，不能只读旧pass报告或按历史数字宣称新变化已通过。
+当前20条要求、16类审查修复、真实远端安装、白话交付和新聊天入口均有记录。
+本机只管理自有skill、AGENTS段与一个MCP；旧运行包保留为回退材料，不是活动安装。
 
-目标模式描述最终目的，STATUS描述实际程度。阶段没完成不能宣告已交付。
-阻塞时继续独立工作；需要帮助时说明具体用途，不要求用户选择专业工具或写提示词。
-开发使用自有材料，不恢复旧真实目标、不改样本授权、不控制旧聊天。
-部署在S6通过后切换自有入口，保留并实际验证原版回退。
-
-当前：独立发布最终复核进行中，先看FINAL-AUDIT.md及STATUS。
-上一轮S0–S6通过仅为历史有限资格；本轮不能沿用其“全部完成”结论。
-本机已选增强REA且旧回退实际通过；当前旧聊天工具目录仍需客户端重连/新聊天。
-新变化必须重核受影响资格，不能重跑旧迁移脚本或恢复旧目标。
+下一次有新需求时保存原话，核对当前源码和受影响资格，再推进该需求；
+成果留当前用户项目，不写共享库。新版本或工具路径更新后重连，旧连接不得静默执行变更的增强工作流。
+不恢复旧真实目标、不改样本授权、不把有限工程资格当任意软件已复刻。

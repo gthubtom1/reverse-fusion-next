@@ -1,0 +1,16 @@
+{
+  "version": "2.1.0",
+  "status": "qualified",
+  "repository": "https://github.com/gthubtom1/reverse-fusion-next",
+  "qualified_implementation_commit": "0eaa223e8da0f10dc41426163eb997b8b57a6208",
+  "engineering_tests": 81,
+  "remote_clone_tests": 81,
+  "engineering": "evidence/next/s6/engineering-tests.json",
+  "remote_clone": "evidence/next/final-audit/remote-install.json",
+  "clean_local_install": "evidence/next/final-audit/clean-redeployment.json",
+  "plain_host_delivery": "evidence/next/final-audit/plain-host.json",
+  "final_desktop_entry": "evidence/next/final-audit/final-fresh-entry.json",
+  "acceptance": "docs/NEXT/ACCEPTANCE.json",
+  "gate": "python -m rea_enhanced release-check --require-deployed",
+  "scope": "Independent Windows x64 Codex engineering release; current source/contracts and declared finite observations"
+}

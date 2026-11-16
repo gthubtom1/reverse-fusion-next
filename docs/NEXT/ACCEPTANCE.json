@@ -1,12 +1,12 @@
 {
   "version": "2.1.0",
-  "status": "final-qualification-in-progress",
+  "status": "engineering-qualified",
   "scope": "Independent reverse-fusion-next repository; Windows x64 Codex; Reverse methods plus enhanced REA",
   "requirements": [
     {
       "id": "N01",
       "requirement": "\u72ec\u7acb\u76ee\u5f55\u4e0e\u65e7\u7248\u4fdd\u5168",
-      "status": "requalification-in-progress",
+      "status": "qualified",
       "evidence": [
         "evidence/next/final-audit/remote-install.json",
         "baseline/identity.json",
@@ -17,7 +17,7 @@
     {
       "id": "N02",
       "requirement": "\u6301\u4e45\u9700\u6c42\u3001\u8ba1\u5212\u4e0e\u6062\u590d",
-      "status": "requalification-in-progress",
+      "status": "qualified",
       "evidence": [
         "docs/NEXT/REQUIREMENTS.md",
         "docs/NEXT/PLAN.md",
@@ -29,7 +29,7 @@
     {
       "id": "N03",
       "requirement": "Reverse\u591a\u9886\u57df\u4fdd\u7559",
-      "status": "requalification-in-progress",
+      "status": "qualified",
       "evidence": [
         "components/reverse-core/preservation.json",
         "tests_next/test_domains.py"
@@ -39,7 +39,7 @@
     {
       "id": "N04",
       "requirement": "\u771f\u5b9e\u5b98\u65b9REA",
-      "status": "requalification-in-progress",
+      "status": "qualified",
       "evidence": [
         "evidence/next/final-audit/native-provider.json",
         "evidence/next/s2/native-live.json",
@@ -50,7 +50,7 @@
     {
       "id": "N05",
       "requirement": "\u589e\u5f3aREA\u5355\u5165\u53e3",
-      "status": "requalification-in-progress",
+      "status": "qualified",
       "evidence": [
         "evidence/next/final-audit/desktop-entry.json",
         "evidence/next/s2/protocol-qualified.json",
@@ -61,7 +61,7 @@
     {
       "id": "N06",
       "requirement": "Craft\u96f6\u8fd0\u884c\u4f9d\u8d56",
-      "status": "requalification-in-progress",
+      "status": "qualified",
       "evidence": [
         "evidence/next/s5/clean-install.json"
       ],
@@ -70,7 +70,7 @@
     {
       "id": "N07",
       "requirement": "Spec\u4e0d\u5f3a\u5236",
-      "status": "requalification-in-progress",
+      "status": "qualified",
       "evidence": [
         "evidence/next/s1/vertical.json",
         "evidence/next/s5/clean-install.json"
@@ -80,7 +80,7 @@
     {
       "id": "N08",
       "requirement": "\u767d\u8bdd\u4e0e\u5b8c\u6574\u76ee\u6807\u4fdd\u6301",
-      "status": "requalification-in-progress",
+      "status": "qualified",
       "evidence": [
         "tests_next/test_final_audit.py",
         "tests_next/test_workflow.py",
@@ -91,7 +91,7 @@
     {
       "id": "N09",
       "requirement": "\u8bc1\u636e\u9a71\u52a8\u65b9\u6cd5\u9009\u62e9",
-      "status": "requalification-in-progress",
+      "status": "qualified",
       "evidence": [
         "docs/AGENT-WORKFLOW.md",
         "tests_next/test_domains.py",
@@ -102,7 +102,7 @@
     {
       "id": "N10",
       "requirement": "\u5355case\u4e0e\u539f\u751f\u6765\u6e90",
-      "status": "requalification-in-progress",
+      "status": "qualified",
       "evidence": [
         "evidence/next/final-audit/plain-host.json",
         "rea_enhanced/workflow.py",
@@ -113,7 +113,7 @@
     {
       "id": "N11",
       "requirement": "\u5b9e\u73b0\u4f9d\u636e\u4e0e\u76f8\u5173\u963b\u65ad",
-      "status": "requalification-in-progress",
+      "status": "qualified",
       "evidence": [
         "tests_next/test_final_audit.py",
         "tests_next/test_workflow.py",
@@ -124,7 +124,7 @@
     {
       "id": "N12",
       "requirement": "\u5bbf\u4e3b\u539f\u751f\u5b9e\u73b0",
-      "status": "requalification-in-progress",
+      "status": "qualified",
       "evidence": [
         "evidence/next/final-audit/plain-host.json",
         "evidence/next/s1/vertical.json"
@@ -134,7 +134,7 @@
     {
       "id": "N13",
       "requirement": "\u72ec\u7acb\u884c\u4e3a\u4e0e\u72b6\u6001\u6bd4\u8f83",
-      "status": "requalification-in-progress",
+      "status": "qualified",
       "evidence": [
         "evidence/next/final-audit/plain-host/core-comparison.json",
         "evidence/next/s1/vertical.json",
@@ -145,7 +145,7 @@
     {
       "id": "N14",
       "requirement": "\u89c6\u89c9\u4e0e\u884c\u4e3a\u5206\u5f00",
-      "status": "requalification-in-progress",
+      "status": "qualified",
       "evidence": [
         "evidence/next/final-audit/web-controls.json",
         "evidence/next/s3/web/qualification.json",
@@ -156,7 +156,7 @@
     {
       "id": "N15",
       "requirement": "\u5931\u8d25\u53cd\u9988\u4e0e\u5931\u6548",
-      "status": "requalification-in-progress",
+      "status": "qualified",
       "evidence": [
         "tests_next/test_final_audit.py",
         "tests_next/test_workflow.py"
@@ -166,7 +166,7 @@
     {
       "id": "N16",
       "requirement": "\u8fb9\u754c\u3001\u53d6\u6d88\u4e0e\u6e05\u7406",
-      "status": "requalification-in-progress",
+      "status": "qualified",
       "evidence": [
         "tests_next/test_mcp.py",
         "tests_next/test_workflow.py",
@@ -177,7 +177,7 @@
     {
       "id": "N17",
       "requirement": "\u771f\u5b9e\u4f9d\u8d56\u4e0e\u5de5\u5177\u7d22\u5f15",
-      "status": "requalification-in-progress",
+      "status": "qualified",
       "evidence": [
         "evidence/next/final-audit/native-provider.json",
         "components/rea-enhanced/provider-bindings.json",
@@ -189,7 +189,7 @@
     {
       "id": "N18",
       "requirement": "\u51bb\u7ed3\u57fa\u7ebf\u5bf9\u7167",
-      "status": "requalification-in-progress",
+      "status": "qualified",
       "evidence": [
         "evidence/next/s5/baseline-comparison.json"
       ],
@@ -198,7 +198,7 @@
     {
       "id": "N19",
       "requirement": "\u5b89\u88c5\u3001\u8fc1\u79fb\u4e0e\u56de\u9000",
-      "status": "requalification-in-progress",
+      "status": "qualified",
       "evidence": [
         "evidence/next/final-audit/clean-redeployment.json",
         "evidence/next/s5/clean-install.json",
@@ -210,7 +210,7 @@
     {
       "id": "N20",
       "requirement": "\u65b0\u673a\u5b89\u88c5\u4e0e\u96f6\u57fa\u7840\u5f15\u5bfc",
-      "status": "requalification-in-progress",
+      "status": "qualified",
       "evidence": [
         "evidence/next/final-audit/remote-install.json",
         "docs/AGENT-BOOTSTRAP.md",
@@ -221,5 +221,12 @@
     }
   ],
   "whole_product_acceptance": "Specific target acceptance remains a separate task; no arbitrary-source-recovery or model-performance claim",
-  "final_audit": "docs/NEXT/FINAL-AUDIT.md"
+  "final_audit": "docs/NEXT/FINAL-AUDIT.md",
+  "engineering_tests": 81,
+  "remote_clone_tests": 81,
+  "qualified_implementation_commit": "0eaa223e8da0f10dc41426163eb997b8b57a6208",
+  "independent_repository": "https://github.com/gthubtom1/reverse-fusion-next",
+  "clean_deployment": "evidence/next/final-audit/clean-redeployment.json",
+  "actual_desktop_entry": "evidence/next/final-audit/final-fresh-entry.json",
+  "plain_host_delivery": "evidence/next/final-audit/plain-host.json"
 }

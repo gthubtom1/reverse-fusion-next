@@ -2,8 +2,8 @@
   "schema_version": 1,
   "version": "2.1.0",
   "baseline_commit": "022e61b803e41569cac1f116ebca2245b9c9b1f8",
-  "goal_status": "active",
-  "stage": "independent-final-audit",
+  "goal_status": "complete",
+  "stage": "maintenance",
   "stages": {
     "S0": {
       "status": "done",
@@ -153,14 +153,27 @@
       "README.md"
     ]
   },
-  "next_action": "Requalify final clean-uninstall, browser controls and shared CLI/MCP launch environment; republish then repeat remote clone and conclude fresh host observations.",
-  "migration": "active enhanced REA 2.0.0; actual legacy byte restoration and both legacy connections verified before final new selection",
+  "next_action": "No pending work for the qualified 2.1.0 independent Windows x64 Codex release. For a new authorized change, preserve its goal and requalify affected source/contracts and operations.",
+  "migration": "Final owned uninstall/empty entry/reinstall verified; legacy REA/Craft processes retired; one enhanced endpoint selected; final fresh desktop chat entry observed.",
   "limitations": [
-    "Finite fixture/tool engineering qualification is distinct from acceptance of a future target.",
-    "Current existing chat did not expose new tools; desktop hot reload is not asserted.",
-    "Other hosts and arbitrary specialized providers are not claimed as actually run."
+    "Finite engineering qualification and the owned plain-language case are distinct from acceptance of arbitrary future targets.",
+    "Final installed entry is verified in a fresh desktop chat; retired cached connections in existing chats are not claimed to hot-reload.",
+    "Existing external OS providers were used; clean OS, other hosts and model A/B are not claimed."
   ],
   "acceptance": "docs/NEXT/ACCEPTANCE.json",
-  "clean_source_commit": "53ceef8ac512122b8cb3d192b8094e4041a5b398",
-  "final_audit": "docs/NEXT/FINAL-AUDIT.md"
+  "clean_source_commit": "0eaa223e8da0f10dc41426163eb997b8b57a6208",
+  "final_audit": "docs/NEXT/FINAL-AUDIT.md",
+  "independent_final_audit": {
+    "status": "done",
+    "engineering_tests": 81,
+    "remote_clone_tests": 81,
+    "audit_classes": 16,
+    "evidence": [
+      "evidence/next/final-audit/remote-install.json",
+      "evidence/next/final-audit/clean-redeployment.json",
+      "evidence/next/final-audit/plain-host.json",
+      "evidence/next/final-audit/final-fresh-entry.json",
+      "evidence/next/final-audit/release-check.json"
+    ]
+  }
 }

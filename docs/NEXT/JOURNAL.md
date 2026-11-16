@@ -83,3 +83,18 @@ install and unrelated-byte checks passed. No old source/runtime deletion.
 Fresh-host observation also prompted controlled process environments shared by CLI/MCP (internal
 host variables must not cause false stale results) and generic select/check/dialog/storage replay.
 These changes require full requalification and another remote-clone run before final closeout.
+
+## 2026-11-17 / independent release closed
+
+Final implementation 0eaa223e8da0f10dc41426163eb997b8b57a6208 passed 81 source/contract-bound checks.
+The actual independent GitHub default clone acquired its own runtime and venv, passed all 81 checks,
+and restored the temporary user's exact configuration. A transient TLS failure was retained and
+bounded retry was qualified before this final successful acquisition. No Craft/Spec runtime acquired.
+Actual local uninstall removed all three owned regions; empty registration and unrelated bytes were
+checked, cached pre-release processes retired, then final new-only entry reinstalled. Old-root MCP
+processes remain retired; original source/master preserved. Fresh post-install Codex chat actually
+called rf_next_case_open. The first plain-language reconstruction chat completed actual original REA
+browser calls, bundle export, native host implementation, independent checks, semantic coverage and
+artifact-bound delivery; snapshots retained. Current release-check with deployed command passed.
+Twenty requirements and sixteen audit classes now have current results. No pending implementation
+in this scoped release; arbitrary-target results remain task-specific. Final synchronization follows.
