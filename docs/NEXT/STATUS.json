@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "version": "2.0.0.dev0",
+  "baseline_commit": "022e61b803e41569cac1f116ebca2245b9c9b1f8",
+  "goal_status": "active",
+  "stage": "S1",
+  "stages": {
+    "S0": {
+      "status": "done",
+      "evidence": [
+        "baseline/identity.json",
+        "baseline/rf-1.4.0 Git tag",
+        "docs/NEXT/REQUIREMENTS.md",
+        "docs/NEXT/PLAN.md"
+      ]
+    },
+    "S1": {
+      "status": "in_progress",
+      "evidence": []
+    },
+    "S2": {
+      "status": "pending",
+      "evidence": []
+    },
+    "S3": {
+      "status": "pending",
+      "evidence": []
+    },
+    "S4": {
+      "status": "pending",
+      "evidence": []
+    },
+    "S5": {
+      "status": "pending",
+      "evidence": []
+    },
+    "S6": {
+      "status": "pending",
+      "evidence": []
+    }
+  },
+  "requirements_evidence": {
+    "N01": [
+      "baseline/identity.json"
+    ],
+    "N02": [
+      "docs/NEXT/RESUME.md",
+      "docs/NEXT/STATUS.json"
+    ]
+  },
+  "next_action": "Implement and exercise an independent case/readiness/paired-comparison/refinement slice with host-native edits and no Craft/Spec runtime.",
+  "migration": "not_started; original checkout and desktop entry remain active",
+  "limitations": [
+    "Development plan is not implementation or release acceptance."
+  ]
+}
