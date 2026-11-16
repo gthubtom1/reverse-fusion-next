@@ -1,0 +1,5 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+body{font-family:Arial,sans-serif;margin:24px;color:#18202c}
+button{background:#2463eb;color:white;border:0;padding:10px 20px;font-size:16px}
+#count{display:block;font-size:32px;margin:20px 0}
+</style></head><body><h1>Owned counter</h1><output id="count">0</output><button id="increment">Add one</button><script>let count=Number(localStorage.getItem('counter')||0);const show=()=>document.getElementById('count').textContent=String(count);show();document.getElementById('increment').addEventListener('click',()=>{count=count+1;localStorage.setItem('counter',String(count));show();});</script></body></html>

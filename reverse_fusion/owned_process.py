@@ -8,7 +8,7 @@ import tempfile
 
 
 def run_owned(argv, *, cwd, stdin: bytes, timeout: float, memory_mb: int | None = None,
-              max_output_bytes: int = 16 * 1024 * 1024, env=None) -> dict:
+              max_output_bytes: int = 16 * 1024 * 1024, env=None, cancel_event=None) -> dict:
     started = time.perf_counter()
     job, kernel = None, None
     process = None
@@ -59,7 +59,7 @@ def run_owned(argv, *, cwd, stdin: bytes, timeout: float, memory_mb: int | None 
         else:
             process = subprocess.Popen(argv, cwd=cwd, env=env, stdin=stdin_file, stdout=stdout_file,
                                        stderr=stderr_file, start_new_session=True)
-        timed_out, output_exceeded = False, False
+        timed_out, output_exceeded, cancelled = False, False, False
         deadline = time.monotonic() + timeout
         while True:
             try:
@@ -68,7 +68,8 @@ def run_owned(argv, *, cwd, stdin: bytes, timeout: float, memory_mb: int | None 
             except subprocess.TimeoutExpired:
                 output_exceeded = any(os.fstat(stream.fileno()).st_size > max_output_bytes for stream in (stdout_file, stderr_file))
                 timed_out = time.monotonic() >= deadline
-                if not output_exceeded and not timed_out:
+                cancelled = bool(cancel_event and cancel_event.is_set())
+                if not output_exceeded and not timed_out and not cancelled:
                     continue
                 if job:
                     if not kernel.TerminateJobObject(job, 124):
@@ -86,8 +87,8 @@ def run_owned(argv, *, cwd, stdin: bytes, timeout: float, memory_mb: int | None 
         stdout_file.seek(0); stderr_file.seek(0)
         stdout, stderr = stdout_file.read(max_output_bytes + 1), stderr_file.read(max_output_bytes + 1)
         limited = output_exceeded or len(stdout) > max_output_bytes or len(stderr) > max_output_bytes
-        return {'status': 'unknown' if timed_out or limited else 'observed',
-                'reason': 'timeout' if timed_out else 'output-limit' if limited else None,
+        return {'status': 'unknown' if timed_out or limited or cancelled else 'observed',
+                'reason': 'cancelled' if cancelled else 'timeout' if timed_out else 'output-limit' if limited else None,
                 'exit_code': process.returncode, 'stdout': stdout, 'stderr': stderr,
                 'elapsed_ms': round((time.perf_counter() - started) * 1000, 3),
                 'peak_job_bytes': peak,

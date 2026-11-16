@@ -1,0 +1,352 @@
+{
+  "records": [
+    {
+      "scenario": "state",
+      "width": 390,
+      "side": "original",
+      "step": 0,
+      "error": null,
+      "observations": [
+        {
+          "selector": "#count",
+          "text": "0",
+          "value": null,
+          "checked": null,
+          "disabled": null,
+          "expanded": null
+        },
+        {
+          "selector": "#increment",
+          "text": "Add one",
+          "value": null,
+          "checked": null,
+          "disabled": false,
+          "expanded": null
+        }
+      ],
+      "storage": {
+        "counter": null
+      },
+      "screenshot": "screens/state/390/original-0.png"
+    },
+    {
+      "scenario": "state",
+      "width": 390,
+      "side": "original",
+      "step": 1,
+      "error": null,
+      "observations": [
+        {
+          "selector": "#count",
+          "text": "1",
+          "value": null,
+          "checked": null,
+          "disabled": null,
+          "expanded": null
+        },
+        {
+          "selector": "#increment",
+          "text": "Add one",
+          "value": null,
+          "checked": null,
+          "disabled": false,
+          "expanded": null
+        }
+      ],
+      "storage": {
+        "counter": "1"
+      },
+      "screenshot": "screens/state/390/original-1.png"
+    },
+    {
+      "scenario": "state",
+      "width": 390,
+      "side": "original",
+      "step": 2,
+      "error": null,
+      "observations": [
+        {
+          "selector": "#count",
+          "text": "1",
+          "value": null,
+          "checked": null,
+          "disabled": null,
+          "expanded": null
+        },
+        {
+          "selector": "#increment",
+          "text": "Add one",
+          "value": null,
+          "checked": null,
+          "disabled": false,
+          "expanded": null
+        }
+      ],
+      "storage": {
+        "counter": "1"
+      },
+      "screenshot": "screens/state/390/original-2.png"
+    },
+    {
+      "scenario": "state",
+      "width": 390,
+      "side": "candidate",
+      "step": 0,
+      "error": null,
+      "observations": [
+        {
+          "selector": "#count",
+          "text": "0",
+          "value": null,
+          "checked": null,
+          "disabled": null,
+          "expanded": null
+        },
+        {
+          "selector": "#increment",
+          "text": "Add one",
+          "value": null,
+          "checked": null,
+          "disabled": false,
+          "expanded": null
+        }
+      ],
+      "storage": {
+        "counter": null
+      },
+      "screenshot": "screens/state/390/candidate-0.png"
+    },
+    {
+      "scenario": "state",
+      "width": 390,
+      "side": "candidate",
+      "step": 1,
+      "error": null,
+      "observations": [
+        {
+          "selector": "#count",
+          "text": "2",
+          "value": null,
+          "checked": null,
+          "disabled": null,
+          "expanded": null
+        },
+        {
+          "selector": "#increment",
+          "text": "Add one",
+          "value": null,
+          "checked": null,
+          "disabled": false,
+          "expanded": null
+        }
+      ],
+      "storage": {
+        "counter": "2"
+      },
+      "screenshot": "screens/state/390/candidate-1.png"
+    },
+    {
+      "scenario": "state",
+      "width": 390,
+      "side": "candidate",
+      "step": 2,
+      "error": null,
+      "observations": [
+        {
+          "selector": "#count",
+          "text": "2",
+          "value": null,
+          "checked": null,
+          "disabled": null,
+          "expanded": null
+        },
+        {
+          "selector": "#increment",
+          "text": "Add one",
+          "value": null,
+          "checked": null,
+          "disabled": false,
+          "expanded": null
+        }
+      ],
+      "storage": {
+        "counter": "2"
+      },
+      "screenshot": "screens/state/390/candidate-2.png"
+    },
+    {
+      "scenario": "state",
+      "width": 1280,
+      "side": "original",
+      "step": 0,
+      "error": null,
+      "observations": [
+        {
+          "selector": "#count",
+          "text": "0",
+          "value": null,
+          "checked": null,
+          "disabled": null,
+          "expanded": null
+        },
+        {
+          "selector": "#increment",
+          "text": "Add one",
+          "value": null,
+          "checked": null,
+          "disabled": false,
+          "expanded": null
+        }
+      ],
+      "storage": {
+        "counter": null
+      },
+      "screenshot": "screens/state/1280/original-0.png"
+    },
+    {
+      "scenario": "state",
+      "width": 1280,
+      "side": "original",
+      "step": 1,
+      "error": null,
+      "observations": [
+        {
+          "selector": "#count",
+          "text": "1",
+          "value": null,
+          "checked": null,
+          "disabled": null,
+          "expanded": null
+        },
+        {
+          "selector": "#increment",
+          "text": "Add one",
+          "value": null,
+          "checked": null,
+          "disabled": false,
+          "expanded": null
+        }
+      ],
+      "storage": {
+        "counter": "1"
+      },
+      "screenshot": "screens/state/1280/original-1.png"
+    },
+    {
+      "scenario": "state",
+      "width": 1280,
+      "side": "original",
+      "step": 2,
+      "error": null,
+      "observations": [
+        {
+          "selector": "#count",
+          "text": "1",
+          "value": null,
+          "checked": null,
+          "disabled": null,
+          "expanded": null
+        },
+        {
+          "selector": "#increment",
+          "text": "Add one",
+          "value": null,
+          "checked": null,
+          "disabled": false,
+          "expanded": null
+        }
+      ],
+      "storage": {
+        "counter": "1"
+      },
+      "screenshot": "screens/state/1280/original-2.png"
+    },
+    {
+      "scenario": "state",
+      "width": 1280,
+      "side": "candidate",
+      "step": 0,
+      "error": null,
+      "observations": [
+        {
+          "selector": "#count",
+          "text": "0",
+          "value": null,
+          "checked": null,
+          "disabled": null,
+          "expanded": null
+        },
+        {
+          "selector": "#increment",
+          "text": "Add one",
+          "value": null,
+          "checked": null,
+          "disabled": false,
+          "expanded": null
+        }
+      ],
+      "storage": {
+        "counter": null
+      },
+      "screenshot": "screens/state/1280/candidate-0.png"
+    },
+    {
+      "scenario": "state",
+      "width": 1280,
+      "side": "candidate",
+      "step": 1,
+      "error": null,
+      "observations": [
+        {
+          "selector": "#count",
+          "text": "2",
+          "value": null,
+          "checked": null,
+          "disabled": null,
+          "expanded": null
+        },
+        {
+          "selector": "#increment",
+          "text": "Add one",
+          "value": null,
+          "checked": null,
+          "disabled": false,
+          "expanded": null
+        }
+      ],
+      "storage": {
+        "counter": "2"
+      },
+      "screenshot": "screens/state/1280/candidate-1.png"
+    },
+    {
+      "scenario": "state",
+      "width": 1280,
+      "side": "candidate",
+      "step": 2,
+      "error": null,
+      "observations": [
+        {
+          "selector": "#count",
+          "text": "2",
+          "value": null,
+          "checked": null,
+          "disabled": null,
+          "expanded": null
+        },
+        {
+          "selector": "#increment",
+          "text": "Add one",
+          "value": null,
+          "checked": null,
+          "disabled": false,
+          "expanded": null
+        }
+      ],
+      "storage": {
+        "counter": "2"
+      },
+      "screenshot": "screens/state/1280/candidate-2.png"
+    }
+  ]
+}

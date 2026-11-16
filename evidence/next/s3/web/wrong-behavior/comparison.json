@@ -1,0 +1,133 @@
+{
+  "schema_version": 2,
+  "operation": "independent-web-replay",
+  "status": "fail",
+  "scope": "Owned click/reload persistence and visuals",
+  "plan": "plan.json",
+  "plan_sha256": "29b90db33be2236b736d649dd7bbab4bddcffab674840f3974e5e50fbd09eb7d",
+  "engine": {
+    "rea_enhanced/comparison.py": "cf54d2c652511ced77b5a50093d3b150884ac3ca49c7ba09be4e2e7a4deb5637",
+    "reverse_fusion/owned_process.py": "4d0f4cfc0367116b084d0ec870fde2d90f0470d6da9887d59cd47be5c96e32fd",
+    "rea_enhanced/web.py": "b1088da2872c3f0e0eccd6eb3df335dda554ba373e0131a128ade6cd6b5b9cfb",
+    "components/rea-enhanced/web-replay.mjs": "b46d6fa992befacfe762465398679c32291b5e0d94a74cd74e742248afb03389"
+  },
+  "sources": {
+    "original/index.html": "32263a9e70cf2def682065fc1f7a2f449a663db846eeb1891b5d92a3d41b61a8",
+    "candidate/index.html": "6a6bc2318b8b59d7c3be1eefad81cbbf7b938b536494d332966d9cffea147775"
+  },
+  "input_trees": {
+    "original": {
+      "cwd": "original",
+      "files": {
+        "index.html": "32263a9e70cf2def682065fc1f7a2f449a663db846eeb1891b5d92a3d41b61a8"
+      }
+    },
+    "candidate": {
+      "cwd": "candidate",
+      "files": {
+        "index.html": "6a6bc2318b8b59d7c3be1eefad81cbbf7b938b536494d332966d9cffea147775"
+      }
+    }
+  },
+  "cases": [
+    {
+      "scenario": "state",
+      "width": 390,
+      "step": 0,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "state",
+      "width": 390,
+      "step": 1,
+      "differences": [
+        "observations",
+        "storage",
+        "pixels"
+      ],
+      "behavior_status": "fail",
+      "visual_status": "fail",
+      "changed_pixel_fraction": 0.0008076923076923077,
+      "status": "fail"
+    },
+    {
+      "scenario": "state",
+      "width": 390,
+      "step": 2,
+      "differences": [
+        "observations",
+        "storage",
+        "pixels"
+      ],
+      "behavior_status": "fail",
+      "visual_status": "fail",
+      "changed_pixel_fraction": 0.0008076923076923077,
+      "status": "fail"
+    },
+    {
+      "scenario": "state",
+      "width": 1280,
+      "step": 0,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "state",
+      "width": 1280,
+      "step": 1,
+      "differences": [
+        "observations",
+        "storage",
+        "pixels"
+      ],
+      "behavior_status": "fail",
+      "visual_status": "fail",
+      "changed_pixel_fraction": 0.00024609375,
+      "status": "fail"
+    },
+    {
+      "scenario": "state",
+      "width": 1280,
+      "step": 2,
+      "differences": [
+        "observations",
+        "storage",
+        "pixels"
+      ],
+      "behavior_status": "fail",
+      "visual_status": "fail",
+      "changed_pixel_fraction": 0.00024609375,
+      "status": "fail"
+    }
+  ],
+  "changed_inputs": [],
+  "browser_executable": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+  "browser_sha256": "5b835c10836045119334d9524e62437110e00e1bd20612c9072a0ae155f94a17",
+  "process": {
+    "status": "observed",
+    "reason": null,
+    "exit_code": 0,
+    "elapsed_ms": 2387.85,
+    "peak_job_bytes": 499245056,
+    "output_truncated": false,
+    "memory_limit_mb": 1536,
+    "cleanup": "owned Windows job closed after invocation"
+  },
+  "capture_path": "wrong-behavior/capture.json",
+  "elapsed_ms": 2387.85,
+  "rea_native_proof": "not-performed",
+  "whole_product_acceptance": "not-established",
+  "limitations": [
+    "Only declared actions/selectors/storage keys/viewport screenshots were compared.",
+    "Source-to-served-URL correspondence is declared by the host, not automatically authenticated.",
+    "No unobserved server, API, device or whole-program equivalence established.",
+    "Disposable browser contexts and owned process cleanup are not OS/network isolation."
+  ]
+}

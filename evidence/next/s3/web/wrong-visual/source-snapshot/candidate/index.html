@@ -1,0 +1,5 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+body{font-family:Arial,sans-serif;margin:24px;color:#18202c}
+button{background:#db2443;color:white;border:0;padding:10px 20px;font-size:16px}
+#count{display:block;font-size:32px;margin:20px 0}
+</style></head><body><h1>Owned counter</h1><output id="count">0</output><button id="increment">Add one</button><script>const output=document.querySelector('#count');let x=parseInt(localStorage.counter??'0',10);output.textContent=x;document.querySelector('#increment').onclick=function(){x+=1;output.textContent=x;localStorage.counter=''+x;};</script></body></html>

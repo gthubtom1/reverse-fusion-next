@@ -1,6 +1,7 @@
 """One durable case: goal, evidence, dependent unknowns and finite checks."""
 from pathlib import Path
 import time
+import sys
 from reverse_fusion.case_bridge import dry_run_route, request_intent
 from .storage import digest, inside, locked, read, write
 from .comparison import compare, fresh
@@ -69,7 +70,7 @@ def open_case(project: Path, request: str, case_root='work/current-case'):
             case = {'schema_version': 2, 'project_root': str(project), 'case_root': case_root,
                 'revision': 0, 'original_request': request, 'objective': intent, 'stage': 'analysis',
                 'route': {key: route.get(key) for key in ('primary_id', 'skill', 'required_reads', 'hard_target')},
-                'supplements': [], 'features': {}, 'evidence': {}, 'unknowns': {}, 'checks': {}, 'events': []}
+                'supplements': [], 'limits':{'max_checks_per_feature':12}, 'features': {}, 'evidence': {}, 'unknowns': {}, 'checks': {}, 'events': []}
             _event(case, 'open', {'request': request})
             write(path, case)
             index = read(index_path) if index_path.exists() else {'schema_version': 2, 'case_roots': []}
@@ -123,6 +124,23 @@ def record(project: Path, case_root: str, change: dict, expected_revision: int):
                     raise ValueError('Unknown requires a question, critical flag and existing affected features')
                 case['unknowns'][identity] = {'question': change['question'], 'critical': change['critical'],
                     'features': change['features'], 'status': 'open', 'resolution_evidence': []}
+        elif op == 'refine_route':
+            hint=change.get('hint')
+            if not isinstance(hint,str) or not hint.strip():raise ValueError('Technical refinement requires a hint')
+            route=dry_run_route(hint,source='local',primary=change.get('primary'))
+            if route['status']!='local-route-pass' or route.get('missing_support'):
+                raise ValueError('Refined domain is unavailable')
+            case['route']={key:route.get(key) for key in ('primary_id','skill','required_reads','hard_target')}
+        elif op == 'deliver_analysis':
+            refs=change.get('evidence');report=inside(project,change.get('report'))
+            if not report.is_file() or not isinstance(refs,list) or not refs or any(not _evidence_valid(project,case,r) for r in refs):
+                raise ValueError('Analysis delivery needs a saved report and fresh evidence references')
+            case['analysis_report']={'path':change['report'],'sha256':digest(report),'evidence':refs}
+        elif op == 'budget':
+            amount=change.get('max_checks_per_feature')
+            if type(amount) is not int or not 1<=amount<=100 or not isinstance(change.get('reason'),str) or not change['reason'].strip():
+                raise ValueError('Budget change needs an explicit 1..100 limit and reason')
+            case['limits']={'max_checks_per_feature':amount}
         elif op == 'resolve':
             identity, refs = change.get('id'), change.get('evidence')
             if (identity not in case['unknowns'] or not isinstance(refs, list) or not refs
@@ -178,6 +196,15 @@ def _readiness(project, case):
     return ready, blocked
 
 
+
+def _feature_inputs(case, identity):
+    feature=case['features'][identity]
+    return {'feature':feature,
+        'evidence':{ref:case['evidence'].get(ref) for ref in feature['evidence']},
+        'dependencies':{ref:case['features'].get(ref) for ref in feature['dependencies']},
+        'unknowns':{uid:value for uid,value in case['unknowns'].items() if identity in value['features']}}
+
+
 def status(project: Path, case_root='work/current-case'):
     project = project.resolve()
     case = _load(project, case_root)
@@ -188,11 +215,13 @@ def status(project: Path, case_root='work/current-case'):
         for cid in feature['checks']:
             saved = case['checks'].get(cid)
             outcome = 'not-run'
-            if saved:
+            if saved and saved.get('status') in {'running','interrupted'}:
+                outcome='incomplete'
+            elif saved:
                 try:
                     report = read(inside(project, saved['path']))
                     qualifies = (digest(inside(project, saved['path'])) == saved['sha256']
-                        and saved['features'].get(identity) == feature and fresh(project, report))
+                        and saved.get('inputs',{}).get(identity) == _feature_inputs(case,identity) and fresh(project, report))
                     outcome = report['status'] if qualifies else 'stale'
                 except (OSError, ValueError, KeyError):
                     outcome = 'stale'
@@ -202,6 +231,13 @@ def status(project: Path, case_root='work/current-case'):
             'blocked_by': blocked.get(identity, []), 'checks': checks, 'complete': complete}
     complete = bool(features) and all(f['complete'] for f in features.values())
     stage = 'finite-scope-verified' if complete else 'implementation' if ready else 'analysis'
+    analysis_report=case.get('analysis_report')
+    if case['objective']=='analysis' and analysis_report:
+        try:
+            if (digest(inside(project,analysis_report['path']))==analysis_report['sha256']
+                    and all(_evidence_valid(project,case,ref) for ref in analysis_report['evidence'])):
+                stage='analysis-delivered'
+        except (OSError,ValueError):pass
     if complete:
         next_action = 'Review declared coverage against the full goal; unlisted requirements are not automatically verified.'
     elif ready:
@@ -211,32 +247,76 @@ def status(project: Path, case_root='work/current-case'):
         next_action = 'Continue evidence gathering and dependency review; preserve the full goal.'
     return {'status': stage, 'case_root': case_root, 'revision': case['revision'],
         'original_request': case['original_request'], 'objective': case['objective'],
-        'route': case['route'], 'supplements': case['supplements'], 'features': features,
+        'route':{**case['route'],'required_read_paths':[str(ROOT/name) for name in case['route'].get('required_reads',[])]},
+        'component_entries':{'official_rea_skill':str(ROOT/'vendor/rea/package/skills/reverse-engineer-anything/SKILL.md'),
+            'enhanced_cli':[sys.executable,'-m','rea_enhanced'],'writer':'current-host-native',
+            'mcp_server':'reverse-fusion-rea','craft_required':False,'spec_required':False},
+        'analysis_report':analysis_report,'supplements': case['supplements'], 'features': features,
         'ready_features': ready, 'blocked_features': blocked, 'unknowns': case['unknowns'],
+        'check_budget':case.get('limits',{'max_checks_per_feature':12}),
         'next_action': next_action, 'whole_product_acceptance': 'not-established',
         'limitations': ['Readiness checks declared evidence, not automatic semantic understanding.',
             'Completion covers only declared features and actual finite checks.',
             'Host editing is permitted; these records are not an OS write sandbox.']}
 
 
-def run_check(project: Path, case_root: str, check_id: str, plan: str, output: str):
-    project = project.resolve()
-    path = _record_path(project, case_root)
-    with locked(path):
-        before = _load(project, case_root)
-        ready, blocked = _readiness(project, before)
-        affected = {identity: feature for identity, feature in before['features'].items()
-                    if check_id in feature['checks'] and identity in ready}
-        if not affected:
-            raise ValueError('Check is not declared by a ready feature; inspect affected dependencies')
-    result = compare(project, plan, output)
-    result_name = output + '/comparison.json'
-    with locked(path):
-        case = _load(project, case_root)
-        if case['revision'] != before['revision']:
-            return {'status': 'superseded', 'result': result, 'next_action': 'Reload the changed case; result preserved but not accepted.'}
-        case['checks'][check_id] = {'path': result_name, 'sha256': digest(inside(project, result_name)),
-            'features': affected, 'status': result['status']}
-        _event(case, 'comparison', {'check': check_id, 'result': result_name, 'status': result['status']})
-        write(path, case)
-    return {'comparison': result, 'workflow': status(project, case_root)}
+
+def run_check(project: Path, case_root: str, check_id: str, plan: str, output: str, cancel_event=None, retry_reason=None):
+    project=project.resolve()
+    if retry_reason is not None and (not isinstance(retry_reason,str) or not retry_reason.strip() or len(retry_reason)>2000):
+        raise ValueError('Retry reason must describe concrete new information')
+    if not isinstance(check_id,str) or not check_id or any(c not in 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_' for c in check_id):
+        raise ValueError('Check ID must be a portable identifier')
+    path=_record_path(project,case_root)
+    run_lock=inside(project,case_root+'/checks/'+check_id+'.json')
+    with locked(run_lock):
+        with locked(path):
+            before=_load(project,case_root)
+            ready,blocked=_readiness(project,before)
+            affected={identity:feature for identity,feature in before['features'].items()
+                      if check_id in feature['checks'] and identity in ready}
+            if not affected:
+                raise ValueError('Check is not declared by a ready feature; inspect affected dependencies')
+            previous=before['checks'].get(check_id)
+            if previous and previous.get('path'):
+                try:
+                    old=read(inside(project,previous['path']))
+                    unchanged=(old.get('plan')==plan and fresh(project,old)
+                        and all(previous.get('inputs',{}).get(identity)==_feature_inputs(before,identity) for identity in affected))
+                except (ValueError,OSError,KeyError):unchanged=False
+                if unchanged and old['status']=='pass':
+                    return {'comparison':old,'workflow':status(project,case_root),'reused':True}
+                if unchanged and old['status'] in {'fail','unknown'} and not retry_reason:
+                    raise ValueError('Unchanged unsuccessful comparison: revise candidate/evidence or record a concrete retry reason')
+            attempts=sum(e['operation']=='comparison-start' and e['detail'].get('check')==check_id for e in before['events'])
+            if attempts>=before.get('limits',{}).get('max_checks_per_feature',12):
+                raise ValueError('Check budget exhausted; revisit investigation or record a justified budget change')
+            before['checks'][check_id]={'status':'running','features':affected,
+                'inputs':{identity:_feature_inputs(before,identity) for identity in affected}}
+            _event(before,'comparison-start',{'check':check_id,'plan':plan,'output':output,
+                'retry_reason':retry_reason,'scope':'Marker is incomplete, not proof a process is still live'})
+            write(path,before)
+        try:
+            result=compare(project,plan,output,cancel_event=cancel_event)
+        except (OSError,ValueError) as exc:
+            with locked(path):
+                case=_load(project,case_root)
+                case['checks'][check_id]={'status':'interrupted','reason':str(exc)}
+                _event(case,'comparison-error',{'check':check_id,'reason':str(exc)})
+                write(path,case)
+            raise
+        result_name=output+'/comparison.json'
+        with locked(path):
+            case=_load(project,case_root)
+            if case['revision']!=before['revision']:
+                case['checks'][check_id]={'status':'interrupted','result':result_name,'reason':'Case changed during comparison'}
+                _event(case,'comparison-superseded',{'check':check_id,'result':result_name})
+                write(path,case)
+                return {'status':'superseded','result':result,
+                    'next_action':'Reload changed case; old result preserved but not accepted.'}
+            case['checks'][check_id]={'path':result_name,'sha256':digest(inside(project,result_name)),
+                'features':affected,'inputs':{identity:_feature_inputs(before,identity) for identity in affected},
+                'status':result['status']}
+            _event(case,'comparison',{'check':check_id,'result':result_name,'status':result['status']})
+            write(path,case)
+        return {'comparison':result,'workflow':status(project,case_root)}

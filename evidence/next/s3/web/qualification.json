@@ -1,0 +1,8 @@
+{
+  "status": "pass",
+  "correct": "pass",
+  "bad_behavior": "fail",
+  "bad_visual": "fail",
+  "behavior_preserved_in_visual_only_failure": true,
+  "scope": "Actual owned browser replay; finite selectors/storage and screenshots, not whole websites or model A/B"
+}

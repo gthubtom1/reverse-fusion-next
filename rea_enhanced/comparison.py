@@ -95,10 +95,20 @@ def validate_plan(project, plan, destination):
     return sides
 
 
-def compare(project: Path, plan_name: str, output: str) -> dict:
+def engine_identity(web=False):
+    root=Path(__file__).resolve().parents[1]
+    names=['rea_enhanced/comparison.py','reverse_fusion/owned_process.py']
+    if web:names+=['rea_enhanced/web.py','components/rea-enhanced/web-replay.mjs']
+    return {name:digest(root/name) for name in names}
+
+
+def compare(project: Path, plan_name: str, output: str, cancel_event=None) -> dict:
     project = project.resolve()
     plan_path, destination = inside(project, plan_name), inside(project, output)
     plan = read(plan_path)
+    if plan.get('kind') == 'web':
+        from .web import compare_web
+        return compare_web(project,plan_name,output,cancel_event=cancel_event)
     sides = validate_plan(project, plan, destination)
     if sum(len(s['steps']) for s in plan['scenarios']) > 200:
         raise ValueError('At most 200 steps per replay')
@@ -110,6 +120,7 @@ def compare(project: Path, plan_name: str, output: str) -> dict:
     if destination.exists():
         raise ValueError('Preserve previous runs; choose a new output path')
     plan_sha = digest(plan_path)
+    engine=engine_identity()
     destination.mkdir(parents=True)
     started, results, failure = time.perf_counter(), [], None
     try:
@@ -120,6 +131,8 @@ def compare(project: Path, plan_name: str, output: str) -> dict:
                 shutil.copytree(conf['cwd'], area)
                 places[side] = area
             for index, step in enumerate(scenario['steps']):
+                if cancel_event and cancel_event.is_set():
+                    raise ValueError('Comparison cancelled')
                 if time.perf_counter() - started >= 600:
                     raise ValueError('Total comparison deadline exceeded')
                 pair = {'scenario': scenario['id'], 'step': index, 'observations': {}, 'differences': []}
@@ -134,7 +147,7 @@ def compare(project: Path, plan_name: str, output: str) -> dict:
                     try:
                         run = run_owned([*argv, *step['args']], cwd=area, stdin=step['stdin'].encode('utf-8'),
                             timeout=min(plan['timeout_seconds'], max(.001, 600 - (time.perf_counter() - started))),
-                            memory_mb=512, max_output_bytes=1024 * 1024)
+                            memory_mb=512, max_output_bytes=1024 * 1024, cancel_event=cancel_event)
                         observed = {k: v for k, v in run.items() if k not in {'stdout', 'stderr'}}
                         observed.update(stdout=base64.b64encode(run['stdout']).decode('ascii'),
                             stderr=base64.b64encode(run['stderr']).decode('ascii'),
@@ -169,12 +182,14 @@ def compare(project: Path, plan_name: str, output: str) -> dict:
             changed.append(side)
     if not plan_path.is_file() or digest(plan_path) != plan_sha:
         changed.append(plan_name)
+    if engine_identity()!=engine:changed.append('comparison-engine')
     expected_count = sum(len(s['steps']) for s in plan['scenarios'])
     status = ('unknown' if failure or changed or len(results) != expected_count or any(r['status'] == 'unknown' for r in results)
               else 'fail' if any(r['status'] == 'fail' for r in results) else 'pass')
     result = {'schema_version': 2, 'operation': 'independent-finite-replay', 'status': status,
         'scope': plan['scope'], 'plan': plan_name, 'plan_sha256': plan_sha,
         'sources': {name: value for conf in sides.values() for name, value in conf['sources'].items()},
+        'engine':engine,
         'input_trees': {side: {'cwd': conf['config']['cwd'], 'files': conf['tree']} for side, conf in sides.items()},
         'cases': results, 'changed_inputs': changed, 'failure': failure,
         'elapsed_ms': round((time.perf_counter() - started) * 1000, 3),
@@ -188,6 +203,10 @@ def compare(project: Path, plan_name: str, output: str) -> dict:
 
 def fresh(project: Path, result: dict) -> bool:
     try:
+        if result.get('engine')!=engine_identity(web=result.get('operation')=='independent-web-replay'):
+            return False
+        if result.get('browser_executable') and digest(Path(result['browser_executable']))!=result['browser_sha256']:
+            return False
         if digest(inside(project, result['plan'])) != result['plan_sha256']:
             return False
         for conf in result['input_trees'].values():

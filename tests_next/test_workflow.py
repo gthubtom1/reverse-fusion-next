@@ -185,4 +185,79 @@ class OwnedCase(unittest.TestCase):
             compare(self.root,'plan.json','work/once')
 
 
+    def test_re_registered_evidence_invalidates_old_check(self):
+        add=self.prepare();run_check(self.root,'work/current-case','C1','plan.json','work/pass')
+        (self.root/'research.md').write_text('Changed observed requirement',encoding='utf-8')
+        add({'op':'evidence','id':'E1','path':'research.md','authority':'observed'})
+        self.assertEqual(status(self.root)['features']['F1']['checks']['C1'],'stale')
+
+    def test_interrupted_check_cannot_retain_success(self):
+        self.prepare();run_check(self.root,'work/current-case','C1','plan.json','work/old-pass')
+        write(self.root/'bad-plan.json',{'version':2})
+        with self.assertRaises(ValueError):
+            run_check(self.root,'work/current-case','C1','bad-plan.json','work/broken')
+        checked=status(self.root)
+        self.assertEqual(checked['features']['F1']['checks']['C1'],'incomplete')
+        self.assertFalse(checked['features']['F1']['complete'])
+
+    def test_nested_case_discovery(self):
+        original=open_case(self.root,'分析这个软件并复刻','work/nested/target')
+        resumed=open_case(self.root,'继续')
+        self.assertEqual(resumed['case_root'],'work/nested/target')
+        self.assertEqual(resumed['original_request'],original['original_request'])
+
+    def test_legacy_case_not_silently_written(self):
+        p=self.root/'work/current-case/case.json';p.parent.mkdir(parents=True);p.write_text('{"legacy":true}')
+        with self.assertRaisesRegex(ValueError,'Legacy case'):
+            open_case(self.root,'分析这个软件')
+        self.assertEqual(p.read_text(),'{"legacy":true}')
+
+    def test_cancellation_is_recorded_unknown(self):
+        import threading,time
+        self.prepare()
+        (self.root/'candidate/app.py').write_text('import time;time.sleep(8)',encoding='utf-8')
+        self.plan['timeout_seconds']=10;self.plan['scenarios']=self.plan['scenarios'][:1]
+        self.plan['scenarios'][0]['steps']=self.plan['scenarios'][0]['steps'][:1]
+        write(self.root/'plan.json',self.plan)
+        event=threading.Event();timer=threading.Timer(.2,event.set);timer.start()
+        result=run_check(self.root,'work/current-case','C1','plan.json','work/cancelled',cancel_event=event)
+        timer.join()
+        self.assertEqual(result['comparison']['status'],'unknown')
+        self.assertFalse(result['workflow']['features']['F1']['complete'])
+
+    def test_concurrent_record_preserves_one_revision(self):
+        import threading
+        self.prepare();revision=status(self.root)['revision'];out=[]
+        def worker(text):
+            try:
+                record(self.root,'work/current-case',{'op':'supplement','text':text},revision);out.append('ok')
+            except ValueError:out.append('stale')
+        threads=[threading.Thread(target=worker,args=(text,)) for text in ['one','two']]
+        for t in threads:t.start()
+        for t in threads:t.join()
+        self.assertEqual(sorted(out),['ok','stale'])
+        self.assertEqual(len(status(self.root)['supplements']),1)
+
+
+    def test_unchanged_success_is_reused_without_another_run(self):
+        self.prepare();run_check(self.root,'work/current-case','C1','plan.json','work/pass')
+        result=run_check(self.root,'work/current-case','C1','plan.json','work/not-created')
+        self.assertTrue(result['reused'])
+        self.assertFalse((self.root/'work/not-created').exists())
+
+    def test_unchanged_failure_requires_new_information(self):
+        self.prepare();(self.root/'candidate/app.py').write_text(CANDIDATE.replace('n=n+int(data["value"])','n=n+abs(int(data["value"]))'),encoding='utf-8')
+        run_check(self.root,'work/current-case','C1','plan.json','work/fail')
+        with self.assertRaisesRegex(ValueError,'Unchanged unsuccessful'):
+            run_check(self.root,'work/current-case','C1','plan.json','work/repeat')
+
+    def test_explicit_check_budget_is_enforced(self):
+        add=self.prepare();add({'op':'budget','max_checks_per_feature':1,'reason':'Owned bounded test'})
+        (self.root/'candidate/app.py').write_text(CANDIDATE.replace('n=n+int(data["value"])','n=n+abs(int(data["value"]))'),encoding='utf-8')
+        run_check(self.root,'work/current-case','C1','plan.json','work/fail')
+        (self.root/'candidate/app.py').write_text(CANDIDATE,encoding='utf-8')
+        with self.assertRaisesRegex(ValueError,'budget exhausted'):
+            run_check(self.root,'work/current-case','C1','plan.json','work/next')
+
+
 if __name__=='__main__':unittest.main()

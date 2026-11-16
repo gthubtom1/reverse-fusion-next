@@ -1,0 +1,7 @@
+{
+  "status": "pass",
+  "tests": 40,
+  "skipped": 0,
+  "actual_web": "evidence/next/s3/web/qualification.json",
+  "scope": "Owned routing, finite process/state, actual browser behavior/pixel, actual MCP/Frida/native bundle recovery; not arbitrary target acceptance or model A/B"
+}

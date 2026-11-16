@@ -13,3 +13,7 @@
 ## 2026-11-17 / S2 qualified
 
 Enhanced MCP retains all 255 canonical official schemas and prompts unchanged, adds four owned tools. Real Ghidra main dossier exported as two original records and imported/exported unchanged in a new server. Actual Node Frida enumeration now succeeds using a separate pinned official prebuild overlay. Original REA tar package restored after npm optional-install attempts. Lifecycle shell failure and Node TLS download failure were observed; direct absolute invocation and verified Python HTTPS acquisition solved the binding without changing global PATH or old installation. Three live protocol/provider/recovery tests pass. Next: S3 failure/freshness/visual cases.
+
+## 2026-11-17 / S3 qualified
+
+40 checks pass, zero skipped. Actual web counter at two widths distinguishes wrong behavior from visual-only mismatch; captures and source snapshots retained. Cancellation, interruption, concurrent revisions, evidence/plan/code/comparator freshness and bounded retry behavior checked. Fixed a real inherited Chinese/ASCII token-boundary bug (这个APK now selects Android methods); all 192 old route expectations still pass and all 603 domain/support files match recorded provenance before S4 adaptation. No old checkout or global deployment write. Next S4: active entry/documentation and independent installer.

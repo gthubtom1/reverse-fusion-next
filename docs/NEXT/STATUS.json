@@ -3,7 +3,7 @@
   "version": "2.0.0.dev0",
   "baseline_commit": "022e61b803e41569cac1f116ebca2245b9c9b1f8",
   "goal_status": "active",
-  "stage": "S3",
+  "stage": "S4",
   "stages": {
     "S0": {
       "status": "done",
@@ -34,11 +34,15 @@
       ]
     },
     "S3": {
-      "status": "in_progress",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "evidence/next/s3/qualification.json",
+        "evidence/next/s3/tests.txt",
+        "evidence/next/s3/web/qualification.json"
+      ]
     },
     "S4": {
-      "status": "pending",
+      "status": "in_progress",
       "evidence": []
     },
     "S5": {
@@ -83,11 +87,21 @@
     "N17": [
       "evidence/next/s2/frida-live.json",
       "components/rea-enhanced/provider-bindings.json"
+    ],
+    "N03": [
+      "tests_next/test_domains.py"
+    ],
+    "N14": [
+      "evidence/next/s3/web/qualification.json"
+    ],
+    "N16": [
+      "tests_next/test_mcp.py",
+      "tests_next/test_workflow.py"
     ]
   },
-  "next_action": "Harden revision/freshness/cancellation boundaries, add actual web/visual-versus-behavior comparison, and exercise cross-domain cases before removing legacy active entry points.",
+  "next_action": "Replace inherited active Craft/Spec instructions and installer paths with the new contract, preserve domain origins, then build and qualify the independent installer.",
   "migration": "not_started; original checkout and desktop entry remain active",
   "limitations": [
-    "S1/S2 qualified finite owned behavior and actual REA operations. Visual channels, hardened recovery, clean installer and desktop migration are not yet complete."
+    "S0-S3 qualified; current desktop still uses 1.4.0. Active documentation cleanup, clean installation/baseline comparison and migration/rollback remain unfinished."
   ]
 }

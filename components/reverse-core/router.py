@@ -153,6 +153,9 @@ def route(hint: str, *, primary: str | None = None) -> LocalRoute:
     """Resolve a hint without reading any external installation state."""
     data, digest = _load()
     text = (hint or "").lower()
+    # Technical acronyms next to Chinese characters are still separate terms.
+    # Python Unicode \b otherwise treats "这个APK" as one word and misses APK.
+    text = re.sub(r'(?<=[\u3400-\u9fff])(?=[a-z0-9])|(?<=[a-z0-9])(?=[\u3400-\u9fff])', ' ', text)
     scores: dict[str, int] = {}
     notes: list[str] = []
     for route_id, route_data in data["routes"].items():

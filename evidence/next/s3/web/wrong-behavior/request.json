@@ -1,0 +1,52 @@
+{
+  "plan": {
+    "version": 1,
+    "kind": "web",
+    "scope": "Owned click/reload persistence and visuals",
+    "original": {
+      "url": "http://127.0.0.1:54415/",
+      "cwd": "original",
+      "sources": [
+        "original/index.html"
+      ]
+    },
+    "candidate": {
+      "url": "http://127.0.0.1:54416/",
+      "cwd": "candidate",
+      "sources": [
+        "candidate/index.html"
+      ]
+    },
+    "widths": [
+      390,
+      1280
+    ],
+    "observe": [
+      "#count",
+      "#increment"
+    ],
+    "storage_keys": [
+      "counter"
+    ],
+    "pixel_tolerance": 0,
+    "scenarios": [
+      {
+        "id": "state",
+        "steps": [
+          {
+            "action": "observe"
+          },
+          {
+            "action": "click",
+            "selector": "#increment"
+          },
+          {
+            "action": "reload"
+          }
+        ]
+      }
+    ]
+  },
+  "output": "D:\\Project\\reverse-next\\evidence\\next\\s3\\web\\wrong-behavior",
+  "browser": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+}

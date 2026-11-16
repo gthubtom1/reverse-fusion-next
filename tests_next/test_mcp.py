@@ -73,4 +73,27 @@ class LiveMCP(unittest.TestCase):
             'import':imported,'export':exported,'cleanup':client.cleanup})
 
 
+    def test_cancelled_owned_comparison_cleans_up_and_stays_unknown(self):
+        import threading,time
+        helper=fixture.OwnedCase();helper.setUp();self.addCleanup(helper.doCleanups)
+        helper.prepare()
+        (helper.root/'candidate/app.py').write_text('import time;time.sleep(10)',encoding='utf-8')
+        helper.plan['timeout_seconds']=15
+        helper.plan['scenarios']=helper.plan['scenarios'][:1]
+        helper.plan['scenarios'][0]['steps']=helper.plan['scenarios'][0]['steps'][:1]
+        write(helper.root/'plan.json',helper.plan)
+        client=StdioMcp([sys.executable,'-m','rea_enhanced','mcp'],cwd=ROOT,timeout=20)
+        with client:
+            client.initialize();identity=client.sequence+1
+            timer=threading.Timer(.5,lambda:client.send({'jsonrpc':'2.0','method':'notifications/cancelled','params':{'requestId':identity,'reason':'Owned cancellation test'}}))
+            started=time.monotonic();timer.start()
+            result=client.request('tools/call',{'name':'rf_next_compare','arguments':{'project_root':str(helper.root),
+                'check_id':'C1','plan':'plan.json','output':'work/cancelled'}})
+            timer.join()
+            self.assertFalse(result.get('isError'),result)
+            self.assertEqual(result['structuredContent']['status'],'unknown')
+            self.assertLess(time.monotonic()-started,5)
+        self.assertEqual(client.cleanup['status'],'verified')
+
+
 if __name__=='__main__':unittest.main()
