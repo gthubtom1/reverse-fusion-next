@@ -1,31 +1,3 @@
-#!/usr/bin/env sh
-set -eu
-
-repo=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd -P)
-python_bin=${RF_PYTHON:-}
-if [ -z "$python_bin" ]; then
-  if command -v python >/dev/null 2>&1; then python_bin=python
-  elif command -v python3 >/dev/null 2>&1; then python_bin=python3
-  else echo 'set RF_PYTHON to a Python 3.11+ launcher' >&2; exit 2
-  fi
-fi
-venv=${1:-"$repo/.venv"}
-venv=$("$python_bin" -c 'import os,sys; print(os.path.realpath(sys.argv[1]))' "$venv")
-if command -v cygpath >/dev/null 2>&1; then venv=$(cygpath -u "$venv"); fi
-case "$venv" in "$repo"/*) ;; *) echo "venv must stay inside repository" >&2; exit 2 ;; esac
-receipt=$("$python_bin" -c 'import os,sys; print(os.path.realpath(sys.argv[1]))' "$repo/state/install.json")
-if command -v cygpath >/dev/null 2>&1; then receipt=$(cygpath -u "$receipt"); fi
-case "$receipt" in "$repo"/*) ;; *) echo "receipt must stay inside repository" >&2; exit 2 ;; esac
-
-venv_python="$venv/bin/python"
-if [ -x "$venv/Scripts/python.exe" ]; then venv_python="$venv/Scripts/python.exe"; fi
-if [ ! -x "$venv_python" ]; then
-  echo 'repository Python is unavailable; restore venv to check global entry ownership before deleting runtime; a missing receipt does not prove global pointers are absent; nothing removed' >&2
-  exit 2
-fi
-if [ -x "$venv_python" ]; then
-  "$venv_python" -m reverse_fusion uninstall --apply --format json >/dev/null
-fi
-if [ -e "$venv" ]; then rm -rf -- "$venv"; fi
-if [ -f "$receipt" ]; then rm -f -- "$receipt"; fi
-printf '%s\n' '{"status":"uninstalled","global_adapter":"ownership-checked-by-reverse-fusion-cli-before-removal"}'
+#!/bin/sh
+echo "v2 automatic installation is qualified for Windows x64 Codex. See docs/AGENT-BOOTSTRAP.md; the v1 installer is retired." >&2
+exit 2

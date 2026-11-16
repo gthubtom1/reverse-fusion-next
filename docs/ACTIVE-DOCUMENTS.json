@@ -1,0 +1,27 @@
+{
+  "version": "2.0.0.dev0",
+  "active": [
+    "README.md",
+    "AGENTS.md",
+    "RULES.md",
+    "SOURCE-MANIFEST.json",
+    "release/manifest.json",
+    "components/official/manifest.json",
+    "docs/CURRENT-STATE.md",
+    "docs/AGENT-BOOTSTRAP.md",
+    "docs/AGENT-WORKFLOW.md",
+    "docs/BEGINNER-GUIDE.md",
+    "docs/CODEX-INTEGRATION.md",
+    "docs/COMPARISON.md",
+    "docs/CROSS-PROJECT-WORKFLOW.md",
+    "docs/DEPLOYMENT-GUIDE.md",
+    "docs/HOST-PROJECT-CONNECTION.md",
+    "docs/INTEGRATION-CONTRACT.md",
+    "docs/MCP-INTEGRATION.md",
+    "docs/NATIVE-COMPONENTS.md",
+    "docs/RECOVERY.md"
+  ],
+  "continuity": "docs/NEXT/*",
+  "domain_methods": "skills/**; root contract supersedes inherited integration instructions",
+  "historical": "Other inherited docs, specs, checkpoints, evidence and v1 scripts are history; original contract at baseline/rf-1.4.0"
+}

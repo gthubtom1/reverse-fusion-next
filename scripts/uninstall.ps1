@@ -1,19 +1,3 @@
-param(
-    [switch]$Apply,
-    [string]$VenvPath = (Join-Path $PSScriptRoot '..\.venv')
-)
-$ErrorActionPreference = 'Stop'
-. (Join-Path $PSScriptRoot 'lib\ScriptSupport.ps1')
-$repo = Get-CanonicalPath (Join-Path $PSScriptRoot '..')
-$venv = Assert-RepositoryWritePath $repo $VenvPath
-$receipt = Assert-RepositoryWritePath $repo (Join-Path $repo 'state\install.json')
-if ($Apply -and -not (Test-Path -LiteralPath (Join-Path $venv 'Scripts\python.exe') -PathType Leaf)) {
-    throw 'Repository Python is unavailable; restore the repository venv to check global entry ownership before deleting its runtime. A missing installation receipt does not prove that global pointers are absent. No files were removed.'
-}
-if ($Apply -and (Test-Path -LiteralPath (Join-Path $venv 'Scripts\python.exe') -PathType Leaf)) {
-    & (Join-Path $venv 'Scripts\python.exe') -m reverse_fusion uninstall --apply --format json | Out-Null
-    Assert-NativeExit $LASTEXITCODE 'global adapter removal'
-}
-if ($Apply -and (Test-Path -LiteralPath $venv)) { Remove-Item -LiteralPath $venv -Recurse -Force }
-if ($Apply -and (Test-Path -LiteralPath $receipt -PathType Leaf)) { Remove-Item -LiteralPath $receipt -Force }
-Write-Output (ConvertTo-Json @{ status = if ($Apply) { 'uninstalled' } else { 'dry-run' }; venv=$venv; global_adapter='ownership-checked-by-reverse-fusion-cli-before-removal' } -Compress)
+param([Parameter(Mandatory=$true)][string]$Receipt)
+& (Join-Path $PSScriptRoot '..\.venv\Scripts\python.exe') -m rea_enhanced rollback --receipt $Receipt
+exit $LASTEXITCODE

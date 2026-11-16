@@ -12,7 +12,7 @@ ROOT=Path(__file__).resolve().parents[1]
 
 class DomainMethods(unittest.TestCase):
     def test_fixed_domain_files_and_recorded_adaptations(self):
-        manifest=json.loads((ROOT/'components/reverse-core/preservation.json').read_text())
+        manifest=json.loads((ROOT/'components/reverse-core/preservation.json').read_text(encoding='utf-8'))
         for name,value in manifest['files'].items():
             data=(ROOT/name).read_bytes()
             if not name.endswith('.jar'):data=data.replace(b'\r\n',b'\n')
@@ -20,7 +20,7 @@ class DomainMethods(unittest.TestCase):
         self.assertEqual(len(manifest['files']),603)
 
     def test_all_domain_descriptors_and_support_are_available(self):
-        routes=json.loads((ROOT/'components/reverse-core/routing.json').read_text())['routes']
+        routes=json.loads((ROOT/'components/reverse-core/routing.json').read_text(encoding='utf-8'))['routes']
         for identity in routes:
             result=dry_run_route('analysis',source='local',primary=identity)
             self.assertEqual(result['status'],'local-route-pass',identity)

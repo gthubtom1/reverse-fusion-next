@@ -9,4 +9,7 @@ Spec is not mandatory. This development version is not yet a qualified replaceme
 
 Read [the persistent plan](docs/NEXT/PLAN.md), [requirements](docs/NEXT/REQUIREMENTS.md),
 [status](docs/NEXT/STATUS.json) and [recovery entry](docs/NEXT/RESUME.md).
-Inherited 1.4 documents outside that active set are historical reference, not install instructions.
+Current public documents are listed in [ACTIVE-DOCUMENTS](docs/ACTIVE-DOCUMENTS.json).
+The sole install entry is [AGENT-BOOTSTRAP](docs/AGENT-BOOTSTRAP.md); the
+[beginner guide](docs/BEGINNER-GUIDE.md) describes plain-language use.
+Other inherited 1.4 documents are historical reference, not install instructions.

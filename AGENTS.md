@@ -16,6 +16,6 @@ Read docs/NEXT/RESUME.md, REQUIREMENTS.md, PLAN.md, STATUS.json and DECISIONS.md
 - Update STATUS and append JOURNAL with each meaningful stage. Done requires actual evidence.
 - Preserve baseline, upstream origin, unrelated user config/credentials and tested rollback.
   Do not copy secrets to this repository. Migration follows qualified isolated installation.
-- Inherited docs outside docs/NEXT, checkpoints/tests/installers are historical reference until
-  explicitly promoted. They do not override this contract. Do not run old installers.
+- Current public documentation is enumerated in docs/ACTIVE-DOCUMENTS.json. Other inherited
+  docs, checkpoints, old tests and installers are historical reference. Do not run old installers.
 - User-authorized migration happens only after S6 gates, retaining actual rollback.

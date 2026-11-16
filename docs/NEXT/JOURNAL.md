@@ -17,3 +17,7 @@ Enhanced MCP retains all 255 canonical official schemas and prompts unchanged, a
 ## 2026-11-17 / S3 qualified
 
 40 checks pass, zero skipped. Actual web counter at two widths distinguishes wrong behavior from visual-only mismatch; captures and source snapshots retained. Cancellation, interruption, concurrent revisions, evidence/plan/code/comparator freshness and bounded retry behavior checked. Fixed a real inherited Chinese/ASCII token-boundary bug (这个APK now selects Android methods); all 192 old route expectations still pass and all 603 domain/support files match recorded provenance before S4 adaptation. No old checkout or global deployment write. Next S4: active entry/documentation and independent installer.
+
+## 2026-11-17 / S4 qualified
+
+48 checks pass. Current public docs/skills/manifests now consistently use enhanced REA and host-native implementation. Old public bootstrap paths are retired; CLI compatibility name routes to the new CLI. Original domain provenance retained with adaptation hashes. New core installer independently acquired pinned Node/REA/Frida/WABT/JADX. Actual temporary-user connection, legacy migration, byte-preserving rollback and injected connection-failure restoration pass. Fixed explicit UTF-8 reading rather than relying on the shell locale. Original deployment remains unchanged. Next S5: clean source/runtime install and finite baseline comparison.

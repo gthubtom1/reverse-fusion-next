@@ -1,0 +1,14 @@
+{
+  "status": "pass",
+  "checks": 48,
+  "active_registry": "docs/ACTIVE-DOCUMENTS.json",
+  "core_bootstrap": "state/bootstrap-next.json",
+  "managed_deployment_cases": [
+    "actual registered enhanced endpoint",
+    "legacy two-server migration and exact restoration",
+    "probe failure restoration with unrelated edit retained",
+    "unmanaged conflict rejection",
+    "modified owned block protection"
+  ],
+  "scope": "v2 active contract, domain provenance, owned deployment and core acquisition; clean-machine and live migration remain S5/S6"
+}

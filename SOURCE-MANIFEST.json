@@ -1,6 +1,7 @@
 {
-  "schema_version": 1,
-  "project": "reverse-fusion",
+  "schema_version": 2,
+  "version": "2.0.0.dev0",
+  "project": "reverse-rea-next",
   "components": [
     {
       "id": "reverse-core",
@@ -31,7 +32,7 @@
       "kind": "official",
       "source": "https://github.com/morluto/rea",
       "commit": "2343e5692595ae9c08ce7de5bb91460118e67ed2",
-      "role": "official evidence and comparison backend"
+      "role": "fixed official tools/results/evidence backend wrapped by enhanced endpoint"
     },
     {
       "id": "jadx-headless-mcp",
@@ -43,27 +44,6 @@
       "manifest": "vendor/jadx-headless-mcp/0.7.1/manifest.json"
     },
     {
-      "id": "spec-kit",
-      "kind": "official",
-      "source": "https://github.com/github/spec-kit",
-      "commit": "2ee2b1e8005905db05f5717300a469b3068b908f",
-      "role": "required installed official CLI and generated project workflow",
-      "source_version": "1.4.1.dev0",
-      "historical_execution_version": "1.4.0",
-      "manifest": "vendor/spec-kit/manifest.json",
-      "audit_version": "1.4.1.dev0"
-    },
-    {
-      "id": "craft-bounded",
-      "kind": "owned-adapter",
-      "source": "https://github.com/storytold/craft-anything",
-      "commit": "8374ad71544f2cc44698ea74ef990aa31600bac6",
-      "role": "actual Craft workspace/write/edit/command/check lifecycle with current host reasoning",
-      "distribution": "pinned-native-engine-adapter",
-      "policy": "repository-owned external-writer seam over pinned Craft engine; replayable Windows Process patch",
-      "manifest": "components/craft-native/manifest.json"
-    },
-    {
       "id": "host-adapters",
       "kind": "owned-adapter",
       "source": "reverse-fusion",
@@ -71,12 +51,19 @@
       "role": "portable host detection and lifecycle commands"
     },
     {
-      "id": "craft-mcp",
-      "kind": "owned-launcher",
-      "source": "https://github.com/storytold/craft-anything",
-      "commit": "8374ad71544f2cc44698ea74ef990aa31600bac6",
-      "role": "original engine/MCP/plugins with host reasoning and owned setup",
-      "manifest": "components/craft-mcp/manifest.json"
+      "id": "rea-enhanced",
+      "kind": "owned-enhancement",
+      "path": "rea_enhanced",
+      "role": "host-driven case, evidence readiness, independent finite comparison and recovery",
+      "craft_runtime": false,
+      "spec_mandatory": false,
+      "design_reference": "https://github.com/storytold/craft-anything; independent implementation, no source/runtime dependency"
     }
+  ],
+  "historical_baseline": "baseline/rf-1.4.0",
+  "core_pins": [
+    "vendor/rea/manifest.json",
+    "vendor/node/manifest.json",
+    "components/rea-enhanced/provider-bindings.json"
   ]
 }

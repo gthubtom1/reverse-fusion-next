@@ -15,6 +15,13 @@ def main(argv=None):
     commands = parser.add_subparsers(dest='command', required=True)
     commands.add_parser('mcp')
     commands.add_parser('doctor')
+    commands.add_parser('bootstrap')
+    for name in ('install','mcp-check'):
+        p=commands.add_parser(name)
+        p.add_argument('--home',type=Path)
+        if name=='install':p.add_argument('--replace-from',type=Path)
+    rollback_parser=commands.add_parser('rollback')
+    rollback_parser.add_argument('--receipt',type=Path,required=True)
     provider_parser=commands.add_parser('providers')
     provider_parser.add_argument('--refresh',action='store_true')
     for name in ('open', 'record', 'status', 'compare'):
@@ -30,11 +37,24 @@ def main(argv=None):
             p.add_argument('--plan', required=True)
             p.add_argument('--output', required=True)
             p.add_argument('--check-id')
+            p.add_argument('--retry-reason')
     args = parser.parse_args(argv)
     try:
         if args.command == 'mcp':
             from .server import serve
             return serve()
+        if args.command in {'bootstrap','install','mcp-check','rollback'}:
+            root=Path(__file__).resolve().parents[1]
+            if args.command=='bootstrap':
+                from .bootstrap import bootstrap
+                result=bootstrap(root)
+            else:
+                from .deployment import install,probe,rollback
+                if args.command=='install':result=install(root,args.home,args.replace_from)
+                elif args.command=='mcp-check':result=probe(root,args.home)
+                else:result=rollback(args.receipt,root)
+            print(json.dumps(result,ensure_ascii=True,indent=2))
+            return 0
         if args.command == 'doctor':
             from .health import inspect
             result=inspect()
@@ -52,7 +72,7 @@ def main(argv=None):
         elif args.command == 'status':
             result = status(args.project_root, args.case_root)
         else:
-            result = (run_check(args.project_root, args.case_root, args.check_id, args.plan, args.output)
+            result = (run_check(args.project_root, args.case_root, args.check_id, args.plan, args.output,retry_reason=args.retry_reason)
                 if args.check_id else compare(args.project_root, args.plan, args.output))
         print(json.dumps(result, ensure_ascii=True, indent=2))
         state = result.get('comparison', result).get('status')

@@ -1,6 +1,7 @@
 {
-  "schema_version": 1,
-  "project": "reverse-fusion",
+  "schema_version": 2,
+  "version": "2.0.0.dev0",
+  "project": "reverse-rea-next",
   "components": [
     {
       "id": "reverse-core",
@@ -37,7 +38,8 @@
       "distribution": "official-package-or-existing-install",
       "policy": "official-default; fork only after proven capability gap",
       "audit_commit": "2343e5692595ae9c08ce7de5bb91460118e67ed2",
-      "audit_version": "rea-agents 6.9.0"
+      "audit_version": "rea-agents 6.9.0",
+      "role": "fixed official tools/results/evidence backend wrapped by enhanced endpoint"
     },
     {
       "id": "jadx-headless-mcp",
@@ -49,30 +51,6 @@
       "manifest": "vendor/jadx-headless-mcp/0.7.1/manifest.json"
     },
     {
-      "id": "spec-kit",
-      "kind": "official",
-      "source": "https://github.com/github/spec-kit",
-      "distribution": "official-cli",
-      "policy": "official-default; project-local artifacts",
-      "audit_commit": "2ee2b1e8005905db05f5717300a469b3068b908f",
-      "audit_version": "1.4.1.dev0",
-      "source_version": "1.4.1.dev0",
-      "historical_execution_version": "1.4.0",
-      "manifest": "vendor/spec-kit/manifest.json",
-      "role": "required installed official CLI and generated project workflow"
-    },
-    {
-      "id": "craft-bounded",
-      "kind": "owned-adapter",
-      "source": "https://github.com/storytold/craft-anything",
-      "distribution": "pinned-native-engine-adapter",
-      "policy": "repository-owned external-writer seam over pinned Craft engine; replayable Windows Process patch",
-      "audit_commit": "8374ad71544f2cc44698ea74ef990aa31600bac6",
-      "audit_version": "Craft upstream 0.6.1 workspace",
-      "role": "actual Craft workspace/write/edit/command/check lifecycle with current host reasoning",
-      "manifest": "components/craft-native/manifest.json"
-    },
-    {
       "id": "host-adapters",
       "kind": "owned-adapter",
       "source": "reverse-fusion",
@@ -80,14 +58,19 @@
       "policy": "single-repository"
     },
     {
-      "id": "craft-mcp",
-      "kind": "owned-launcher",
-      "source": "https://github.com/storytold/craft-anything",
-      "distribution": "pinned-original-engine-mcp",
-      "policy": "original engine/MCP/plugins; host reasoning and repository-managed setup replace separate AI/setup layers",
-      "audit_commit": "8374ad71544f2cc44698ea74ef990aa31600bac6",
-      "audit_version": "0.6.1",
-      "manifest": "components/craft-mcp/manifest.json"
+      "id": "rea-enhanced",
+      "kind": "owned-enhancement",
+      "path": "rea_enhanced",
+      "role": "host-driven case, evidence readiness, independent finite comparison and recovery",
+      "craft_runtime": false,
+      "spec_mandatory": false,
+      "design_reference": "https://github.com/storytold/craft-anything; independent implementation, no source/runtime dependency"
     }
+  ],
+  "historical_baseline": "baseline/rf-1.4.0",
+  "core_pins": [
+    "vendor/rea/manifest.json",
+    "vendor/node/manifest.json",
+    "components/rea-enhanced/provider-bindings.json"
   ]
 }

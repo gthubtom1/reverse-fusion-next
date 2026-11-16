@@ -1,0 +1,244 @@
+"""Codex entry migration, owned-region rollback and actual registered MCP probe.
+
+Only owned sections are persisted in recovery receipts. Full user configuration
+is held in memory during a transaction, never copied to the repository.
+"""
+import base64
+from hashlib import sha256
+import json
+import os
+from pathlib import Path
+import re
+import tomllib
+import uuid
+from reverse_fusion.file_updates import atomic_write, file_transaction
+from reverse_fusion.global_adapter import (adapter_paths, agents_block, _agents_region,
+    _updated_agents, _block_repository)
+from .storage import locked, read, write
+
+BEGIN=b'# reverse-fusion:mcp:begin'
+END=b'# reverse-fusion:mcp:end'
+ROOT=Path(__file__).resolve().parents[1]
+
+
+def skill_text(root):
+    repo=root.resolve().as_posix()
+    return f'''---
+name: reverse-fusion
+description: 分析软件并复刻、APK/网站/原生程序逆向、行为重建、专业安全分析，以及显式Reverse Fusion任务。使用共享Reverse方法和增强REA，保留完整目标。
+---
+
+# Reverse Fusion cross-project adapter
+
+The canonical checkout is `{repo}` (enhanced REA v2). Keep the current user project
+as the outcome workspace. Ordinary development remains host-native without a case.
+Read `{repo}/docs/AGENT-WORKFLOW.md` and `{repo}/RULES.md` before specialist work.
+
+Use MCP `rf_next_case_open` with absolute project_root and the original plain-language
+request. Resume the same case on follow-up; record new requirements as supplements.
+If MCP is absent in this chat, use the identical CLI:
+`& "{repo}/.venv/Scripts/python.exe" -m rea_enhanced open --project-root "<outcome project>" --request "<original words>"`.
+Its returned domain skill/required_read_paths and official REA skill are mandatory
+reads before selecting methods. Do not copy the domain tree or change cwd to the
+shared checkout. Tool paths come from saved providers; actual operations determine health.
+
+Read status and readiness before implementation. Preserve the full objective, evidence,
+affected unknowns and remaining features in the same case. Current host is the only
+reasoning/coding agent and edits/builds in its native tools. Craft is not used; Spec is
+optional. Do not start another AI loop. Export the original REA evidence bundle into
+the outcome case before ending its investigation and import it on restart. Do not
+invent native evidence IDs or call owned comparison receipts official REA proof.
+
+Use existing official REA tools and appropriate installed tools; do not handwrite
+replacement decompilers. Refine the domain in the same case as evidence changes.
+Authorization/key availability is a dependency, not a fixed instruction to bypass,
+debug or dump; choose methods from evidence and the authorized task. Missing facts
+block dependent functions while independent work continues. Ask concrete human
+questions only for unavailable information or product decisions.
+
+Record features with evidence, dependencies, semantic review and declared checks.
+Run rf_next_compare or CLI compare against an independent reference with a reviewed
+finite plan. Separate visual and behavior results. A screenshot, exit zero or candidate
+unit test does not close the whole product goal. Changes invalidate old checks. Reuse
+unchanged passes, require new information to retry failures, retain unknowns and stop
+unproductive loops. Read `{repo}/docs/COMPARISON.md` for schemas and boundaries,
+`{repo}/docs/RECOVERY.md` for interruption and recovery. Do not shrink the request to a
+demo. Report actual tested scope, remaining requirements and concrete next steps.
+
+For installation only, follow `{repo}/docs/AGENT-BOOTSTRAP.md`. Never run inherited v1
+installers or standalone REA setup over this managed install. One owned MCP endpoint
+reverse-fusion-rea serves original tools plus enhancements. mcp-check probes the
+registered command; existing chats may require reconnect. No model/config/credential
+changes beyond this installer's owned skill, AGENTS block and MCP block.
+'''
+
+
+def _paths(home=None):
+    paths=adapter_paths(home)
+    return {**paths,'config':paths['agents'].parent/'config.toml'}
+
+
+def _mcp_region(payload):
+    parsed=tomllib.loads(payload.decode('utf-8-sig'))
+    if BEGIN not in payload and END not in payload:return None
+    if payload.count(BEGIN)!=1 or payload.count(END)!=1:raise ValueError('Duplicate/incomplete MCP ownership markers')
+    match=re.search(rb'^'+re.escape(BEGIN)+rb'\r?\n',payload,re.M)
+    end=re.search(rb'^'+re.escape(END)+rb'(?:\r?\n|$)',payload,re.M)
+    if not match or not end or end.start()<=match.start():raise ValueError('Invalid MCP marker order')
+    block=payload[match.start():end.end()]
+    def meta(name):
+        values=re.findall(rb'^# reverse-fusion:mcp:'+name.encode()+rb' = ([^\r\n]+)',block,re.M)
+        if len(values)!=1:raise ValueError('Invalid MCP ownership metadata')
+        return json.loads(values[0])
+    owner=meta('repository'); separator=meta('added-separator'); existed=meta('original-config-existed')
+    if not isinstance(owner,str) or not Path(owner).is_absolute() or type(separator)!=int or separator not in (0,1) or type(existed)!=bool:
+        raise ValueError('Invalid MCP ownership identity')
+    if b'# reverse-fusion:mcp:format = 2' not in block:
+        from reverse_fusion.mcp_adapter import _managed
+        old=_managed(payload,parsed)
+        return {'start':old.start,'end':old.end,'owner':old.repository,'existed':old.original_existed,'separator':old.separator}
+    owned=tomllib.loads(block.decode('utf-8'))
+    registrations=owned.get('mcp_servers',{})
+    if set(owned)!={'mcp_servers'} or set(registrations)!={'reverse-fusion-rea'}:
+        raise ValueError('Unrelated content in owned MCP block')
+    canonical=json.dumps(registrations,sort_keys=True,separators=(',',':')).encode()
+    if sha256(canonical).hexdigest()!=meta('sha256'):raise ValueError('Owned MCP block changed; preserve for review')
+    entry=registrations['reverse-fusion-rea']
+    if parsed.get('mcp_servers',{}).get('reverse-fusion-rea')!=entry or entry.get('cwd')!=owner:
+        raise ValueError('Owned MCP entry extended outside block or changed owner')
+    start=match.start()-separator
+    if start<0 or separator and payload[start:match.start()]!=b'\n':raise ValueError('MCP append separator changed')
+    return {'start':start,'end':end.end(),'owner':Path(owner).resolve(),'existed':existed,'separator':separator}
+
+
+def _region(kind,payload):
+    if kind=='skill':return {'start':0,'end':len(payload)} if payload else None
+    if kind=='config':return _mcp_region(payload)
+    region=_agents_region(payload)
+    if region:
+        region['owner']=_block_repository(region['block'])
+        region['existed']=region.get('metadata',{}).get('original_existed',True) if region.get('metadata') else True
+    return region
+
+
+def _skill_owner(payload):
+    if b'# Reverse Fusion cross-project adapter' not in payload:raise ValueError('Existing skill is unmanaged')
+    match=re.search(rb'The canonical checkout is `([^`]+)`',payload)
+    if not match or not Path(match[1].decode()).is_absolute():raise ValueError('Skill checkout identity missing')
+    return Path(match[1].decode()).resolve()
+
+
+def registration(root):
+    python=root/'.venv/Scripts/python.exe'
+    if not python.is_file():raise ValueError('Repository Python environment missing')
+    return {'command':str(python),'args':['-m','rea_enhanced','mcp'],'cwd':str(root),
+            'startup_timeout_sec':60,'tool_timeout_sec':600}
+
+
+def _render(root, separator, existed):
+    registrations={'reverse-fusion-rea':registration(root)}
+    checksum=sha256(json.dumps(registrations,sort_keys=True,separators=(',',':')).encode()).hexdigest()
+    q=lambda x:json.dumps(x,ensure_ascii=False)
+    lines=[BEGIN.decode(),'# reverse-fusion:mcp:format = 2',
+        '# reverse-fusion:mcp:repository = '+q(str(root)),
+        '# reverse-fusion:mcp:added-separator = '+str(separator),
+        '# reverse-fusion:mcp:original-config-existed = '+str(existed).lower(),
+        '# reverse-fusion:mcp:sha256 = '+q(checksum),'','[mcp_servers.reverse-fusion-rea]']
+    lines.extend(key+' = '+q(value) for key,value in registrations['reverse-fusion-rea'].items())
+    return b'\n'*separator+('\n'.join(lines)+'\n'+END.decode()+'\n').encode()
+
+
+def probe(root=ROOT,home=None):
+    from reverse_fusion.mcp_probe import StdioMcp,catalog
+    from .providers import environment
+    path=_paths(home)['config'];payload=path.read_bytes();region=_mcp_region(payload)
+    if not region or region['owner']!=root.resolve():raise ValueError('Selected checkout is not the registered MCP owner')
+    entries=tomllib.loads(payload.decode('utf-8-sig'))['mcp_servers']
+    entry=entries['reverse-fusion-rea']
+    if entry!=registration(root.resolve()):raise ValueError('Registered command differs from this release')
+    with StdioMcp([entry['command'],*entry['args']],cwd=Path(entry['cwd']),env=environment(root),timeout=60) as client:
+        identity=client.initialize();tools=catalog(client)
+        if identity['serverInfo']['name']!='rea-enhanced':raise ValueError('Unexpected enhanced REA server')
+        if not {'binary_session','rf_next_case_open','rf_next_compare'}<={t['name'] for t in tools}:raise ValueError('Required tool interfaces missing')
+        observed={}
+        for name in ('binary_session','list_frida_devices'):
+            result=client.request('tools/call',{'name':name,'arguments':{}})
+            if result.get('isError'):raise ValueError('Registered operation failed: '+name)
+            observed[name]=result
+    if client.cleanup.get('status')!='verified':raise ValueError('MCP child cleanup not verified')
+    report={'status':'pass','repository':str(root),'registered':entry,'server':identity['serverInfo'],
+        'tools':len(tools),'operations':observed,'cleanup':client.cleanup,
+        'scope':'Actual registered stdio connection and target-free calls, not desktop hot reload or all provider operations'}
+    write(root/'state/next-mcp-check.json',report)
+    return report
+
+
+def install(root=ROOT, home=None, replace_from=None, check=True):
+    root=root.resolve();paths=_paths(home);allowed={root}
+    if replace_from:allowed.add(Path(replace_from).resolve())
+    with locked(paths['config'].parent/'reverse-fusion-install.json'):
+        originals={k:p.read_bytes() if p.is_file() else b'' for k,p in paths.items()}
+        regions={k:_region(k,value) for k,value in originals.items()}
+        for kind,payload in originals.items():
+            region=regions[kind]
+            owner=_skill_owner(payload) if kind=='skill' and payload else region.get('owner') if region else None
+            if payload and kind=='skill' or region:
+                if owner not in allowed:raise ValueError('Entry belongs to another checkout; explicit --replace-from is required')
+        config=originals['config'];parsed=tomllib.loads(config.decode('utf-8-sig'))
+        current=regions['config'];servers=parsed.get('mcp_servers',{})
+        if not current and any(k in servers for k in ('reverse-fusion-rea','reverse-fusion-craft')):
+            raise ValueError('Conflicting unmanaged MCP registration')
+        fragment=_render(root,current['separator'] if current else int(bool(config) and not config.endswith(b'\n')),
+                         current['existed'] if current else paths['config'].is_file())
+        updated={'skill':skill_text(root).encode(),
+            'agents':_updated_agents(originals['agents'],agents_block(root),root,original_existed=paths['agents'].is_file()),
+            'config':config[:current['start']]+fragment+config[current['end']:] if current else config+fragment}
+        snapshot={'schema_version':2,'repository':str(root),'status':'prepared','files':{}}
+        for kind,after in updated.items():
+            before=originals[kind];b=regions[kind];a=_region(kind,after)
+            snapshot['files'][kind]={'path':str(paths[kind]),'file_existed':paths[kind].is_file(),
+                'before':base64.b64encode(before[b['start']:b['end']] if b else b'').decode(),
+                'after_sha256':sha256(after[a['start']:a['end']]).hexdigest()}
+        receipt=root/'state/migrations'/(uuid.uuid4().hex+'.json')
+        write(receipt,snapshot)
+        try:
+            for kind,data in updated.items():atomic_write(paths[kind],data)
+            checked=probe(root,home) if check else {'status':'not-run'}
+        except Exception as exc:
+            for kind,p in paths.items():
+                current_payload=p.read_bytes() if p.is_file() else b''
+                if current_payload==originals[kind]:continue
+                region=_region(kind,current_payload)
+                if not region or sha256(current_payload[region['start']:region['end']]).hexdigest()!=snapshot['files'][kind]['after_sha256']:
+                    raise ValueError('Deployment interrupted and owned entry changed; use prepared recovery receipt: '+str(receipt)) from exc
+                restored=current_payload[:region['start']]+base64.b64decode(snapshot['files'][kind]['before'])+current_payload[region['end']:]
+                if restored or snapshot['files'][kind]['file_existed']:atomic_write(p,restored)
+                else:p.unlink(missing_ok=True)
+            snapshot.update(status='failed-restored',error_type=type(exc).__name__);write(receipt,snapshot)
+            raise ValueError('Deployment connection failed; previous owned entries restored: '+str(exc)) from exc
+        snapshot['status']='installed';write(receipt,snapshot)
+        return {'status':'installed','repository':str(root),'rollback_receipt':str(receipt),'mcp_check':checked,
+            'desktop_reconnect_required':True,'owned_servers':['reverse-fusion-rea']}
+
+
+def rollback(receipt,root=ROOT):
+    snapshot=read(Path(receipt));root=root.resolve()
+    if snapshot.get('repository')!=str(root) or snapshot.get('status') not in {'installed','prepared'}:
+        raise ValueError('Recovery receipt is not an active transaction from this checkout')
+    records=snapshot['files'];paths=[Path(r['path']) for r in records.values()]
+    with locked(paths[-1].parent/'reverse-fusion-install.json'):
+        outputs={}
+        for kind,record in records.items():
+            path=Path(record['path']);payload=path.read_bytes() if path.is_file() else b'';region=_region(kind,payload)
+            if snapshot['status']=='prepared':
+                before=base64.b64decode(record['before'])
+                if (region and payload[region['start']:region['end']]==before) or (not region and not before):continue
+            if not region or sha256(payload[region['start']:region['end']]).hexdigest()!=record['after_sha256']:
+                raise ValueError('Owned entry changed after installation; preserve it for review')
+            outputs[path]=(payload[:region['start']]+base64.b64decode(record['before'])+payload[region['end']:],record['file_existed'])
+        with file_transaction(paths):
+            for path,(data,existed) in outputs.items():
+                if not data and not existed:path.unlink()
+                else:atomic_write(path,data)
+        snapshot['status']='rolled-back';write(Path(receipt),snapshot)
+    return {'status':'rolled-back','receipt':str(receipt),'scope':'Owned regions restored; current unrelated bytes retained'}

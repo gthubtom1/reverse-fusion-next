@@ -478,14 +478,14 @@
       "patch_reason": "RF-34 closeout: correct active routing source and local deployment pointer in inherited navigation."
     },
     "skills/MASTER-ROUTING.md": {
-      "sha256": "235d3ced59756efa089a96c3ac020bcbb455a3717b6bbbac070b3391a4dfc6af",
+      "sha256": "82c88475f3976fb9b1db8fe719ebf1e75422f7aaf46b86729e294cfed62f7616",
       "upstream_sha256": "936acd97ad21d324e7a966c3e97e27cbdd202d2c03803aaa1a5cf22e10bfaa66",
-      "patch_reason": "RF-34 closeout: identify native router as compatibility entry, correct active source, required REA and local native deployment owner."
+      "patch_reason": "RF-34 closeout: identify native router as compatibility entry, correct active source, required REA and local native deployment owner.; v2 adaptation: host implementation and enhanced comparison replace mandatory Craft/Spec; domain origin retained"
     },
     "skills/SKILL.md": {
-      "sha256": "8dc3ef18d73f5d7d0d5556a62ff539a223370029cf94b2d214c4d9a12b92005f",
+      "sha256": "3f5ca85aebf99db01d000a6ed3b0541e261fdd77a5bd5f4c853d323b82928902",
       "upstream_sha256": "24723a2f0fde33f5aff82e5f58288ff6cbefe8fc2c78b43ca30cfe3e27e7cb58",
-      "patch_reason": "Use the shipped Linux/macOS bootstrap entry on Kali; the old separate Kali installer is not a dependency. RF-34 closeout: make shared bridge/effective routing, existing user authorization, local core bootstrap and current-host/native ownership authoritative; remove external installer drift."
+      "patch_reason": "Use the shipped Linux/macOS bootstrap entry on Kali; the old separate Kali installer is not a dependency. RF-34 closeout: make shared bridge/effective routing, existing user authorization, local core bootstrap and current-host/native ownership authoritative; remove external installer drift.; v2 adaptation: host implementation and enhanced comparison replace mandatory Craft/Spec; domain origin retained"
     },
     "skills/api-security/SKILL.md": {
       "sha256": "db43296b79aff0e7c3b705063baccf54dead35e2ef7f19e447f25eee62d51d59"
@@ -992,9 +992,9 @@
       "sha256": "737b28e598257713677404613c55af5fd2def40caa3bd101d3328d14e6b1a62d"
     },
     "skills/ops/IDENTITY.md": {
-      "sha256": "f31cc60270cf0230e5253aa168367b9ff7d18eec0c072ef115adfc1d180cb08d",
+      "sha256": "026f0826dd38e2b564c4b689360bee3715042541550084676ee44de49d88dab4",
       "upstream_sha256": "b52a9980a076d01a16bd5f71e9d0cfc2be016b435274b7c38c4ebe97b7b29e46",
-      "patch_reason": "RF-34 closeout: retain upstream method-pack identity while requiring actual core deployment, not clone-only installation."
+      "patch_reason": "RF-34 closeout: retain upstream method-pack identity while requiring actual core deployment, not clone-only installation.; v2 adaptation: host implementation and enhanced comparison replace mandatory Craft/Spec; domain origin retained"
     },
     "skills/ops/README.md": {
       "sha256": "a338fed7fd1daeb2d8c178495f00417f61bad6b9d11a6e0212c4dbafe07c79f6"
@@ -1015,7 +1015,9 @@
       "sha256": "5dd0422121e4a02adab99fe1c33bee9153caf4c693d8afbaceff8fa5cdc871e6"
     },
     "skills/ops/guided-operator-contract.md": {
-      "sha256": "f55ff0bf8e4d91766c9f3d08f5605ffd4d62c459341e619d1b45a9449457c261"
+      "sha256": "90f3e7f2f0ad2e63bcab15f36369da941198cfae1c91557fe1e5e3d08289ec41",
+      "upstream_sha256": "f55ff0bf8e4d91766c9f3d08f5605ffd4d62c459341e619d1b45a9449457c261",
+      "patch_reason": "; v2 adaptation: host implementation and enhanced comparison replace mandatory Craft/Spec; domain origin retained"
     },
     "skills/ops/process-lifecycle.md": {
       "sha256": "db3e6423f9536768f49e7bcfe83e363c4828def78614527e63cd377a6ee6d4c4"
@@ -1026,9 +1028,9 @@
       "patch_reason": "RF-34 closeout: current-host lead rather than Pi-specific prerequisite; distinguish lead acceptance from official REA native record production."
     },
     "skills/ops/role-map.md": {
-      "sha256": "6daf9207832df6a3305450b646458922cdd2f2fcd5a504cc49cfeecf0de35018",
+      "sha256": "fb3e64b0e34672944d22dc058851c282d4e28d1e5824d3a8ddae29038679bbf6",
       "upstream_sha256": "ed1e9e5d31c9651eec5c261d0dd4acc3a63b5aa501cf79f4095a5f3a02b1ccf9",
-      "patch_reason": "RF-34 closeout: current-host single native writer; old Pi roles and external backend are provenance, not mandatory sessions or active fallback."
+      "patch_reason": "RF-34 closeout: current-host single native writer; old Pi roles and external backend are provenance, not mandatory sessions or active fallback.; v2 adaptation: host implementation and enhanced comparison replace mandatory Craft/Spec; domain origin retained"
     },
     "skills/ops/sandbox-profile.md": {
       "sha256": "9bf1b57710370993f4db5fab5730fa57e79cf3958e2272f2361a1372b22f78fc",
@@ -1452,9 +1454,9 @@
       "sha256": "74a8e9a7a4c8b62bae47963cd2d34ed6e0e150c327e0b9712ba17189eff10d6e"
     },
     "skills/reconstruction/SKILL.md": {
-      "sha256": "7769bbf5d320093f3d1e0e23ce9fe0407260a9a9f70b90a6cbed259af279ca24",
+      "sha256": "f256993842e20787d4d315c2313bcb35f1d1d734155c6bfc4feac79b5c4d697a",
       "upstream_sha256": "86f2ac1e9c18e0d964e1f694a229484b93d6e9ba0c3a1346bd1c328de77dfe77",
-      "patch_reason": "RF-29 preserves full plain-language delivery goals and requires evidence-based semantic readiness; retains RF-28 official Spec and actual native Craft integration. RF-34 closeout: require true native Craft throughout current implementation; remove legacy direct Worker/external Pi fallback and route-source ambiguity."
+      "patch_reason": "RF-29 preserves full plain-language delivery goals and requires evidence-based semantic readiness; retains RF-28 official Spec and actual native Craft integration. RF-34 closeout: require true native Craft throughout current implementation; remove legacy direct Worker/external Pi fallback and route-source ambiguity.; v2 adaptation: host implementation and enhanced comparison replace mandatory Craft/Spec; domain origin retained"
     },
     "skills/reconstruction/TESTING.md": {
       "sha256": "4dce508bd3662bd7c1506a61edaa150fcad109c77dc2b05158512ea3b2e33da0"
@@ -1496,10 +1498,14 @@
       "sha256": "a82cc54345885cf01c79ce8b520021f68eccee087f2e0d82bcc0dfa857633b4e"
     },
     "skills/reconstruction/references/differential-validation.md": {
-      "sha256": "63bfc90b1ff3cdea4c901d30b07ecae5e2830850329c48c1053fbff4320ed9cc"
+      "sha256": "eeb1e8f6f78d7fff2e16d24563f361ccd5c4fed2fa54e60314ab9f1df85c093e",
+      "upstream_sha256": "63bfc90b1ff3cdea4c901d30b07ecae5e2830850329c48c1053fbff4320ed9cc",
+      "patch_reason": "; v2 adaptation: host implementation and enhanced comparison replace mandatory Craft/Spec; domain origin retained"
     },
     "skills/reconstruction/references/evidence-to-spec.md": {
-      "sha256": "1c82528e440707b6751d79ec034d7524463d49835e9ffb157e4a45f4772bfb23"
+      "sha256": "eeb1e8f6f78d7fff2e16d24563f361ccd5c4fed2fa54e60314ab9f1df85c093e",
+      "upstream_sha256": "1c82528e440707b6751d79ec034d7524463d49835e9ffb157e4a45f4772bfb23",
+      "patch_reason": "; v2 adaptation: host implementation and enhanced comparison replace mandatory Craft/Spec; domain origin retained"
     },
     "skills/reconstruction/references/execution-backend-contract.json": {
       "sha256": "af316f81599007649f3838de22437decc934c30f104e7f3976435c079dc24dea",
@@ -1507,20 +1513,24 @@
       "patch_reason": "RF-29 synchronizes skill identity after adding the adaptive novice-user analysis/implementation contract; original upstream identity retained. RF-34 closeout: synchronize four reviewed text identities after current/native and historical/Pi split; fixed upstream schema/version/capability IDs retained without runtime claim."
     },
     "skills/reconstruction/references/execution-backend.md": {
-      "sha256": "2915af2472c92398e9ea18153ec2b8ed9e698fc7da64cdaa882c766d004ad379",
+      "sha256": "eeb1e8f6f78d7fff2e16d24563f361ccd5c4fed2fa54e60314ab9f1df85c093e",
       "upstream_sha256": "56275a13f58d1501d340d3be9e6564a7c13e84cbc91e5eae237f181819f56de6",
-      "patch_reason": "RF-34 closeout: current native handoff replaces active external Pi contract; full original contract retained as explicitly non-operative historical quote. Legacy capability ID remains compatibility provenance."
+      "patch_reason": "RF-34 closeout: current native handoff replaces active external Pi contract; full original contract retained as explicitly non-operative historical quote. Legacy capability ID remains compatibility provenance.; v2 adaptation: host implementation and enhanced comparison replace mandatory Craft/Spec; domain origin retained"
     },
     "skills/reconstruction/references/handoff-manifest.md": {
-      "sha256": "1d64d223c7e855b47ee3970b42b63b2ad1b256e30852b6ca185412ca59f95d33"
+      "sha256": "eeb1e8f6f78d7fff2e16d24563f361ccd5c4fed2fa54e60314ab9f1df85c093e",
+      "upstream_sha256": "1d64d223c7e855b47ee3970b42b63b2ad1b256e30852b6ca185412ca59f95d33",
+      "patch_reason": "; v2 adaptation: host implementation and enhanced comparison replace mandatory Craft/Spec; domain origin retained"
     },
     "skills/reconstruction/references/spec-kit-workflow.md": {
-      "sha256": "9842ee46b0cbbab94dba6a5e5ac95291d8730c723cf2c7bbcb075fd45e35c43d",
+      "sha256": "d06aa8712d7b451ebb90256e98f8e50ce3ab6b07c0b673f8527b711631f7ceb0",
       "upstream_sha256": "9f681a12d8aac869ca59cfa5fdf026617914fbab7a6155724770380f4e7e603b",
-      "patch_reason": "RF-34 closeout: official Spec runner uses installed native Craft under current host; local deployment owner and full prerequisites remain explicit."
+      "patch_reason": "RF-34 closeout: official Spec runner uses installed native Craft under current host; local deployment owner and full prerequisites remain explicit.; v2 adaptation: host implementation and enhanced comparison replace mandatory Craft/Spec; domain origin retained"
     },
     "skills/reconstruction/references/upstream-follow-update.md": {
-      "sha256": "90c9a1ee0ee93a899ae3c8abe01f0f565535b13f434f647858ff9177aa1f17d5"
+      "sha256": "f149305cf119548f7a60e75f78fdcad0c0374cd5de6a0a8eca6998f821ff137d",
+      "upstream_sha256": "90c9a1ee0ee93a899ae3c8abe01f0f565535b13f434f647858ff9177aa1f17d5",
+      "patch_reason": "; v2 adaptation: host implementation and enhanced comparison replace mandatory Craft/Spec; domain origin retained"
     },
     "skills/reconstruction/scripts/check_handoff.py": {
       "sha256": "9a5384091f0b982c0fb8da0dbe5cf913da4b9af63109ebe00eeaf2f8dd5cfed5",
@@ -1566,7 +1576,9 @@
       "sha256": "e428350e0f495a311f9c4d72a137127383953d4924f076a7927ef36da08b94c2"
     },
     "skills/reverse-engineering/SKILL.md": {
-      "sha256": "61e91c6b8967ecf7cf2cf0b5526bb9a5e116f56c32b5e0ed4cec217013a92ec4"
+      "sha256": "5932fa5d87d44fee7e705f010847246dbed763bf24956c96edce0aebd2b03bd1",
+      "upstream_sha256": "61e91c6b8967ecf7cf2cf0b5526bb9a5e116f56c32b5e0ed4cec217013a92ec4",
+      "patch_reason": "; v2 adaptation: host implementation and enhanced comparison replace mandatory Craft/Spec; domain origin retained"
     },
     "skills/reverse-engineering/anti-analysis.md": {
       "sha256": "338417bde3a4473cf0b8238d7d32b5895fb98a25625776bf83752c3fb9844b9e"

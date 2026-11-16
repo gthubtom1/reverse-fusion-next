@@ -3,7 +3,7 @@
   "version": "2.0.0.dev0",
   "baseline_commit": "022e61b803e41569cac1f116ebca2245b9c9b1f8",
   "goal_status": "active",
-  "stage": "S4",
+  "stage": "S5",
   "stages": {
     "S0": {
       "status": "done",
@@ -42,11 +42,15 @@
       ]
     },
     "S4": {
-      "status": "in_progress",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "evidence/next/s4/qualification.json",
+        "evidence/next/s4/tests.txt",
+        "docs/ACTIVE-DOCUMENTS.json"
+      ]
     },
     "S5": {
-      "status": "pending",
+      "status": "in_progress",
       "evidence": []
     },
     "S6": {
@@ -99,9 +103,9 @@
       "tests_next/test_workflow.py"
     ]
   },
-  "next_action": "Replace inherited active Craft/Spec instructions and installer paths with the new contract, preserve domain origins, then build and qualify the independent installer.",
+  "next_action": "Qualify a clean independent source export without Craft/Spec source or runtime, then compare like-for-like owned behaviors against the frozen v1 baseline.",
   "migration": "not_started; original checkout and desktop entry remain active",
   "limitations": [
-    "S0-S3 qualified; current desktop still uses 1.4.0. Active documentation cleanup, clean installation/baseline comparison and migration/rollback remain unfinished."
+    "S0-S4 qualified. Clean independent installation, baseline comparison and real local migration/rollback remain."
   ]
 }
