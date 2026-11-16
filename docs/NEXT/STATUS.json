@@ -108,8 +108,8 @@
       "tests_next/test_workflow.py"
     ]
   },
-  "next_action": "51 source-bound checks passed; repeat clean installation for the final provider inventory/doctor fix, then execute actual local entry migration and rollback.",
-  "migration": "not_started; original checkout and desktop entry remain active",
+  "next_action": "Run one clean committed-source installation for the final client-format compatibility change, then close the requirements record and publish the independent branch.",
+  "migration": "active enhanced REA; real legacy byte restoration and both old connections passed; final selection new",
   "limitations": [
     "S0-S5 qualified. Real local migration, rollback connection and final N01-N20 review remain."
   ]

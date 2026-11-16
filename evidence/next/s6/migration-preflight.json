@@ -1,0 +1,6 @@
+{
+  "status": "blocked-before-write",
+  "reason": "Codex had reserialized the baseline TOML: begin/metadata comments absent, one end comment retained",
+  "baseline_files_unchanged": true,
+  "resolution": "Exact legacy command/args/cwd/timeouts/env adoption only with explicit prior checkout; new same-owner commentless connection/reinstall/rollback supported and regression tested"
+}

@@ -1,0 +1,104 @@
+{
+  "status": "pass",
+  "first_selection": {
+    "status": "pass",
+    "repository": "D:\\Project\\reverse-next",
+    "registered": {
+      "command": "D:\\Project\\reverse-next\\.venv\\Scripts\\python.exe",
+      "args": [
+        "-m",
+        "rea_enhanced",
+        "mcp"
+      ],
+      "cwd": "D:\\Project\\reverse-next",
+      "startup_timeout_sec": 60,
+      "tool_timeout_sec": 600
+    },
+    "server": {
+      "name": "rea-enhanced",
+      "version": "2.0.0"
+    },
+    "tools": 259,
+    "cleanup": {
+      "status": "verified",
+      "scope": "owned Windows Job active-process count zero before close",
+      "root_returncode": 0
+    },
+    "scope": "Actual registered stdio connection and target-free calls, not desktop hot reload or all provider operations"
+  },
+  "rollback": {
+    "status": "rolled-back",
+    "receipt": "D:\\Project\\reverse-next\\state\\migrations\\df3ff9ad272b46d7a6e4f0b276dbf032.json",
+    "scope": "Owned regions restored; current unrelated bytes retained"
+  },
+  "old_entries_exactly_restored": true,
+  "legacy_actual_connections": [
+    {
+      "name": "reverse-fusion-rea",
+      "identity": {
+        "name": "rea",
+        "version": "6.9.0"
+      },
+      "tools": 255,
+      "actual_call": "binary_session",
+      "actual_result": "returned without isError",
+      "cleanup": {
+        "status": "verified",
+        "scope": "owned Windows Job active-process count zero before close",
+        "root_returncode": 0
+      }
+    },
+    {
+      "name": "reverse-fusion-craft",
+      "identity": {
+        "name": "craft-anything",
+        "title": "Craft Anything",
+        "version": "0.6.1"
+      },
+      "tools": 305,
+      "actual_call": "core_session_show",
+      "actual_result": "returned without isError",
+      "cleanup": {
+        "status": "verified",
+        "scope": "owned Windows Job active-process count zero before close",
+        "root_returncode": 0
+      }
+    }
+  ],
+  "final_selection": {
+    "status": "pass",
+    "repository": "D:\\Project\\reverse-next",
+    "registered": {
+      "command": "D:\\Project\\reverse-next\\.venv\\Scripts\\python.exe",
+      "args": [
+        "-m",
+        "rea_enhanced",
+        "mcp"
+      ],
+      "cwd": "D:\\Project\\reverse-next",
+      "startup_timeout_sec": 60,
+      "tool_timeout_sec": 600
+    },
+    "server": {
+      "name": "rea-enhanced",
+      "version": "2.0.0"
+    },
+    "tools": 259,
+    "cleanup": {
+      "status": "verified",
+      "scope": "owned Windows Job active-process count zero before close",
+      "root_returncode": 0
+    },
+    "scope": "Actual registered stdio connection and target-free calls, not desktop hot reload or all provider operations"
+  },
+  "active_rollback_receipt": "D:\\Project\\reverse-next\\state\\migrations\\5f9108b9ce9e4ec1aaaf855401a7c067.json",
+  "unrelated_bytes_sha256_before_and_after": {
+    "agents": "7023481aced6c12f0640c08492497b4c5a427b047e450b5851763cacba73ce22",
+    "config": "c7bddd675e3764c080f4e7af92e394839ce8efaf23644ed84995b818c852b7bd"
+  },
+  "old_head": "022e61b803e41569cac1f116ebca2245b9c9b1f8",
+  "old_git_status": "",
+  "old_source_changed": false,
+  "desktop_hot_reload": "not-asserted; current chat may keep prior connections; new/reconnected clients read the registered entry",
+  "scope": "Actual owned local Codex entry migration, original connection restoration and final new command connection; no target actions"
+}

@@ -15,11 +15,11 @@ from rea_enhanced.storage import read,write,digest
 from reverse_fusion.mcp_probe import StdioMcp,catalog
 
 
-def outside_hashes():
+def outside_hashes(previous=None):
     result={}
     for kind,path in _paths().items():
         if kind=='skill':continue
-        payload=path.read_bytes();region=_region(kind,payload)
+        payload=path.read_bytes();region=_region(kind,payload,previous)
         outside=payload[:region['start']]+payload[region['end']:] if region else payload
         result[kind]=hashlib.sha256(outside).hexdigest()
     return result
@@ -35,7 +35,7 @@ def main():
     frozen=read(ROOT/'baseline/identity.json');old=Path(frozen['source'])
     for item in frozen['global_files'].values():
         if digest(Path(item['path']))!=item['sha256']:raise ValueError('Frozen user entry changed; inspect current ownership before migration')
-    before_outside=outside_hashes()
+    before_outside=outside_hashes(old)
     print('Selecting qualified enhanced entry, then testing real restoration',flush=True)
     first=install(ROOT,replace_from=old)
     if outside_hashes()!=before_outside:raise ValueError('Unrelated bytes changed during migration')

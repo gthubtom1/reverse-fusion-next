@@ -29,3 +29,11 @@ Fresh committed export omitted retired Craft/Spec source and acquired its own ru
 ## 2026-11-17 / S6 qualification before migration
 
 Final source version is 2.0.0. 51 actual checks passed with identical source identities before/after. Added prepared-transaction interrupt recovery and fixed two concrete install gaps: generated current domain tool index, and missing/changed Node Frida now makes core doctor incomplete. Both regressions covered. Source-bound release-check refuses stale engineering evidence. Repeating clean installation because provider/doctor code changed; old clean evidence retained under s5/initial. Local user entry still frozen until this repeat passes.
+
+## 2026-11-17 / S6 actual configuration edge discovered
+
+Live preflight refused the frozen real config before any write: Codex had stripped begin/metadata comments while retaining the end marker. Isolated generated TOML had not covered client serialization. Added explicit-old-owner exact registration adoption with no unrelated content, and durable exact self-owner recognition after v2 comments are dropped. Eight deployment checks pass, including actual commentless enhanced connection and rollback. Real baseline adoption read-only preflight passes; all frozen files still unchanged. Requalifying changed deployment source before retry.
+
+## 2026-11-17 / S6 actual migration passed
+
+All 53 source-bound checks pass. Exact real configuration preflight additionally covered the old end comment moved to EOF, preserving it outside the owned span. Local entry selected enhanced REA; rollback restored all three frozen user files byte-for-byte, and both original REA binary_session and Craft core_session_show actually connected. Enhanced REA selected again with 259 tools and verified child cleanup. Unrelated bytes and original Git source unchanged. Current old chat catalog did not expose rf_next_case_status; desktop hot reload is not claimed. Final committed-source clean repeat and public closeout remain.

@@ -16,7 +16,7 @@
     "rea_enhanced/bootstrap.py": "29e116d65e51724f21c043b260ebd19df5bc78ea99f474fe3e4958a740d8aab6",
     "rea_enhanced/cli.py": "fc0228c754942eab4aa710361100b6fad03e272c72e01d7ddac22cb01cbe511c",
     "rea_enhanced/comparison.py": "0a8ec9f92366fdd64cb3dd22fd4c10ad3bbd97512040bb5101b5923c95a8d66a",
-    "rea_enhanced/deployment.py": "f1ebd57460fdc128958f14ef8899f2b17e09c15bd4a97f42d9ac9fcdd19eba9b",
+    "rea_enhanced/deployment.py": "15b18be1c9a3155915b6fdedaf50448103ba0d863175dc7fe16d32bbc5069d50",
     "rea_enhanced/health.py": "395ab0ae788085dbd0d38c62ed639aab7a897c0afce2251b99e89c68cc0a3b6d",
     "rea_enhanced/providers.py": "4b5248aa26734e1cee84405be2fb26f7cdb716b97f025ac019d110e0312538ea",
     "rea_enhanced/qualification.py": "80d3ad5c70efea956b996d2991e4b5747523107fa23602fd90b814d68bd67234",
@@ -41,6 +41,6 @@
     "vendor/node/manifest.json": "b8a272316bf0ffbd6bc03f770a7a96b7054cdc51bb13991dc83b4daaf0b3b18d",
     "vendor/rea/manifest.json": "08c482a0198ef1995460405cc6013a9db7f51816eb3f3b2eb215783dbeb4427a"
   },
-  "elapsed_seconds": 37.1880000000092,
+  "elapsed_seconds": 37.51600000000326,
   "scope": "Actual unittest discovery of next-generation tests; native tool protocol and finite fixture results, not arbitrary target acceptance"
 }

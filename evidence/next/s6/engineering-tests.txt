@@ -1,11 +1,13 @@
 test_safe_archive_extracts_to_selected_root (test_bootstrap.ArchiveSafety.test_safe_archive_extracts_to_selected_root) ... ok
 test_tar_symlink_rejected_before_writes (test_bootstrap.ArchiveSafety.test_tar_symlink_rejected_before_writes) ... ok
 test_zip_escape_rejected_before_any_write (test_bootstrap.ArchiveSafety.test_zip_escape_rejected_before_any_write) ... ok
+test_codex_reserialized_enhanced_entry_still_connects_and_rolls_back (test_deployment.Deployment.test_codex_reserialized_enhanced_entry_still_connects_and_rolls_back) ... ok
 test_interrupted_prepared_transaction_can_be_recovered (test_deployment.Deployment.test_interrupted_prepared_transaction_can_be_recovered) ... ok
 test_migrate_legacy_two_servers_then_restore_exact_owned_sections (test_deployment.Deployment.test_migrate_legacy_two_servers_then_restore_exact_owned_sections) ... ok
 test_modified_owned_entry_refuses_rollback (test_deployment.Deployment.test_modified_owned_entry_refuses_rollback) ... ok
 test_probe_failure_restores_and_retains_unrelated_edit (test_deployment.Deployment.test_probe_failure_restores_and_retains_unrelated_edit) ... ok
 test_real_registered_server_and_owned_rollback (test_deployment.Deployment.test_real_registered_server_and_owned_rollback) ... ok
+test_reserialized_legacy_comments_require_explicit_exact_adoption (test_deployment.Deployment.test_reserialized_legacy_comments_require_explicit_exact_adoption) ... ok
 test_unmanaged_conflict_is_not_overwritten (test_deployment.Deployment.test_unmanaged_conflict_is_not_overwritten) ... ok
 test_all_domain_descriptors_and_support_are_available (test_domains.DomainMethods.test_all_domain_descriptors_and_support_are_available) ... ok
 test_chinese_adjacent_technical_names_keep_specialist_routes (test_domains.DomainMethods.test_chinese_adjacent_technical_names_keep_specialist_routes) ... ok
@@ -51,6 +53,6 @@ test_unchanged_success_is_reused_without_another_run (test_workflow.OwnedCase.te
 test_wrong_algorithm_fails (test_workflow.OwnedCase.test_wrong_algorithm_fails) ... ok
 
 ----------------------------------------------------------------------
-Ran 51 tests in 37.037s
+Ran 53 tests in 37.362s
 
 OK

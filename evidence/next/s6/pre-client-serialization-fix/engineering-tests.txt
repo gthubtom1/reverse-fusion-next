@@ -1,0 +1,56 @@
+test_safe_archive_extracts_to_selected_root (test_bootstrap.ArchiveSafety.test_safe_archive_extracts_to_selected_root) ... ok
+test_tar_symlink_rejected_before_writes (test_bootstrap.ArchiveSafety.test_tar_symlink_rejected_before_writes) ... ok
+test_zip_escape_rejected_before_any_write (test_bootstrap.ArchiveSafety.test_zip_escape_rejected_before_any_write) ... ok
+test_interrupted_prepared_transaction_can_be_recovered (test_deployment.Deployment.test_interrupted_prepared_transaction_can_be_recovered) ... ok
+test_migrate_legacy_two_servers_then_restore_exact_owned_sections (test_deployment.Deployment.test_migrate_legacy_two_servers_then_restore_exact_owned_sections) ... ok
+test_modified_owned_entry_refuses_rollback (test_deployment.Deployment.test_modified_owned_entry_refuses_rollback) ... ok
+test_probe_failure_restores_and_retains_unrelated_edit (test_deployment.Deployment.test_probe_failure_restores_and_retains_unrelated_edit) ... ok
+test_real_registered_server_and_owned_rollback (test_deployment.Deployment.test_real_registered_server_and_owned_rollback) ... ok
+test_unmanaged_conflict_is_not_overwritten (test_deployment.Deployment.test_unmanaged_conflict_is_not_overwritten) ... ok
+test_all_domain_descriptors_and_support_are_available (test_domains.DomainMethods.test_all_domain_descriptors_and_support_are_available) ... ok
+test_chinese_adjacent_technical_names_keep_specialist_routes (test_domains.DomainMethods.test_chinese_adjacent_technical_names_keep_specialist_routes) ... ok
+test_domain_refinement_keeps_original_goal (test_domains.DomainMethods.test_domain_refinement_keeps_original_goal) ... ok
+test_fixed_domain_files_and_recorded_adaptations (test_domains.DomainMethods.test_fixed_domain_files_and_recorded_adaptations) ... ok
+test_inherited_routing_corpus (test_domains.DomainMethods.test_inherited_routing_corpus) ... ok
+test_plain_analysis_can_deliver_without_building (test_domains.DomainMethods.test_plain_analysis_can_deliver_without_building) ... ok
+test_missing_node_binding_makes_core_doctor_incomplete (test_inventory.Inventory.test_missing_node_binding_makes_core_doctor_incomplete) ... ok
+test_refresh_generates_current_index_without_fabricated_readiness (test_inventory.Inventory.test_refresh_generates_current_index_without_fabricated_readiness) ... ok
+test_cancelled_owned_comparison_cleans_up_and_stays_unknown (test_mcp.LiveMCP.test_cancelled_owned_comparison_cleans_up_and_stays_unknown) ... ok
+test_native_bundle_survives_new_server (test_mcp.LiveMCP.test_native_bundle_survives_new_server) ... ok
+test_original_catalog_preserved_and_frida_actually_enumerates (test_mcp.LiveMCP.test_original_catalog_preserved_and_frida_actually_enumerates) ... ok
+test_owned_workflow_via_mcp (test_mcp.LiveMCP.test_owned_workflow_via_mcp) ... ok
+test_missing_reference_observation_is_unknown (test_web.WebComparison.test_missing_reference_observation_is_unknown) ... ok
+test_same_visual_and_behavior (test_web.WebComparison.test_same_visual_and_behavior) ... ok
+test_wrong_behavior_is_not_hidden_by_initial_look (test_web.WebComparison.test_wrong_behavior_is_not_hidden_by_initial_look) ... ok
+test_wrong_color_does_not_claim_behavior_failure (test_web.WebComparison.test_wrong_color_does_not_claim_behavior_failure) ... ok
+test_cancellation_is_recorded_unknown (test_workflow.OwnedCase.test_cancellation_is_recorded_unknown) ... ok
+test_concurrent_record_preserves_one_revision (test_workflow.OwnedCase.test_concurrent_record_preserves_one_revision) ... ok
+test_dependency_blocks_only_affected_feature (test_workflow.OwnedCase.test_dependency_blocks_only_affected_feature) ... ok
+test_escape_and_overwrite_rejected (test_workflow.OwnedCase.test_escape_and_overwrite_rejected) ... ok
+test_explicit_check_budget_is_enforced (test_workflow.OwnedCase.test_explicit_check_budget_is_enforced) ... ok
+test_freshness_invalidates_success_after_edit (test_workflow.OwnedCase.test_freshness_invalidates_success_after_edit) ... ok
+test_independent_ordered_state_and_error (test_workflow.OwnedCase.test_independent_ordered_state_and_error) ... ok
+test_interrupted_check_cannot_retain_success (test_workflow.OwnedCase.test_interrupted_check_cannot_retain_success) ... ok
+test_legacy_case_not_silently_written (test_workflow.OwnedCase.test_legacy_case_not_silently_written) ... ok
+test_matching_crashes_are_not_success (test_workflow.OwnedCase.test_matching_crashes_are_not_success) ... ok
+test_missing_evidence_and_inferred_resolution (test_workflow.OwnedCase.test_missing_evidence_and_inferred_resolution) ... ok
+test_nested_case_discovery (test_workflow.OwnedCase.test_nested_case_discovery) ... ok
+test_no_manually_posted_pass (test_workflow.OwnedCase.test_no_manually_posted_pass) ... ok
+test_no_reused_original_identity (test_workflow.OwnedCase.test_no_reused_original_identity) ... ok
+test_normal_development_and_missing_continue (test_workflow.OwnedCase.test_normal_development_and_missing_continue) ... ok
+test_original_request_and_resume (test_workflow.OwnedCase.test_original_request_and_resume) ... ok
+test_plan_change_invalidates_success (test_workflow.OwnedCase.test_plan_change_invalidates_success) ... ok
+test_re_registered_evidence_invalidates_old_check (test_workflow.OwnedCase.test_re_registered_evidence_invalidates_old_check) ... ok
+test_same_stdout_wrong_persistence_fails (test_workflow.OwnedCase.test_same_stdout_wrong_persistence_fails) ... ok
+test_stale_revision_rejected (test_workflow.OwnedCase.test_stale_revision_rejected) ... ok
+test_supplement_retains_original_and_remaining_work (test_workflow.OwnedCase.test_supplement_retains_original_and_remaining_work) ... ok
+test_timeout_is_unknown_and_owned_process_ends (test_workflow.OwnedCase.test_timeout_is_unknown_and_owned_process_ends) ... ok
+test_two_missing_files_are_not_success (test_workflow.OwnedCase.test_two_missing_files_are_not_success) ... ok
+test_unchanged_failure_requires_new_information (test_workflow.OwnedCase.test_unchanged_failure_requires_new_information) ... ok
+test_unchanged_success_is_reused_without_another_run (test_workflow.OwnedCase.test_unchanged_success_is_reused_without_another_run) ... ok
+test_wrong_algorithm_fails (test_workflow.OwnedCase.test_wrong_algorithm_fails) ... ok
+
+----------------------------------------------------------------------
+Ran 51 tests in 37.037s
+
+OK

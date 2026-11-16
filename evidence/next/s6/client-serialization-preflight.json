@@ -1,0 +1,7 @@
+{
+  "status": "pass",
+  "actual_existing_shape": "two exact legacy stanzas, no begin/metadata comments, old end comment relocated after unrelated tables at EOF",
+  "would_change_only_owned_span": true,
+  "preflight_wrote_user_config": false,
+  "resolution": "preserve relocated orphan comment as unrelated bytes and match the new begin to its first following terminator"
+}

@@ -84,5 +84,38 @@ class Deployment(unittest.TestCase):
         self.assertEqual(self.paths['agents'].read_bytes(),self.agents)
         self.assertFalse(self.paths['skill'].exists())
 
+    def test_reserialized_legacy_comments_require_explicit_exact_adoption(self):
+        from reverse_fusion.global_adapter import install_global_adapter
+        from reverse_fusion.mcp_adapter import _render,_registrations
+        previous=ROOT.parent/'reverse'
+        install_global_adapter(previous,self.home)
+        raw=_render(previous,_registrations(previous),separator=0,original_existed=True)
+        for mode in ('absent','adjacent','moved-to-eof'):
+            with self.subTest(marker_mode=mode):
+                lines=[line for line in raw.splitlines(keepends=True)
+                    if not line.startswith(b'# reverse-fusion:mcp:') or mode=='adjacent' and line.strip()==b'# reverse-fusion:mcp:end']
+                suffix=b'\n[mcp_servers.extra]\ncommand = "unrelated-after"\n'
+                if mode=='moved-to-eof':suffix+=b'\n# reverse-fusion:mcp:end\n'
+                value=self.config+b''.join(lines)+suffix
+                self.paths['config'].write_bytes(value)
+                with self.assertRaises(ValueError):install(ROOT,self.home,check=False)
+                result=install(ROOT,self.home,replace_from=previous,check=False)
+                rollback(result['rollback_receipt'],ROOT)
+                self.assertEqual(self.paths['config'].read_bytes(),value)
+
+    def test_codex_reserialized_enhanced_entry_still_connects_and_rolls_back(self):
+        import tomllib
+        from rea_enhanced.deployment import probe
+        result=install(ROOT,self.home,check=False)
+        payload=self.paths['config'].read_bytes()
+        rewritten=b''.join(line for line in payload.splitlines(keepends=True)
+            if not line.startswith(b'# reverse-fusion:mcp:'))
+        self.paths['config'].write_bytes(rewritten)
+        self.assertEqual(probe(ROOT,self.home)['status'],'pass')
+        rollback(result['rollback_receipt'],ROOT)
+        parsed=tomllib.loads(self.paths['config'].read_text(encoding='utf-8'))
+        self.assertEqual(parsed['mcp_servers'],{'user':{'command':'unrelated'}})
+        self.assertEqual(parsed['model'],'retained')
+
 
 if __name__=='__main__':unittest.main()

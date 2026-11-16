@@ -78,12 +78,46 @@ def _paths(home=None):
     return {**paths,'config':paths['agents'].parent/'config.toml'}
 
 
-def _mcp_region(payload):
+def _adopt_legacy(payload,parsed,owner):
+    """Codex may reserialize TOML and drop ownership comments. Explicit owner only."""
+    from reverse_fusion.mcp_adapter import _registrations
+    owner=Path(owner).resolve()
+    actual=parsed.get('mcp_servers',{})
+    names=set(actual)&{'reverse-fusion-rea','reverse-fusion-craft'}
+    enhanced=names=={'reverse-fusion-rea'}
+    expected={'reverse-fusion-rea':registration(owner)} if enhanced else _registrations(owner)
+    if any(actual.get(name)!=value for name,value in expected.items()):
+        raise ValueError('Unmarked legacy entries do not exactly match the explicit previous checkout')
+    headers=list(re.finditer(rb'(?m)^[ \t]*\[[^\r\n]+\][ \t]*(?:#[^\r\n]*)?(?:\r?\n|$)',payload))
+    first=next((m for m in headers if m[0].strip()==b'[mcp_servers.reverse-fusion-rea]'),None)
+    last=first if enhanced else next((m for m in headers if m[0].strip()==b'[mcp_servers.reverse-fusion-craft]'),None)
+    if not first or not last or last.start()<first.start():raise ValueError('Legacy section layout requires explicit review')
+    after=next((m.start() for m in headers if m.start()>last.start()),len(payload))
+    end=after
+    marker=re.search(rb'(?m)^'+re.escape(END)+rb'(?:\r?\n|$)',payload[first.start():after])
+    if marker:end=first.start()+marker.end()
+    block=payload[first.start():end]
+    own=tomllib.loads(block.decode('utf-8'))
+    if own!={'mcp_servers':expected}:raise ValueError('Unmarked legacy span contains unrelated configuration')
+    if any(line.lstrip().startswith(b'#') and line.strip()!=END for line in block.splitlines()):
+        raise ValueError('Unmarked legacy span has unowned comments; preserve them for review')
+    return {'start':first.start(),'end':end,'owner':owner,'existed':True,'separator':0,
+        'adopted':'enhanced-exact' if enhanced else 'legacy-exact'}
+
+
+def _mcp_region(payload,legacy_owner=None,current_owner=None):
     parsed=tomllib.loads(payload.decode('utf-8-sig'))
+    selected_owner=current_owner or legacy_owner
+    if selected_owner and payload.count(BEGIN)==0 and payload.count(END)<=1:
+        if any(name in parsed.get('mcp_servers',{}) for name in ('reverse-fusion-rea','reverse-fusion-craft')):
+            return _adopt_legacy(payload,parsed,selected_owner)
     if BEGIN not in payload and END not in payload:return None
-    if payload.count(BEGIN)!=1 or payload.count(END)!=1:raise ValueError('Duplicate/incomplete MCP ownership markers')
+    if payload.count(BEGIN)!=1 or payload.count(END)<1:raise ValueError('Duplicate/incomplete MCP ownership markers')
     match=re.search(rb'^'+re.escape(BEGIN)+rb'\r?\n',payload,re.M)
-    end=re.search(rb'^'+re.escape(END)+rb'(?:\r?\n|$)',payload,re.M)
+    # A Codex rewrite may have moved the old orphan end comment to EOF. It is
+    # outside our exact replacement span and must remain untouched, not counted
+    # as a second owned block. Match this begin's first following terminator.
+    end=re.compile(rb'^'+re.escape(END)+rb'(?:\r?\n|$)',re.M).search(payload,match.end()) if match else None
     if not match or not end or end.start()<=match.start():raise ValueError('Invalid MCP marker order')
     block=payload[match.start():end.end()]
     def meta(name):
@@ -111,9 +145,9 @@ def _mcp_region(payload):
     return {'start':start,'end':end.end(),'owner':Path(owner).resolve(),'existed':existed,'separator':separator}
 
 
-def _region(kind,payload):
+def _region(kind,payload,legacy_owner=None,current_owner=None):
     if kind=='skill':return {'start':0,'end':len(payload)} if payload else None
-    if kind=='config':return _mcp_region(payload)
+    if kind=='config':return _mcp_region(payload,legacy_owner,current_owner)
     region=_agents_region(payload)
     if region:
         region['owner']=_block_repository(region['block'])
@@ -151,7 +185,7 @@ def _render(root, separator, existed):
 def probe(root=ROOT,home=None):
     from reverse_fusion.mcp_probe import StdioMcp,catalog
     from .providers import environment
-    path=_paths(home)['config'];payload=path.read_bytes();region=_mcp_region(payload)
+    path=_paths(home)['config'];payload=path.read_bytes();region=_mcp_region(payload,current_owner=root)
     if not region or region['owner']!=root.resolve():raise ValueError('Selected checkout is not the registered MCP owner')
     entries=tomllib.loads(payload.decode('utf-8-sig'))['mcp_servers']
     entry=entries['reverse-fusion-rea']
@@ -178,7 +212,10 @@ def install(root=ROOT, home=None, replace_from=None, check=True):
     if replace_from:allowed.add(Path(replace_from).resolve())
     with locked(paths['config'].parent/'reverse-fusion-install.json'):
         originals={k:p.read_bytes() if p.is_file() else b'' for k,p in paths.items()}
-        regions={k:_region(k,value) for k,value in originals.items()}
+        skill_owner=_skill_owner(originals['skill']) if originals['skill'] else None
+        agents_region=_region('agents',originals['agents'])
+        current_owner=root if skill_owner==root and agents_region and agents_region.get('owner')==root else None
+        regions={k:_region(k,value,replace_from,current_owner) for k,value in originals.items()}
         for kind,payload in originals.items():
             region=regions[kind]
             owner=_skill_owner(payload) if kind=='skill' and payload else region.get('owner') if region else None
@@ -193,12 +230,14 @@ def install(root=ROOT, home=None, replace_from=None, check=True):
         updated={'skill':skill_text(root).encode(),
             'agents':_updated_agents(originals['agents'],agents_block(root),root,original_existed=paths['agents'].is_file()),
             'config':config[:current['start']]+fragment+config[current['end']:] if current else config+fragment}
-        snapshot={'schema_version':2,'repository':str(root),'status':'prepared','files':{}}
+        snapshot={'schema_version':2,'repository':str(root),'status':'prepared','files':{},
+            'previous_repository':str(Path(replace_from).resolve()) if replace_from else None}
         for kind,after in updated.items():
             before=originals[kind];b=regions[kind];a=_region(kind,after)
             snapshot['files'][kind]={'path':str(paths[kind]),'file_existed':paths[kind].is_file(),
                 'before':base64.b64encode(before[b['start']:b['end']] if b else b'').decode(),
                 'after_sha256':sha256(after[a['start']:a['end']]).hexdigest()}
+            if kind=='config':snapshot['files'][kind]['after_registration']=registration(root)
         receipt=root/'state/migrations'/(uuid.uuid4().hex+'.json')
         write(receipt,snapshot)
         try:
@@ -208,7 +247,7 @@ def install(root=ROOT, home=None, replace_from=None, check=True):
             for kind,p in paths.items():
                 current_payload=p.read_bytes() if p.is_file() else b''
                 if current_payload==originals[kind]:continue
-                region=_region(kind,current_payload)
+                region=_region(kind,current_payload,replace_from,root)
                 if not region or sha256(current_payload[region['start']:region['end']]).hexdigest()!=snapshot['files'][kind]['after_sha256']:
                     raise ValueError('Deployment interrupted and owned entry changed; use prepared recovery receipt: '+str(receipt)) from exc
                 restored=current_payload[:region['start']]+base64.b64decode(snapshot['files'][kind]['before'])+current_payload[region['end']:]
@@ -229,11 +268,17 @@ def rollback(receipt,root=ROOT):
     with locked(paths[-1].parent/'reverse-fusion-install.json'):
         outputs={}
         for kind,record in records.items():
-            path=Path(record['path']);payload=path.read_bytes() if path.is_file() else b'';region=_region(kind,payload)
+            path=Path(record['path']);payload=path.read_bytes() if path.is_file() else b''
+            # Original entries in a partially written transaction use the old owner.
+            # An installed enhanced entry can be recognized after Codex drops comments.
+            selected=root if snapshot['status']=='installed' else None
+            region=_region(kind,payload,snapshot.get('previous_repository'),selected)
             if snapshot['status']=='prepared':
                 before=base64.b64decode(record['before'])
                 if (region and payload[region['start']:region['end']]==before) or (not region and not before):continue
-            if not region or sha256(payload[region['start']:region['end']]).hexdigest()!=record['after_sha256']:
+            semantic_config=(kind=='config' and region and region.get('adopted')=='enhanced-exact'
+                and record.get('after_registration')==registration(root))
+            if not region or (sha256(payload[region['start']:region['end']]).hexdigest()!=record['after_sha256'] and not semantic_config):
                 raise ValueError('Owned entry changed after installation; preserve it for review')
             outputs[path]=(payload[:region['start']]+base64.b64decode(record['before'])+payload[region['end']:],record['file_existed'])
         with file_transaction(paths):
