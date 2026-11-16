@@ -5,7 +5,7 @@ import tarfile
 import tempfile
 import unittest
 import zipfile
-from rea_enhanced.bootstrap import extract, verify_rea_archive
+from rea_enhanced.bootstrap import extract, verify_rea_archive, acquire
 
 
 class ArchiveSafety(unittest.TestCase):
@@ -43,6 +43,16 @@ class ArchiveSafety(unittest.TestCase):
         self.assertEqual(verify_rea_archive(self.root,archive),[])
         (self.root/'vendor/rea/package/dist/runtime.js').unlink()
         self.assertEqual(verify_rea_archive(self.root,archive),['package/dist/runtime.js'])
+
+    def test_transient_tls_eof_retries_without_accepting_partial_download(self):
+        import hashlib,urllib.error,ssl
+        from unittest.mock import patch
+        data=b'complete authenticated asset'
+        with patch('urllib.request.urlopen',side_effect=[urllib.error.URLError(ssl.SSLEOFError('observed transient EOF')),io.BytesIO(data)]) as download, patch('rea_enhanced.bootstrap.time.sleep'):
+            result=acquire('https://example.invalid/pinned',self.root/'asset.zip',expected=hashlib.sha256(data).hexdigest())
+        self.assertEqual(download.call_count,2)
+        self.assertEqual(result.read_bytes(),data)
+        self.assertFalse((self.root/'asset.zip.partial').exists())
 
 
 if __name__=='__main__':unittest.main()

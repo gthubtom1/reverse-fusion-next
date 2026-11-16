@@ -16,6 +16,18 @@ ROOT=Path(__file__).resolve().parents[1]
 
 
 class LiveMCP(unittest.TestCase):
+    def test_old_connection_cannot_silently_apply_changed_workflow(self):
+        from rea_enhanced.server import connection_identity,require_current_connection
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            for name in connection_identity(ROOT):
+                p=root/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes((ROOT/name).read_bytes())
+            initial=connection_identity(root)
+            require_current_connection(initial,root)
+            with (root/'rea_enhanced/workflow.py').open('ab') as stream:stream.write(b'\n# updated runtime\n')
+            with self.assertRaisesRegex(ValueError,'needs-reconnect'):
+                require_current_connection(initial,root)
+
     def test_actual_native_provider_and_new_server_bundle_roundtrip(self):
         compiler=shutil.which('gcc')
         self.assertIsNotNone(compiler,'This native qualification requires the selected external GCC fixture compiler')

@@ -1,0 +1,14 @@
+{
+  "status": "pass",
+  "checks": [
+    "real-server-started-on-stable-loopback-port",
+    "served-exact-index.html",
+    "served-exact-core.mjs",
+    "served-exact-page.mjs",
+    "served-exact-style.css",
+    "second-launch-reopens-existing-app",
+    "foreign-port-conflict-explained",
+    "double-click-command-targets-installed-python-and-launcher"
+  ],
+  "cleanup": "all owned servers stopped"
+}

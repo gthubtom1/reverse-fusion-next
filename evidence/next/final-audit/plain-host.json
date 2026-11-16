@@ -1,5 +1,5 @@
 {
-  "status": "running",
+  "status": "pass",
   "thread_id": "01a1e5f2-d510-73c0-beca-9540626d51f9",
   "host_id": "local",
   "outcome_project": "D:/Project/reverse-next-plain-audit-20261117",
@@ -76,5 +76,47 @@
     "tests_next/test_workflow.py": "e9c10da8dfaeaf61fbfcf81474b49cd29a6d09733c894a8d14f47565aa78be0f",
     "vendor/node/manifest.json": "b8a272316bf0ffbd6bc03f770a7a96b7054cdc51bb13991dc83b4daaf0b3b18d",
     "vendor/rea/manifest.json": "08c482a0198ef1995460405cc6013a9db7f51816eb3f3b2eb215783dbeb4427a"
-  }
+  },
+  "observed_completion": "reviewed-delivery",
+  "coverage": "current",
+  "delivery": "current",
+  "case_revision": 20,
+  "actual_tool_call_counts": {
+    "exec_command": 38,
+    "rf_next_case_open": 1,
+    "capture_browser_scenario": 4,
+    "rf_next_case_record": 9,
+    "export_evidence_bundle": 1,
+    "rf_next_case_status": 2,
+    "view_image": 2,
+    "write_stdin": 2
+  },
+  "retained_snapshots_sha256": {
+    "case-v2.json": "4d9fa5477d90ac3e42cb90fb59a38aadd5fd1f09a40ed2df5eefd7532656e84d",
+    "original-rea-bundle.json": "df4d9cf2f729745d4eb545a791b5d5dd3b74d103c6deb635c56abd7eeb7ff67d",
+    "core-comparison.json": "0b432d3aec9aabfd0d8fac40deee2e0ee6c8c850281a96896a00dae5d1fb7bb4",
+    "web-comparison.json": "1c3b8ab37ed9213b2f0f2f784cee0253161dc3196503b3eac0670cf37c8ba5be",
+    "edge-report.json": "7e6b35a0d6c61bef4c76793e77cc2f9873584481052dee129de25bbc9ed04b9d",
+    "launcher-report.json": "9389a364b0cc728377ecc669c4c1b3935ad3cc97d26cd109482bac98395255af",
+    "wrong-candidate-comparison.json": "092866f6938be9415cf1309ba530763048c8d2fc960e63549f085bf57779d01b",
+    "artifact-checks.json": "211cbc6c00c2325b51ee13a5345cc796462b4a9398cdb045ec3153b193d28bd1",
+    "analysis-and-acceptance.md": "1b6d54da880165a1a81895ab1878e5e1649f832132f6dfb1e0a45f35e2c5a2d5",
+    "core-probe.mjs": "920b810299c47f341c405a954a9aa7cd3cf9a97765a2dfc4cf07232f1810ccc6",
+    "candidate-index.html": "375dc3bf2ce72ee9c1478023326705e043957a142f4a3ecb6c0db44235e2fb72",
+    "candidate-core.mjs": "807e58059fe1ef0c2cf9d917a4a7539df6ea98748b7c2ea56700033fc93036db",
+    "candidate-page.mjs": "7b17e2ed09dc4ade3615f060cbb4aa8228d704343e887f01d5e23456fab0e499",
+    "candidate-style.css": "873c0d539f578dc0c55ce6c274982af8265cc7dfee6b04bd80cb7c0c1ad89026",
+    "candidate-launch.py": "573469db4b69bcf4468804421285c081e6eefa073bd40752a48fe64567bb44f9",
+    "candidate-\u542f\u52a8\u65b0\u7248.cmd": "3a8b31cd56e724f1a0a35c032fac54ec69f1c7bd2dc5e48ef6a07349857da7be"
+  },
+  "original_preserved_independently_checked": true,
+  "finite_results": {
+    "core_cases": 5162,
+    "web_observation_pairs": 60,
+    "edge_scenarios": 24,
+    "launcher_checks": 8
+  },
+  "recovery_observation": "The shared implementation was updated during this test. The host noticed cached MCP/CLI disagreement and used the current absolute CLI to rerun and complete. Startup identity enforcement added afterward prevents silently using changed workflows; fresh-connection behavior separately qualified.",
+  "final_source_qualification": "source identity at intake records the start version; behavior receipts bind the actual comparison engine. Later installer/server-only changes do not alter these behavior results.",
+  "limits": "One owned offline web application in current Codex, not difficult binary/APK/model A-B or arbitrary whole-program equivalence."
 }

@@ -1,0 +1,3959 @@
+{
+  "status": "pass",
+  "scenarios": [
+    {
+      "id": "clear-cancel-accept",
+      "width": 390,
+      "status": "pass",
+      "observations": 6,
+      "sides": [
+        {
+          "side": "original",
+          "states": [
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "请填写名称",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "请填写名称",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "clear",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [],
+              "summary": "0 项 · 共 0 件",
+              "empty": "还没有条目，先添加一个吧。",
+              "emptyHidden": false,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "clear",
+              "storage": "{\"version\":1,\"next\":1,\"entries\":[]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "新条目",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"新条目\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "新条目",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"新条目\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            }
+          ],
+          "pixels": "c639f30e49e4098424af389804bdc368c67e180194b017fc9b0b989dc06ba364",
+          "screenshot": "clear-cancel-accept-390-original.png"
+        },
+        {
+          "side": "candidate",
+          "states": [
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "请填写名称",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "请填写名称",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "clear",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [],
+              "summary": "0 项 · 共 0 件",
+              "empty": "还没有条目，先添加一个吧。",
+              "emptyHidden": false,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "clear",
+              "storage": "{\"version\":1,\"next\":1,\"entries\":[]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "新条目",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"新条目\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "新条目",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"新条目\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            }
+          ],
+          "pixels": "c639f30e49e4098424af389804bdc368c67e180194b017fc9b0b989dc06ba364",
+          "screenshot": "clear-cancel-accept-390-candidate.png"
+        }
+      ]
+    },
+    {
+      "id": "corrupt-json",
+      "width": 390,
+      "status": "pass",
+      "observations": 3,
+      "sides": [
+        {
+          "side": "original",
+          "states": [
+            {
+              "rows": [],
+              "summary": "0 项 · 共 0 件",
+              "empty": "还没有条目，先添加一个吧。",
+              "emptyHidden": false,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{bad",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            }
+          ],
+          "pixels": "0d53ef41bb709aac315767c3af65d14fef5aabc9c001eba8a79438cbc80c8448",
+          "screenshot": "corrupt-json-390-original.png"
+        },
+        {
+          "side": "candidate",
+          "states": [
+            {
+              "rows": [],
+              "summary": "0 项 · 共 0 件",
+              "empty": "还没有条目，先添加一个吧。",
+              "emptyHidden": false,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{bad",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            }
+          ],
+          "pixels": "0d53ef41bb709aac315767c3af65d14fef5aabc9c001eba8a79438cbc80c8448",
+          "screenshot": "corrupt-json-390-candidate.png"
+        }
+      ]
+    },
+    {
+      "id": "invalid-shape",
+      "width": 390,
+      "status": "pass",
+      "observations": 2,
+      "sides": [
+        {
+          "side": "original",
+          "states": [
+            {
+              "rows": [],
+              "summary": "0 项 · 共 0 件",
+              "empty": "还没有条目，先添加一个吧。",
+              "emptyHidden": false,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":2,\"name\":\"坏数据\",\"tag\":\"x\",\"quantity\":1}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            }
+          ],
+          "pixels": "03d044403be5fd1f1f55365151460534a4e43112105c1b088f81d5d34a4ee353",
+          "screenshot": "invalid-shape-390-original.png"
+        },
+        {
+          "side": "candidate",
+          "states": [
+            {
+              "rows": [],
+              "summary": "0 项 · 共 0 件",
+              "empty": "还没有条目，先添加一个吧。",
+              "emptyHidden": false,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":2,\"name\":\"坏数据\",\"tag\":\"x\",\"quantity\":1}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            }
+          ],
+          "pixels": "03d044403be5fd1f1f55365151460534a4e43112105c1b088f81d5d34a4ee353",
+          "screenshot": "invalid-shape-390-candidate.png"
+        }
+      ]
+    },
+    {
+      "id": "compatible-state",
+      "width": 390,
+      "status": "pass",
+      "observations": 2,
+      "sides": [
+        {
+          "side": "original",
+          "states": [
+            {
+              "rows": [
+                [
+                  "已有物品",
+                  "迁入",
+                  "9",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 9 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":8,\"entries\":[{\"id\":7,\"name\":\"已有物品\",\"tag\":\"迁入\",\"quantity\":9,\"extra\":\"kept\"}],\"extra\":42}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ],
+                [
+                  "已有物品",
+                  "迁入",
+                  "9",
+                  "删除"
+                ]
+              ],
+              "summary": "2 项 · 共 11 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":9,\"entries\":[{\"id\":7,\"name\":\"已有物品\",\"tag\":\"迁入\",\"quantity\":9,\"extra\":\"kept\"},{\"id\":8,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}],\"extra\":42}",
+              "injected": null
+            }
+          ],
+          "pixels": "172a99d8738965f872f7c4d34f741f62c1cdd1c68e783a8ffd51a7142283ca01",
+          "screenshot": "compatible-state-390-original.png"
+        },
+        {
+          "side": "candidate",
+          "states": [
+            {
+              "rows": [
+                [
+                  "已有物品",
+                  "迁入",
+                  "9",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 9 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":8,\"entries\":[{\"id\":7,\"name\":\"已有物品\",\"tag\":\"迁入\",\"quantity\":9,\"extra\":\"kept\"}],\"extra\":42}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ],
+                [
+                  "已有物品",
+                  "迁入",
+                  "9",
+                  "删除"
+                ]
+              ],
+              "summary": "2 项 · 共 11 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":9,\"entries\":[{\"id\":7,\"name\":\"已有物品\",\"tag\":\"迁入\",\"quantity\":9,\"extra\":\"kept\"},{\"id\":8,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}],\"extra\":42}",
+              "injected": null
+            }
+          ],
+          "pixels": "172a99d8738965f872f7c4d34f741f62c1cdd1c68e783a8ffd51a7142283ca01",
+          "screenshot": "compatible-state-390-candidate.png"
+        }
+      ]
+    },
+    {
+      "id": "storage-write-failure",
+      "width": 390,
+      "status": "pass",
+      "observations": 1,
+      "sides": [
+        {
+          "side": "original",
+          "states": [
+            {
+              "rows": [],
+              "summary": "0 项 · 共 0 件",
+              "empty": "还没有条目，先添加一个吧。",
+              "emptyHidden": false,
+              "error": "测试：存储空间已满",
+              "fields": {
+                "name": "笔",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": null,
+              "injected": null
+            }
+          ],
+          "pixels": "1be2874796c291a59308fc64f58081dffb2da1eb7432afa3f3108346d55d5556",
+          "screenshot": "storage-write-failure-390-original.png"
+        },
+        {
+          "side": "candidate",
+          "states": [
+            {
+              "rows": [],
+              "summary": "0 项 · 共 0 件",
+              "empty": "还没有条目，先添加一个吧。",
+              "emptyHidden": false,
+              "error": "测试：存储空间已满",
+              "fields": {
+                "name": "笔",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": null,
+              "injected": null
+            }
+          ],
+          "pixels": "1be2874796c291a59308fc64f58081dffb2da1eb7432afa3f3108346d55d5556",
+          "screenshot": "storage-write-failure-390-candidate.png"
+        }
+      ]
+    },
+    {
+      "id": "text-and-keyboard",
+      "width": 390,
+      "status": "pass",
+      "observations": 4,
+      "sides": [
+        {
+          "side": "original",
+          "states": [
+            {
+              "rows": [
+                [
+                  "<img src=x onerror=\"pwned=1\">",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 1 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "<b>文本</b>",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"<img src=x onerror=\\\"pwned=1\\\">\",\"tag\":\"<b>文本</b>\",\"quantity\":1}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "键盘提交",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ],
+                [
+                  "<img src=x onerror=\"pwned=1\">",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ]
+              ],
+              "summary": "2 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "<b>文本</b>",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":3,\"entries\":[{\"id\":1,\"name\":\"<img src=x onerror=\\\"pwned=1\\\">\",\"tag\":\"<b>文本</b>\",\"quantity\":1},{\"id\":2,\"name\":\"键盘提交\",\"tag\":\"<b>文本</b>\",\"quantity\":1}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "键盘提交",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ],
+                [
+                  "<img src=x onerror=\"pwned=1\">",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ]
+              ],
+              "summary": "2 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "小数",
+                "tag": "<b>文本</b>",
+                "quantity": "1.5",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "quantity",
+              "storage": "{\"version\":1,\"next\":3,\"entries\":[{\"id\":1,\"name\":\"<img src=x onerror=\\\"pwned=1\\\">\",\"tag\":\"<b>文本</b>\",\"quantity\":1},{\"id\":2,\"name\":\"键盘提交\",\"tag\":\"<b>文本</b>\",\"quantity\":1}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "键盘提交",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ],
+                [
+                  "<img src=x onerror=\"pwned=1\">",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ]
+              ],
+              "summary": "2 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":3,\"entries\":[{\"id\":1,\"name\":\"<img src=x onerror=\\\"pwned=1\\\">\",\"tag\":\"<b>文本</b>\",\"quantity\":1},{\"id\":2,\"name\":\"键盘提交\",\"tag\":\"<b>文本</b>\",\"quantity\":1}]}",
+              "injected": null
+            }
+          ],
+          "pixels": "597393621c25c18dc7b71d38e1dc693c1923f138144c29bdc2bee0aa42e48f2c",
+          "screenshot": "text-and-keyboard-390-original.png"
+        },
+        {
+          "side": "candidate",
+          "states": [
+            {
+              "rows": [
+                [
+                  "<img src=x onerror=\"pwned=1\">",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 1 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "<b>文本</b>",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"<img src=x onerror=\\\"pwned=1\\\">\",\"tag\":\"<b>文本</b>\",\"quantity\":1}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "键盘提交",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ],
+                [
+                  "<img src=x onerror=\"pwned=1\">",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ]
+              ],
+              "summary": "2 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "<b>文本</b>",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":3,\"entries\":[{\"id\":1,\"name\":\"<img src=x onerror=\\\"pwned=1\\\">\",\"tag\":\"<b>文本</b>\",\"quantity\":1},{\"id\":2,\"name\":\"键盘提交\",\"tag\":\"<b>文本</b>\",\"quantity\":1}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "键盘提交",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ],
+                [
+                  "<img src=x onerror=\"pwned=1\">",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ]
+              ],
+              "summary": "2 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "小数",
+                "tag": "<b>文本</b>",
+                "quantity": "1.5",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "quantity",
+              "storage": "{\"version\":1,\"next\":3,\"entries\":[{\"id\":1,\"name\":\"<img src=x onerror=\\\"pwned=1\\\">\",\"tag\":\"<b>文本</b>\",\"quantity\":1},{\"id\":2,\"name\":\"键盘提交\",\"tag\":\"<b>文本</b>\",\"quantity\":1}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "键盘提交",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ],
+                [
+                  "<img src=x onerror=\"pwned=1\">",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ]
+              ],
+              "summary": "2 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":3,\"entries\":[{\"id\":1,\"name\":\"<img src=x onerror=\\\"pwned=1\\\">\",\"tag\":\"<b>文本</b>\",\"quantity\":1},{\"id\":2,\"name\":\"键盘提交\",\"tag\":\"<b>文本</b>\",\"quantity\":1}]}",
+              "injected": null
+            }
+          ],
+          "pixels": "597393621c25c18dc7b71d38e1dc693c1923f138144c29bdc2bee0aa42e48f2c",
+          "screenshot": "text-and-keyboard-390-candidate.png"
+        }
+      ]
+    },
+    {
+      "id": "clear-cancel-accept",
+      "width": 600,
+      "status": "pass",
+      "observations": 6,
+      "sides": [
+        {
+          "side": "original",
+          "states": [
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "请填写名称",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "请填写名称",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "clear",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [],
+              "summary": "0 项 · 共 0 件",
+              "empty": "还没有条目，先添加一个吧。",
+              "emptyHidden": false,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "clear",
+              "storage": "{\"version\":1,\"next\":1,\"entries\":[]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "新条目",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"新条目\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "新条目",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"新条目\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            }
+          ],
+          "pixels": "a478e8ba05d8e4b7bdd25529760c4adc5619b8ddaf3bf432e7fbfc6ca507876c",
+          "screenshot": "clear-cancel-accept-600-original.png"
+        },
+        {
+          "side": "candidate",
+          "states": [
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "请填写名称",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "请填写名称",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "clear",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [],
+              "summary": "0 项 · 共 0 件",
+              "empty": "还没有条目，先添加一个吧。",
+              "emptyHidden": false,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "clear",
+              "storage": "{\"version\":1,\"next\":1,\"entries\":[]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "新条目",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"新条目\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "新条目",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"新条目\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            }
+          ],
+          "pixels": "a478e8ba05d8e4b7bdd25529760c4adc5619b8ddaf3bf432e7fbfc6ca507876c",
+          "screenshot": "clear-cancel-accept-600-candidate.png"
+        }
+      ]
+    },
+    {
+      "id": "corrupt-json",
+      "width": 600,
+      "status": "pass",
+      "observations": 3,
+      "sides": [
+        {
+          "side": "original",
+          "states": [
+            {
+              "rows": [],
+              "summary": "0 项 · 共 0 件",
+              "empty": "还没有条目，先添加一个吧。",
+              "emptyHidden": false,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{bad",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            }
+          ],
+          "pixels": "5d015523e1d62bd8477386f93afef597d6cf555c1081594a0c8e60edfc93c6fa",
+          "screenshot": "corrupt-json-600-original.png"
+        },
+        {
+          "side": "candidate",
+          "states": [
+            {
+              "rows": [],
+              "summary": "0 项 · 共 0 件",
+              "empty": "还没有条目，先添加一个吧。",
+              "emptyHidden": false,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{bad",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            }
+          ],
+          "pixels": "5d015523e1d62bd8477386f93afef597d6cf555c1081594a0c8e60edfc93c6fa",
+          "screenshot": "corrupt-json-600-candidate.png"
+        }
+      ]
+    },
+    {
+      "id": "invalid-shape",
+      "width": 600,
+      "status": "pass",
+      "observations": 2,
+      "sides": [
+        {
+          "side": "original",
+          "states": [
+            {
+              "rows": [],
+              "summary": "0 项 · 共 0 件",
+              "empty": "还没有条目，先添加一个吧。",
+              "emptyHidden": false,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":2,\"name\":\"坏数据\",\"tag\":\"x\",\"quantity\":1}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            }
+          ],
+          "pixels": "1cf0b3eeb2ad20503732c2e47cc1e950197b79be03c397a66a1c82d4e7e2beaa",
+          "screenshot": "invalid-shape-600-original.png"
+        },
+        {
+          "side": "candidate",
+          "states": [
+            {
+              "rows": [],
+              "summary": "0 项 · 共 0 件",
+              "empty": "还没有条目，先添加一个吧。",
+              "emptyHidden": false,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":2,\"name\":\"坏数据\",\"tag\":\"x\",\"quantity\":1}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            }
+          ],
+          "pixels": "1cf0b3eeb2ad20503732c2e47cc1e950197b79be03c397a66a1c82d4e7e2beaa",
+          "screenshot": "invalid-shape-600-candidate.png"
+        }
+      ]
+    },
+    {
+      "id": "compatible-state",
+      "width": 600,
+      "status": "pass",
+      "observations": 2,
+      "sides": [
+        {
+          "side": "original",
+          "states": [
+            {
+              "rows": [
+                [
+                  "已有物品",
+                  "迁入",
+                  "9",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 9 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":8,\"entries\":[{\"id\":7,\"name\":\"已有物品\",\"tag\":\"迁入\",\"quantity\":9,\"extra\":\"kept\"}],\"extra\":42}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ],
+                [
+                  "已有物品",
+                  "迁入",
+                  "9",
+                  "删除"
+                ]
+              ],
+              "summary": "2 项 · 共 11 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":9,\"entries\":[{\"id\":7,\"name\":\"已有物品\",\"tag\":\"迁入\",\"quantity\":9,\"extra\":\"kept\"},{\"id\":8,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}],\"extra\":42}",
+              "injected": null
+            }
+          ],
+          "pixels": "fea9ab910209eabcbcbd33488f9a7a5f06256163e7aae10e36704416accbc6b3",
+          "screenshot": "compatible-state-600-original.png"
+        },
+        {
+          "side": "candidate",
+          "states": [
+            {
+              "rows": [
+                [
+                  "已有物品",
+                  "迁入",
+                  "9",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 9 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":8,\"entries\":[{\"id\":7,\"name\":\"已有物品\",\"tag\":\"迁入\",\"quantity\":9,\"extra\":\"kept\"}],\"extra\":42}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ],
+                [
+                  "已有物品",
+                  "迁入",
+                  "9",
+                  "删除"
+                ]
+              ],
+              "summary": "2 项 · 共 11 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":9,\"entries\":[{\"id\":7,\"name\":\"已有物品\",\"tag\":\"迁入\",\"quantity\":9,\"extra\":\"kept\"},{\"id\":8,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}],\"extra\":42}",
+              "injected": null
+            }
+          ],
+          "pixels": "fea9ab910209eabcbcbd33488f9a7a5f06256163e7aae10e36704416accbc6b3",
+          "screenshot": "compatible-state-600-candidate.png"
+        }
+      ]
+    },
+    {
+      "id": "storage-write-failure",
+      "width": 600,
+      "status": "pass",
+      "observations": 1,
+      "sides": [
+        {
+          "side": "original",
+          "states": [
+            {
+              "rows": [],
+              "summary": "0 项 · 共 0 件",
+              "empty": "还没有条目，先添加一个吧。",
+              "emptyHidden": false,
+              "error": "测试：存储空间已满",
+              "fields": {
+                "name": "笔",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": null,
+              "injected": null
+            }
+          ],
+          "pixels": "6f886923cdff8e9c86f6a1a89eb327b4d71e3bc05ae0746dac966e4a95a4d118",
+          "screenshot": "storage-write-failure-600-original.png"
+        },
+        {
+          "side": "candidate",
+          "states": [
+            {
+              "rows": [],
+              "summary": "0 项 · 共 0 件",
+              "empty": "还没有条目，先添加一个吧。",
+              "emptyHidden": false,
+              "error": "测试：存储空间已满",
+              "fields": {
+                "name": "笔",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": null,
+              "injected": null
+            }
+          ],
+          "pixels": "6f886923cdff8e9c86f6a1a89eb327b4d71e3bc05ae0746dac966e4a95a4d118",
+          "screenshot": "storage-write-failure-600-candidate.png"
+        }
+      ]
+    },
+    {
+      "id": "text-and-keyboard",
+      "width": 600,
+      "status": "pass",
+      "observations": 4,
+      "sides": [
+        {
+          "side": "original",
+          "states": [
+            {
+              "rows": [
+                [
+                  "<img src=x onerror=\"pwned=1\">",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 1 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "<b>文本</b>",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"<img src=x onerror=\\\"pwned=1\\\">\",\"tag\":\"<b>文本</b>\",\"quantity\":1}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "键盘提交",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ],
+                [
+                  "<img src=x onerror=\"pwned=1\">",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ]
+              ],
+              "summary": "2 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "<b>文本</b>",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":3,\"entries\":[{\"id\":1,\"name\":\"<img src=x onerror=\\\"pwned=1\\\">\",\"tag\":\"<b>文本</b>\",\"quantity\":1},{\"id\":2,\"name\":\"键盘提交\",\"tag\":\"<b>文本</b>\",\"quantity\":1}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "键盘提交",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ],
+                [
+                  "<img src=x onerror=\"pwned=1\">",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ]
+              ],
+              "summary": "2 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "小数",
+                "tag": "<b>文本</b>",
+                "quantity": "1.5",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "quantity",
+              "storage": "{\"version\":1,\"next\":3,\"entries\":[{\"id\":1,\"name\":\"<img src=x onerror=\\\"pwned=1\\\">\",\"tag\":\"<b>文本</b>\",\"quantity\":1},{\"id\":2,\"name\":\"键盘提交\",\"tag\":\"<b>文本</b>\",\"quantity\":1}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "键盘提交",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ],
+                [
+                  "<img src=x onerror=\"pwned=1\">",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ]
+              ],
+              "summary": "2 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":3,\"entries\":[{\"id\":1,\"name\":\"<img src=x onerror=\\\"pwned=1\\\">\",\"tag\":\"<b>文本</b>\",\"quantity\":1},{\"id\":2,\"name\":\"键盘提交\",\"tag\":\"<b>文本</b>\",\"quantity\":1}]}",
+              "injected": null
+            }
+          ],
+          "pixels": "ff68011c911e5a0f61fac5b9eadd93fe82c1a9a27a8ef1e6985d98b3b5d5e61f",
+          "screenshot": "text-and-keyboard-600-original.png"
+        },
+        {
+          "side": "candidate",
+          "states": [
+            {
+              "rows": [
+                [
+                  "<img src=x onerror=\"pwned=1\">",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 1 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "<b>文本</b>",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"<img src=x onerror=\\\"pwned=1\\\">\",\"tag\":\"<b>文本</b>\",\"quantity\":1}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "键盘提交",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ],
+                [
+                  "<img src=x onerror=\"pwned=1\">",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ]
+              ],
+              "summary": "2 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "<b>文本</b>",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":3,\"entries\":[{\"id\":1,\"name\":\"<img src=x onerror=\\\"pwned=1\\\">\",\"tag\":\"<b>文本</b>\",\"quantity\":1},{\"id\":2,\"name\":\"键盘提交\",\"tag\":\"<b>文本</b>\",\"quantity\":1}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "键盘提交",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ],
+                [
+                  "<img src=x onerror=\"pwned=1\">",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ]
+              ],
+              "summary": "2 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "小数",
+                "tag": "<b>文本</b>",
+                "quantity": "1.5",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "quantity",
+              "storage": "{\"version\":1,\"next\":3,\"entries\":[{\"id\":1,\"name\":\"<img src=x onerror=\\\"pwned=1\\\">\",\"tag\":\"<b>文本</b>\",\"quantity\":1},{\"id\":2,\"name\":\"键盘提交\",\"tag\":\"<b>文本</b>\",\"quantity\":1}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "键盘提交",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ],
+                [
+                  "<img src=x onerror=\"pwned=1\">",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ]
+              ],
+              "summary": "2 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":3,\"entries\":[{\"id\":1,\"name\":\"<img src=x onerror=\\\"pwned=1\\\">\",\"tag\":\"<b>文本</b>\",\"quantity\":1},{\"id\":2,\"name\":\"键盘提交\",\"tag\":\"<b>文本</b>\",\"quantity\":1}]}",
+              "injected": null
+            }
+          ],
+          "pixels": "ff68011c911e5a0f61fac5b9eadd93fe82c1a9a27a8ef1e6985d98b3b5d5e61f",
+          "screenshot": "text-and-keyboard-600-candidate.png"
+        }
+      ]
+    },
+    {
+      "id": "clear-cancel-accept",
+      "width": 601,
+      "status": "pass",
+      "observations": 6,
+      "sides": [
+        {
+          "side": "original",
+          "states": [
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "请填写名称",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "请填写名称",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "clear",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [],
+              "summary": "0 项 · 共 0 件",
+              "empty": "还没有条目，先添加一个吧。",
+              "emptyHidden": false,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "clear",
+              "storage": "{\"version\":1,\"next\":1,\"entries\":[]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "新条目",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"新条目\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "新条目",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"新条目\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            }
+          ],
+          "pixels": "f52d2fa82abed870c51827ad932c1a6f8bda6cd13f3410dfd7b8538a69c79614",
+          "screenshot": "clear-cancel-accept-601-original.png"
+        },
+        {
+          "side": "candidate",
+          "states": [
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "请填写名称",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "请填写名称",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "clear",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [],
+              "summary": "0 项 · 共 0 件",
+              "empty": "还没有条目，先添加一个吧。",
+              "emptyHidden": false,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "clear",
+              "storage": "{\"version\":1,\"next\":1,\"entries\":[]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "新条目",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"新条目\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "新条目",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"新条目\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            }
+          ],
+          "pixels": "f52d2fa82abed870c51827ad932c1a6f8bda6cd13f3410dfd7b8538a69c79614",
+          "screenshot": "clear-cancel-accept-601-candidate.png"
+        }
+      ]
+    },
+    {
+      "id": "corrupt-json",
+      "width": 601,
+      "status": "pass",
+      "observations": 3,
+      "sides": [
+        {
+          "side": "original",
+          "states": [
+            {
+              "rows": [],
+              "summary": "0 项 · 共 0 件",
+              "empty": "还没有条目，先添加一个吧。",
+              "emptyHidden": false,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{bad",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            }
+          ],
+          "pixels": "611f0a6ec4584a4c8bb9c20bcab5e27bfbbcf07eaea537aa20326710967193c6",
+          "screenshot": "corrupt-json-601-original.png"
+        },
+        {
+          "side": "candidate",
+          "states": [
+            {
+              "rows": [],
+              "summary": "0 项 · 共 0 件",
+              "empty": "还没有条目，先添加一个吧。",
+              "emptyHidden": false,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{bad",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            }
+          ],
+          "pixels": "611f0a6ec4584a4c8bb9c20bcab5e27bfbbcf07eaea537aa20326710967193c6",
+          "screenshot": "corrupt-json-601-candidate.png"
+        }
+      ]
+    },
+    {
+      "id": "invalid-shape",
+      "width": 601,
+      "status": "pass",
+      "observations": 2,
+      "sides": [
+        {
+          "side": "original",
+          "states": [
+            {
+              "rows": [],
+              "summary": "0 项 · 共 0 件",
+              "empty": "还没有条目，先添加一个吧。",
+              "emptyHidden": false,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":2,\"name\":\"坏数据\",\"tag\":\"x\",\"quantity\":1}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            }
+          ],
+          "pixels": "0c87c4b572a47fb89db75e20fed6500d065005d8d3d7d750100abd4dbe6c4739",
+          "screenshot": "invalid-shape-601-original.png"
+        },
+        {
+          "side": "candidate",
+          "states": [
+            {
+              "rows": [],
+              "summary": "0 项 · 共 0 件",
+              "empty": "还没有条目，先添加一个吧。",
+              "emptyHidden": false,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":2,\"name\":\"坏数据\",\"tag\":\"x\",\"quantity\":1}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            }
+          ],
+          "pixels": "0c87c4b572a47fb89db75e20fed6500d065005d8d3d7d750100abd4dbe6c4739",
+          "screenshot": "invalid-shape-601-candidate.png"
+        }
+      ]
+    },
+    {
+      "id": "compatible-state",
+      "width": 601,
+      "status": "pass",
+      "observations": 2,
+      "sides": [
+        {
+          "side": "original",
+          "states": [
+            {
+              "rows": [
+                [
+                  "已有物品",
+                  "迁入",
+                  "9",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 9 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":8,\"entries\":[{\"id\":7,\"name\":\"已有物品\",\"tag\":\"迁入\",\"quantity\":9,\"extra\":\"kept\"}],\"extra\":42}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ],
+                [
+                  "已有物品",
+                  "迁入",
+                  "9",
+                  "删除"
+                ]
+              ],
+              "summary": "2 项 · 共 11 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":9,\"entries\":[{\"id\":7,\"name\":\"已有物品\",\"tag\":\"迁入\",\"quantity\":9,\"extra\":\"kept\"},{\"id\":8,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}],\"extra\":42}",
+              "injected": null
+            }
+          ],
+          "pixels": "a45bc769745e2133d64e9a7c4be5359bc1ec33280581fad3b6a7a44411936d56",
+          "screenshot": "compatible-state-601-original.png"
+        },
+        {
+          "side": "candidate",
+          "states": [
+            {
+              "rows": [
+                [
+                  "已有物品",
+                  "迁入",
+                  "9",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 9 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":8,\"entries\":[{\"id\":7,\"name\":\"已有物品\",\"tag\":\"迁入\",\"quantity\":9,\"extra\":\"kept\"}],\"extra\":42}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ],
+                [
+                  "已有物品",
+                  "迁入",
+                  "9",
+                  "删除"
+                ]
+              ],
+              "summary": "2 项 · 共 11 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":9,\"entries\":[{\"id\":7,\"name\":\"已有物品\",\"tag\":\"迁入\",\"quantity\":9,\"extra\":\"kept\"},{\"id\":8,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}],\"extra\":42}",
+              "injected": null
+            }
+          ],
+          "pixels": "a45bc769745e2133d64e9a7c4be5359bc1ec33280581fad3b6a7a44411936d56",
+          "screenshot": "compatible-state-601-candidate.png"
+        }
+      ]
+    },
+    {
+      "id": "storage-write-failure",
+      "width": 601,
+      "status": "pass",
+      "observations": 1,
+      "sides": [
+        {
+          "side": "original",
+          "states": [
+            {
+              "rows": [],
+              "summary": "0 项 · 共 0 件",
+              "empty": "还没有条目，先添加一个吧。",
+              "emptyHidden": false,
+              "error": "测试：存储空间已满",
+              "fields": {
+                "name": "笔",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": null,
+              "injected": null
+            }
+          ],
+          "pixels": "cf0125eb64e80d33230d82e489af29a670c76146f1e323a7975d529f0081430b",
+          "screenshot": "storage-write-failure-601-original.png"
+        },
+        {
+          "side": "candidate",
+          "states": [
+            {
+              "rows": [],
+              "summary": "0 项 · 共 0 件",
+              "empty": "还没有条目，先添加一个吧。",
+              "emptyHidden": false,
+              "error": "测试：存储空间已满",
+              "fields": {
+                "name": "笔",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": null,
+              "injected": null
+            }
+          ],
+          "pixels": "cf0125eb64e80d33230d82e489af29a670c76146f1e323a7975d529f0081430b",
+          "screenshot": "storage-write-failure-601-candidate.png"
+        }
+      ]
+    },
+    {
+      "id": "text-and-keyboard",
+      "width": 601,
+      "status": "pass",
+      "observations": 4,
+      "sides": [
+        {
+          "side": "original",
+          "states": [
+            {
+              "rows": [
+                [
+                  "<img src=x onerror=\"pwned=1\">",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 1 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "<b>文本</b>",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"<img src=x onerror=\\\"pwned=1\\\">\",\"tag\":\"<b>文本</b>\",\"quantity\":1}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "键盘提交",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ],
+                [
+                  "<img src=x onerror=\"pwned=1\">",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ]
+              ],
+              "summary": "2 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "<b>文本</b>",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":3,\"entries\":[{\"id\":1,\"name\":\"<img src=x onerror=\\\"pwned=1\\\">\",\"tag\":\"<b>文本</b>\",\"quantity\":1},{\"id\":2,\"name\":\"键盘提交\",\"tag\":\"<b>文本</b>\",\"quantity\":1}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "键盘提交",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ],
+                [
+                  "<img src=x onerror=\"pwned=1\">",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ]
+              ],
+              "summary": "2 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "小数",
+                "tag": "<b>文本</b>",
+                "quantity": "1.5",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "quantity",
+              "storage": "{\"version\":1,\"next\":3,\"entries\":[{\"id\":1,\"name\":\"<img src=x onerror=\\\"pwned=1\\\">\",\"tag\":\"<b>文本</b>\",\"quantity\":1},{\"id\":2,\"name\":\"键盘提交\",\"tag\":\"<b>文本</b>\",\"quantity\":1}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "键盘提交",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ],
+                [
+                  "<img src=x onerror=\"pwned=1\">",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ]
+              ],
+              "summary": "2 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":3,\"entries\":[{\"id\":1,\"name\":\"<img src=x onerror=\\\"pwned=1\\\">\",\"tag\":\"<b>文本</b>\",\"quantity\":1},{\"id\":2,\"name\":\"键盘提交\",\"tag\":\"<b>文本</b>\",\"quantity\":1}]}",
+              "injected": null
+            }
+          ],
+          "pixels": "6362e9993b87c8ab6f0a5a088105618cb8b565052f92234198c691168bdfabc9",
+          "screenshot": "text-and-keyboard-601-original.png"
+        },
+        {
+          "side": "candidate",
+          "states": [
+            {
+              "rows": [
+                [
+                  "<img src=x onerror=\"pwned=1\">",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 1 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "<b>文本</b>",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"<img src=x onerror=\\\"pwned=1\\\">\",\"tag\":\"<b>文本</b>\",\"quantity\":1}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "键盘提交",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ],
+                [
+                  "<img src=x onerror=\"pwned=1\">",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ]
+              ],
+              "summary": "2 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "<b>文本</b>",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":3,\"entries\":[{\"id\":1,\"name\":\"<img src=x onerror=\\\"pwned=1\\\">\",\"tag\":\"<b>文本</b>\",\"quantity\":1},{\"id\":2,\"name\":\"键盘提交\",\"tag\":\"<b>文本</b>\",\"quantity\":1}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "键盘提交",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ],
+                [
+                  "<img src=x onerror=\"pwned=1\">",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ]
+              ],
+              "summary": "2 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "小数",
+                "tag": "<b>文本</b>",
+                "quantity": "1.5",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "quantity",
+              "storage": "{\"version\":1,\"next\":3,\"entries\":[{\"id\":1,\"name\":\"<img src=x onerror=\\\"pwned=1\\\">\",\"tag\":\"<b>文本</b>\",\"quantity\":1},{\"id\":2,\"name\":\"键盘提交\",\"tag\":\"<b>文本</b>\",\"quantity\":1}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "键盘提交",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ],
+                [
+                  "<img src=x onerror=\"pwned=1\">",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ]
+              ],
+              "summary": "2 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":3,\"entries\":[{\"id\":1,\"name\":\"<img src=x onerror=\\\"pwned=1\\\">\",\"tag\":\"<b>文本</b>\",\"quantity\":1},{\"id\":2,\"name\":\"键盘提交\",\"tag\":\"<b>文本</b>\",\"quantity\":1}]}",
+              "injected": null
+            }
+          ],
+          "pixels": "6362e9993b87c8ab6f0a5a088105618cb8b565052f92234198c691168bdfabc9",
+          "screenshot": "text-and-keyboard-601-candidate.png"
+        }
+      ]
+    },
+    {
+      "id": "clear-cancel-accept",
+      "width": 1280,
+      "status": "pass",
+      "observations": 6,
+      "sides": [
+        {
+          "side": "original",
+          "states": [
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "请填写名称",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "请填写名称",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "clear",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [],
+              "summary": "0 项 · 共 0 件",
+              "empty": "还没有条目，先添加一个吧。",
+              "emptyHidden": false,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "clear",
+              "storage": "{\"version\":1,\"next\":1,\"entries\":[]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "新条目",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"新条目\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "新条目",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"新条目\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            }
+          ],
+          "pixels": "aaf800d0a031849ac355b4f918e61ee53532505ab33fb6b3d61df5d6d034e7a4",
+          "screenshot": "clear-cancel-accept-1280-original.png"
+        },
+        {
+          "side": "candidate",
+          "states": [
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "请填写名称",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "请填写名称",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "clear",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [],
+              "summary": "0 项 · 共 0 件",
+              "empty": "还没有条目，先添加一个吧。",
+              "emptyHidden": false,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "clear",
+              "storage": "{\"version\":1,\"next\":1,\"entries\":[]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "新条目",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"新条目\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "新条目",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"新条目\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            }
+          ],
+          "pixels": "aaf800d0a031849ac355b4f918e61ee53532505ab33fb6b3d61df5d6d034e7a4",
+          "screenshot": "clear-cancel-accept-1280-candidate.png"
+        }
+      ]
+    },
+    {
+      "id": "corrupt-json",
+      "width": 1280,
+      "status": "pass",
+      "observations": 3,
+      "sides": [
+        {
+          "side": "original",
+          "states": [
+            {
+              "rows": [],
+              "summary": "0 项 · 共 0 件",
+              "empty": "还没有条目，先添加一个吧。",
+              "emptyHidden": false,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{bad",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            }
+          ],
+          "pixels": "e7f01155ddbc47ffbd15713bf657c37d27f698c8bb593cfe63f05eec8a6d9681",
+          "screenshot": "corrupt-json-1280-original.png"
+        },
+        {
+          "side": "candidate",
+          "states": [
+            {
+              "rows": [],
+              "summary": "0 项 · 共 0 件",
+              "empty": "还没有条目，先添加一个吧。",
+              "emptyHidden": false,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{bad",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            }
+          ],
+          "pixels": "e7f01155ddbc47ffbd15713bf657c37d27f698c8bb593cfe63f05eec8a6d9681",
+          "screenshot": "corrupt-json-1280-candidate.png"
+        }
+      ]
+    },
+    {
+      "id": "invalid-shape",
+      "width": 1280,
+      "status": "pass",
+      "observations": 2,
+      "sides": [
+        {
+          "side": "original",
+          "states": [
+            {
+              "rows": [],
+              "summary": "0 项 · 共 0 件",
+              "empty": "还没有条目，先添加一个吧。",
+              "emptyHidden": false,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":2,\"name\":\"坏数据\",\"tag\":\"x\",\"quantity\":1}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            }
+          ],
+          "pixels": "e9be4babbd12f7f30079bc07b0526fcff215c789d833532106245377893d6e01",
+          "screenshot": "invalid-shape-1280-original.png"
+        },
+        {
+          "side": "candidate",
+          "states": [
+            {
+              "rows": [],
+              "summary": "0 项 · 共 0 件",
+              "empty": "还没有条目，先添加一个吧。",
+              "emptyHidden": false,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":2,\"name\":\"坏数据\",\"tag\":\"x\",\"quantity\":1}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}]}",
+              "injected": null
+            }
+          ],
+          "pixels": "e9be4babbd12f7f30079bc07b0526fcff215c789d833532106245377893d6e01",
+          "screenshot": "invalid-shape-1280-candidate.png"
+        }
+      ]
+    },
+    {
+      "id": "compatible-state",
+      "width": 1280,
+      "status": "pass",
+      "observations": 2,
+      "sides": [
+        {
+          "side": "original",
+          "states": [
+            {
+              "rows": [
+                [
+                  "已有物品",
+                  "迁入",
+                  "9",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 9 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":8,\"entries\":[{\"id\":7,\"name\":\"已有物品\",\"tag\":\"迁入\",\"quantity\":9,\"extra\":\"kept\"}],\"extra\":42}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ],
+                [
+                  "已有物品",
+                  "迁入",
+                  "9",
+                  "删除"
+                ]
+              ],
+              "summary": "2 项 · 共 11 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":9,\"entries\":[{\"id\":7,\"name\":\"已有物品\",\"tag\":\"迁入\",\"quantity\":9,\"extra\":\"kept\"},{\"id\":8,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}],\"extra\":42}",
+              "injected": null
+            }
+          ],
+          "pixels": "1701597bb1e883e0672c1f2ab8422ee5306ea70fcf7a3524eb60a37bb2607ce4",
+          "screenshot": "compatible-state-1280-original.png"
+        },
+        {
+          "side": "candidate",
+          "states": [
+            {
+              "rows": [
+                [
+                  "已有物品",
+                  "迁入",
+                  "9",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 9 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":8,\"entries\":[{\"id\":7,\"name\":\"已有物品\",\"tag\":\"迁入\",\"quantity\":9,\"extra\":\"kept\"}],\"extra\":42}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "笔",
+                  "办公",
+                  "2",
+                  "删除"
+                ],
+                [
+                  "已有物品",
+                  "迁入",
+                  "9",
+                  "删除"
+                ]
+              ],
+              "summary": "2 项 · 共 11 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":9,\"entries\":[{\"id\":7,\"name\":\"已有物品\",\"tag\":\"迁入\",\"quantity\":9,\"extra\":\"kept\"},{\"id\":8,\"name\":\"笔\",\"tag\":\"办公\",\"quantity\":2}],\"extra\":42}",
+              "injected": null
+            }
+          ],
+          "pixels": "1701597bb1e883e0672c1f2ab8422ee5306ea70fcf7a3524eb60a37bb2607ce4",
+          "screenshot": "compatible-state-1280-candidate.png"
+        }
+      ]
+    },
+    {
+      "id": "storage-write-failure",
+      "width": 1280,
+      "status": "pass",
+      "observations": 1,
+      "sides": [
+        {
+          "side": "original",
+          "states": [
+            {
+              "rows": [],
+              "summary": "0 项 · 共 0 件",
+              "empty": "还没有条目，先添加一个吧。",
+              "emptyHidden": false,
+              "error": "测试：存储空间已满",
+              "fields": {
+                "name": "笔",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": null,
+              "injected": null
+            }
+          ],
+          "pixels": "90cc1afb1f78de6fe11640e9016e17fec84f4ad721ec1d7987a3532f69ce7927",
+          "screenshot": "storage-write-failure-1280-original.png"
+        },
+        {
+          "side": "candidate",
+          "states": [
+            {
+              "rows": [],
+              "summary": "0 项 · 共 0 件",
+              "empty": "还没有条目，先添加一个吧。",
+              "emptyHidden": false,
+              "error": "测试：存储空间已满",
+              "fields": {
+                "name": "笔",
+                "tag": "办公",
+                "quantity": "2",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": null,
+              "injected": null
+            }
+          ],
+          "pixels": "90cc1afb1f78de6fe11640e9016e17fec84f4ad721ec1d7987a3532f69ce7927",
+          "screenshot": "storage-write-failure-1280-candidate.png"
+        }
+      ]
+    },
+    {
+      "id": "text-and-keyboard",
+      "width": 1280,
+      "status": "pass",
+      "observations": 4,
+      "sides": [
+        {
+          "side": "original",
+          "states": [
+            {
+              "rows": [
+                [
+                  "<img src=x onerror=\"pwned=1\">",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 1 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "<b>文本</b>",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"<img src=x onerror=\\\"pwned=1\\\">\",\"tag\":\"<b>文本</b>\",\"quantity\":1}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "键盘提交",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ],
+                [
+                  "<img src=x onerror=\"pwned=1\">",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ]
+              ],
+              "summary": "2 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "<b>文本</b>",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":3,\"entries\":[{\"id\":1,\"name\":\"<img src=x onerror=\\\"pwned=1\\\">\",\"tag\":\"<b>文本</b>\",\"quantity\":1},{\"id\":2,\"name\":\"键盘提交\",\"tag\":\"<b>文本</b>\",\"quantity\":1}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "键盘提交",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ],
+                [
+                  "<img src=x onerror=\"pwned=1\">",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ]
+              ],
+              "summary": "2 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "小数",
+                "tag": "<b>文本</b>",
+                "quantity": "1.5",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "quantity",
+              "storage": "{\"version\":1,\"next\":3,\"entries\":[{\"id\":1,\"name\":\"<img src=x onerror=\\\"pwned=1\\\">\",\"tag\":\"<b>文本</b>\",\"quantity\":1},{\"id\":2,\"name\":\"键盘提交\",\"tag\":\"<b>文本</b>\",\"quantity\":1}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "键盘提交",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ],
+                [
+                  "<img src=x onerror=\"pwned=1\">",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ]
+              ],
+              "summary": "2 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":3,\"entries\":[{\"id\":1,\"name\":\"<img src=x onerror=\\\"pwned=1\\\">\",\"tag\":\"<b>文本</b>\",\"quantity\":1},{\"id\":2,\"name\":\"键盘提交\",\"tag\":\"<b>文本</b>\",\"quantity\":1}]}",
+              "injected": null
+            }
+          ],
+          "pixels": "84484e84cbd2c440b68a074824d710ad71312ace1b81a17610b4a19d5fb164de",
+          "screenshot": "text-and-keyboard-1280-original.png"
+        },
+        {
+          "side": "candidate",
+          "states": [
+            {
+              "rows": [
+                [
+                  "<img src=x onerror=\"pwned=1\">",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ]
+              ],
+              "summary": "1 项 · 共 1 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "<b>文本</b>",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":2,\"entries\":[{\"id\":1,\"name\":\"<img src=x onerror=\\\"pwned=1\\\">\",\"tag\":\"<b>文本</b>\",\"quantity\":1}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "键盘提交",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ],
+                [
+                  "<img src=x onerror=\"pwned=1\">",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ]
+              ],
+              "summary": "2 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "<b>文本</b>",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "name",
+              "storage": "{\"version\":1,\"next\":3,\"entries\":[{\"id\":1,\"name\":\"<img src=x onerror=\\\"pwned=1\\\">\",\"tag\":\"<b>文本</b>\",\"quantity\":1},{\"id\":2,\"name\":\"键盘提交\",\"tag\":\"<b>文本</b>\",\"quantity\":1}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "键盘提交",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ],
+                [
+                  "<img src=x onerror=\"pwned=1\">",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ]
+              ],
+              "summary": "2 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "小数",
+                "tag": "<b>文本</b>",
+                "quantity": "1.5",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "quantity",
+              "storage": "{\"version\":1,\"next\":3,\"entries\":[{\"id\":1,\"name\":\"<img src=x onerror=\\\"pwned=1\\\">\",\"tag\":\"<b>文本</b>\",\"quantity\":1},{\"id\":2,\"name\":\"键盘提交\",\"tag\":\"<b>文本</b>\",\"quantity\":1}]}",
+              "injected": null
+            },
+            {
+              "rows": [
+                [
+                  "键盘提交",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ],
+                [
+                  "<img src=x onerror=\"pwned=1\">",
+                  "<b>文本</b>",
+                  "1",
+                  "删除"
+                ]
+              ],
+              "summary": "2 项 · 共 2 件",
+              "empty": "没有匹配的条目。",
+              "emptyHidden": true,
+              "error": "",
+              "fields": {
+                "name": "",
+                "tag": "",
+                "quantity": "1",
+                "query": "",
+                "order": "newest"
+              },
+              "focus": "",
+              "storage": "{\"version\":1,\"next\":3,\"entries\":[{\"id\":1,\"name\":\"<img src=x onerror=\\\"pwned=1\\\">\",\"tag\":\"<b>文本</b>\",\"quantity\":1},{\"id\":2,\"name\":\"键盘提交\",\"tag\":\"<b>文本</b>\",\"quantity\":1}]}",
+              "injected": null
+            }
+          ],
+          "pixels": "84484e84cbd2c440b68a074824d710ad71312ace1b81a17610b4a19d5fb164de",
+          "screenshot": "text-and-keyboard-1280-candidate.png"
+        }
+      ]
+    }
+  ],
+  "network": [],
+  "pageErrors": []
+}

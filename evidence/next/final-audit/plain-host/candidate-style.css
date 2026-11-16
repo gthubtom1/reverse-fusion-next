@@ -1,0 +1,22 @@
+/* Reference visual contract: preserve dimensions, palette and native controls. */
+* { box-sizing: border-box; }
+body { margin: 0; background: #f4f2ee; color: #282b28; font: 16px/1.5 system-ui,sans-serif; }
+main { max-width: 860px; margin: 48px auto; padding: 28px; background: white; border: 1px solid #d7d8d2; border-radius: 8px; }
+h1 { margin: 0 0 4px; font-size: 28px; }
+p { color: #656961; }
+form, .toolbar { display: flex; gap: 12px; flex-wrap: wrap; margin: 24px 0; }
+label { display: grid; gap: 5px; flex: 1; }
+input, select, button { font: inherit; padding: 9px 12px; border: 1px solid #babeb4; border-radius: 4px; }
+button { cursor: pointer; background: #365b45; color: white; align-self: end; }
+button.secondary { background: white; color: #365b45; }
+#error { min-height: 24px; color: #a33124; }
+table { width: 100%; border-collapse: collapse; }
+td, th { text-align: left; border-bottom: 1px solid #e5e7df; padding: 12px 8px; }
+th { font-weight: 600; color: #565f51; }
+#empty { padding: 24px; text-align: center; }
+footer { display: flex; justify-content: space-between; margin-top: 20px; }
+.remove { padding: 4px 9px; background: white; color: #8b3b32; }
+@media (max-width: 600px) {
+  main { margin: 12px; padding: 18px; }
+  label { min-width: 120px; }
+}

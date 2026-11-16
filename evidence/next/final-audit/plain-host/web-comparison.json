@@ -1,0 +1,670 @@
+{
+  "schema_version": 2,
+  "operation": "independent-web-replay",
+  "status": "pass",
+  "scope": "All visible v1 controls, validation, CRUD, search, sorting, reload persistence; zero pixel tolerance at 390/1280px",
+  "plan": "work/web-plan.json",
+  "plan_sha256": "6070144aaea6be17c77facd1b11fb35fbd730516d6b938b2cf6f6f63f1bb8ee1",
+  "engine": {
+    "rea_enhanced/comparison.py": "09e96f0916472e635d1ba31f2b6c41847dd5d012d0ceaf51857b0f89cfe50d37",
+    "reverse_fusion/owned_process.py": "4d0f4cfc0367116b084d0ec870fde2d90f0470d6da9887d59cd47be5c96e32fd",
+    "rea_enhanced/web.py": "b2c0a5de0fc9d4a6cae74d33e30937501aebcefdfa9167d7e0a8712ceef84102",
+    "components/rea-enhanced/web-replay.mjs": "0a7251bf8cd023d51f46a7232bc28ef65068088ff5beacf4b3be603054b20a79"
+  },
+  "sources": {
+    "work/reference/index.html": "fe8bb33fe756982f3bbaae9745716d896f7c81e9104f1327266c84a1975e6832",
+    "work/reference/page.mjs": "83f93826a55b128f7c711ebc7052455330896b29d3553c895b1ac39433d92c63",
+    "work/reference/core.mjs": "ddf8609a5fbb3e194d3973228da56771c6c3c03329166f0e5a95e29e1e94b9f2",
+    "outputs/\u65b0\u7248/index.html": "375dc3bf2ce72ee9c1478023326705e043957a142f4a3ecb6c0db44235e2fb72",
+    "outputs/\u65b0\u7248/page.mjs": "7b17e2ed09dc4ade3615f060cbb4aa8228d704343e887f01d5e23456fab0e499",
+    "outputs/\u65b0\u7248/core.mjs": "807e58059fe1ef0c2cf9d917a4a7539df6ea98748b7c2ea56700033fc93036db",
+    "outputs/\u65b0\u7248/style.css": "873c0d539f578dc0c55ce6c274982af8265cc7dfee6b04bd80cb7c0c1ad89026"
+  },
+  "input_trees": {
+    "original": {
+      "cwd": "work/reference",
+      "files": {
+        "core.mjs": "ddf8609a5fbb3e194d3973228da56771c6c3c03329166f0e5a95e29e1e94b9f2",
+        "index.html": "fe8bb33fe756982f3bbaae9745716d896f7c81e9104f1327266c84a1975e6832",
+        "page.mjs": "83f93826a55b128f7c711ebc7052455330896b29d3553c895b1ac39433d92c63",
+        "README.txt": "abb9dd6c8bdd460a293e321a9c0d23361f11352b8396b5471b0a525ea3efc66e"
+      }
+    },
+    "candidate": {
+      "cwd": "outputs/\u65b0\u7248",
+      "files": {
+        "core.mjs": "807e58059fe1ef0c2cf9d917a4a7539df6ea98748b7c2ea56700033fc93036db",
+        "index.html": "375dc3bf2ce72ee9c1478023326705e043957a142f4a3ecb6c0db44235e2fb72",
+        "launch.py": "573469db4b69bcf4468804421285c081e6eefa073bd40752a48fe64567bb44f9",
+        "page.mjs": "7b17e2ed09dc4ade3615f060cbb4aa8228d704343e887f01d5e23456fab0e499",
+        "style.css": "873c0d539f578dc0c55ce6c274982af8265cc7dfee6b04bd80cb7c0c1ad89026",
+        "\u542f\u52a8\u65b0\u7248.cmd": "3a8b31cd56e724f1a0a35c032fac54ec69f1c7bd2dc5e48ef6a07349857da7be"
+      }
+    }
+  },
+  "cases": [
+    {
+      "scenario": "usage",
+      "width": 390,
+      "step": 0,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 390,
+      "step": 1,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 390,
+      "step": 2,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 390,
+      "step": 3,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 390,
+      "step": 4,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 390,
+      "step": 5,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 390,
+      "step": 6,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 390,
+      "step": 7,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 390,
+      "step": 8,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 390,
+      "step": 9,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 390,
+      "step": 10,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 390,
+      "step": 11,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 390,
+      "step": 12,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 390,
+      "step": 13,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 390,
+      "step": 14,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 390,
+      "step": 15,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 390,
+      "step": 16,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 390,
+      "step": 17,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 390,
+      "step": 18,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 390,
+      "step": 19,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 1280,
+      "step": 0,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 1280,
+      "step": 1,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 1280,
+      "step": 2,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 1280,
+      "step": 3,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 1280,
+      "step": 4,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 1280,
+      "step": 5,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 1280,
+      "step": 6,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 1280,
+      "step": 7,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 1280,
+      "step": 8,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 1280,
+      "step": 9,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 1280,
+      "step": 10,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 1280,
+      "step": 11,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 1280,
+      "step": 12,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 1280,
+      "step": 13,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 1280,
+      "step": 14,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 1280,
+      "step": 15,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 1280,
+      "step": 16,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 1280,
+      "step": 17,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 1280,
+      "step": 18,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "usage",
+      "width": 1280,
+      "step": 19,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "limits",
+      "width": 390,
+      "step": 0,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "limits",
+      "width": 390,
+      "step": 1,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "limits",
+      "width": 390,
+      "step": 2,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "limits",
+      "width": 390,
+      "step": 3,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "limits",
+      "width": 390,
+      "step": 4,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "limits",
+      "width": 390,
+      "step": 5,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "limits",
+      "width": 390,
+      "step": 6,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "limits",
+      "width": 390,
+      "step": 7,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "limits",
+      "width": 390,
+      "step": 8,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "limits",
+      "width": 390,
+      "step": 9,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "limits",
+      "width": 1280,
+      "step": 0,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "limits",
+      "width": 1280,
+      "step": 1,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "limits",
+      "width": 1280,
+      "step": 2,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "limits",
+      "width": 1280,
+      "step": 3,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "limits",
+      "width": 1280,
+      "step": 4,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "limits",
+      "width": 1280,
+      "step": 5,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "limits",
+      "width": 1280,
+      "step": 6,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "limits",
+      "width": 1280,
+      "step": 7,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "limits",
+      "width": 1280,
+      "step": 8,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    },
+    {
+      "scenario": "limits",
+      "width": 1280,
+      "step": 9,
+      "differences": [],
+      "behavior_status": "pass",
+      "visual_status": "pass",
+      "changed_pixel_fraction": 0.0,
+      "status": "pass"
+    }
+  ],
+  "changed_inputs": [],
+  "browser_executable": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+  "browser_sha256": "5b835c10836045119334d9524e62437110e00e1bd20612c9072a0ae155f94a17",
+  "process": {
+    "status": "observed",
+    "reason": null,
+    "exit_code": 0,
+    "elapsed_ms": 13100.983,
+    "peak_job_bytes": 532230144,
+    "output_truncated": false,
+    "memory_limit_mb": 1536,
+    "cleanup": "owned Windows job closed after invocation"
+  },
+  "capture_path": "work/web-round-2/capture.json",
+  "elapsed_ms": 13100.983,
+  "rea_native_proof": "not-performed",
+  "whole_product_acceptance": "not-established",
+  "limitations": [
+    "Only declared actions/selectors/storage keys/viewport screenshots were compared.",
+    "Source-to-served-URL correspondence is declared by the host, not automatically authenticated.",
+    "No unobserved server, API, device or whole-program equivalence established.",
+    "Disposable browser contexts and owned process cleanup are not OS/network isolation."
+  ]
+}

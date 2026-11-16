@@ -1,0 +1,85 @@
+{
+  "date": "2026-11-17",
+  "original_preserved": [
+    {
+      "file": "core.mjs",
+      "before": "ddf8609a5fbb3e194d3973228da56771c6c3c03329166f0e5a95e29e1e94b9f2",
+      "after": "ddf8609a5fbb3e194d3973228da56771c6c3c03329166f0e5a95e29e1e94b9f2",
+      "unchanged": true
+    },
+    {
+      "file": "index.html",
+      "before": "fe8bb33fe756982f3bbaae9745716d896f7c81e9104f1327266c84a1975e6832",
+      "after": "fe8bb33fe756982f3bbaae9745716d896f7c81e9104f1327266c84a1975e6832",
+      "unchanged": true
+    },
+    {
+      "file": "page.mjs",
+      "before": "83f93826a55b128f7c711ebc7052455330896b29d3553c895b1ac39433d92c63",
+      "after": "83f93826a55b128f7c711ebc7052455330896b29d3553c895b1ac39433d92c63",
+      "unchanged": true
+    },
+    {
+      "file": "README.txt",
+      "before": "abb9dd6c8bdd460a293e321a9c0d23361f11352b8396b5471b0a525ea3efc66e",
+      "after": "abb9dd6c8bdd460a293e321a9c0d23361f11352b8396b5471b0a525ea3efc66e",
+      "unchanged": true
+    }
+  ],
+  "core": {
+    "checks": 5162,
+    "status": "pass",
+    "receipt": "work/core-round-2/comparison.json",
+    "sha256": "0b432d3aec9aabfd0d8fac40deee2e0ee6c8c850281a96896a00dae5d1fb7bb4"
+  },
+  "web": {
+    "pairs": 60,
+    "status": "pass",
+    "behavior": "pass",
+    "visual": "pass",
+    "pixel_tolerance": 0,
+    "widths": [
+      390,
+      1280
+    ],
+    "receipt": "work/web-round-2/comparison.json",
+    "sha256": "1c3b8ab37ed9213b2f0f2f784cee0253161dc3196503b3eac0670cf37c8ba5be"
+  },
+  "edges": {
+    "pairs": 24,
+    "widths": [
+      390,
+      600,
+      601,
+      1280
+    ],
+    "status": "pass",
+    "receipt": "work/edge-results/report.json",
+    "sha256": "7e6b35a0d6c61bef4c76793e77cc2f9873584481052dee129de25bbc9ed04b9d"
+  },
+  "launcher": {
+    "checks": 8,
+    "status": "pass",
+    "receipt": "work/launcher-report.json",
+    "sha256": "9389a364b0cc728377ecc669c4c1b3935ad3cc97d26cd109482bac98395255af"
+  },
+  "negative_control": {
+    "deliberately_incorrect_candidate_rejected": true,
+    "receipt": "work/mutant-round-1/comparison.json"
+  },
+  "official_rea_bundle": {
+    "path": "work/current-case/rea-evidence.json",
+    "sha256": "df4d9cf2f729745d4eb545a791b5d5dd3b74d103c6deb635c56abd7eeb7ff67d",
+    "records": 4
+  },
+  "final_app": {
+    "core.mjs": "807e58059fe1ef0c2cf9d917a4a7539df6ea98748b7c2ea56700033fc93036db",
+    "index.html": "375dc3bf2ce72ee9c1478023326705e043957a142f4a3ecb6c0db44235e2fb72",
+    "launch.py": "573469db4b69bcf4468804421285c081e6eefa073bd40752a48fe64567bb44f9",
+    "page.mjs": "7b17e2ed09dc4ade3615f060cbb4aa8228d704343e887f01d5e23456fab0e499",
+    "style.css": "873c0d539f578dc0c55ce6c274982af8265cc7dfee6b04bd80cb7c0c1ad89026",
+    "启动新版.cmd": "3a8b31cd56e724f1a0a35c032fac54ec69f1c7bd2dc5e48ef6a07349857da7be"
+  },
+  "freshness": "Core and web comparisons rerun after shared comparator update in fresh CLI processes. The old MCP connection retains the earlier in-memory process-environment validator, so final status/delivery use the current CLI from the same managed installation.",
+  "scope": "All functions and UI in the supplied three-file offline application; tests are finite observations on this Windows/Chromium environment."
+}

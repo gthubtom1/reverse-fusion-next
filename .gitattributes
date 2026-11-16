@@ -16,3 +16,4 @@ evidence/rf33/owned-desk/** binary
 evidence/rf36/raw/** binary
 # Actual installer/process transcripts preserve their observed newline bytes.
 evidence/next/final-audit/*.log binary
+evidence/next/final-audit/plain-host/** binary

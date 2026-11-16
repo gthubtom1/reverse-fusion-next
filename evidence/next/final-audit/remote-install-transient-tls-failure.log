@@ -1,0 +1,32 @@
+Obtaining file:///D:/Project/reverse-next/work/remote-install-32f2ff1145
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Checking if build backend supports build_editable: started
+  Checking if build backend supports build_editable: finished with status 'done'
+  Getting requirements to build editable: started
+  Getting requirements to build editable: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Preparing editable metadata (pyproject.toml): finished with status 'done'
+Collecting Pillow==11.3.0 (from reverse-rea-next==2.1.0)
+  Obtaining dependency information for Pillow==11.3.0 from https://files.pythonhosted.org/packages/8c/ce/e7dfc873bdd9828f3b6e5c2bbb74e47a98ec23cc5c74fc4e54462f0d9204/pillow-11.3.0-cp312-cp312-win_amd64.whl.metadata
+  Using cached pillow-11.3.0-cp312-cp312-win_amd64.whl.metadata (9.2 kB)
+Using cached pillow-11.3.0-cp312-cp312-win_amd64.whl (7.0 MB)
+Building wheels for collected packages: reverse-rea-next
+  Building editable for reverse-rea-next (pyproject.toml): started
+  Building editable for reverse-rea-next (pyproject.toml): finished with status 'done'
+  Created wheel for reverse-rea-next: filename=reverse_rea_next-2.1.0-0.editable-py3-none-any.whl size=4894 sha256=b9a6136175f16a9fc1975154d3fbc18c9753ebf7fcc0831ab3331d81bf3404bc
+  Stored in directory: D:\tmp\pip-ephem-wheel-cache-h427wokz\wheels\6a\21\cc\fd8be2676244a8b0be30294b39c16e9bad7f69dff760132def
+Successfully built reverse-rea-next
+Installing collected packages: Pillow, reverse-rea-next
+Successfully installed Pillow-11.3.0 reverse-rea-next-2.1.0
+{"status": "error", "message": "<urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1000)>"}
+
+[notice] A new release of pip is available: 23.2.1 -> 26.3
+[notice] To update, run: D:\Project\reverse-next\work\remote-install-32f2ff1145\.venv\Scripts\python.exe -m pip install --upgrade pip
+Pinned runtime preparation failed
+ËùÔÚÎ»ÖÃ D:\Project\reverse-next\work\remote-install-32f2ff1145\scripts\install.ps1:19 ×Ö·û: 32
++ ... f ($LASTEXITCODE -ne 0) { throw 'Pinned runtime preparation failed' }
++                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Pinned runtime preparation failed:String) [], RuntimeException
+    + FullyQualifiedErrorId : Pinned runtime preparation failed
+ 

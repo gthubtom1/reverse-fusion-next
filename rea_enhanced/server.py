@@ -14,6 +14,7 @@ from . import __version__
 from .workflow import open_case, record, status, run_check
 from reverse_fusion.mcp_process import McpProcess
 from .providers import environment as launch_environment
+from .storage import digest
 from reverse_fusion.runtime import node_runtime
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -61,6 +62,17 @@ TOOLS = [
 NAMES={tool['name'] for tool in TOOLS}
 
 
+def connection_identity(root=ROOT):
+    names=[p.relative_to(root).as_posix() for p in (root/'rea_enhanced').glob('*.py')]
+    names+=['components/rea-enhanced/web-replay.mjs','vendor/rea/manifest.json','vendor/node/manifest.json']
+    return {name:digest(root/name) for name in sorted(names)}
+
+
+def require_current_connection(initial,root=ROOT):
+    if connection_identity(root)!=initial:
+        raise ValueError('needs-reconnect: enhanced runtime changed since this connection started. Reconnect MCP before using this connection; the absolute scripts/next-cli.py entry reads the current version. No old workflow operation was executed.')
+
+
 def call_owned(name, args, cancel_event=None):
     if not isinstance(args,dict):raise ValueError('Tool arguments must be an object')
     schema=next(t['inputSchema'] for t in TOOLS if t['name']==name)
@@ -83,6 +95,7 @@ def call_owned(name, args, cancel_event=None):
 
 
 def serve():
+    loaded_identity=connection_identity()
     node,_=node_runtime(ROOT)
     entry=ROOT/'vendor/rea/package/scripts/rea.mjs'
     if not node or not entry.is_file():raise ValueError('Install the pinned REA runtime in this checkout first')
@@ -130,6 +143,7 @@ def serve():
     slots=threading.BoundedSemaphore(4)
     def owned_request(message,event):
         try:
+            require_current_connection(loaded_identity)
             params=message.get('params',{})
             result=call_owned(params['name'],params.get('arguments',{}),cancel_event=event)
             reply={'content':[{'type':'text','text':json.dumps(result,ensure_ascii=True)}],'structuredContent':result}

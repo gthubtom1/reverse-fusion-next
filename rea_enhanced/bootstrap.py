@@ -10,6 +10,9 @@ import tarfile
 import tempfile
 import urllib.request
 import zipfile
+import ssl
+import time
+import urllib.error
 from .storage import digest, read, write
 
 
@@ -38,12 +41,18 @@ def acquire(url, destination, algorithm='sha256', expected=None):
         return h.hexdigest() == expected
     if destination.is_file() and valid(destination): return destination
     temporary = destination.with_suffix(destination.suffix + '.partial')
-    try:
-        with urllib.request.urlopen(url, timeout=60) as source, temporary.open('wb') as output:
-            shutil.copyfileobj(source, output)
-        if not valid(temporary): raise ValueError('Pinned asset checksum mismatch: ' + destination.name)
-        os.replace(temporary, destination)
-    finally: temporary.unlink(missing_ok=True)
+    for attempt in range(3):
+        try:
+            with urllib.request.urlopen(url, timeout=60) as source, temporary.open('wb') as output:
+                shutil.copyfileobj(source, output)
+            if not valid(temporary): raise ValueError('Pinned asset checksum mismatch: ' + destination.name)
+            os.replace(temporary, destination)
+            break
+        except (urllib.error.URLError,ssl.SSLError,TimeoutError,ConnectionError) as exc:
+            if isinstance(exc,urllib.error.HTTPError) and exc.code not in {408,429,500,502,503,504}:raise
+            if attempt==2:raise
+            time.sleep(attempt+1)
+        finally: temporary.unlink(missing_ok=True)
     return destination
 
 

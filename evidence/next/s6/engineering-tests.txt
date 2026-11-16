@@ -1,5 +1,6 @@
 test_safe_archive_extracts_to_selected_root (test_bootstrap.ArchiveSafety.test_safe_archive_extracts_to_selected_root) ... ok
 test_tar_symlink_rejected_before_writes (test_bootstrap.ArchiveSafety.test_tar_symlink_rejected_before_writes) ... ok
+test_transient_tls_eof_retries_without_accepting_partial_download (test_bootstrap.ArchiveSafety.test_transient_tls_eof_retries_without_accepting_partial_download) ... ok
 test_unmodified_entry_cannot_hide_missing_execution_module (test_bootstrap.ArchiveSafety.test_unmodified_entry_cannot_hide_missing_execution_module) ... ok
 test_zip_escape_rejected_before_any_write (test_bootstrap.ArchiveSafety.test_zip_escape_rejected_before_any_write) ... ok
 test_clean_uninstall_and_reinstall_has_only_one_owned_server (test_deployment.Deployment.test_clean_uninstall_and_reinstall_has_only_one_owned_server) ... ok
@@ -41,6 +42,7 @@ test_refresh_generates_current_index_without_fabricated_readiness (test_inventor
 test_actual_native_provider_and_new_server_bundle_roundtrip (test_mcp.LiveMCP.test_actual_native_provider_and_new_server_bundle_roundtrip) ... ok
 test_cancelled_owned_comparison_cleans_up_and_stays_unknown (test_mcp.LiveMCP.test_cancelled_owned_comparison_cleans_up_and_stays_unknown) ... ok
 test_native_bundle_survives_new_server (test_mcp.LiveMCP.test_native_bundle_survives_new_server) ... ok
+test_old_connection_cannot_silently_apply_changed_workflow (test_mcp.LiveMCP.test_old_connection_cannot_silently_apply_changed_workflow) ... ok
 test_original_catalog_preserved_and_frida_actually_enumerates (test_mcp.LiveMCP.test_original_catalog_preserved_and_frida_actually_enumerates) ... ok
 test_owned_workflow_via_mcp (test_mcp.LiveMCP.test_owned_workflow_via_mcp) ... ok
 test_test_and_public_contract_edits_change_release_identity (test_qualification.Qualification.test_test_and_public_contract_edits_change_release_identity) ... ok
@@ -79,6 +81,6 @@ test_unchanged_success_is_reused_without_another_run (test_workflow.OwnedCase.te
 test_wrong_algorithm_fails (test_workflow.OwnedCase.test_wrong_algorithm_fails) ... ok
 
 ----------------------------------------------------------------------
-Ran 79 tests in 88.919s
+Ran 81 tests in 81.693s
 
 OK

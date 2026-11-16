@@ -1,0 +1,93 @@
+{
+  "schema_version": 2,
+  "operation": "independent-finite-replay",
+  "status": "fail",
+  "scope": "Full exported v1 core: validation, immutable changes, search, ordering, restore, deterministic sequences",
+  "plan": "work/mutant-plan.json",
+  "plan_sha256": "ebb350b0f5336deb4a23946eadc00a012cee9d8464b2d8554363411c2bb280dc",
+  "sources": {
+    "work/core-reference/probe.mjs": "920b810299c47f341c405a954a9aa7cd3cf9a97765a2dfc4cf07232f1810ccc6",
+    "work/core-reference/core.mjs": "ddf8609a5fbb3e194d3973228da56771c6c3c03329166f0e5a95e29e1e94b9f2",
+    "work/core-mutant/probe.mjs": "920b810299c47f341c405a954a9aa7cd3cf9a97765a2dfc4cf07232f1810ccc6",
+    "work/core-mutant/core.mjs": "b600e2f865e8b098f6415e779b2fcc542079fa08bb0411148305ace9946d1cf6"
+  },
+  "engine": {
+    "rea_enhanced/comparison.py": "5150bc3bce5991f3220a617320de40104f27f3957e9dcf93b038479e177e5af2",
+    "reverse_fusion/owned_process.py": "4d0f4cfc0367116b084d0ec870fde2d90f0470d6da9887d59cd47be5c96e32fd"
+  },
+  "process_runtime": {
+    "original": {
+      "path": "D:\\Tools\\Node\\node.exe",
+      "sha256": "5c976096e04e5c2c1f091938926234cc9fbebfe9787ddd149351b3b0ecc707b5"
+    },
+    "candidate": {
+      "path": "D:\\Tools\\Node\\node.exe",
+      "sha256": "5c976096e04e5c2c1f091938926234cc9fbebfe9787ddd149351b3b0ecc707b5"
+    },
+    "environment_sha256": "29c5e4b0740758bd4d17053c97718e21f5507f959367f5f3e06d23fd93f1c96d"
+  },
+  "input_trees": {
+    "original": {
+      "cwd": "work/core-reference",
+      "files": {
+        "core.mjs": "ddf8609a5fbb3e194d3973228da56771c6c3c03329166f0e5a95e29e1e94b9f2",
+        "probe.mjs": "920b810299c47f341c405a954a9aa7cd3cf9a97765a2dfc4cf07232f1810ccc6"
+      }
+    },
+    "candidate": {
+      "cwd": "work/core-mutant",
+      "files": {
+        "core.mjs": "b600e2f865e8b098f6415e779b2fcc542079fa08bb0411148305ace9946d1cf6",
+        "probe.mjs": "920b810299c47f341c405a954a9aa7cd3cf9a97765a2dfc4cf07232f1810ccc6"
+      }
+    }
+  },
+  "cases": [
+    {
+      "scenario": "core-matrix",
+      "step": 0,
+      "observations": {
+        "original": {
+          "status": "observed",
+          "reason": null,
+          "exit_code": 0,
+          "elapsed_ms": 150.498,
+          "peak_job_bytes": 45764608,
+          "output_truncated": false,
+          "memory_limit_mb": 512,
+          "cleanup": "owned Windows job closed after invocation",
+          "stdout": "eyJjaGVja3MiOjUxNjIsInNoYTI1NiI6IjVhZmNiOWM1NmVmZDgxYzNkYTBlNjg4NGU5NWFjMDc1MDQzMGRhNjU3MDg0ZWNiNjA5OGU5NmU5N2MxOTFhZDkifQo=",
+          "stderr": "",
+          "files": {}
+        },
+        "candidate": {
+          "status": "observed",
+          "reason": null,
+          "exit_code": 0,
+          "elapsed_ms": 134.909,
+          "peak_job_bytes": 46395392,
+          "output_truncated": false,
+          "memory_limit_mb": 512,
+          "cleanup": "owned Windows job closed after invocation",
+          "stdout": "eyJjaGVja3MiOjUxNjIsInNoYTI1NiI6ImFmYzkxOTE3ODYyNzdjZWJjMDNhZDBlNWU0NDQ4ZTEzYTI5NzA3ZGE4MGE2ZmFiNzhlYjJlMDBjMzYwNWJmYjkifQo=",
+          "stderr": "",
+          "files": {}
+        }
+      },
+      "differences": [
+        "stdout"
+      ],
+      "status": "fail"
+    }
+  ],
+  "changed_inputs": [],
+  "failure": null,
+  "elapsed_ms": 410.503,
+  "rea_native_proof": "not-performed",
+  "whole_product_acceptance": "not-established",
+  "limitations": [
+    "Only declared ordered inputs, raw output, exit and named file effects were compared.",
+    "Working copies and owned cleanup are not filesystem or network isolation.",
+    "No UI, network, unlisted effects or whole-program equivalence established."
+  ]
+}

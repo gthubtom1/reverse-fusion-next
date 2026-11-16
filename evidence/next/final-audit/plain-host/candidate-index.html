@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>标签收纳盒</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main>
+    <h1>标签收纳盒</h1>
+    <p>把零散物品放进分类，数量与清单只保存在当前浏览器。</p>
+    <form id="add"><label>名称<input id="name" autocomplete="off"></label><label>分类<input id="tag" autocomplete="off"></label><label>数量<input id="quantity" type="number" value="1"></label><button>添加条目</button></form>
+    <div id="error" role="alert"></div>
+    <div class="toolbar"><label>搜索名称或分类<input id="query" placeholder="输入关键词"></label><label>排序<select id="order"><option value="newest">最近添加</option><option value="name">按名称</option></select></label></div>
+    <table><thead><tr><th>名称</th><th>分类</th><th>数量</th><th>操作</th></tr></thead><tbody id="rows"></tbody></table>
+    <div id="empty">还没有条目，先添加一个吧。</div>
+    <footer><span id="summary"></span><button type="button" id="clear" class="secondary">清空全部</button></footer>
+  </main>
+  <script type="module" src="./page.mjs"></script>
+</body>
+</html>
