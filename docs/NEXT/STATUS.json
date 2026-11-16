@@ -3,7 +3,7 @@
   "version": "2.0.0.dev0",
   "baseline_commit": "022e61b803e41569cac1f116ebca2245b9c9b1f8",
   "goal_status": "active",
-  "stage": "S5",
+  "stage": "S6",
   "stages": {
     "S0": {
       "status": "done",
@@ -50,11 +50,16 @@
       ]
     },
     "S5": {
-      "status": "in_progress",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "evidence/next/s5/clean-install.json",
+        "evidence/next/s5/clean-tests.txt",
+        "evidence/next/s5/baseline-comparison.json",
+        "evidence/next/s5/pre-migration-preservation.json"
+      ]
     },
     "S6": {
-      "status": "pending",
+      "status": "in_progress",
       "evidence": []
     }
   },
@@ -103,9 +108,9 @@
       "tests_next/test_workflow.py"
     ]
   },
-  "next_action": "Qualify a clean independent source export without Craft/Spec source or runtime, then compare like-for-like owned behaviors against the frozen v1 baseline.",
+  "next_action": "Finalize source-bound release qualification, then migrate the owned local Codex entry, actually restore and probe the old entry, and select the qualified new entry.",
   "migration": "not_started; original checkout and desktop entry remain active",
   "limitations": [
-    "S0-S4 qualified. Clean independent installation, baseline comparison and real local migration/rollback remain."
+    "S0-S5 qualified. Real local migration, rollback connection and final N01-N20 review remain."
   ]
 }

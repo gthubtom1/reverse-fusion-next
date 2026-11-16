@@ -1,0 +1,18 @@
+{
+  "old_head": "022e61b803e41569cac1f116ebca2245b9c9b1f8",
+  "old_status": "",
+  "deployment": {
+    "config": {
+      "same_as_frozen": true,
+      "sha256": "3378848fd98697831fa5fe63a3a7d31a1fa83b048cd53448985e55683c659d42"
+    },
+    "global_agents": {
+      "same_as_frozen": true,
+      "sha256": "49a271c6aec7f6932d5947ad5ddb44a68911ba92d923346f498f0ab54efd28bc"
+    },
+    "skill": {
+      "same_as_frozen": true,
+      "sha256": "9f8b2cac32bd09f25d7f5abe2339c2b0226f4ad5f7bdbd62f58f4c4caef1c471"
+    }
+  }
+}

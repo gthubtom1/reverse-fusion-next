@@ -21,3 +21,7 @@ Enhanced MCP retains all 255 canonical official schemas and prompts unchanged, a
 ## 2026-11-17 / S4 qualified
 
 48 checks pass. Current public docs/skills/manifests now consistently use enhanced REA and host-native implementation. Old public bootstrap paths are retired; CLI compatibility name routes to the new CLI. Original domain provenance retained with adaptation hashes. New core installer independently acquired pinned Node/REA/Frida/WABT/JADX. Actual temporary-user connection, legacy migration, byte-preserving rollback and injected connection-failure restoration pass. Fixed explicit UTF-8 reading rather than relying on the shell locale. Original deployment remains unchanged. Next S5: clean source/runtime install and finite baseline comparison.
+
+## 2026-11-17 / S5 qualified
+
+Fresh committed export omitted retired Craft/Spec source and acquired its own runtime/cache/venv. Public installer connected the enhanced endpoint, 39 independent workflow/browser/domain/archive checks passed, and temporary-user rollback restored exact user bytes. No provider was borrowed from either checkout. Like-for-like owned stream cases passed/fail correctly in both v1 and v2; the separately declared file-state channel identified the wrong file in v2. This is finite tool qualification, not a model performance claim. Original Git and frozen deployment hashes checked before migration. Next S6: source-bound final qualification and owned real entry migration/rollback.
