@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "2.0.0.dev0",
+  "version": "2.0.0",
   "baseline_commit": "022e61b803e41569cac1f116ebca2245b9c9b1f8",
   "goal_status": "active",
   "stage": "S6",
@@ -108,7 +108,7 @@
       "tests_next/test_workflow.py"
     ]
   },
-  "next_action": "Finalize source-bound release qualification, then migrate the owned local Codex entry, actually restore and probe the old entry, and select the qualified new entry.",
+  "next_action": "51 source-bound checks passed; repeat clean installation for the final provider inventory/doctor fix, then execute actual local entry migration and rollback.",
   "migration": "not_started; original checkout and desktop entry remain active",
   "limitations": [
     "S0-S5 qualified. Real local migration, rollback connection and final N01-N20 review remain."

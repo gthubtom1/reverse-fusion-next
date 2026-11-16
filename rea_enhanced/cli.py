@@ -16,6 +16,8 @@ def main(argv=None):
     commands.add_parser('mcp')
     commands.add_parser('doctor')
     commands.add_parser('bootstrap')
+    release_parser=commands.add_parser('release-check')
+    release_parser.add_argument('--require-deployed',action='store_true')
     for name in ('install','mcp-check'):
         p=commands.add_parser(name)
         p.add_argument('--home',type=Path)
@@ -43,6 +45,11 @@ def main(argv=None):
         if args.command == 'mcp':
             from .server import serve
             return serve()
+        if args.command=='release-check':
+            from .qualification import release_check
+            result=release_check(require_deployed=args.require_deployed)
+            print(json.dumps(result,ensure_ascii=True,indent=2))
+            return 0 if result['status']=='pass' else 2
         if args.command in {'bootstrap','install','mcp-check','rollback'}:
             root=Path(__file__).resolve().parents[1]
             if args.command=='bootstrap':

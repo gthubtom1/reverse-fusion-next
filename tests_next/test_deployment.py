@@ -72,5 +72,17 @@ class Deployment(unittest.TestCase):
         with self.assertRaises(ValueError):rollback(result['rollback_receipt'],ROOT)
         self.assertEqual(self.paths['config'].read_bytes(),before)
 
+    def test_interrupted_prepared_transaction_can_be_recovered(self):
+        with patch('rea_enhanced.deployment.probe',side_effect=KeyboardInterrupt):
+            with self.assertRaises(KeyboardInterrupt):install(ROOT,self.home)
+        receipts=[path for path in (ROOT/'state/migrations').glob('*.json')
+            if read(path)['files']['config']['path']==str(self.paths['config'])]
+        self.assertEqual(len(receipts),1)
+        self.assertEqual(read(receipts[0])['status'],'prepared')
+        rollback(receipts[0],ROOT)
+        self.assertEqual(self.paths['config'].read_bytes(),self.config)
+        self.assertEqual(self.paths['agents'].read_bytes(),self.agents)
+        self.assertFalse(self.paths['skill'].exists())
+
 
 if __name__=='__main__':unittest.main()

@@ -6,6 +6,8 @@ Start with the original plain request using rf_next_case_open (or python -m rea_
 
 One outcome case owns the goal, features, dependencies, evidence pointers, unknowns and checks. Official REA evidence stays in original bundles; export into the case and import on restart. Host-supplied provenance is labeled. Do not fabricate native proof or treat route pass as analysis success.
 
+The installer/providers --refresh generates skills/tool-index.md and .json from this checkout's actual selected paths. Embedded machine paths/versions in inherited methods are historical examples, never current readiness. A missing index means refresh discovery; an index path still requires the actual selected operation. Do not substitute a CLI for an MCP JAR or Python Frida for the Node binding.
+
 Investigate identity and static evidence when informative. Select observation, providers, unpacking or other methods from actual findings and the authorized task. A key/account is a condition to record, not a universal bypass/dump workflow. Memory capture does not automatically avoid protections or recover source. Missing dependencies block affected functions. Ask concrete human questions only when necessary; continue independent work.
 
 Before implementation record behavior evidence, dependencies, semantic review and checks. Retain all original requirements; an initial slice does not reduce the final goal. Current host implements/builds in the outcome project without a second model. Raw analysis may continue when a provider is missing, keeping dependent official claims unverified.

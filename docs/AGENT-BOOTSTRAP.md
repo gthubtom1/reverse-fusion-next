@@ -10,6 +10,8 @@ powershell -NoProfile -File .\scripts\install.ps1
 
 安装器创建仓库.venv和固定Python依赖，按摘要从固定来源取得Node/REA/Frida/WABT/JADX；npm按锁文件下载且不运行生命周期脚本。随后保存本机工具路径。Ghidra/Java、浏览器、设备、ILSpy和其他provider按目标需要，路径存在不等于实际操作通过；缺少工具不会冒称该类目标可验收。
 
+安装与providers --refresh还会生成skills/tool-index.md/.json，供保留的领域方法读取；索引区分路径发现与实际操作资格。核心doctor会将缺失/变动的Node Frida绑定判为不完整，不能用另一个Python包冒充。
+
 默认只管理当前Codex的reverse-fusion用户技能、全局AGENTS托管段、一个reverse-fusion-rea MCP。保留无关配置与凭据。已有另一checkout的托管入口时显式指定旧绝对路径：
 
 ```powershell

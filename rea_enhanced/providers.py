@@ -42,6 +42,7 @@ def providers(root: Path, refresh=False, overrides=None):
             'paths':selected,'sources':sources,
             'scope':'Configured paths only; actual selected operations establish health.'}
         write(p,result)
+        write_index(root,result)
     else:
         result=read(p) if p.exists() else {'schema_version':2,'repository_root':str(root),'paths':{},'sources':{}}
     if result['repository_root']!=str(root) or set(result['paths'])-set(PATH_KEYS):
@@ -51,6 +52,28 @@ def providers(root: Path, refresh=False, overrides=None):
         try:_existing(key,path)
         except (ValueError,OSError) as exc:missing[key]=str(exc)
     return {**result,'unavailable':missing,'status':'configured' if result['paths'] and not missing else 'incomplete'}
+
+
+def write_index(root,selected):
+    """Meet preserved domain readers with current paths, never historical readiness."""
+    import sys
+    from reverse_fusion.runtime import node_runtime
+    node,_=node_runtime(root)
+    rows={'python':str(Path(sys.executable).resolve()),'rea':str(root/'vendor/rea/package/scripts/rea.mjs')}
+    if node:rows['node']=node
+    rows.update(selected['paths'])
+    payload={'schema_version':2,'repository_root':str(root),'paths':rows,
+        'qualification':'Configured/discovered paths only; operation health is established by actual provider calls',
+        'refresh':'python -m rea_enhanced providers --refresh',
+        'missing_tools':'Not listed means unselected or unavailable; never infer readiness from embedded historical versions'}
+    write(root/'skills/tool-index.json',payload)
+    lines=['# 当前工具路径索引','','来自增强REA的保存路径；不是工具操作通过证明。',
+        '领域文档中的旧路径/版本仅方法例子，本索引与实际调用结果优先。',
+        '未列工具按需发现；不能把JADX MCP JAR当成jadx CLI或把Python Frida当成Node绑定。','',
+        '| 路径键 | 当前路径 | 状态 |','|---|---|---|']
+    lines += ['| '+key+' | '+value.replace('|','\\|')+' | 路径已选择，操作需实测 |' for key,value in sorted(rows.items())]
+    from reverse_fusion.file_updates import atomic_write
+    atomic_write(root/'skills/tool-index.md',('\n'.join(lines)+'\n').encode('utf-8'))
 
 
 def environment(root: Path):

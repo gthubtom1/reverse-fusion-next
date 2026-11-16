@@ -49,7 +49,7 @@ def main():
     python=destination/'.venv/Scripts/python.exe'
     print('Checking actual independent behavior, browser and retained domain content',flush=True)
     tests=run_owned([str(python),'-m','unittest','tests_next.test_workflow','tests_next.test_web',
-        'tests_next.test_domains','tests_next.test_bootstrap','-v'],cwd=destination,stdin=b'',timeout=180,
+        'tests_next.test_domains','tests_next.test_bootstrap','tests_next.test_inventory','-v'],cwd=destination,stdin=b'',timeout=180,
         memory_mb=2048,max_output_bytes=8*1024*1024)
     (evidence/'clean-tests.txt').write_bytes(tests['stdout']+tests['stderr'])
     if tests['status']!='observed' or tests['exit_code']:raise ValueError('Fresh export checks failed; see clean-tests.txt')
@@ -62,6 +62,8 @@ def main():
     if (home/'.agents/skills/reverse-fusion/SKILL.md').exists() or (home/'.codex/AGENTS.md').exists():
         raise ValueError('Fresh rollback did not remove newly owned entries')
     selected=read(destination/'state/rea-providers.json')
+    inventory=read(destination/'skills/tool-index.json')
+    if inventory['repository_root']!=str(destination):raise ValueError('Fresh domain inventory is missing or stale')
     for value in selected['paths'].values():
         path=Path(value).resolve()
         if path.is_relative_to(ROOT) and not path.is_relative_to(destination):
@@ -72,11 +74,11 @@ def main():
         'craft_runtime_present':(destination/'vendor/craft').exists(),
         'spec_present':(destination/'vendor/spec-kit').exists(),
         'copied_runtime_or_cache':False,'mcp_check':read(destination/'state/next-mcp-check.json'),
-        'owned_tests':39,'temporary_home_rollback':'exact user config restored; owned skill and AGENTS absent',
+        'owned_tests':41,'temporary_home_rollback':'exact user config restored; owned skill and AGENTS absent',
         'elapsed_seconds':time.monotonic()-started,'installer_execution':{k:v for k,v in run.items() if k not in {'stdout','stderr'}},
         'scope':'Fresh committed source and runtime installation on this Windows x64 machine using existing external provider tools; not a clean OS or another host/model A/B'}
     write(evidence/'clean-install.json',report)
-    print(json.dumps({'status':'pass','tests':39,'seconds':report['elapsed_seconds'],'craft':False,'spec':False}))
+    print(json.dumps({'status':'pass','tests':41,'seconds':report['elapsed_seconds'],'craft':False,'spec':False}))
 
 
 if __name__=='__main__':main()

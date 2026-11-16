@@ -34,6 +34,7 @@ def inspect(root=ROOT):
     frida={'status':'unavailable','scope':'Node binding identity only; actual enumeration is a separate live operation'}
     if binding.is_file():
         frida['status']='installed' if digest(binding)==pin['binding_sha256'] else 'changed'
+    if frida['status']!='installed':failures.append('Required separate Node Frida binding missing or changed')
     return {'status':'installed' if not failures else 'incomplete','failures':failures,
         'core':{'package':manifest['package'],'version':manifest['version'],'node':node,'node_version':version,
             'runtime_source':source,'original_methods':methods},'providers':selected,'frida':frida,

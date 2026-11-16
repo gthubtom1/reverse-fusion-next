@@ -25,3 +25,7 @@ Enhanced MCP retains all 255 canonical official schemas and prompts unchanged, a
 ## 2026-11-17 / S5 qualified
 
 Fresh committed export omitted retired Craft/Spec source and acquired its own runtime/cache/venv. Public installer connected the enhanced endpoint, 39 independent workflow/browser/domain/archive checks passed, and temporary-user rollback restored exact user bytes. No provider was borrowed from either checkout. Like-for-like owned stream cases passed/fail correctly in both v1 and v2; the separately declared file-state channel identified the wrong file in v2. This is finite tool qualification, not a model performance claim. Original Git and frozen deployment hashes checked before migration. Next S6: source-bound final qualification and owned real entry migration/rollback.
+
+## 2026-11-17 / S6 qualification before migration
+
+Final source version is 2.0.0. 51 actual checks passed with identical source identities before/after. Added prepared-transaction interrupt recovery and fixed two concrete install gaps: generated current domain tool index, and missing/changed Node Frida now makes core doctor incomplete. Both regressions covered. Source-bound release-check refuses stale engineering evidence. Repeating clean installation because provider/doctor code changed; old clean evidence retained under s5/initial. Local user entry still frozen until this repeat passes.

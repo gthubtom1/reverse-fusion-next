@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "version": "2.0.0.dev0",
+  "version": "2.0.0",
   "edition": "windows-x64-codex",
   "status": "qualification-in-progress",
   "requirements": "docs/NEXT/REQUIREMENTS.md",
