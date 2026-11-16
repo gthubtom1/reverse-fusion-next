@@ -1,0 +1,33 @@
+_recorded_unknown) ... ok
+test_concurrent_record_preserves_one_revision (test_workflow.OwnedCase.test_concurrent_record_preserves_one_revision) ... ok
+test_dependency_blocks_only_affected_feature (test_workflow.OwnedCase.test_dependency_blocks_only_affected_feature) ... ok
+test_escape_and_overwrite_rejected (test_workflow.OwnedCase.test_escape_and_overwrite_rejected) ... ok
+test_explicit_check_budget_is_enforced (test_workflow.OwnedCase.test_explicit_check_budget_is_enforced) ... ok
+test_freshness_invalidates_success_after_edit (test_workflow.OwnedCase.test_freshness_invalidates_success_after_edit) ... ok
+test_independent_ordered_state_and_error (test_workflow.OwnedCase.test_independent_ordered_state_and_error) ... ok
+test_interrupted_check_cannot_retain_success (test_workflow.OwnedCase.test_interrupted_check_cannot_retain_success) ... ok
+test_legacy_case_not_silently_written (test_workflow.OwnedCase.test_legacy_case_not_silently_written) ... ok
+test_matching_crashes_are_not_success (test_workflow.OwnedCase.test_matching_crashes_are_not_success) ... ok
+test_missing_evidence_and_inferred_resolution (test_workflow.OwnedCase.test_missing_evidence_and_inferred_resolution) ... ok
+test_nested_case_discovery (test_workflow.OwnedCase.test_nested_case_discovery) ... ok
+test_no_manually_posted_pass (test_workflow.OwnedCase.test_no_manually_posted_pass) ... ok
+test_no_reused_original_identity (test_workflow.OwnedCase.test_no_reused_original_identity) ... ok
+test_normal_development_and_missing_continue (test_workflow.OwnedCase.test_normal_development_and_missing_continue) ... ok
+test_original_request_and_resume (test_workflow.OwnedCase.test_original_request_and_resume) ... ok
+test_plan_change_invalidates_success (test_workflow.OwnedCase.test_plan_change_invalidates_success) ... ok
+test_re_registered_evidence_invalidates_old_check (test_workflow.OwnedCase.test_re_registered_evidence_invalidates_old_check) ... ok
+test_same_stdout_wrong_persistence_fails (test_workflow.OwnedCase.test_same_stdout_wrong_persistence_fails) ... ok
+test_stale_revision_rejected (test_workflow.OwnedCase.test_stale_revision_rejected) ... ok
+test_supplement_retains_original_and_remaining_work (test_workflow.OwnedCase.test_supplement_retains_original_and_remaining_work) ... ok
+test_timeout_is_unknown_and_owned_process_ends (test_workflow.OwnedCase.test_timeout_is_unknown_and_owned_process_ends) ... ok
+test_two_missing_files_are_not_success (test_workflow.OwnedCase.test_two_missing_files_are_not_success) ... ok
+test_unchanged_failure_requires_new_information (test_workflow.OwnedCase.test_unchanged_failure_requires_new_information) ... ok
+test_unchanged_success_is_reused_without_another_run (test_workflow.OwnedCase.test_unchanged_success_is_reused_without_another_run) ... ok
+test_wrong_algorithm_fails (test_workflow.OwnedCase.test_wrong_algorithm_fails) ... ok
+
+----------------------------------------------------------------------
+Ran 72 tests in 72.346s
+
+OK
+
+{'status': 'pass', 'tests': 72}

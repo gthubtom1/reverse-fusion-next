@@ -76,5 +76,46 @@ class WebComparison(unittest.TestCase):
         self.assertEqual(result['status'],'unknown',result)
         self.retain('missing-observation',result)
 
+    def controls(self):
+        html='''<!doctype html><html><body>
+<select id="order"><option value="new">New</option><option value="name">Name</option></select>
+<input type="checkbox" id="enabled"><button id="clear">Clear</button><output id="count">0</output>
+<script>document.querySelector('#clear').onclick=()=>{if(confirm('Remove all?')){
+localStorage.setItem('counter','0');document.querySelector('#count').textContent='cleared';}};</script></body></html>'''
+        for side in ('original','candidate'):
+            (self.root/side/'index.html').write_text(html+('<!-- independent candidate -->' if side=='candidate' else ''),encoding='utf-8')
+        self.plan.update(widths=[390],observe=['#order','#enabled','#count'],scenarios=[{'id':'controls','steps':[
+            {'action':'select','selector':'#order','value':'name'},
+            {'action':'check','selector':'#enabled','checked':True},
+            {'action':'storage','key':'counter','value':'invalid-state'},
+            {'action':'dialog','decision':'dismiss','value':''},
+            {'action':'click','selector':'#clear'},
+            {'action':'dialog','decision':'accept','value':''},
+            {'action':'click','selector':'#clear'},
+            {'action':'reload'}]}])
+        write(self.root/'plan.json',self.plan)
+
+    def test_dropdown_checkbox_storage_and_both_dialog_outcomes(self):
+        self.controls()
+        result=compare(self.root,'plan.json','work/controls')
+        self.assertEqual(result['status'],'pass',result)
+        self.assertEqual(len(result['cases']),8)
+        self.assertEqual(result['cases'][4]['behavior_status'],'pass')
+        self.retain('controls',result)
+
+    def test_changed_dialog_is_a_real_behavior_difference(self):
+        self.controls()
+        p=self.root/'candidate/index.html';p.write_text(p.read_text(encoding='utf-8').replace('Remove all?','Remove some?'),encoding='utf-8')
+        result=compare(self.root,'plan.json','work/wrong-dialog')
+        self.assertEqual(result['status'],'fail',result)
+        self.assertTrue(any('dialogs' in row['differences'] for row in result['cases']))
+
+    def test_undeclared_dialog_cannot_silently_dismiss_and_pass(self):
+        self.controls()
+        self.plan['scenarios'][0]['steps']=[{'action':'click','selector':'#clear'}]
+        write(self.root/'plan.json',self.plan)
+        result=compare(self.root,'plan.json','work/unexpected-dialog')
+        self.assertEqual(result['status'],'unknown',result)
+
 
 if __name__=='__main__':unittest.main()

@@ -9,7 +9,17 @@ from reverse_fusion.owned_process import run_owned
 from .storage import digest, inside, read, write
 
 
-def process_identity(sides):
+def launch_environment(plan):
+    # CLI and MCP hosts add different internal variables. Those are not target
+    # inputs: launch only this explicit environment, plus plan-declared app keys.
+    keys={'SystemRoot','SYSTEMROOT','WINDIR','SystemDrive','COMSPEC','TEMP','TMP','PATH','PATHEXT',
+          'USERPROFILE','HOME','APPDATA','LOCALAPPDATA','PROGRAMDATA','PROGRAMFILES','PROGRAMFILES(X86)',
+          'PYTHONPATH','PYTHONHOME','PYTHONHASHSEED','NODE_PATH','NODE_OPTIONS','JAVA_HOME','JAVA_TOOL_OPTIONS',
+          'LANG','LC_ALL','TZ'} | set(plan.get('environment_keys',[]))
+    return {key:value for key,value in os.environ.items() if key in keys}
+
+
+def process_identity(sides, plan):
     """Bind executable resolution and relevant inherited launch configuration, without secrets."""
     result = {}
     for side, conf in sides.items():
@@ -21,7 +31,7 @@ def process_identity(sides):
             raise ValueError('Replay executable is missing: ' + argv[0])
         executable = executable.resolve()
         result[side] = {'path':str(executable),'sha256':digest(executable)}
-    result['environment_sha256'] = sha256(repr(sorted(os.environ.items())).encode()).hexdigest()
+    result['environment_sha256'] = sha256(repr(sorted(launch_environment(plan).items())).encode()).hexdigest()
     return result
 
 
@@ -55,9 +65,12 @@ def observe_files(root, names):
 
 def validate_plan(project, plan, destination):
     required = {'version', 'scope', 'original', 'candidate', 'scenarios', 'timeout_seconds'}
-    if (set(plan) != required or type(plan['version']) is not int or plan['version'] != 2
+    if (set(plan)-{'environment_keys'} != required or type(plan['version']) is not int or plan['version'] != 2
             or not isinstance(plan['scope'], str) or not plan['scope'].strip()):
         raise ValueError('Version 2 requires scope, two sides, scenarios and timeout_seconds')
+    if (not isinstance(plan.get('environment_keys',[]),list)
+            or any(not isinstance(k,str) or not k or '=' in k or '\0' in k for k in plan.get('environment_keys',[]))):
+        raise ValueError('environment_keys must name explicit additional inherited application inputs')
     if type(plan['timeout_seconds']) not in (int, float) or not 0 < plan['timeout_seconds'] <= 60:
         raise ValueError('Timeout must be in (0, 60]')
     scenarios = plan['scenarios']
@@ -155,7 +168,7 @@ def compare(project: Path, plan_name: str, output: str, cancel_event=None) -> di
         raise ValueError('Preserve previous runs; choose a new output path')
     plan_sha = digest(plan_path)
     engine=engine_identity()
-    launch=process_identity(sides)
+    launch=process_identity(sides,plan)
     destination.mkdir(parents=True)
     started, results, failure = time.perf_counter(), [], None
     try:
@@ -182,7 +195,8 @@ def compare(project: Path, plan_name: str, output: str, cancel_event=None) -> di
                     try:
                         run = run_owned([*argv, *step['args']], cwd=area, stdin=step['stdin'].encode('utf-8'),
                             timeout=min(plan['timeout_seconds'], max(.001, 600 - (time.perf_counter() - started))),
-                            memory_mb=512, max_output_bytes=1024 * 1024, cancel_event=cancel_event)
+                            memory_mb=512, max_output_bytes=1024 * 1024, cancel_event=cancel_event,
+                            env=launch_environment(plan))
                         observed = {k: v for k, v in run.items() if k not in {'stdout', 'stderr'}}
                         observed.update(stdout=base64.b64encode(run['stdout']).decode('ascii'),
                             stderr=base64.b64encode(run['stderr']).decode('ascii'),
@@ -218,7 +232,9 @@ def compare(project: Path, plan_name: str, output: str, cancel_event=None) -> di
     if not plan_path.is_file() or digest(plan_path) != plan_sha:
         changed.append(plan_name)
     if engine_identity()!=engine:changed.append('comparison-engine')
-    if process_identity(sides)!=launch:changed.append('process-runtime')
+    try:
+        if process_identity(sides,plan)!=launch:changed.append('process-runtime')
+    except (OSError,ValueError):changed.append('process-runtime')
     expected_count = sum(len(s['steps']) for s in plan['scenarios'])
     status = ('unknown' if failure or changed or len(results) != expected_count or any(r['status'] == 'unknown' for r in results)
               else 'fail' if any(r['status'] == 'fail' for r in results) else 'pass')
@@ -252,7 +268,7 @@ def fresh(project: Path, result: dict) -> bool:
             plan = read(inside(project,result['plan']))
             sides = {side:{'config':plan[side],'cwd':inside(project,plan[side]['cwd'])}
                      for side in ('original','candidate')}
-            if result.get('process_runtime') != process_identity(sides):
+            if result.get('process_runtime') != process_identity(sides,plan):
                 return False
         return True
     except (OSError, ValueError, KeyError, TypeError):

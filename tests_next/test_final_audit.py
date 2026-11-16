@@ -67,11 +67,21 @@ class FinalAudit(unittest.TestCase):
     def test_application_environment_change_invalidates_success(self):
         import os
         from unittest.mock import patch
+        self.plan['environment_keys']=['RF_OWNED_APP_MODE'];write(self.root/'plan.json',self.plan)
         with patch.dict(os.environ,{'RF_OWNED_APP_MODE':'first'}):
             result=compare(self.root,'plan.json','work/env')
             self.assertTrue(fresh(self.root,result))
         with patch.dict(os.environ,{'RF_OWNED_APP_MODE':'second'}):
             self.assertFalse(fresh(self.root,result))
+
+    def test_host_internal_environment_does_not_break_shared_cli_mcp_freshness(self):
+        import os
+        from unittest.mock import patch
+        with patch.dict(os.environ,{'RF_HOST_SESSION_ONLY':'cli'}):
+            result=compare(self.root,'plan.json','work/host-env')
+            self.assertEqual(result['status'],'pass')
+        with patch.dict(os.environ,{'RF_HOST_SESSION_ONLY':'mcp'}):
+            self.assertTrue(fresh(self.root,result))
 
     def test_external_script_cannot_substitute_both_real_sides(self):
         other=self.root.parent/('external-'+self.root.name+'.py')

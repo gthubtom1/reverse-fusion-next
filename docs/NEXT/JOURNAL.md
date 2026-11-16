@@ -65,3 +65,21 @@ adapted with recorded previous hashes after finding unsupported bridge/case-init
 references. Actual current native Ghidra analysis, bundle export/import in a new server, and fourteen
 new workflow counterexamples passed together. Independent GitHub repository created; origin and local
 main now point there. Full stable qualification and actual remote-clone installation follow.
+
+## 2026-11-17 / clean migration and fresh host observed
+
+Independent main published at d2a5957. Actual public default clone installed with its own downloads
+and venv, all 72 checks passed and temporary-user rollback was exact. Fresh user-owned Codex chat
+01a1e5f2-d510-73c0-beca-9540626d51f9 received only a plain request in a new external outcome folder;
+it actually called rf_next_case_open/record, original REA browser capture and exported original bundle,
+then performed independent core/web checks. This is direct desktop loading evidence, not a CLI probe.
+
+User correctly requested old-runtime isolation. Config was already new-only but old chat connections
+left 90 old launcher/descendant processes. Exact old-path process retirement left zero old endpoints;
+new endpoints and unrelated MCPs were retained. Actual owned uninstall exposed an orphan old end
+comment parser assumption. Fixed, regression added, empty managed registration verified, then new-only
+install and unrelated-byte checks passed. No old source/runtime deletion.
+
+Fresh-host observation also prompted controlled process environments shared by CLI/MCP (internal
+host variables must not cause false stale results) and generic select/check/dialog/storage replay.
+These changes require full requalification and another remote-clone run before final closeout.

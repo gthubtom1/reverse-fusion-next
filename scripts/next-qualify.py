@@ -23,7 +23,7 @@ def main():
         'evidence/next/final-audit/native-provider.json',
         'evidence/next/s2/native-restart-qualified.json',
         *('evidence/next/final-audit/web-'+name+'.json' for name in
-          ('equal','wrong-behavior','wrong-look','missing-observation'))]
+          ('equal','wrong-behavior','wrong-look','missing-observation','controls'))]
     count=re.search(rb'Ran (\d+) tests?',output)
     report={'status':'pass' if run.returncode==0 and before==after else 'fail',
         'exit_code':run.returncode,'tests':int(count[1]) if count else None,

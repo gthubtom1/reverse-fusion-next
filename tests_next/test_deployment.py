@@ -4,7 +4,7 @@ from pathlib import Path
 import tempfile
 import unittest
 from unittest.mock import patch
-from rea_enhanced.deployment import install,rollback,_paths,_mcp_region
+from rea_enhanced.deployment import install,rollback,uninstall,_paths,_mcp_region
 from rea_enhanced.storage import read,write
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -75,6 +75,38 @@ class Deployment(unittest.TestCase):
         before=self.paths['config'].read_bytes()
         with self.assertRaises(ValueError):rollback(result['rollback_receipt'],ROOT)
         self.assertEqual(self.paths['config'].read_bytes(),before)
+
+    def test_clean_uninstall_and_reinstall_has_only_one_owned_server(self):
+        import tomllib
+        install(ROOT,self.home,check=False)
+        result=uninstall(ROOT,self.home)
+        self.assertEqual(result['status'],'uninstalled')
+        self.assertEqual(self.paths['config'].read_bytes(),self.config)
+        self.assertEqual(self.paths['agents'].read_bytes(),self.agents)
+        self.assertFalse(self.paths['skill'].exists())
+        result=install(ROOT,self.home)
+        parsed=tomllib.loads(self.paths['config'].read_text(encoding='utf-8'))
+        self.assertEqual(set(parsed['mcp_servers']),{'user','reverse-fusion-rea'})
+        rollback(result['rollback_receipt'],ROOT)
+
+    def test_uninstall_does_not_remove_modified_owned_skill(self):
+        install(ROOT,self.home,check=False)
+        with self.paths['skill'].open('ab') as stream:stream.write(b'\nUser edit\n')
+        before={k:p.read_bytes() for k,p in self.paths.items()}
+        with self.assertRaisesRegex(ValueError,'changed'):
+            uninstall(ROOT,self.home)
+        self.assertEqual({k:p.read_bytes() for k,p in self.paths.items()},before)
+
+    def test_retired_orphan_end_comment_survives_clean_reinstall(self):
+        original=self.config+b'\n# reverse-fusion:mcp:end\n'
+        self.paths['config'].write_bytes(original)
+        install(ROOT,self.home,check=False)
+        uninstall(ROOT,self.home)
+        self.assertEqual(self.paths['config'].read_bytes(),original)
+        self.assertIsNone(_mcp_region(original,current_owner=ROOT))
+        result=install(ROOT,self.home)
+        rollback(result['rollback_receipt'],ROOT)
+        self.assertEqual(self.paths['config'].read_bytes(),original)
 
     def test_interrupted_prepared_transaction_can_be_recovered(self):
         with patch('rea_enhanced.deployment.probe',side_effect=KeyboardInterrupt):

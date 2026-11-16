@@ -115,6 +115,11 @@ def _mcp_region(payload,legacy_owner=None,current_owner=None):
     if selected_owner and payload.count(BEGIN)==0 and payload.count(END)<=1:
         if any(name in parsed.get('mcp_servers',{}) for name in ('reverse-fusion-rea','reverse-fusion-craft')):
             return _adopt_legacy(payload,parsed,selected_owner)
+    # Codex may move a retired end comment to EOF. With no registration and no
+    # begin block it owns nothing; retain the harmless original comment bytes.
+    if (payload.count(BEGIN)==0 and payload.count(END)<=1
+            and not {'reverse-fusion-rea','reverse-fusion-craft'} & set(parsed.get('mcp_servers',{}))):
+        return None
     if BEGIN not in payload and END not in payload:return None
     if payload.count(BEGIN)!=1 or payload.count(END)<1:raise ValueError('Duplicate/incomplete MCP ownership markers')
     match=re.search(rb'^'+re.escape(BEGIN)+rb'\r?\n',payload,re.M)
@@ -262,6 +267,41 @@ def install(root=ROOT, home=None, replace_from=None, check=True):
         snapshot['status']='installed';write(receipt,snapshot)
         return {'status':'installed','repository':str(root),'rollback_receipt':str(receipt),'mcp_check':checked,
             'desktop_reconnect_required':True,'owned_servers':['reverse-fusion-rea']}
+
+
+def uninstall(root=ROOT,home=None):
+    """Remove this exact owner's entry; retain source/runtime and every unrelated byte."""
+    root=root.resolve();paths=_paths(home)
+    with locked(paths['config'].parent/'reverse-fusion-install.json'):
+        originals={k:p.read_bytes() if p.is_file() else b'' for k,p in paths.items()}
+        skill_owner=_skill_owner(originals['skill']) if originals['skill'] else None
+        agents_region=_region('agents',originals['agents'])
+        current=root if skill_owner==root and agents_region and agents_region.get('owner')==root else None
+        regions={k:_region(k,v,root,current) for k,v in originals.items()}
+        if originals['skill'] and skill_owner!=root:raise ValueError('Skill belongs to another checkout')
+        if originals['skill'].replace(b'\r\n',b'\n')!=skill_text(root).encode().replace(b'\r\n',b'\n') and originals['skill']:
+            raise ValueError('Owned skill changed; preserve it for review')
+        for kind in ('agents','config'):
+            if regions[kind] and regions[kind]['owner']!=root:raise ValueError('Entry belongs to another checkout')
+        if agents_region:
+            from reverse_fusion.global_adapter import _agents_digest
+            metadata=agents_region.get('metadata')
+            if not metadata or _agents_digest(agents_region['block'])!=metadata['block_sha256']:
+                raise ValueError('Owned AGENTS instructions changed; preserve them for review')
+        updated={}
+        for kind,payload in originals.items():
+            region=regions[kind]
+            if region:
+                updated[kind]=payload[:region['start']]+payload[region['end']:]
+        with file_transaction(paths.values()):
+            for kind,payload in updated.items():
+                existed=regions[kind].get('existed',False)
+                if payload or existed:atomic_write(paths[kind],payload)
+                else:paths[kind].unlink(missing_ok=True)
+        return {'status':'uninstalled','repository':str(root),'removed_owned_regions':sorted(updated),
+            'unrelated_before_sha256':{k:sha256(v[:regions[k]['start']]+v[regions[k]['end']:] if regions[k] else v).hexdigest()
+                                      for k,v in originals.items() if k!='skill'},
+            'scope':'Owned entries only; runtime/source retained for recovery. Existing desktop connections require closing/reconnecting.'}
 
 
 def rollback(receipt,root=ROOT):

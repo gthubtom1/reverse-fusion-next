@@ -18,7 +18,7 @@ def main(argv=None):
     commands.add_parser('bootstrap')
     release_parser=commands.add_parser('release-check')
     release_parser.add_argument('--require-deployed',action='store_true')
-    for name in ('install','mcp-check'):
+    for name in ('install','uninstall','mcp-check'):
         p=commands.add_parser(name)
         p.add_argument('--home',type=Path)
         if name=='install':p.add_argument('--replace-from',type=Path)
@@ -50,14 +50,15 @@ def main(argv=None):
             result=release_check(require_deployed=args.require_deployed)
             print(json.dumps(result,ensure_ascii=True,indent=2))
             return 0 if result['status']=='pass' else 2
-        if args.command in {'bootstrap','install','mcp-check','rollback'}:
+        if args.command in {'bootstrap','install','uninstall','mcp-check','rollback'}:
             root=Path(__file__).resolve().parents[1]
             if args.command=='bootstrap':
                 from .bootstrap import bootstrap
                 result=bootstrap(root)
             else:
-                from .deployment import install,probe,rollback
+                from .deployment import install,probe,rollback,uninstall
                 if args.command=='install':result=install(root,args.home,args.replace_from)
+                elif args.command=='uninstall':result=uninstall(root,args.home)
                 elif args.command=='mcp-check':result=probe(root,args.home)
                 else:result=rollback(args.receipt,root)
             print(json.dumps(result,ensure_ascii=True,indent=2))

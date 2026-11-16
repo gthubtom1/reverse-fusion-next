@@ -37,10 +37,25 @@ evidence authority为observed/static/inferred/designed/native-rea-bundle。resol
 
 argv必须实际调用该侧声明的源码/二进制，外部解释器可用但会绑定路径和摘要。
 不能把两侧都指向同一个外部脚本，也不允许inline -c/-e替代声明源码。
-外部输入先复制进各自有限目录。比较还绑定全部继承启动环境的合并摘要，不保存环境值。
+外部输入先复制进各自有限目录。进程使用明确的系统/解释器环境，应用额外需要的环境键
+在计划顶层environment_keys数组中声明；其它宿主内部变量不传入目标。
+比较绑定实际传入环境的合并摘要，不保存环境值，CLI与MCP可共享同一结果。
 进程观察不是完整依赖闭包：系统DLL、网络服务或未声明外部状态仍需宿主确认并重新比较。
 
-网页计划version=1,kind=web，scope,original/candidate(url/cwd/sources),scenarios(id/steps),widths,observe,storage_keys,pixel_tolerance。操作click/fill/press/reload/wait/observe。冻结选择器/存储键/容差；实际新context不读用户profile，分别报告DOM/输入/ARIA/指定存储和截图。例子evidence/next/s3/web/plan.json。需受控服务或独立验证URL对应源码；声明文件本身不认证远程实际代码。
+网页计划version=1,kind=web，scope,original/candidate(url/cwd/sources),scenarios(id/steps),widths,observe,storage_keys,pixel_tolerance。操作click/fill/press/select/check/dialog/storage/reload/wait/observe。冻结选择器/存储键/容差；实际新context不读用户profile，分别报告DOM/输入/ARIA/原生校验/对话框/指定存储和截图。例子evidence/next/s3/web/plan.json。需受控服务或独立验证URL对应源码；声明文件本身不认证远程实际代码。
+
+select使用selector/value；check使用selector/checked布尔值；dialog用decision=accept或dismiss及value字符串，
+在触发确认/提示框的click之前声明，实际比较类型、文字及处理结果；未声明的对话框导致unknown，不能静默取消后算通过。
+storage使用key/value字符串且key必须列入storage_keys，可准备损坏/边界状态后reload。例子：
+
+```json
+{"action":"select","selector":"#order","value":"name"}
+{"action":"check","selector":"#enabled","checked":true}
+{"action":"dialog","decision":"accept","value":""}
+{"action":"click","selector":"#clear"}
+{"action":"storage","key":"state","value":"invalid-json"}
+{"action":"reload"}
+```
 
 结果由实际compare生产，不能record pass。每轮新目录，原始差异保留。缺失观察、同样崩溃、同样缺文件不通过，同源两侧拒绝。结果绑定计划/源码/比较器/证据/功能依据，相关修改失效。复用前检查原回执摘要；改写报告不能制造通过。复用时返回原回执实际路径。默认每check12次，不变通过复用，不变失败/unknown需retry_reason或新内容，预算修改要理由。
 

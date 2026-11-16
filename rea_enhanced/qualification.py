@@ -45,7 +45,7 @@ def release_check(root=ROOT,require_deployed=False):
             if digest(root/name)!=expected:failures.append('Qualified operation evidence changed: '+name)
         for name in ('s2/protocol-qualified.json','s2/native-restart-qualified.json',
                      'final-audit/native-provider.json',
-                     *('final-audit/web-'+n+'.json' for n in ('equal','wrong-behavior','wrong-look','missing-observation'))):
+                     *('final-audit/web-'+n+'.json' for n in ('equal','wrong-behavior','wrong-look','missing-observation','controls'))):
             key='evidence/next/'+name
             if key not in record.get('evidence_sha256',{}) or read(root/key).get('status')!='pass':
                 failures.append('Required operation was not bound to qualification: '+name)

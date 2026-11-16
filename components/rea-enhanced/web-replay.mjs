@@ -16,6 +16,15 @@ try {
       const context = await browser.newContext({viewport:{width,height:800},deviceScaleFactor:1,locale:'en-US',timezoneId:'UTC',reducedMotion:'reduce'});
       const page = await context.newPage();
       page.setDefaultTimeout(5000);
+      let nextDialog=null;
+      const dialogs=[];
+      page.on('dialog',async dialog=>{
+        const requested=nextDialog;nextDialog=null;
+        dialogs.push({type:dialog.type(),message:dialog.message(),defaultValue:dialog.defaultValue(),
+          decision:requested?.decision??'unexpected-dismiss'});
+        if(requested?.decision==='accept') await dialog.accept(requested.value);
+        else await dialog.dismiss();
+      });
       try {
         await page.goto(plan[side].url,{waitUntil:'domcontentloaded',timeout:15000});
         for (let index=0;index<scenario.steps.length;index++) {
@@ -25,6 +34,13 @@ try {
             if(step.action==='click') await page.locator(step.selector).click();
             else if(step.action==='fill') await page.locator(step.selector).fill(step.value);
             else if(step.action==='press') await page.locator(step.selector).press(step.value);
+            else if(step.action==='select') await page.locator(step.selector).selectOption(step.value);
+            else if(step.action==='check') await page.locator(step.selector).setChecked(step.checked);
+            else if(step.action==='dialog') {
+              if(nextDialog) throw new Error('Previous expected dialog did not occur');
+              nextDialog={decision:step.decision,value:step.value};
+            }
+            else if(step.action==='storage') await page.evaluate(({key,value})=>localStorage.setItem(key,value),step);
             else if(step.action==='reload') await page.reload({waitUntil:'domcontentloaded'});
             else if(step.action==='wait') await page.waitForTimeout(step.ms);
             else if(step.action!=='observe') throw new Error('Unsupported action');
@@ -37,6 +53,7 @@ try {
               value:['INPUT','TEXTAREA','SELECT'].includes(e.tagName)?e.value:null,
               checked:e.tagName==='INPUT'&&['checkbox','radio'].includes(e.type)?e.checked:null,
               disabled:'disabled' in e?e.disabled:null,
+              validationMessage:'validationMessage' in e?e.validationMessage:null,
               expanded:e.getAttribute('aria-expanded')}),selector));
           }
           const storage=await page.evaluate(keys=>Object.fromEntries(keys.map(key=>[key,localStorage.getItem(key)])),plan.storage_keys);
@@ -44,7 +61,9 @@ try {
           const screenshot=path.join(output,...relative.split('/'));
           fs.mkdirSync(path.dirname(screenshot),{recursive:true});
           await page.screenshot({path:screenshot,animations:'disabled',caret:'hide'});
-          records.push({scenario:scenario.id,width,side,step:index,error,observations,storage,screenshot:relative});
+          if(dialogs.some(d=>d.decision==='unexpected-dismiss')) error=error??'Undeclared dialog was dismissed';
+          if(index===scenario.steps.length-1&&nextDialog) error=error??'Expected dialog did not occur';
+          records.push({scenario:scenario.id,width,side,step:index,error,observations,storage,dialogs:[...dialogs],screenshot:relative});
           if(error) break;
         }
       } catch(e) {records.push({scenario:scenario.id,width,side,step:0,error:e.message,observations:[],storage:{},screenshot:null});}

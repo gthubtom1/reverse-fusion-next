@@ -2,6 +2,7 @@ test_safe_archive_extracts_to_selected_root (test_bootstrap.ArchiveSafety.test_s
 test_tar_symlink_rejected_before_writes (test_bootstrap.ArchiveSafety.test_tar_symlink_rejected_before_writes) ... ok
 test_unmodified_entry_cannot_hide_missing_execution_module (test_bootstrap.ArchiveSafety.test_unmodified_entry_cannot_hide_missing_execution_module) ... ok
 test_zip_escape_rejected_before_any_write (test_bootstrap.ArchiveSafety.test_zip_escape_rejected_before_any_write) ... ok
+test_clean_uninstall_and_reinstall_has_only_one_owned_server (test_deployment.Deployment.test_clean_uninstall_and_reinstall_has_only_one_owned_server) ... ok
 test_codex_reserialized_enhanced_entry_still_connects_and_rolls_back (test_deployment.Deployment.test_codex_reserialized_enhanced_entry_still_connects_and_rolls_back) ... ok
 test_interrupted_prepared_transaction_can_be_recovered (test_deployment.Deployment.test_interrupted_prepared_transaction_can_be_recovered) ... ok
 test_migrate_legacy_two_servers_then_restore_exact_owned_sections (test_deployment.Deployment.test_migrate_legacy_two_servers_then_restore_exact_owned_sections) ... ok
@@ -9,6 +10,8 @@ test_modified_owned_entry_refuses_rollback (test_deployment.Deployment.test_modi
 test_probe_failure_restores_and_retains_unrelated_edit (test_deployment.Deployment.test_probe_failure_restores_and_retains_unrelated_edit) ... ok
 test_real_registered_server_and_owned_rollback (test_deployment.Deployment.test_real_registered_server_and_owned_rollback) ... ok
 test_reserialized_legacy_comments_require_explicit_exact_adoption (test_deployment.Deployment.test_reserialized_legacy_comments_require_explicit_exact_adoption) ... ok
+test_retired_orphan_end_comment_survives_clean_reinstall (test_deployment.Deployment.test_retired_orphan_end_comment_survives_clean_reinstall) ... ok
+test_uninstall_does_not_remove_modified_owned_skill (test_deployment.Deployment.test_uninstall_does_not_remove_modified_owned_skill) ... ok
 test_unmanaged_conflict_is_not_overwritten (test_deployment.Deployment.test_unmanaged_conflict_is_not_overwritten) ... ok
 test_all_domain_descriptors_and_support_are_available (test_domains.DomainMethods.test_all_domain_descriptors_and_support_are_available) ... ok
 test_chinese_adjacent_technical_names_keep_specialist_routes (test_domains.DomainMethods.test_chinese_adjacent_technical_names_keep_specialist_routes) ... ok
@@ -25,6 +28,7 @@ test_dependency_evidence_replacement_invalidates_dependent_pass (test_final_audi
 test_different_new_target_is_not_silently_discarded (test_final_audit.FinalAudit.test_different_new_target_is_not_silently_discarded) ... ok
 test_external_runtime_change_invalidates_comparison (test_final_audit.FinalAudit.test_external_runtime_change_invalidates_comparison) ... ok
 test_external_script_cannot_substitute_both_real_sides (test_final_audit.FinalAudit.test_external_script_cannot_substitute_both_real_sides) ... ok
+test_host_internal_environment_does_not_break_shared_cli_mcp_freshness (test_final_audit.FinalAudit.test_host_internal_environment_does_not_break_shared_cli_mcp_freshness) ... ok
 test_mcp_reused_result_points_to_real_original_receipt (test_final_audit.FinalAudit.test_mcp_reused_result_points_to_real_original_receipt) ... ok
 test_modified_failure_receipt_cannot_be_reused_as_pass (test_final_audit.FinalAudit.test_modified_failure_receipt_cannot_be_reused_as_pass) ... ok
 test_partial_coverage_and_changed_artifacts_cannot_close (test_final_audit.FinalAudit.test_partial_coverage_and_changed_artifacts_cannot_close) ... ok
@@ -40,8 +44,11 @@ test_native_bundle_survives_new_server (test_mcp.LiveMCP.test_native_bundle_surv
 test_original_catalog_preserved_and_frida_actually_enumerates (test_mcp.LiveMCP.test_original_catalog_preserved_and_frida_actually_enumerates) ... ok
 test_owned_workflow_via_mcp (test_mcp.LiveMCP.test_owned_workflow_via_mcp) ... ok
 test_test_and_public_contract_edits_change_release_identity (test_qualification.Qualification.test_test_and_public_contract_edits_change_release_identity) ... ok
+test_changed_dialog_is_a_real_behavior_difference (test_web.WebComparison.test_changed_dialog_is_a_real_behavior_difference) ... ok
+test_dropdown_checkbox_storage_and_both_dialog_outcomes (test_web.WebComparison.test_dropdown_checkbox_storage_and_both_dialog_outcomes) ... ok
 test_missing_reference_observation_is_unknown (test_web.WebComparison.test_missing_reference_observation_is_unknown) ... ok
 test_same_visual_and_behavior (test_web.WebComparison.test_same_visual_and_behavior) ... ok
+test_undeclared_dialog_cannot_silently_dismiss_and_pass (test_web.WebComparison.test_undeclared_dialog_cannot_silently_dismiss_and_pass) ... ok
 test_wrong_behavior_is_not_hidden_by_initial_look (test_web.WebComparison.test_wrong_behavior_is_not_hidden_by_initial_look) ... ok
 test_wrong_color_does_not_claim_behavior_failure (test_web.WebComparison.test_wrong_color_does_not_claim_behavior_failure) ... ok
 test_cancellation_is_recorded_unknown (test_workflow.OwnedCase.test_cancellation_is_recorded_unknown) ... ok
@@ -72,6 +79,6 @@ test_unchanged_success_is_reused_without_another_run (test_workflow.OwnedCase.te
 test_wrong_algorithm_fails (test_workflow.OwnedCase.test_wrong_algorithm_fails) ... ok
 
 ----------------------------------------------------------------------
-Ran 72 tests in 68.717s
+Ran 79 tests in 88.919s
 
 OK

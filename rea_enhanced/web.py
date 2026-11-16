@@ -44,11 +44,17 @@ def compare_web(project,plan_name,output,cancel_event=None):
         for step in scenario['steps']:
             allowed={'action'}
             action=step.get('action')
-            if action in {'click','fill','press'}:allowed.add('selector')
-            if action in {'fill','press'}:allowed.add('value')
+            if action in {'click','fill','press','select','check'}:allowed.add('selector')
+            if action in {'fill','press','select','dialog','storage'}:allowed.add('value')
+            if action=='check':allowed.add('checked')
+            if action=='dialog':allowed.add('decision')
+            if action=='storage':allowed.add('key')
             if action=='wait':allowed.add('ms')
-            if action not in {'click','fill','press','reload','wait','observe'} or set(step)!=allowed:
+            if action not in {'click','fill','press','select','check','dialog','storage','reload','wait','observe'} or set(step)!=allowed:
                 raise ValueError('Unsupported or malformed web action')
+            if action=='check' and type(step['checked']) is not bool:raise ValueError('Check action requires boolean checked')
+            if action=='dialog' and step['decision'] not in {'accept','dismiss'}:raise ValueError('Dialog decision must be accept or dismiss')
+            if action=='storage' and step['key'] not in plan['storage_keys']:raise ValueError('Storage action key must be in the observed allowlist')
             if action=='wait' and (type(step['ms']) is not int or not 0<=step['ms']<=1000):raise ValueError('Wait must be 0..1000ms')
             if any(not isinstance(step[k],str) or len(step[k])>10000 for k in ('selector','value') if k in step):raise ValueError('Bounded action strings required')
     if steps_count*len(plan['widths'])>60:raise ValueError('At most 60 width/step observations per side')
@@ -102,7 +108,7 @@ def compare_web(project,plan_name,output,cancel_event=None):
                     if right.get('error'):
                         case['behavior_status']='fail';case['differences'].append('candidate-action')
                     else:
-                        for channel in ('observations','storage'):
+                        for channel in ('observations','storage','dialogs'):
                             if left[channel]!=right[channel]:case['differences'].append(channel)
                         case['behavior_status']='fail' if case['differences'] else 'pass'
                     try:

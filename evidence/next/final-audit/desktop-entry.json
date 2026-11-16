@@ -1,0 +1,21 @@
+{
+  "status": "pass",
+  "observer": "current Codex desktop chat",
+  "actual_direct_calls": [
+    {
+      "tool": "rf_next_case_status",
+      "project_root": "D:/Project/reverse-next-plain-audit-20261117",
+      "outcome": "original request and real case revision 8 returned"
+    },
+    {
+      "tool": "binary_session",
+      "client_name": "codex-mcp-client",
+      "client_version": "0.169.0-alpha.11.1",
+      "official_package": "rea-agents@6.9.0",
+      "official_path": "D:/Project/reverse-next/vendor/rea/package/scripts/rea.mjs",
+      "outcome": "actual response; Ghidra available, no current target"
+    }
+  ],
+  "old_craft_catalog_removed_observed": true,
+  "scope": "Actual desktop tool calls after clean redeployment. Enhanced availability is established, not inferred from CLI connection."
+}
