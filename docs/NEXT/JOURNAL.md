@@ -40,4 +40,8 @@ All 53 source-bound checks pass. Exact real configuration preflight additionally
 
 ## 2026-11-17 / S6 engineering closed
 
-Final 53 source-bound checks passed. Final committed-source clean installation (see s5 canonical report) independently reacquired runtime with no Craft/Spec source or binary, completed 41 checks and exact temporary-user rollback. Real local migration and old REA/Craft reconnect rollback passed; final new enhanced endpoint passed release-check with 259 tools. All N01-N20 reviewed against concrete evidence in ACCEPTANCE, with task acceptance/semantic omission/desktop reload scope kept distinct. Original source clean, unrelated global bytes retained. No implementation or migration item remains in the defined Windows x64 Codex edition. Publishing retains old main and the independently maintained next branch.
+Final 53 source-bound checks passed. Final committed-source clean installation (see s5 canonical report) independently reacquired runtime with no Craft/Spec source or binary, completed 41 checks and exact temporary-user rollback. Real local migration and old REA/Craft reconnect rollback passed; final new enhanced endpoint passed release-check with 259 tools. All N01-N20 reviewed against concrete evidence in ACCEPTANCE, with task acceptance/semantic omission/desktop reload scope kept distinct. Original source clean, unrelated global bytes retained. No implementation or migration item remains in the defined Windows x64 Codex edition. Publishing retains the old default branch and the independently maintained next branch.
+
+## 2026-11-17 / publication transport check
+
+GitHub API and Git HEAD both confirm the default branch is master at the frozen 1.4.0 commit. The first next-branch push returned HTTP 408 before creating the branch. Retrying only codex/rea-next with per-command HTTP/1.1 and a bounded non-chunked post buffer; no global Git settings changed.
