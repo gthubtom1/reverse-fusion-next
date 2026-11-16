@@ -41,6 +41,6 @@ test_missing_node_binding_makes_core_doctor_incomplete (tests_next.test_inventor
 test_refresh_generates_current_index_without_fabricated_readiness (tests_next.test_inventory.Inventory.test_refresh_generates_current_index_without_fabricated_readiness) ... ok
 
 ----------------------------------------------------------------------
-Ran 41 tests in 20.558s
+Ran 41 tests in 23.323s
 
 OK

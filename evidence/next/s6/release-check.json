@@ -1,0 +1,33 @@
+{
+  "status": "pass",
+  "version": "2.0.0",
+  "failures": [],
+  "scope": "Source-bound Windows x64 Codex engineering and retained finite evidence",
+  "whole_product_acceptance": "not-established; task-specific coverage remains required",
+  "connection": {
+    "status": "pass",
+    "repository": "D:\\Project\\reverse-next",
+    "registered": {
+      "command": "D:\\Project\\reverse-next\\.venv\\Scripts\\python.exe",
+      "args": [
+        "-m",
+        "rea_enhanced",
+        "mcp"
+      ],
+      "cwd": "D:\\Project\\reverse-next",
+      "startup_timeout_sec": 60,
+      "tool_timeout_sec": 600
+    },
+    "server": {
+      "name": "rea-enhanced",
+      "version": "2.0.0"
+    },
+    "tools": 259,
+    "cleanup": {
+      "status": "verified",
+      "scope": "owned Windows Job active-process count zero before close",
+      "root_returncode": 0
+    },
+    "scope": "Actual registered stdio connection and target-free calls, not desktop hot reload or all provider operations"
+  }
+}

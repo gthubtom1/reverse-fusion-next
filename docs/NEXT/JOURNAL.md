@@ -37,3 +37,7 @@ Live preflight refused the frozen real config before any write: Codex had stripp
 ## 2026-11-17 / S6 actual migration passed
 
 All 53 source-bound checks pass. Exact real configuration preflight additionally covered the old end comment moved to EOF, preserving it outside the owned span. Local entry selected enhanced REA; rollback restored all three frozen user files byte-for-byte, and both original REA binary_session and Craft core_session_show actually connected. Enhanced REA selected again with 259 tools and verified child cleanup. Unrelated bytes and original Git source unchanged. Current old chat catalog did not expose rf_next_case_status; desktop hot reload is not claimed. Final committed-source clean repeat and public closeout remain.
+
+## 2026-11-17 / S6 engineering closed
+
+Final 53 source-bound checks passed. Final committed-source clean installation (see s5 canonical report) independently reacquired runtime with no Craft/Spec source or binary, completed 41 checks and exact temporary-user rollback. Real local migration and old REA/Craft reconnect rollback passed; final new enhanced endpoint passed release-check with 259 tools. All N01-N20 reviewed against concrete evidence in ACCEPTANCE, with task acceptance/semantic omission/desktop reload scope kept distinct. Original source clean, unrelated global bytes retained. No implementation or migration item remains in the defined Windows x64 Codex edition. Publishing retains old main and the independently maintained next branch.

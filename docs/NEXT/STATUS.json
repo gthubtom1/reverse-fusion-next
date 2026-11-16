@@ -2,8 +2,8 @@
   "schema_version": 1,
   "version": "2.0.0",
   "baseline_commit": "022e61b803e41569cac1f116ebca2245b9c9b1f8",
-  "goal_status": "active",
-  "stage": "S6",
+  "goal_status": "complete",
+  "stage": "maintenance",
   "stages": {
     "S0": {
       "status": "done",
@@ -59,58 +59,107 @@
       ]
     },
     "S6": {
-      "status": "in_progress",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "evidence/next/s6/engineering-tests.json",
+        "evidence/next/s6/local-migration.json",
+        "evidence/next/s6/release-check.json",
+        "docs/NEXT/ACCEPTANCE.json"
+      ]
     }
   },
   "requirements_evidence": {
     "N01": [
-      "baseline/identity.json"
+      "baseline/identity.json",
+      "evidence/next/s6/local-migration.json"
     ],
     "N02": [
-      "docs/NEXT/RESUME.md",
-      "docs/NEXT/STATUS.json"
+      "docs/NEXT/REQUIREMENTS.md",
+      "docs/NEXT/PLAN.md",
+      "docs/NEXT/STATUS.json",
+      "docs/NEXT/JOURNAL.md"
     ],
-    "N08": [
-      "tests_next/test_workflow.py"
-    ],
-    "N11": [
-      "tests_next/test_workflow.py"
-    ],
-    "N12": [
-      "evidence/next/s1/vertical.json"
-    ],
-    "N13": [
-      "evidence/next/s1/vertical.json"
-    ],
-    "N15": [
-      "tests_next/test_workflow.py"
+    "N03": [
+      "components/reverse-core/preservation.json",
+      "tests_next/test_domains.py"
     ],
     "N04": [
       "evidence/next/s2/native-live.json",
       "evidence/next/s2/native-restart-qualified.json"
     ],
     "N05": [
-      "evidence/next/s2/protocol-qualified.json"
+      "evidence/next/s2/protocol-qualified.json",
+      "evidence/next/s6/local-migration.json"
     ],
-    "N17": [
-      "evidence/next/s2/frida-live.json",
-      "components/rea-enhanced/provider-bindings.json"
+    "N06": [
+      "evidence/next/s5/clean-install.json"
     ],
-    "N03": [
-      "tests_next/test_domains.py"
+    "N07": [
+      "evidence/next/s1/vertical.json",
+      "evidence/next/s5/clean-install.json"
+    ],
+    "N08": [
+      "tests_next/test_workflow.py",
+      "docs/BEGINNER-GUIDE.md"
+    ],
+    "N09": [
+      "docs/AGENT-WORKFLOW.md",
+      "tests_next/test_domains.py",
+      "skills/reverse-engineering/SKILL.md"
+    ],
+    "N10": [
+      "rea_enhanced/workflow.py",
+      "evidence/next/s2/native-restart-qualified.json"
+    ],
+    "N11": [
+      "tests_next/test_workflow.py",
+      "RULES.md"
+    ],
+    "N12": [
+      "evidence/next/s1/vertical.json"
+    ],
+    "N13": [
+      "evidence/next/s1/vertical.json",
+      "tests_next/test_workflow.py"
     ],
     "N14": [
-      "evidence/next/s3/web/qualification.json"
+      "evidence/next/s3/web/qualification.json",
+      "tests_next/test_web.py"
+    ],
+    "N15": [
+      "tests_next/test_workflow.py"
     ],
     "N16": [
       "tests_next/test_mcp.py",
-      "tests_next/test_workflow.py"
+      "tests_next/test_workflow.py",
+      "tests_next/test_bootstrap.py"
+    ],
+    "N17": [
+      "components/rea-enhanced/provider-bindings.json",
+      "tests_next/test_inventory.py",
+      "evidence/next/s2/protocol-qualified.json"
+    ],
+    "N18": [
+      "evidence/next/s5/baseline-comparison.json"
+    ],
+    "N19": [
+      "evidence/next/s5/clean-install.json",
+      "evidence/next/s6/local-migration.json",
+      "tests_next/test_deployment.py"
+    ],
+    "N20": [
+      "docs/AGENT-BOOTSTRAP.md",
+      "docs/BEGINNER-GUIDE.md",
+      "README.md"
     ]
   },
-  "next_action": "Run one clean committed-source installation for the final client-format compatibility change, then close the requirements record and publish the independent branch.",
-  "migration": "active enhanced REA; real legacy byte restoration and both old connections passed; final selection new",
+  "next_action": "No pending implementation or migration work for the scoped 2.0.0 Windows x64 Codex engineering release. On a new requested change, recheck affected source-bound qualification.",
+  "migration": "active enhanced REA 2.0.0; actual legacy byte restoration and both legacy connections verified before final new selection",
   "limitations": [
-    "S0-S5 qualified. Real local migration, rollback connection and final N01-N20 review remain."
-  ]
+    "Finite fixture/tool engineering qualification is distinct from acceptance of a future target.",
+    "Current existing chat did not expose new tools; desktop hot reload is not asserted.",
+    "Other hosts and arbitrary specialized providers are not claimed as actually run."
+  ],
+  "acceptance": "docs/NEXT/ACCEPTANCE.json",
+  "clean_source_commit": "53ceef8ac512122b8cb3d192b8094e4041a5b398"
 }

@@ -2,11 +2,15 @@
   "schema_version": 2,
   "version": "2.0.0",
   "edition": "windows-x64-codex",
-  "status": "qualification-in-progress",
+  "status": "qualified",
   "requirements": "docs/NEXT/REQUIREMENTS.md",
   "current_status": "docs/NEXT/STATUS.json",
   "craft_runtime": false,
   "spec_mandatory": false,
   "test_suite": "tests_next",
-  "baseline": "baseline/rf-1.4.0"
+  "baseline": "baseline/rf-1.4.0",
+  "local_deployment": "active enhanced REA; original restore tested",
+  "acceptance": "docs/NEXT/ACCEPTANCE.json",
+  "source_bound_engineering": "evidence/next/s6/engineering-tests.json",
+  "clean_source_commit": "53ceef8ac512122b8cb3d192b8094e4041a5b398"
 }

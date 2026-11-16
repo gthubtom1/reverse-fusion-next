@@ -1,0 +1,11 @@
+{
+  "status": "pass",
+  "source_release_check": "pass",
+  "current_version": "2.0.0",
+  "requirements": 20,
+  "stages": "S0-S6 all done",
+  "active_document_count": 19,
+  "missing_active_links": [],
+  "old_source_unchanged": true,
+  "scope": "Final current entry/record consistency; historical docs excluded by the active registry"
+}
