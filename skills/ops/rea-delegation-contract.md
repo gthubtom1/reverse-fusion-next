@@ -1,5 +1,10 @@
 # REA Delegation Contract
 
+> Next适配：当前宿主是唯一推理/编码者，本合同的delegation指给工具后端的有限任务，
+> 不要求创建子模型或第二case。case-v2.json是唯一状态来源；历史scope/workitems/timeline
+> 字段映射为同case中的需求、证据、unknown和事件，按需补充有用的调查材料。
+> 工具会话结束保存原REA bundle。跨模型交接仅在用户明确要求时适用。
+
 ## Purpose
 
 Reverse Fusion remains the only router and case owner. The **current host main agent / lead is the sole acceptance authority** for route, scope, case, timeline, work item, Evidence acceptance, Finding, Path, budgets and replanning. Official REA owns native Evidence/proof production and is a bounded backend after PRIMARY selects a specialist. It does not create another route, scope, case, or evidence graph.

@@ -5,7 +5,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 from rea_enhanced.deployment import install,rollback,_paths,_mcp_region
-from rea_enhanced.storage import read
+from rea_enhanced.storage import read,write
 
 ROOT=Path(__file__).resolve().parents[1]
 
@@ -18,6 +18,10 @@ class Deployment(unittest.TestCase):
         self.config=b'# user comment\r\nmodel = "retained"\r\n[mcp_servers.user]\r\ncommand = "unrelated"\r\n'
         self.agents='用户原有指引\r\n'.encode()
         self.paths['config'].write_bytes(self.config);self.paths['agents'].write_bytes(self.agents)
+        # This exercises legacy configuration ownership, not a Craft runtime.
+        self.previous=self.home/'legacy-fixture'
+        write(self.previous/'components/craft-mcp/manifest.json',{'platforms':{
+            'windows-x64':{'local_path':'vendor/craft/fixture.exe'}}})
 
     def test_real_registered_server_and_owned_rollback(self):
         result=install(ROOT,self.home)
@@ -38,7 +42,7 @@ class Deployment(unittest.TestCase):
     def test_migrate_legacy_two_servers_then_restore_exact_owned_sections(self):
         from reverse_fusion.global_adapter import install_global_adapter
         from reverse_fusion.mcp_adapter import _render,_registrations
-        previous=ROOT.parent/'reverse'
+        previous=self.previous
         install_global_adapter(previous,self.home)
         self.paths['config'].write_bytes(self.config+_render(previous,_registrations(previous),separator=0,original_existed=True))
         before={k:p.read_bytes() for k,p in self.paths.items()}
@@ -87,7 +91,7 @@ class Deployment(unittest.TestCase):
     def test_reserialized_legacy_comments_require_explicit_exact_adoption(self):
         from reverse_fusion.global_adapter import install_global_adapter
         from reverse_fusion.mcp_adapter import _render,_registrations
-        previous=ROOT.parent/'reverse'
+        previous=self.previous
         install_global_adapter(previous,self.home)
         raw=_render(previous,_registrations(previous),separator=0,original_existed=True)
         for mode in ('absent','adjacent','moved-to-eof'):

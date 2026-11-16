@@ -3,8 +3,26 @@ import base64
 from pathlib import Path
 import shutil
 import time
+import os
+from hashlib import sha256
 from reverse_fusion.owned_process import run_owned
 from .storage import digest, inside, read, write
+
+
+def process_identity(sides):
+    """Bind executable resolution and relevant inherited launch configuration, without secrets."""
+    result = {}
+    for side, conf in sides.items():
+        argv = conf['config']['argv']
+        local = conf['cwd']/argv[0]
+        executable = (Path(argv[0]) if Path(argv[0]).is_absolute() else local if local.is_file()
+                      else Path(shutil.which(argv[0]) or ''))
+        if not executable.is_file():
+            raise ValueError('Replay executable is missing: ' + argv[0])
+        executable = executable.resolve()
+        result[side] = {'path':str(executable),'sha256':digest(executable)}
+    result['environment_sha256'] = sha256(repr(sorted(os.environ.items())).encode()).hexdigest()
+    return result
 
 
 def tree(root):
@@ -68,6 +86,8 @@ def validate_plan(project, plan, destination):
                 raise ValueError('Each step needs stdin, args, files and expected reference exit codes')
             for name in step['files']:
                 inside(project, name)
+            if any(Path(arg).is_absolute() for arg in step['args']):
+                raise ValueError('External scenario inputs must be copied into the declared source trees')
     sides = {}
     for side in ('original', 'candidate'):
         conf = plan[side]
@@ -86,11 +106,25 @@ def validate_plan(project, plan, destination):
             if not p.is_file() or not p.is_relative_to(cwd):
                 raise ValueError('Sources must be files under the side cwd')
             refs[name] = digest(p)
+        invoked = []
+        for i, arg in enumerate(conf['argv']):
+            if arg.startswith('-'):
+                continue
+            p = Path(arg)
+            resolved = p.resolve() if p.is_absolute() else (cwd/p).resolve()
+            if i and p.is_absolute() and not resolved.is_relative_to(cwd):
+                raise ValueError('External argv input must be copied into the declared source tree')
+            if resolved.is_file() and resolved.is_relative_to(cwd):
+                invoked.append(resolved)
+        if not any(inside(project,name) in invoked for name in conf['sources']):
+            raise ValueError('Replay argv must actually invoke a declared source, not an unrelated external command')
+        if any(arg in {'-c','-e','--eval','/c','/C','-Command','-EncodedCommand'} for arg in conf['argv'][1:]):
+            raise ValueError('Inline argv code is not a declared source; save it in the side source tree')
         sides[side] = {'config': conf, 'cwd': cwd, 'tree': snapshot, 'sources': refs}
     left, right = sides['original'], sides['candidate']
     if (set(left['sources']) & set(right['sources'])
             or set(left['sources'].values()) == set(right['sources'].values())
-            or left['cwd'] == right['cwd']):
+            or left['cwd'].is_relative_to(right['cwd']) or right['cwd'].is_relative_to(left['cwd'])):
         raise ValueError('Reference and candidate need independent source paths and identities')
     return sides
 
@@ -121,6 +155,7 @@ def compare(project: Path, plan_name: str, output: str, cancel_event=None) -> di
         raise ValueError('Preserve previous runs; choose a new output path')
     plan_sha = digest(plan_path)
     engine=engine_identity()
+    launch=process_identity(sides)
     destination.mkdir(parents=True)
     started, results, failure = time.perf_counter(), [], None
     try:
@@ -183,13 +218,14 @@ def compare(project: Path, plan_name: str, output: str, cancel_event=None) -> di
     if not plan_path.is_file() or digest(plan_path) != plan_sha:
         changed.append(plan_name)
     if engine_identity()!=engine:changed.append('comparison-engine')
+    if process_identity(sides)!=launch:changed.append('process-runtime')
     expected_count = sum(len(s['steps']) for s in plan['scenarios'])
     status = ('unknown' if failure or changed or len(results) != expected_count or any(r['status'] == 'unknown' for r in results)
               else 'fail' if any(r['status'] == 'fail' for r in results) else 'pass')
     result = {'schema_version': 2, 'operation': 'independent-finite-replay', 'status': status,
         'scope': plan['scope'], 'plan': plan_name, 'plan_sha256': plan_sha,
         'sources': {name: value for conf in sides.values() for name, value in conf['sources'].items()},
-        'engine':engine,
+        'engine':engine, 'process_runtime':launch,
         'input_trees': {side: {'cwd': conf['config']['cwd'], 'files': conf['tree']} for side, conf in sides.items()},
         'cases': results, 'changed_inputs': changed, 'failure': failure,
         'elapsed_ms': round((time.perf_counter() - started) * 1000, 3),
@@ -211,6 +247,12 @@ def fresh(project: Path, result: dict) -> bool:
             return False
         for conf in result['input_trees'].values():
             if tree(inside(project, conf['cwd'])) != conf['files']:
+                return False
+        if result.get('operation') == 'independent-finite-replay':
+            plan = read(inside(project,result['plan']))
+            sides = {side:{'config':plan[side],'cwd':inside(project,plan[side]['cwd'])}
+                     for side in ('original','candidate')}
+            if result.get('process_runtime') != process_identity(sides):
                 return False
         return True
     except (OSError, ValueError, KeyError, TypeError):

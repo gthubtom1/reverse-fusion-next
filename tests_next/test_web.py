@@ -7,7 +7,9 @@ import tempfile
 import threading
 import unittest
 from rea_enhanced.comparison import compare,fresh
-from rea_enhanced.storage import write
+from rea_enhanced.storage import write,digest
+
+ROOT=Path(__file__).resolve().parents[1]
 
 HTML='''<!doctype html><html><head><meta charset="utf-8"><style>
 body{font-family:Arial,sans-serif;margin:24px;color:#18202c}
@@ -23,6 +25,12 @@ class Quiet(SimpleHTTPRequestHandler):
 
 
 class WebComparison(unittest.TestCase):
+    def retain(self,name,result):
+        write(ROOT/('evidence/next/final-audit/web-'+name+'.json'),{
+            'status':'pass','observed_comparison_status':result['status'],'comparison':result,
+            'test_sha256':digest(Path(__file__)),
+            'scope':'Actual finite browser assertions in this test; not a whole website acceptance'})
+
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup);self.root=Path(self.temp.name)
         self.servers=[]
@@ -44,6 +52,7 @@ class WebComparison(unittest.TestCase):
         self.assertEqual(result['status'],'pass',result)
         self.assertTrue(all(r['behavior_status']=='pass' and r['visual_status']=='pass' for r in result['cases']))
         self.assertTrue(fresh(self.root,result))
+        self.retain('equal',result)
 
     def test_wrong_behavior_is_not_hidden_by_initial_look(self):
         (self.root/'candidate/index.html').write_text(HTML.replace('CODE',CANDIDATE.replace('x+=1','x+=2')),encoding='utf-8')
@@ -51,6 +60,7 @@ class WebComparison(unittest.TestCase):
         self.assertEqual(result['status'],'fail',result)
         self.assertTrue(any(r['behavior_status']=='fail' for r in result['cases']))
         self.assertTrue(any(r['behavior_status']=='pass' for r in result['cases']))
+        self.retain('wrong-behavior',result)
 
     def test_wrong_color_does_not_claim_behavior_failure(self):
         (self.root/'candidate/index.html').write_text(HTML.replace('CODE',CANDIDATE).replace('#2463eb','#db2443'),encoding='utf-8')
@@ -58,11 +68,13 @@ class WebComparison(unittest.TestCase):
         self.assertEqual(result['status'],'fail',result)
         self.assertTrue(all(r['behavior_status']=='pass' for r in result['cases']))
         self.assertTrue(any(r['visual_status']=='fail' for r in result['cases']))
+        self.retain('wrong-look',result)
 
     def test_missing_reference_observation_is_unknown(self):
         self.plan['observe']=['#does-not-exist'];write(self.root/'plan.json',self.plan)
         result=compare(self.root,'plan.json','work/unknown')
         self.assertEqual(result['status'],'unknown',result)
+        self.retain('missing-observation',result)
 
 
 if __name__=='__main__':unittest.main()

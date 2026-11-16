@@ -1,8 +1,8 @@
-# Reverse Fusion 2.0：Reverse方法＋增强REA
+# Reverse Fusion Next：Reverse方法＋增强REA
 
 用白话交给智能体：分析软件、APK或网站，保留完整目标，在证据足够时实现，再独立比较并修正。普通开发保持宿主原生流程，纯分析可以只交报告。
 
-本版在独立目录和分支开发，基于1.4.0提交`022e61b803e41569cac1f116ebca2245b9c9b1f8`。原仓库和旧版基线保留。实际资格及本机切换见[当前状态](docs/CURRENT-STATE.md)。
+本版为独立项目 [reverse-fusion-next](https://github.com/gthubtom1/reverse-fusion-next)，基于1.4.0提交`022e61b803e41569cac1f116ebca2245b9c9b1f8`。旧项目和基线保留。实际资格及本机切换见[当前状态](docs/CURRENT-STATE.md)。
 
 运行核心只有两部分：
 
@@ -14,7 +14,7 @@
 安装范围为Windows x64、Codex。将本版放在长期保留目录：
 
 ```powershell
-git clone --branch codex/rea-next --single-branch https://github.com/gthubtom1/reverse-fusion.git D:\Project\reverse-next
+git clone https://github.com/gthubtom1/reverse-fusion-next.git D:\Project\reverse-next
 cd D:\Project\reverse-next
 powershell -NoProfile -File .\scripts\install.ps1
 ```

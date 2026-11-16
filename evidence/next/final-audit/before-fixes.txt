@@ -1,0 +1,98 @@
+test_critical_unknown_cannot_have_no_affected_scope (tests_next.test_final_audit.FinalAudit.test_critical_unknown_cannot_have_no_affected_scope) ... FAIL
+test_different_new_target_is_not_silently_discarded (tests_next.test_final_audit.FinalAudit.test_different_new_target_is_not_silently_discarded) ... FAIL
+test_external_runtime_change_invalidates_comparison (tests_next.test_final_audit.FinalAudit.test_external_runtime_change_invalidates_comparison) ... FAIL
+test_external_script_cannot_substitute_both_real_sides (tests_next.test_final_audit.FinalAudit.test_external_script_cannot_substitute_both_real_sides) ... FAIL
+test_modified_failure_receipt_cannot_be_reused_as_pass (tests_next.test_final_audit.FinalAudit.test_modified_failure_receipt_cannot_be_reused_as_pass) ... FAIL
+test_plain_continue_with_new_requirement_is_preserved (tests_next.test_final_audit.FinalAudit.test_plain_continue_with_new_requirement_is_preserved) ... ERROR
+test_resolution_does_not_follow_replaced_evidence (tests_next.test_final_audit.FinalAudit.test_resolution_does_not_follow_replaced_evidence) ... FAIL
+test_cancellation_is_recorded_unknown (tests_next.test_workflow.OwnedCase.test_cancellation_is_recorded_unknown) ... ok
+test_concurrent_record_preserves_one_revision (tests_next.test_workflow.OwnedCase.test_concurrent_record_preserves_one_revision) ... ok
+test_dependency_blocks_only_affected_feature (tests_next.test_workflow.OwnedCase.test_dependency_blocks_only_affected_feature) ... ok
+test_escape_and_overwrite_rejected (tests_next.test_workflow.OwnedCase.test_escape_and_overwrite_rejected) ... ok
+test_explicit_check_budget_is_enforced (tests_next.test_workflow.OwnedCase.test_explicit_check_budget_is_enforced) ... ok
+test_freshness_invalidates_success_after_edit (tests_next.test_workflow.OwnedCase.test_freshness_invalidates_success_after_edit) ... ok
+test_independent_ordered_state_and_error (tests_next.test_workflow.OwnedCase.test_independent_ordered_state_and_error) ... ok
+test_interrupted_check_cannot_retain_success (tests_next.test_workflow.OwnedCase.test_interrupted_check_cannot_retain_success) ... ok
+test_legacy_case_not_silently_written (tests_next.test_workflow.OwnedCase.test_legacy_case_not_silently_written) ... ok
+test_matching_crashes_are_not_success (tests_next.test_workflow.OwnedCase.test_matching_crashes_are_not_success) ... ok
+test_missing_evidence_and_inferred_resolution (tests_next.test_workflow.OwnedCase.test_missing_evidence_and_inferred_resolution) ... ok
+test_nested_case_discovery (tests_next.test_workflow.OwnedCase.test_nested_case_discovery) ... ok
+test_no_manually_posted_pass (tests_next.test_workflow.OwnedCase.test_no_manually_posted_pass) ... ok
+test_no_reused_original_identity (tests_next.test_workflow.OwnedCase.test_no_reused_original_identity) ... ok
+test_normal_development_and_missing_continue (tests_next.test_workflow.OwnedCase.test_normal_development_and_missing_continue) ... ok
+test_original_request_and_resume (tests_next.test_workflow.OwnedCase.test_original_request_and_resume) ... ok
+test_plan_change_invalidates_success (tests_next.test_workflow.OwnedCase.test_plan_change_invalidates_success) ... ok
+test_re_registered_evidence_invalidates_old_check (tests_next.test_workflow.OwnedCase.test_re_registered_evidence_invalidates_old_check) ... ok
+test_same_stdout_wrong_persistence_fails (tests_next.test_workflow.OwnedCase.test_same_stdout_wrong_persistence_fails) ... ok
+test_stale_revision_rejected (tests_next.test_workflow.OwnedCase.test_stale_revision_rejected) ... ok
+test_supplement_retains_original_and_remaining_work (tests_next.test_workflow.OwnedCase.test_supplement_retains_original_and_remaining_work) ... ok
+test_timeout_is_unknown_and_owned_process_ends (tests_next.test_workflow.OwnedCase.test_timeout_is_unknown_and_owned_process_ends) ... ok
+test_two_missing_files_are_not_success (tests_next.test_workflow.OwnedCase.test_two_missing_files_are_not_success) ... ok
+test_unchanged_failure_requires_new_information (tests_next.test_workflow.OwnedCase.test_unchanged_failure_requires_new_information) ... ok
+test_unchanged_success_is_reused_without_another_run (tests_next.test_workflow.OwnedCase.test_unchanged_success_is_reused_without_another_run) ... ok
+test_wrong_algorithm_fails (tests_next.test_workflow.OwnedCase.test_wrong_algorithm_fails) ... ok
+
+======================================================================
+ERROR: test_plain_continue_with_new_requirement_is_preserved (tests_next.test_final_audit.FinalAudit.test_plain_continue_with_new_requirement_is_preserved)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Project\reverse-next\tests_next\test_final_audit.py", line 26, in test_plain_continue_with_new_requirement_is_preserved
+    self.assertIn('�������ټ��ϵ������ܣ�ǰ���ҲҪ����', result['supplements'])
+                                        ~~~~~~^^^^^^^^^^^^^^^
+KeyError: 'supplements'
+
+======================================================================
+FAIL: test_critical_unknown_cannot_have_no_affected_scope (tests_next.test_final_audit.FinalAudit.test_critical_unknown_cannot_have_no_affected_scope)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Project\reverse-next\tests_next\test_final_audit.py", line 39, in test_critical_unknown_cannot_have_no_affected_scope
+    with self.assertRaisesRegex(ValueError, 'scope|affected'):
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_different_new_target_is_not_silently_discarded (tests_next.test_final_audit.FinalAudit.test_different_new_target_is_not_silently_discarded)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Project\reverse-next\tests_next\test_final_audit.py", line 19, in test_different_new_target_is_not_silently_discarded
+    self.assertEqual(result['status'], 'needs-context')
+AssertionError: 'implementation' != 'needs-context'
+- implementation
++ needs-context
+
+
+======================================================================
+FAIL: test_external_runtime_change_invalidates_comparison (tests_next.test_final_audit.FinalAudit.test_external_runtime_change_invalidates_comparison)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Project\reverse-next\tests_next\test_final_audit.py", line 65, in test_external_runtime_change_invalidates_comparison
+    self.assertFalse(fresh(self.root,result))
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_external_script_cannot_substitute_both_real_sides (tests_next.test_final_audit.FinalAudit.test_external_script_cannot_substitute_both_real_sides)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Project\reverse-next\tests_next\test_final_audit.py", line 74, in test_external_script_cannot_substitute_both_real_sides
+    with self.assertRaisesRegex(ValueError,'external|source|argv'):
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_modified_failure_receipt_cannot_be_reused_as_pass (tests_next.test_final_audit.FinalAudit.test_modified_failure_receipt_cannot_be_reused_as_pass)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Project\reverse-next\tests_next\test_final_audit.py", line 50, in test_modified_failure_receipt_cannot_be_reused_as_pass
+    self.assertFalse(checked.get('reused',False))
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_resolution_does_not_follow_replaced_evidence (tests_next.test_final_audit.FinalAudit.test_resolution_does_not_follow_replaced_evidence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Project\reverse-next\tests_next\test_final_audit.py", line 35, in test_resolution_does_not_follow_replaced_evidence
+    self.assertFalse(status(self.root)['ready_features'])
+AssertionError: ['F1'] is not false
+
+----------------------------------------------------------------------
+Ran 33 tests in 8.743s
+
+FAILED (failures=6, errors=1)

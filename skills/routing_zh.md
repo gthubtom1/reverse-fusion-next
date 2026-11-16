@@ -1,13 +1,13 @@
 # 逆向技能路由矩阵
 
-按目标类型、用户意图和工具链整理的中文参考矩阵。当前有效源为仓库根 `components/reverse-core/routing.json`，默认由 `reverse_fusion bridge`使用，兼容master-route也读取同一源；`skills/config/routing.json`只保留上游基线。本表用于解释和人工补充，不覆盖实际PRIMARY输出。
+按目标类型、用户意图和工具链整理的中文参考矩阵。当前有效源为仓库根 `components/reverse-core/routing.json`，默认由 `rea_enhanced open`的route使用，兼容master-route也读取同一源；`skills/config/routing.json`只保留上游基线。本表用于解释和人工补充，不覆盖实际PRIMARY输出。
 
 ## CRITICAL: 路由判定执行协议
 
-1. `MUST` 通过共享 `reverse_fusion bridge`定PRIMARY；兼容master-route使用同一有效源 `components/reverse-core/routing.json`。本表只作人工补充。
+1. `MUST` 通过共享 `rea_enhanced open`的route定PRIMARY；兼容master-route使用同一有效源 `components/reverse-core/routing.json`。本表只作人工补充。
 2. `SHOULD` 先读 `MASTER-ROUTING.md` 或运行 `scripts/master-route.ps1` 定 PRIMARY；本表用于疑难补全。
 3. `MUST` 输出你的路由依据（目标类型/意图/工具链至少命中一项）。
-4. `MUST` 对目标 ACT 前完成 `case-init` / `scope.md`（`ops/scope-contract.md`）：`auth.status=granted` + `network_profile`。
+4. `MUST` 对目标 ACT 前按 `ops/scope-contract.md` 核对已有用户授权、目标与网络边界；同case保存范围信息，不运行旧case-init创建第二权威。
 5. `MUST NOT` 因为“看起来差不多”把任务塞进不匹配 skill。
 6. `MUST` 路由未命中时保留低置信度并按主路由要求补充证据；是否联网取决于当前 scope 和用户授权，不因本表自动联网。
 7. `MUST NOT` 只回复“请给具体任务”；应先基于现有输入启动可确定步骤。

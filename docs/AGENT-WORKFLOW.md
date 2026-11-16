@@ -9,6 +9,17 @@
 5. 每功能record feature（description/evidence/checks/dependencies/review），审查输入、输出、状态、错误和外部依赖，不能靠默认值补事实。critical unknown只阻断相关功能。先做可验证部分，保留全部剩余目标。
 6. 当前宿主实际写入、构建、运行。按COMPARISON.md冻结计划，独立运行原版/候选，行为与视觉分开。只有实际compare可记结果，不能手填passed。失败带差异回实现/分析，证据不足保留unknown。
 7. 相关修改使旧通过失效；不变通过复用，不变失败需新信息。默认每check 12次，可记理由调整预算。中断先status恢复，用新输出目录，不覆盖记录、不无限空转。
-8. 逐项回看原话与补充，说明实际验证和缺口。finite-scope-verified只覆盖已声明检查，不能把全产品改成演示。纯分析可deliver_analysis交报告，无需构建或Spec。
+8. 逐项回看原话与每条补充，用record coverage持久保存需求→功能映射及语义审查。
+   每条原话来源/补充和每个功能均须覆盖；有未实现要求则继续保留，不能改名关闭。
+   所有声明检查新鲜通过、未知项解决且成果文件齐全后，record deliver保存实际交付。
+   reviewed-delivery表示宿主审查后的声明范围交付，不是自动证明全程序等价。
+   新补充、功能/证据/未知项/成果/比较变化会使相应审查或交付失效。
+   finite-scope-verified只覆盖已声明检查，不能把全产品改成演示。
+   纯分析可deliver_analysis交报告，无需构建或Spec。
+
+已有case收到不同目标时open返回needs-context并携带incoming_request；智能体为新目标
+选择独立case_root，或明确把它作为当前目标的supplement，不可静默丢弃。
+“继续，再增加……”自动保存完整补充；无歧义的“继续”保持原记录。
+unknown影响整个调查时显式scope=case；未指明影响范围的关键未知不能悄悄放行。
 
 操作见COMPARISON.md，安装见AGENT-BOOTSTRAP.md，恢复见RECOVERY.md。旧领域资料用于专业知识；旧Spec/Craft实现指令由本文件、根RULES和当前reconstruction技能取代。

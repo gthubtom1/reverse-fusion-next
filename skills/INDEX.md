@@ -107,5 +107,5 @@ skills/windows-ad/SKILL.md/
 
 ## 路由
 
-当前PRIMARY由仓库根 `components/reverse-core/routing.json` 驱动，默认用仓库venv的 `reverse_fusion bridge`；兼容master-route读取同一有效源。`skills/config/routing.json`只保留上游基线。完整部署见 [本仓库部署入口](../docs/AGENT-BOOTSTRAP.md)。
+当前PRIMARY由仓库根 `components/reverse-core/routing.json` 驱动，通过增强入口 `rea_enhanced open` 的route返回；只读方法查询使用router.py。兼容master-route读取同一有效源。`skills/config/routing.json`只保留上游基线。完整部署见 [本仓库部署入口](../docs/AGENT-BOOTSTRAP.md)。
 歧义场景读 `skills/routing.md` 全矩阵；CTF 多类型任务走 `CTF-Sandbox-Orchestrator/`。

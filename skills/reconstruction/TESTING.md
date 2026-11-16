@@ -1,3 +1,5 @@
+> Next说明：下文为保留的方法/历史记录；当前入口为rea_enhanced open，唯一状态为case-v2，具体操作以根RULES及docs/AGENT-WORKFLOW为准。旧case-init、Spec/Craft命令不是当前要求。
+
 # 验证记录 / Validation record
 
 本记录仅覆盖 `skills/reconstruction/` 自身。源码文件限 Markdown/Python/JSON；样例完全合成脱敏，无真实目标、二进制、真实 REA 导出或伪造 semantic ID。未执行 git add/commit/push；共享路由、工具发现、原 tests/CI 和 installer 均由主流程集成。

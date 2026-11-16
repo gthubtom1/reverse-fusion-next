@@ -1,8 +1,8 @@
 {
   "schema_version": 2,
-  "version": "2.0.0",
+  "version": "2.1.0",
   "edition": "windows-x64-codex",
-  "status": "qualified",
+  "status": "source-bound-release-check-required",
   "requirements": "docs/NEXT/REQUIREMENTS.md",
   "current_status": "docs/NEXT/STATUS.json",
   "craft_runtime": false,
@@ -12,5 +12,7 @@
   "local_deployment": "active enhanced REA; original restore tested",
   "acceptance": "docs/NEXT/ACCEPTANCE.json",
   "source_bound_engineering": "evidence/next/s6/engineering-tests.json",
-  "clean_source_commit": "53ceef8ac512122b8cb3d192b8094e4041a5b398"
+  "repository": "https://github.com/gthubtom1/reverse-fusion-next",
+  "default_branch": "main",
+  "independent_install": "evidence/next/final-audit/remote-install.json"
 }

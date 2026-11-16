@@ -11,12 +11,12 @@ description: Routes reverse engineering, exploitation, penetration testing, malw
 先判断当前请求是**只读审查/摘要/比较/维护设计**，还是要求对目标或仓库产生副作用。
 
 - 只读模式：读取规则、证据和代码；需要路由时仅调用原生 `-DryRun` / `--dry-run`，只输出 PRIMARY、零文件写入。不得创建 case、启动 provider、安装工具、写入 case/journal/index 或修改客户端配置。报告结论和未知项后停止在只读边界。
-- 执行模式：当前任务与既有授权决定可执行范围，按下列顺序执行；已涵盖的可恢复技术动作连续推进，不重复索取首步批准。新增影响或缺少授权时才请求具体决定。目标授权仍由 `scope.md` 独立控制。
+- 执行模式：当前任务与既有授权决定可执行范围，按下列顺序执行；已涵盖的可恢复技术动作连续推进，不重复索取首步批准。新增影响或缺少授权时才请求具体决定。范围信息保存在同case的证据材料，不能由文档自动授予权限。
 
 ### 执行模式 hot path
 
 1. `NOW`：先用共享 `rea_enhanced open` 定PRIMARY并保存原始目标；兼容的 `scripts/master-route.ps1` / `.sh`同样读取 `components/reverse-core/routing.json`。疑难再读 `routing.md` 三轴附录。
-2. `NEXT`：平台原生 `case-init` 落地当前分析项目的 `work/<case>/scope.md`；**auth 未 granted 禁止对目标 ACT**。本地离线样本使用 `offline-sample` preset + explicit sample；Force 不得绕过硬门。
+2. `NEXT`：按 `ops/scope-contract.md` 核对当前用户请求、目标和影响边界，复用已有授权；状态仍在case-v2，不运行旧case-init创建第二账本。缺权限只阻断相应动作，不能凭模板或本地文件制造授权。
 3. `ACT`：打开 PRIMARY `SKILL.md`，执行其 ACTION REQUIRED。
 4. `NEXT`：工具路径只认 `tool-index.md`；缺工具只在已批准的 bootstrap 计划内调用平台原生 bootstrap。
 5. 结论用 Evidence→Finding→Path。任务完成时按 `RULES.md` 的适用收尾清单处理；只读审查、范围未就绪或明确不适用的项目只记录原因，不伪造完成。

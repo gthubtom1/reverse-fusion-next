@@ -5,7 +5,7 @@
 Reverse Fusion适配：当前有效路由是仓库根`components/reverse-core/routing.json`，
 `skills/config/routing.json`仅保留上游基线。核心和宿主部署归根AGENT-BOOTSTRAP；
 本文只指导领域内容维护。新增技能的执行、工具准备及经验回写服从当前用户授权，
-不能因模板要求自动联网、安装服务或改宿主配置。原生Craft的当前职责见
+不能因模板要求自动联网、安装服务或改宿主配置。宿主原生实现与增强比较的当前职责见
 [execution-backend](reconstruction/references/execution-backend.md)。
 
 ---

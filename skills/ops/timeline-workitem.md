@@ -1,3 +1,5 @@
+> Next说明：下文为保留的方法/历史记录；当前入口为rea_enhanced open，唯一状态为case-v2，具体操作以根RULES及docs/AGENT-WORKFLOW为准。旧case-init、Spec/Craft命令不是当前要求。
+
 # Timeline + WorkItem / Coverage
 
 > 可回放作战记录（Z3r0 timeline 思想）+ 覆盖勾选（WorkItem 思想）。  

@@ -1,119 +1,24 @@
-# 通用 Scope 契约（任务启动硬门槛）
+# 当前任务的范围与授权
 
-> **MUST**：任何安全/逆向/渗透任务在 **ACT 之前** 在当前用户分析项目的 `work/<case>/` 落地 `scope.md`。
-> 无 scope → 只允许读文档/路由，**禁止** 对目标主动扫描、Hook、利用。
-> 模板可复制；字段名保持英文键，便于脚本校验。
+本版使用同一个case-v2.json。用户原话与补充保持原样，相关范围材料作为evidence文件引用。
+不要求运行旧case-init、不创建第二case、不要求用户选择专业preset或重复批准已授权动作。
+旧版scope.md字段和脚本是baseline/rf-1.4.0历史，不能作为新版必经流程。
 
-## 如何初始化
+行动前由当前宿主核对：目标身份及原件/副本、用户要求的结果、允许的动作与写入位置、
+联网/设备/账号影响、时间/资源预算以及清理/回退。已有会话指令可以提供授权，
+不能把模板、样本名称、模型自述或本地auth字段当成用户授权。
 
-Windows：
+普通开发保持宿主原生。分析可先做当前范围内的身份与静态资料读取；目标执行、
+网络请求、设备操作、持久修改等依赖其实际授权。仅缺少某项资料或权限时，只阻断
+依赖它的动作，继续其它工作。工具选择和同范围技术转场由宿主决定，不给新手工具菜单。
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File skills\scripts\case-init.ps1 -Hint "<任务一句话>" -CaseName "my-case"
-# 默认产出：当前分析项目的 work/<case>/scope.md 等
-# 从其他目录调用 skill 时显式指定：-ProjectRoot "C:\path\to\analysis-project"
+有实质范围变化时，用白话解释具体影响、请求所缺决定；把回答原文作为supplement或
+引用的范围材料保存。没有变化则沿用原回答，避免反复询问。
 
-# 合法本地离线样本：auth granted + offline + explicit sample → ready_for_act=true
-powershell -NoProfile -ExecutionPolicy Bypass -File skills\scripts\case-init.ps1 `
-  -Hint "offline apk" -CaseName "my-sample" -Preset offline-sample -Sample ".\app.apk"
-```
+调查材料可包含 target/path/sha256、allowed_actions、write_paths、network、device、
+budget、cleanup 和用户指令出处。格式按问题需要；不另造授权系统或强制额外账本。
+相关未知用record unknown绑定features或scope=case；有新鲜依据后resolve。
 
-Linux / macOS / Kali：
-
-```bash
-bash skills/scripts/case-init.sh --hint "<任务一句话>" --case-name "my-case"
-# 默认产出：caller 当前分析项目的 work/<case>/scope.md 等
-# 从其他目录调用时显式指定：--project-root "/path/to/analysis-project"
-
-# 合法本地离线样本
-bash skills/scripts/case-init.sh \
-  --hint "offline apk" --case-name "my-sample" \
-  --preset offline-sample --sample ./app.apk
-```
-
-`-PackageRoot` / `--package-root` 保留为兼容参数；新流程应以 `ProjectRoot` / `--project-root` 表示 case artifact 的归属项目。
-
-`offline` 只有在 `in_scope.assets` 中至少有一个能按 case root 相对路径（或明确绝对路径）打开的可读 regular file 时才可进入 ready 状态。URL、域名、普通字符串或仅因包含 `sample`/扩展名而看起来像文件的值不能满足该条件；无法判定为可读本地文件时，guard/review 必须记录失败原因。`in_scope.assets`、`network_profile.mode` 等权威字段以及四个硬门 section 必须唯一，CRLF 与 LF 等价。
-
-## scope.md 完整模板
-
-```markdown
-# Case Scope
-
-## meta
-- case_id: {YYYYMMDD-short}
-- created: {ISO-8601}
-- operator: {name or local}
-- project_root: {caller analysis project}
-- primary_skill: {from master-route}
-- lead_role: lead   # see ops/role-map.md
-- specialist_roles: []  # e.g. cie, cpe, cre
-
-## auth
-- status: granted | pending | denied
-- basis: written_contract | bug_bounty_scope | ctf_public | own_system | lab_only
-- evidence_of_auth: {ticket/path or "CTF public" or "owner-operated"}
-- MUST NOT proceed if status != granted
-
-## in_scope
-- assets: []          # hosts, domains, APK paths, binaries, URLs
-- surfaces: []        # web, mobile, binary, network, api
-- activities: []      # recon, reverse, exploit_validate, report
-
-## out_of_scope
-- assets: []
-- activities: []      # e.g. DoS, phishing real users, data exfil
-
-## network_profile
-- mode: offline | lab_only | authorized_target_only | unrestricted_lab
-- notes: |
-    offline = 无对外发包（纯静态/本地样本）
-    lab_only = 仅 lab/VM IP
-    authorized_target_only = 仅 in_scope 资产
-- MUST NOT use unrestricted against production without written auth
-
-## deliverables
-- report: true
-- field_journal: true
-- diagrams: true
-- timeline: true
-
-## constraints
-- timebox: {}
-- stealth: low | medium | high
-- data_handling: anonymize | no_user_pii
-
-## signoff
-- ready_for_act: false
-- checklist:
-  - [ ] auth.status = granted
-  - [ ] in_scope.assets non-empty OR offline sample path set
-  - [ ] network_profile.mode chosen
-  - [ ] out_of_scope reviewed
-```
-
-## 路由挂钩（AI 必须执行）
-
-```text
-RULES / MASTER-ROUTING / SKILL:
-  1) master-route → PRIMARY
-  2) 平台原生 case-init 或手写 scope.md
-  3) auth 未 granted → STOP，只允许补授权材料
-  4) ready_for_act = true → 打开 PRIMARY SKILL.md → ACT
-```
-
-`case-guard -Force` / `case-guard --force` 是兼容参数，**不得**绕过 `auth.status`、合法 scope、network profile 或 `ready_for_act` 硬门。
-
-## network_profile 速查
-
-| mode | 允许 | 禁止 |
-|------|------|------|
-| `offline` | 静态分析、本地文件、模拟 | 任意外连、公网 RPC |
-| `lab_only` | lab/CTF 靶机网段 | 生产/未授权 IP |
-| `authorized_target_only` | in_scope 列表 | 列表外资产 |
-| `unrestricted_lab` | 隔离实验网（书面） | 互联网生产 |
-
-## 特色
-
-- 纯 Markdown，**无数据库**  
-- 与 `tool-index` / bootstrap 正交：scope 管「能不能打」，tool-index 管「用什么打」
+原始样本保护、明确禁止项、来源、实际操作错误及cleanup必须如实记录。
+工具工作副本和进程清理不是操作系统或网络隔离。运行环境不满足所需隔离时，
+暂停依赖该环境的动作，继续能独立完成的分析。

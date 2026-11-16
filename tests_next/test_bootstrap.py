@@ -5,7 +5,7 @@ import tarfile
 import tempfile
 import unittest
 import zipfile
-from rea_enhanced.bootstrap import extract
+from rea_enhanced.bootstrap import extract, verify_rea_archive
 
 
 class ArchiveSafety(unittest.TestCase):
@@ -33,6 +33,16 @@ class ArchiveSafety(unittest.TestCase):
             entry=tarfile.TarInfo('package/nested.txt');entry.size=4;source.addfile(entry,io.BytesIO(b'data'))
         extract(archive,self.root/'out')
         self.assertEqual((self.root/'out/package/nested.txt').read_bytes(),b'data')
+
+    def test_unmodified_entry_cannot_hide_missing_execution_module(self):
+        archive=self.root/'rea.tar'
+        with tarfile.open(archive,'w') as source:
+            for name,data in [('package/scripts/rea.mjs',b'entry'),('package/dist/runtime.js',b'actual runtime')]:
+                entry=tarfile.TarInfo(name);entry.size=len(data);source.addfile(entry,io.BytesIO(data))
+        extract(archive,self.root/'vendor/rea')
+        self.assertEqual(verify_rea_archive(self.root,archive),[])
+        (self.root/'vendor/rea/package/dist/runtime.js').unlink()
+        self.assertEqual(verify_rea_archive(self.root,archive),['package/dist/runtime.js'])
 
 
 if __name__=='__main__':unittest.main()

@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
-  "version": "2.0.0",
-  "project": "reverse-rea-next",
+  "version": "2.1.0",
+  "project": "reverse-fusion-next",
   "components": [
     {
       "id": "reverse-core",
@@ -72,5 +72,6 @@
     "vendor/rea/manifest.json",
     "vendor/node/manifest.json",
     "components/rea-enhanced/provider-bindings.json"
-  ]
+  ],
+  "repository": "https://github.com/gthubtom1/reverse-fusion-next"
 }

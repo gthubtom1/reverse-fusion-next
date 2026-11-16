@@ -1,5 +1,6 @@
 test_safe_archive_extracts_to_selected_root (test_bootstrap.ArchiveSafety.test_safe_archive_extracts_to_selected_root) ... ok
 test_tar_symlink_rejected_before_writes (test_bootstrap.ArchiveSafety.test_tar_symlink_rejected_before_writes) ... ok
+test_unmodified_entry_cannot_hide_missing_execution_module (test_bootstrap.ArchiveSafety.test_unmodified_entry_cannot_hide_missing_execution_module) ... ok
 test_zip_escape_rejected_before_any_write (test_bootstrap.ArchiveSafety.test_zip_escape_rejected_before_any_write) ... ok
 test_codex_reserialized_enhanced_entry_still_connects_and_rolls_back (test_deployment.Deployment.test_codex_reserialized_enhanced_entry_still_connects_and_rolls_back) ... ok
 test_interrupted_prepared_transaction_can_be_recovered (test_deployment.Deployment.test_interrupted_prepared_transaction_can_be_recovered) ... ok
@@ -15,12 +16,30 @@ test_domain_refinement_keeps_original_goal (test_domains.DomainMethods.test_doma
 test_fixed_domain_files_and_recorded_adaptations (test_domains.DomainMethods.test_fixed_domain_files_and_recorded_adaptations) ... ok
 test_inherited_routing_corpus (test_domains.DomainMethods.test_inherited_routing_corpus) ... ok
 test_plain_analysis_can_deliver_without_building (test_domains.DomainMethods.test_plain_analysis_can_deliver_without_building) ... ok
+test_analysis_report_is_invalidated_by_new_request (test_final_audit.FinalAudit.test_analysis_report_is_invalidated_by_new_request) ... ok
+test_application_environment_change_invalidates_success (test_final_audit.FinalAudit.test_application_environment_change_invalidates_success) ... ok
+test_case_scoped_unknown_blocks_current_and_future_features (test_final_audit.FinalAudit.test_case_scoped_unknown_blocks_current_and_future_features) ... ok
+test_critical_unknown_cannot_have_no_affected_scope (test_final_audit.FinalAudit.test_critical_unknown_cannot_have_no_affected_scope) ... ok
+test_delivery_requires_whole_goal_review_and_invalidates_on_supplement (test_final_audit.FinalAudit.test_delivery_requires_whole_goal_review_and_invalidates_on_supplement) ... ok
+test_dependency_evidence_replacement_invalidates_dependent_pass (test_final_audit.FinalAudit.test_dependency_evidence_replacement_invalidates_dependent_pass) ... ok
+test_different_new_target_is_not_silently_discarded (test_final_audit.FinalAudit.test_different_new_target_is_not_silently_discarded) ... ok
+test_external_runtime_change_invalidates_comparison (test_final_audit.FinalAudit.test_external_runtime_change_invalidates_comparison) ... ok
+test_external_script_cannot_substitute_both_real_sides (test_final_audit.FinalAudit.test_external_script_cannot_substitute_both_real_sides) ... ok
+test_mcp_reused_result_points_to_real_original_receipt (test_final_audit.FinalAudit.test_mcp_reused_result_points_to_real_original_receipt) ... ok
+test_modified_failure_receipt_cannot_be_reused_as_pass (test_final_audit.FinalAudit.test_modified_failure_receipt_cannot_be_reused_as_pass) ... ok
+test_partial_coverage_and_changed_artifacts_cannot_close (test_final_audit.FinalAudit.test_partial_coverage_and_changed_artifacts_cannot_close) ... ok
+test_plain_continue_with_new_requirement_is_preserved (test_final_audit.FinalAudit.test_plain_continue_with_new_requirement_is_preserved) ... ok
+test_resolution_does_not_follow_replaced_evidence (test_final_audit.FinalAudit.test_resolution_does_not_follow_replaced_evidence) ... ok
+test_returned_cli_works_outside_checkout_with_colliding_module (test_final_audit.FinalAudit.test_returned_cli_works_outside_checkout_with_colliding_module) ... ok
+test_shared_dependency_graph_does_not_explode_saved_inputs (test_final_audit.FinalAudit.test_shared_dependency_graph_does_not_explode_saved_inputs) ... ok
 test_missing_node_binding_makes_core_doctor_incomplete (test_inventory.Inventory.test_missing_node_binding_makes_core_doctor_incomplete) ... ok
 test_refresh_generates_current_index_without_fabricated_readiness (test_inventory.Inventory.test_refresh_generates_current_index_without_fabricated_readiness) ... ok
+test_actual_native_provider_and_new_server_bundle_roundtrip (test_mcp.LiveMCP.test_actual_native_provider_and_new_server_bundle_roundtrip) ... ok
 test_cancelled_owned_comparison_cleans_up_and_stays_unknown (test_mcp.LiveMCP.test_cancelled_owned_comparison_cleans_up_and_stays_unknown) ... ok
 test_native_bundle_survives_new_server (test_mcp.LiveMCP.test_native_bundle_survives_new_server) ... ok
 test_original_catalog_preserved_and_frida_actually_enumerates (test_mcp.LiveMCP.test_original_catalog_preserved_and_frida_actually_enumerates) ... ok
 test_owned_workflow_via_mcp (test_mcp.LiveMCP.test_owned_workflow_via_mcp) ... ok
+test_test_and_public_contract_edits_change_release_identity (test_qualification.Qualification.test_test_and_public_contract_edits_change_release_identity) ... ok
 test_missing_reference_observation_is_unknown (test_web.WebComparison.test_missing_reference_observation_is_unknown) ... ok
 test_same_visual_and_behavior (test_web.WebComparison.test_same_visual_and_behavior) ... ok
 test_wrong_behavior_is_not_hidden_by_initial_look (test_web.WebComparison.test_wrong_behavior_is_not_hidden_by_initial_look) ... ok
@@ -53,6 +72,6 @@ test_unchanged_success_is_reused_without_another_run (test_workflow.OwnedCase.te
 test_wrong_algorithm_fails (test_workflow.OwnedCase.test_wrong_algorithm_fails) ... ok
 
 ----------------------------------------------------------------------
-Ran 53 tests in 37.362s
+Ran 72 tests in 68.717s
 
 OK

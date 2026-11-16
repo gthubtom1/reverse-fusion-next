@@ -2,6 +2,8 @@
 from pathlib import Path
 import json
 import subprocess
+import hashlib
+import base64
 from .storage import read,digest
 from .providers import providers,environment
 from reverse_fusion.runtime import node_runtime
@@ -28,6 +30,21 @@ def inspect(root=ROOT):
     if not all(methods.values()):failures.append('Fixed official skill/method identity missing or changed')
     entry=root/'vendor/rea/package/scripts/rea.mjs'
     if not entry.is_file():failures.append('REA entry missing')
+    package_check={'status':'not-verified'}
+    if manifest.get('integrity'):
+        archive=root/'state/downloads/rea.tgz'
+        try:
+            algorithm,expected=manifest['integrity'].split('-',1)
+            h=hashlib.new(algorithm)
+            with archive.open('rb') as stream:
+                for chunk in iter(lambda:stream.read(1024*1024),b''):h.update(chunk)
+            if h.digest()!=base64.b64decode(expected):raise ValueError('Pinned REA archive identity changed')
+            from .bootstrap import verify_rea_archive
+            changed=verify_rea_archive(root,archive)
+            package_check={'status':'verified' if not changed else 'changed','changed':changed[:20]}
+            if changed:failures.append('Original REA executable package missing or changed')
+        except (OSError,ValueError) as exc:
+            failures.append('REA archive/package verification unavailable: '+str(exc))
     selected=providers(root)
     binding=root/'vendor/rea/node_modules/frida/build/frida_binding.node'
     pin=read(root/'components/rea-enhanced/provider-bindings.json')
@@ -37,5 +54,5 @@ def inspect(root=ROOT):
     if frida['status']!='installed':failures.append('Required separate Node Frida binding missing or changed')
     return {'status':'installed' if not failures else 'incomplete','failures':failures,
         'core':{'package':manifest['package'],'version':manifest['version'],'node':node,'node_version':version,
-            'runtime_source':source,'original_methods':methods},'providers':selected,'frida':frida,
+            'runtime_source':source,'original_methods':methods,'package_integrity':package_check},'providers':selected,'frida':frida,
         'craft_required':False,'spec_required':False,'target_acceptance':'not-assessed'}

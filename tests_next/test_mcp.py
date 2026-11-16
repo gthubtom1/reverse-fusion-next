@@ -4,6 +4,8 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+import shutil
+import subprocess
 from rea_enhanced.providers import environment
 from rea_enhanced.storage import write,read
 from reverse_fusion.runtime import node_runtime
@@ -14,6 +16,39 @@ ROOT=Path(__file__).resolve().parents[1]
 
 
 class LiveMCP(unittest.TestCase):
+    def test_actual_native_provider_and_new_server_bundle_roundtrip(self):
+        compiler=shutil.which('gcc')
+        self.assertIsNotNone(compiler,'This native qualification requires the selected external GCC fixture compiler')
+        area=ROOT/'work/final-native-provider';area.mkdir(parents=True,exist_ok=True)
+        target=area/'owned-reference.exe'
+        subprocess.run([compiler,str(ROOT/'fixtures/owned-native/guarded.c'),'-g','-O0','-o',str(target)],check=True,capture_output=True,timeout=30)
+        bundle=area/'native-bundle.json'; restored=area/'restored-bundle.json'
+        client=StdioMcp([sys.executable,'-m','rea_enhanced','mcp'],cwd=ROOT,timeout=150)
+        with client:
+            client.initialize()
+            def call(name,args):
+                result=client.request('tools/call',{'name':name,'arguments':args})
+                self.assertFalse(result.get('isError'),result)
+                return result
+            opened=call('open_binary',{'path':str(target)})
+            analyzed=call('analyze_function',{'procedure':'main','detail':'summary'})
+            self.assertTrue(analyzed['structuredContent']['normalized_result']['summary']['pseudocode']['available'])
+            exported=call('export_evidence_bundle',{'path':str(bundle),'overwrite':True})
+            self.assertGreater(exported['structuredContent']['result']['records'],0)
+        with StdioMcp([sys.executable,'-m','rea_enhanced','mcp'],cwd=ROOT,timeout=45) as second:
+            second.initialize()
+            imported=second.request('tools/call',{'name':'import_evidence_bundle','arguments':{'path':str(bundle)}})
+            exported_again=second.request('tools/call',{'name':'export_evidence_bundle','arguments':{'path':str(restored),'overwrite':True}})
+        self.assertFalse(imported.get('isError'),imported)
+        self.assertFalse(exported_again.get('isError'),exported_again)
+        self.assertEqual(read(bundle)['records'],read(restored)['records'])
+        self.assertEqual(client.cleanup['status'],'verified')
+        self.assertEqual(second.cleanup['status'],'verified')
+        write(ROOT/'evidence/next/final-audit/native-provider.json',{'status':'pass',
+            'open':opened,'analysis':analyzed,'export':exported,'import':imported,
+            'records_equal':True,'compiler':compiler,'cleanup':[client.cleanup,second.cleanup],
+            'scope':'Actual selected native provider on a repository-owned PE, original evidence and restart. Not a hostile/protected third-party target.'})
+
     def test_original_catalog_preserved_and_frida_actually_enumerates(self):
         node,_=node_runtime(ROOT);env=environment(ROOT)
         original=StdioMcp([node,str(ROOT/'vendor/rea/package/scripts/rea.mjs'),'mcp'],cwd=ROOT,env=env,timeout=45)

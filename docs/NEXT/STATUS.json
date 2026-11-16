@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "version": "2.0.0",
+  "version": "2.1.0",
   "baseline_commit": "022e61b803e41569cac1f116ebca2245b9c9b1f8",
-  "goal_status": "complete",
-  "stage": "maintenance",
+  "goal_status": "active",
+  "stage": "independent-final-audit",
   "stages": {
     "S0": {
       "status": "done",
@@ -153,7 +153,7 @@
       "README.md"
     ]
   },
-  "next_action": "No pending implementation or migration work for the scoped 2.0.0 Windows x64 Codex engineering release. On a new requested change, recheck affected source-bound qualification.",
+  "next_action": "Run stable source-bound full qualification, publish independent main, then qualify actual remote clone and owned local entry.",
   "migration": "active enhanced REA 2.0.0; actual legacy byte restoration and both legacy connections verified before final new selection",
   "limitations": [
     "Finite fixture/tool engineering qualification is distinct from acceptance of a future target.",
@@ -161,5 +161,6 @@
     "Other hosts and arbitrary specialized providers are not claimed as actually run."
   ],
   "acceptance": "docs/NEXT/ACCEPTANCE.json",
-  "clean_source_commit": "53ceef8ac512122b8cb3d192b8094e4041a5b398"
+  "clean_source_commit": "53ceef8ac512122b8cb3d192b8094e4041a5b398",
+  "final_audit": "docs/NEXT/FINAL-AUDIT.md"
 }

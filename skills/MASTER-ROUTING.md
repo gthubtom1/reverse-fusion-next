@@ -1,3 +1,5 @@
+> Next说明：下文为保留的方法/历史记录；当前入口为rea_enhanced open，唯一状态为case-v2，具体操作以根RULES及docs/AGENT-WORKFLOW为准。旧case-init、Spec/Craft命令不是当前要求。
+
 # reverse-skill PRIMARY 快路径
 
 > 当前默认入口为仓库venv的 `rea_enhanced open`。下列原生master-route是兼容工具，读取仓库根有效源 `components/reverse-core/routing.json`；`skills/config/routing.json`是只读上游基线。平台只改变执行入口，不改变routing semantics。

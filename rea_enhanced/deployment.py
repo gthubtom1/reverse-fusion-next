@@ -37,7 +37,7 @@ Read `{repo}/docs/AGENT-WORKFLOW.md` and `{repo}/RULES.md` before specialist wor
 Use MCP `rf_next_case_open` with absolute project_root and the original plain-language
 request. Resume the same case on follow-up; record new requirements as supplements.
 If MCP is absent in this chat, use the identical CLI:
-`& "{repo}/.venv/Scripts/python.exe" -m rea_enhanced open --project-root "<outcome project>" --request "<original words>"`.
+`& "{repo}/.venv/Scripts/python.exe" "{repo}/scripts/next-cli.py" open --project-root "<outcome project>" --request "<original words>"`.
 Its returned domain skill/required_read_paths and official REA skill are mandatory
 reads before selecting methods. Do not copy the domain tree or change cwd to the
 shared checkout. Tool paths come from saved providers; actual operations determine health.
@@ -57,6 +57,10 @@ block dependent functions while independent work continues. Ask concrete human
 questions only for unavailable information or product decisions.
 
 Record features with evidence, dependencies, semantic review and declared checks.
+Before delivery, record coverage mapping every original/supplement source to features,
+then deliver with actual artifacts after fresh comparisons. Read the operation schemas
+from rf_next_case_record or COMPARISON.md; do not guess required fields. A new goal
+against an occupied case returns needs-context; choose a new case or explicit supplement.
 Run rf_next_compare or CLI compare against an independent reference with a reviewed
 finite plan. Separate visual and behavior results. A screenshot, exit zero or candidate
 unit test does not close the whole product goal. Changes invalidate old checks. Reuse

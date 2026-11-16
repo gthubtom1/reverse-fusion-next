@@ -8,7 +8,8 @@
 按STATUS唯一next_action继续，先核Git差异和已有检查。不要根据旧“全部完成”重启RF-36。
 
 目录：D:/Project/reverse-next；原仓库：D:/Project/reverse；Git对象独立。
-分支codex/rea-next；baseline远端仅指向本机旧仓库，无GitHub可写origin。
+审查基线分支codex/rea-next；baseline远端指向本机旧仓库。
+本轮正在把origin从旧项目分支迁至独立reverse-fusion-next项目，实际remote以git为准。
 冻结标签baseline/rf-1.4.0及baseline清单保存回退身份。
 
 目标模式描述最终目的，STATUS描述实际程度。阶段没完成不能宣告已交付。
@@ -16,4 +17,7 @@
 开发使用自有材料，不恢复旧真实目标、不改样本授权、不控制旧聊天。
 部署在S6通过后切换自有入口，保留并实际验证原版回退。
 
-当前：2.0.0，S0–S6工程工作已完成，本机已选增强REA且实际回退验证通过。先看ACCEPTANCE及STATUS；原上文阶段描述是执行顺序，不能在维护时重新迁移。当前旧聊天工具目录仍需客户端重连/新聊天。新变化应重核受影响的source-bound资格，勿把历史next_action当待办。
+当前：独立发布最终复核进行中，先看FINAL-AUDIT.md及STATUS。
+上一轮S0–S6通过仅为历史有限资格；本轮不能沿用其“全部完成”结论。
+本机已选增强REA且旧回退实际通过；当前旧聊天工具目录仍需客户端重连/新聊天。
+新变化必须重核受影响资格，不能重跑旧迁移脚本或恢复旧目标。

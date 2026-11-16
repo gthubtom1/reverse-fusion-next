@@ -1,5 +1,10 @@
 # RE Agent 工作流门闩（静态↔动态）
 
+> Next状态适配：当前宿主通过增强REA维护一个case-v2.json，原话、补充、功能、证据、
+> unknown和比较以该case为准。下文scope/workitems/timeline是可按需保存的调查材料，
+> 不强制再创建另一套状态账本；bounded work item可写入同case引用的evidence文件。
+> PRIMARY指返回的领域方法，REA是工具后端，不是另一个推理模型。
+
 > 来源启发：binary-re 阶段划分、社区 RE skill（Frida/r2/Ghidra/IDA 循环）、Cerberus 三头环（静/动/插桩）  
 > Issue #65 增量：IAT 修复铁律、六阶段映射、.NET/DLL·SYS 等价路径；用户指令可行性门闩；旁路补丁 6–10；反调试/混淆菜谱 A–T；非 PE 多格式菜谱 U–AV（2026-08-12）  
 > 适用：`reverse-engineering/`、`ida-reverse/`、`radare2/`、`malware-analysis/`、与 cre 角色交接

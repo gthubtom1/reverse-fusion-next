@@ -1,13 +1,13 @@
 # Reverse Engineering Skill Routing Matrix
 
-> **Advisory only.** In Reverse Fusion, PRIMARY comes from repository-root `components/reverse-core/routing.json` through the default `reverse_fusion bridge`; native master-route reads the same source. `skills/config/routing.json` is the preserved upstream baseline. This is a 3-axis explanation view; actual router output wins.
+> **Advisory only.** In Reverse Fusion Next, PRIMARY comes from repository-root `components/reverse-core/routing.json` through `rea_enhanced open` and its route result; native master-route reads the same source. `skills/config/routing.json` is the preserved upstream baseline. This is a 3-axis explanation view; actual router output wins.
 
 Route tasks to the most appropriate skill module by target type, user intent, and toolchain.
 
 ## CRITICAL: Routing Execution Protocol
 
 1. **MUST** complete routing BEFORE executing. Do NOT "do first, route later".
-2. **MUST** use the shared `reverse_fusion bridge` by default; native master-route remains a compatibility entry over the same effective JSON. Use this matrix only when PRIMARY is ambiguous.
+2. **MUST** use the shared `rea_enhanced open` case entry by default; native master-route remains a read-only method query over the same effective JSON. Use this matrix only when PRIMARY is ambiguous.
 3. **MUST** match dimensions (target type + user intent + toolchain) before entering a skill.
 4. If route not matched → propose new skill, do NOT force-fit.
 5. Cross-module tasks → combine skills per "Path Crossing" section.
@@ -19,7 +19,7 @@ Route tasks to the most appropriate skill module by target type, user intent, an
 
 Use [reconstruction](reconstruction/SKILL.md) after the current target-specific analysis has produced reviewed Evidence and a bounded behavior contract. A mixed APK/JS/CTF request keeps its original PRIMARY first. Record the later subtask separately and call the same native router with `reconstruction implementation` or `reconstruction verification`; preserve the original user request and case scope.
 
-For an existing independent implementation following an upstream release, [binary-diff](binary-diff/SKILL.md) compares old upstream, our implementation/design, and new upstream. See reconstruction follow-update for identity, UI preservation and proof freshness. REA is not another PRIMARY; actual REA is a required installed core and supplies native Evidence during reconstruction. Host setup belongs to this repository [deployment entry](../docs/AGENT-BOOTSTRAP.md); implementation uses the [native Craft handoff](../docs/NATIVE-COMPONENTS.md).
+For an existing independent implementation following an upstream release, [binary-diff](binary-diff/SKILL.md) compares old upstream, our implementation/design, and new upstream. See reconstruction follow-update for identity, UI preservation and proof freshness. REA is not another PRIMARY; actual REA is a required installed core and supplies native Evidence during reconstruction. Host setup belongs to this repository [deployment entry](../docs/AGENT-BOOTSTRAP.md); implementation uses [the current host and enhanced comparison](../docs/NATIVE-COMPONENTS.md).
 
 ## By Target Type
 

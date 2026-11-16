@@ -45,3 +45,23 @@ Final 53 source-bound checks passed. Final committed-source clean installation (
 ## 2026-11-17 / publication transport check
 
 GitHub API and Git HEAD both confirm the default branch is master at the frozen 1.4.0 commit. The first next-branch push returned HTTP 408 before creating the branch. Retrying only codex/rea-next with per-command HTTP/1.1 and a bounded non-chunked post buffer; no global Git settings changed.
+
+## 2026-11-17 / independent final audit opened
+
+User rejected old-repository branch publication. Independent repository and deeper negative-case audit
+are required. A read-only history subagent identified repeated evidence-scope overclaims, missing actual
+host connections, dropped original goals and CLI substitutions. FINAL-AUDIT records the new completion
+criteria and audit leads. Previous qualification remains historical, not current acceptance.
+
+## 2026-11-17 / final audit counterexamples repaired
+
+Seven initial negative probes failed on the previous release; all are now fixed. Added follow-up preservation,
+resolution snapshots, case-wide unknown scope, dependent evidence freshness, receipt integrity, actual
+executable/environment identity, declared-source invocation, persistent whole-goal coverage and delivery.
+Analysis delivery also invalidates on supplements. MCP reuse returns the actual original receipt.
+The current tests and public contracts are included in source identity. The full original REA package is
+authenticated, and Frida loads before accepting its overlay. Thirteen method navigation/contracts were
+adapted with recorded previous hashes after finding unsupported bridge/case-init and mandatory Craft
+references. Actual current native Ghidra analysis, bundle export/import in a new server, and fourteen
+new workflow counterexamples passed together. Independent GitHub repository created; origin and local
+main now point there. Full stable qualification and actual remote-clone installation follow.

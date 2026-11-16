@@ -1,0 +1,123 @@
+{
+  "status": "pass",
+  "observed_comparison_status": "pass",
+  "comparison": {
+    "schema_version": 2,
+    "operation": "independent-web-replay",
+    "status": "pass",
+    "scope": "Owned counter visual, click and persistence behavior",
+    "plan": "plan.json",
+    "plan_sha256": "8976ded883261aa8b46422f543c5f187ab3ec679d0d44224397301002993b82e",
+    "engine": {
+      "rea_enhanced/comparison.py": "5150bc3bce5991f3220a617320de40104f27f3957e9dcf93b038479e177e5af2",
+      "reverse_fusion/owned_process.py": "4d0f4cfc0367116b084d0ec870fde2d90f0470d6da9887d59cd47be5c96e32fd",
+      "rea_enhanced/web.py": "b1088da2872c3f0e0eccd6eb3df335dda554ba373e0131a128ade6cd6b5b9cfb",
+      "components/rea-enhanced/web-replay.mjs": "b46d6fa992befacfe762465398679c32291b5e0d94a74cd74e742248afb03389"
+    },
+    "sources": {
+      "original/index.html": "32263a9e70cf2def682065fc1f7a2f449a663db846eeb1891b5d92a3d41b61a8",
+      "candidate/index.html": "16a7fe87a4ebb13d568bb411c046833fdd6bd944466f8c2b1909dc1a8c8514e9"
+    },
+    "input_trees": {
+      "original": {
+        "cwd": "original",
+        "files": {
+          "index.html": "32263a9e70cf2def682065fc1f7a2f449a663db846eeb1891b5d92a3d41b61a8"
+        }
+      },
+      "candidate": {
+        "cwd": "candidate",
+        "files": {
+          "index.html": "16a7fe87a4ebb13d568bb411c046833fdd6bd944466f8c2b1909dc1a8c8514e9"
+        }
+      }
+    },
+    "cases": [
+      {
+        "scenario": "click-and-reload",
+        "width": 390,
+        "step": 0,
+        "differences": [],
+        "behavior_status": "pass",
+        "visual_status": "pass",
+        "changed_pixel_fraction": 0.0,
+        "status": "pass"
+      },
+      {
+        "scenario": "click-and-reload",
+        "width": 390,
+        "step": 1,
+        "differences": [],
+        "behavior_status": "pass",
+        "visual_status": "pass",
+        "changed_pixel_fraction": 0.0,
+        "status": "pass"
+      },
+      {
+        "scenario": "click-and-reload",
+        "width": 390,
+        "step": 2,
+        "differences": [],
+        "behavior_status": "pass",
+        "visual_status": "pass",
+        "changed_pixel_fraction": 0.0,
+        "status": "pass"
+      },
+      {
+        "scenario": "click-and-reload",
+        "width": 1280,
+        "step": 0,
+        "differences": [],
+        "behavior_status": "pass",
+        "visual_status": "pass",
+        "changed_pixel_fraction": 0.0,
+        "status": "pass"
+      },
+      {
+        "scenario": "click-and-reload",
+        "width": 1280,
+        "step": 1,
+        "differences": [],
+        "behavior_status": "pass",
+        "visual_status": "pass",
+        "changed_pixel_fraction": 0.0,
+        "status": "pass"
+      },
+      {
+        "scenario": "click-and-reload",
+        "width": 1280,
+        "step": 2,
+        "differences": [],
+        "behavior_status": "pass",
+        "visual_status": "pass",
+        "changed_pixel_fraction": 0.0,
+        "status": "pass"
+      }
+    ],
+    "changed_inputs": [],
+    "browser_executable": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+    "browser_sha256": "5b835c10836045119334d9524e62437110e00e1bd20612c9072a0ae155f94a17",
+    "process": {
+      "status": "observed",
+      "reason": null,
+      "exit_code": 0,
+      "elapsed_ms": 1630.912,
+      "peak_job_bytes": 487002112,
+      "output_truncated": false,
+      "memory_limit_mb": 1536,
+      "cleanup": "owned Windows job closed after invocation"
+    },
+    "capture_path": "work/first/capture.json",
+    "elapsed_ms": 1630.912,
+    "rea_native_proof": "not-performed",
+    "whole_product_acceptance": "not-established",
+    "limitations": [
+      "Only declared actions/selectors/storage keys/viewport screenshots were compared.",
+      "Source-to-served-URL correspondence is declared by the host, not automatically authenticated.",
+      "No unobserved server, API, device or whole-program equivalence established.",
+      "Disposable browser contexts and owned process cleanup are not OS/network isolation."
+    ]
+  },
+  "test_sha256": "f61ab6f752ab0f98f29724ef9ed56fa71af8eed0039b5285a93b41a11f206051",
+  "scope": "Actual finite browser assertions in this test; not a whole website acceptance"
+}

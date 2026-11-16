@@ -26,12 +26,36 @@ def _tool(name, description, properties, required):
     return {'name':name,'description':description,'inputSchema':schema}
 
 
+def _change(op, properties, required):
+    return {'type':'object','properties':{'op':{'const':op},**properties},
+        'required':['op',*required],'additionalProperties':False}
+
+
+TEXT={'type':'string','minLength':1}
+STRINGS={'type':'array','items':TEXT}
+CHANGE={'oneOf':[
+    _change('supplement',{'text':TEXT},['text']),
+    _change('evidence',{'id':TEXT,'path':TEXT,'authority':{'enum':['observed','static','inferred','designed','native-rea-bundle']},'description':TEXT},['id','path','authority']),
+    _change('feature',{'id':TEXT,'description':TEXT,'evidence':STRINGS,'checks':STRINGS,'dependencies':STRINGS,'review':TEXT},
+            ['id','description','evidence','checks','dependencies','review']),
+    _change('unknown',{'id':TEXT,'question':TEXT,'critical':{'type':'boolean'},'features':STRINGS,'scope':{'enum':['features','case']}},
+            ['id','question','critical','features']),
+    _change('resolve',{'id':TEXT,'evidence':STRINGS},['id','evidence']),
+    _change('refine_route',{'hint':TEXT,'primary':TEXT},['hint']),
+    _change('deliver_analysis',{'report':TEXT,'evidence':STRINGS},['report','evidence']),
+    _change('budget',{'max_checks_per_feature':{'type':'integer','minimum':1,'maximum':100},'reason':TEXT},['max_checks_per_feature','reason']),
+    _change('coverage',{'review':TEXT,'requirements':{'type':'array','minItems':1,'items':{
+        'type':'object','properties':{'id':TEXT,'text':TEXT,'source':TEXT,'features':STRINGS},
+        'required':['id','text','source','features'],'additionalProperties':False}}},['review','requirements']),
+    _change('deliver',{'summary':TEXT,'artifacts':STRINGS},['summary','artifacts'])]}
+
+
 TOOLS = [
     _tool('rf_next_case_open','Preserve a plain-language goal or resume its existing case. Ordinary development remains host-native.',
           {'request':{'type':'string'}},['request']),
     _tool('rf_next_case_status','Read original goal, feature readiness, affected unknowns and fresh finite checks. Does not claim whole-product completion.',{},[]),
     _tool('rf_next_case_record','Record evidence, a feature, a dependent unknown or a user supplement with optimistic revision checking. Cannot post a check pass.',
-          {'change':{'type':'object'},'expected_revision':{'type':'integer','minimum':1}},['change','expected_revision']),
+          {'change':CHANGE,'expected_revision':{'type':'integer','minimum':1}},['change','expected_revision']),
     _tool('rf_next_compare','Execute the reviewed finite comparison plan in separate working copies. Actual executable effects; not an OS sandbox. Saves full receipts and returns a compact result.',
           {'check_id':{'type':'string'},'plan':{'type':'string'},'output':{'type':'string'},'retry_reason':{'type':'string'}},['check_id','plan','output'])]
 NAMES={tool['name'] for tool in TOOLS}
@@ -52,7 +76,7 @@ def call_owned(name, args, cancel_event=None):
     result=run_check(project,case,args['check_id'],args['plan'],args['output'],cancel_event=cancel_event,retry_reason=args.get('retry_reason'))
     if 'comparison' not in result:return result
     receipt=result['comparison']
-    return {'status':receipt['status'],'result_path':str(project/(args['output']+'/comparison.json')),
+    return {'status':receipt['status'],'result_path':str(project/result['receipt_path']), 'reused':result.get('reused',False),
         'differences':[{'scenario':r['scenario'],'step':r['step'],'channels':r['differences'],'status':r['status']}
             for r in receipt['cases'] if r['status']!='pass'][:20],
         'workflow':result['workflow'],'rea_native_proof':'not-performed'}

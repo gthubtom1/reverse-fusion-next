@@ -13,6 +13,20 @@ import zipfile
 from .storage import digest, read, write
 
 
+def verify_rea_archive(root, archive):
+    """Authenticate every original package file, including bundled execution modules."""
+    failures=[]
+    with tarfile.open(archive) as source:
+        for entry in source:
+            if not entry.isfile():continue
+            path=(root/'vendor/rea'/entry.name).resolve()
+            if not path.is_relative_to((root/'vendor/rea/package').resolve()):
+                raise ValueError('REA package member outside package')
+            expected=hashlib.sha256(source.extractfile(entry).read()).hexdigest()
+            if not path.is_file() or digest(path)!=expected:failures.append(entry.name)
+    return failures
+
+
 def acquire(url, destination, algorithm='sha256', expected=None):
     if not url.startswith('https://'):
         raise ValueError('Pinned assets require HTTPS')
@@ -85,10 +99,9 @@ def bootstrap(root):
     algorithm, value = rea_pin['integrity'].split('-',1)
     rea_archive = acquire(rea_pin['source'], cache/'rea.tgz', algorithm, base64.b64decode(value).hex())
     package = root/'vendor/rea/package'
-    with tarfile.open(rea_archive) as archive:
-        entry_expected=hashlib.sha256(archive.extractfile('package/scripts/rea.mjs').read()).hexdigest()
     if not (package/'scripts/rea.mjs').is_file(): extract(rea_archive, root/'vendor/rea')
-    if digest(package/'scripts/rea.mjs')!=entry_expected:raise ValueError('REA entry differs from the verified archive')
+    changed=verify_rea_archive(root,rea_archive)
+    if changed:raise ValueError('Original REA package differs from verified archive; restore managed package before retry: '+', '.join(changed[:8]))
     for name, expected in rea_pin['method_files_sha256'].items():
         if digest(root/'vendor/rea'/name) != expected: raise ValueError('Official REA method changed: '+name)
     overlay = root/'vendor/rea'
@@ -96,13 +109,19 @@ def bootstrap(root):
         shutil.copyfile(root/'components/rea-enhanced'/original, overlay/name)
     pin = read(root/'components/rea-enhanced/provider-bindings.json')
     binding = overlay/'node_modules/frida/build/frida_binding.node'
-    if not binding.is_file() or digest(binding) != pin['binding_sha256']:
+    overlay_valid=False
+    if binding.is_file() and digest(binding)==pin['binding_sha256']:
+        probe=subprocess.run([str(node),'--input-type=module','-e','await import("frida"); console.log("loaded")'],
+            cwd=overlay,capture_output=True,timeout=15)
+        overlay_valid=probe.returncode==0
+    if not overlay_valid:
         npm = node.parent/'node_modules/npm/bin/npm-cli.js'
         env = dict(os.environ); env['PATH'] = str(node.parent)+os.pathsep+env.get('PATH','')
-        run = subprocess.run([str(node),str(npm),'ci','--ignore-scripts','--no-audit','--no-fund','--prefix',str(overlay)],
-                             cwd=root, env=env, capture_output=True, timeout=240)
-        (root/'state/npm-provider-install.log').write_bytes(run.stdout+run.stderr)
-        if run.returncode: raise ValueError('Locked Node provider acquisition failed; see state/npm-provider-install.log')
+        from reverse_fusion.owned_process import run_owned
+        run = run_owned([str(node),str(npm),'ci','--ignore-scripts','--no-audit','--no-fund','--prefix',str(overlay)],
+            cwd=root,env=env,stdin=b'',timeout=240,memory_mb=2048,max_output_bytes=8*1024*1024)
+        (root/'state/npm-provider-install.log').write_bytes(run['stdout']+run['stderr'])
+        if run['status']!='observed' or run['exit_code']: raise ValueError('Locked Node provider acquisition failed; see state/npm-provider-install.log')
         archive = acquire(pin['url'], cache/'frida.tar.gz', expected=pin['sha256'])
         extract(archive, overlay/'node_modules/frida')
     if digest(binding) != pin['binding_sha256']: raise ValueError('Frida binding identity mismatch')
