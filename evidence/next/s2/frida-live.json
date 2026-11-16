@@ -1,0 +1,40 @@
+{
+  "server": {
+    "name": "rea-enhanced",
+    "version": "2.0.0.dev0"
+  },
+  "result": {
+    "_meta": {
+      "provenance": {
+        "untrusted_content": true,
+        "source": "analysis_target"
+      }
+    },
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"devices\":[{\"device_id\":\"local\",\"name\":\"Local System\",\"type\":\"local\"},{\"device_id\":\"socket\",\"name\":\"Local Socket\",\"type\":\"remote\"},{\"device_id\":\"barebone\",\"name\":\"GDB Remote Stub\",\"type\":\"remote\"}],\"cleanup_error\":null}"
+      }
+    ],
+    "structuredContent": {
+      "devices": [
+        {
+          "device_id": "local",
+          "name": "Local System",
+          "type": "local"
+        },
+        {
+          "device_id": "socket",
+          "name": "Local Socket",
+          "type": "remote"
+        },
+        {
+          "device_id": "barebone",
+          "name": "GDB Remote Stub",
+          "type": "remote"
+        }
+      ],
+      "cleanup_error": null
+    }
+  }
+}

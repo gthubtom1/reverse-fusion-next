@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "version": "17.23.2",
+  "platform": "win32-x64-napi8",
+  "url": "https://github.com/frida/frida/releases/download/17.23.2/frida-v17.23.2-napi-v8-win32-x64.tar.gz",
+  "sha256": "e9dbc08d386130610430137f0bb31d90af7b08c0f5710942d4313368ada930ea",
+  "binding_sha256": "32c73230bdfd4b9a8f1f1871ef616001e486269919f18a111a195854352057dc",
+  "dependency_lock": "components/rea-enhanced/provider-package-lock.json",
+  "source": "Official Frida prebuild; separate from the unmodified REA package",
+  "license": "LGPL-2.0 WITH WxWindows-exception-3.1"
+}

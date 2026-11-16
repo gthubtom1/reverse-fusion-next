@@ -1,0 +1,46 @@
+{
+  "status": "pass",
+  "records_equal": true,
+  "import": {
+    "_meta": {
+      "provenance": {
+        "untrusted_content": true,
+        "source": "analysis_target"
+      }
+    },
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"result\":{\"imported\":2,\"unknowns_added\":0,\"total\":2}}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "imported": 2,
+        "unknowns_added": 0,
+        "total": 2
+      }
+    }
+  },
+  "export": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"result\":{\"path\":\"D:\\\\Project\\\\reverse-next\\\\state\\\\next-native-restored.json\",\"bytes\":125447,\"records\":2,\"unknowns\":0}}"
+      }
+    ],
+    "structuredContent": {
+      "result": {
+        "path": "D:\\Project\\reverse-next\\state\\next-native-restored.json",
+        "bytes": 125447,
+        "records": 2,
+        "unknowns": 0
+      }
+    }
+  },
+  "cleanup": {
+    "status": "verified",
+    "scope": "owned Windows Job active-process count zero before close",
+    "root_returncode": 0
+  }
+}

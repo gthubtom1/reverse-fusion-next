@@ -13,6 +13,10 @@ def main(argv=None):
     parser = argparse.ArgumentParser(prog='rea-enhanced')
     parser.add_argument('--version', action='version', version=__version__)
     commands = parser.add_subparsers(dest='command', required=True)
+    commands.add_parser('mcp')
+    commands.add_parser('doctor')
+    provider_parser=commands.add_parser('providers')
+    provider_parser.add_argument('--refresh',action='store_true')
     for name in ('open', 'record', 'status', 'compare'):
         p = commands.add_parser(name)
         p.add_argument('--project-root', type=Path, default=Path.cwd())
@@ -28,6 +32,19 @@ def main(argv=None):
             p.add_argument('--check-id')
     args = parser.parse_args(argv)
     try:
+        if args.command == 'mcp':
+            from .server import serve
+            return serve()
+        if args.command == 'doctor':
+            from .health import inspect
+            result=inspect()
+            print(json.dumps(result,ensure_ascii=True,indent=2))
+            return 0 if result['status']=='installed' else 2
+        if args.command == 'providers':
+            from .providers import providers
+            result=providers(Path(__file__).resolve().parents[1],refresh=args.refresh)
+            print(json.dumps(result,ensure_ascii=True,indent=2))
+            return 0 if not result['unavailable'] else 2
         if args.command == 'open':
             result = open_case(args.project_root, args.request, args.case_root)
         elif args.command == 'record':

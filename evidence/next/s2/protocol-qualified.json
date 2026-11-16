@@ -1,0 +1,60 @@
+{
+  "status": "pass",
+  "source_server": {
+    "name": "rea",
+    "version": "6.9.0"
+  },
+  "enhanced_server": {
+    "name": "rea-enhanced",
+    "version": "2.0.0.dev0"
+  },
+  "official_tool_count": 255,
+  "enhanced_tool_count": 259,
+  "canonical_tools_equal": true,
+  "prompts_equal": true,
+  "frida": {
+    "_meta": {
+      "provenance": {
+        "untrusted_content": true,
+        "source": "analysis_target"
+      }
+    },
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"devices\":[{\"device_id\":\"local\",\"name\":\"Local System\",\"type\":\"local\"},{\"device_id\":\"socket\",\"name\":\"Local Socket\",\"type\":\"remote\"},{\"device_id\":\"barebone\",\"name\":\"GDB Remote Stub\",\"type\":\"remote\"}],\"cleanup_error\":null}"
+      }
+    ],
+    "structuredContent": {
+      "devices": [
+        {
+          "device_id": "local",
+          "name": "Local System",
+          "type": "local"
+        },
+        {
+          "device_id": "socket",
+          "name": "Local Socket",
+          "type": "remote"
+        },
+        {
+          "device_id": "barebone",
+          "name": "GDB Remote Stub",
+          "type": "remote"
+        }
+      ],
+      "cleanup_error": null
+    }
+  },
+  "original_cleanup": {
+    "status": "verified",
+    "scope": "owned Windows Job active-process count zero before close",
+    "root_returncode": 0
+  },
+  "enhanced_cleanup": {
+    "status": "verified",
+    "scope": "owned Windows Job active-process count zero before close",
+    "root_returncode": 0
+  },
+  "scope": "Actual catalog/protocol, target-free provider enumeration; not every tool or target acceptance"
+}
