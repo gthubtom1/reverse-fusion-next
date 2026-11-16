@@ -1,6 +1,6 @@
 [project]
-name = "reverse-fusion"
-version = "1.4.0"
+name = "reverse-rea-next"
+version = "2.0.0.dev0"
 description = "Evidence-driven reverse engineering and reconstruction orchestration"
 requires-python = ">=3.11"
 readme = "README.md"
@@ -10,11 +10,12 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
-include = ["reverse_fusion*"]
+include = ["rea_enhanced*", "reverse_fusion*"]
 
 [project.scripts]
-reverse-fusion = "reverse_fusion.cli:main"
+reverse-fusion = "rea_enhanced.cli:main"
+rea-enhanced = "rea_enhanced.cli:main"
 
 [tool.pytest.ini_options]
 addopts = "-q"
-testpaths = ["tests"]
+testpaths = ["tests_next"]

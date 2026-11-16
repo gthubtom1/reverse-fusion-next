@@ -1,0 +1,560 @@
+{
+  "status": "pass",
+  "scope": "Owned finite vertical; no universal/software/model performance claim",
+  "bad": {
+    "comparison": {
+      "schema_version": 2,
+      "operation": "independent-finite-replay",
+      "status": "fail",
+      "scope": "Owned stateful counter, restart and error path",
+      "plan": "plan.json",
+      "plan_sha256": "c08e3d973d3f2b2025f282c427d56ce2ba31bc6ded35ae0384536855936f22ad",
+      "sources": {
+        "original/app.py": "d2cc9c45349f6ed92b0abb04b207f3b001ba4a393d7015c88357f9635dd542c6",
+        "candidate/app.py": "958c256ef6143ce49faabb8f4f0e9bd9d854051dec5d2fe63bf6cf98dcafad5e"
+      },
+      "input_trees": {
+        "original": {
+          "cwd": "original",
+          "files": {
+            "app.py": "d2cc9c45349f6ed92b0abb04b207f3b001ba4a393d7015c88357f9635dd542c6"
+          }
+        },
+        "candidate": {
+          "cwd": "candidate",
+          "files": {
+            "app.py": "958c256ef6143ce49faabb8f4f0e9bd9d854051dec5d2fe63bf6cf98dcafad5e"
+          }
+        }
+      },
+      "cases": [
+        {
+          "scenario": "state",
+          "step": 0,
+          "observations": {
+            "original": {
+              "status": "observed",
+              "reason": null,
+              "exit_code": 0,
+              "elapsed_ms": 67.752,
+              "peak_job_bytes": 15781888,
+              "output_truncated": false,
+              "memory_limit_mb": 512,
+              "cleanup": "owned Windows job closed after invocation",
+              "stdout": "eyJjb3VudCI6IDJ9DQo=",
+              "stderr": "",
+              "files": {
+                "state.json": {
+                  "status": "observed",
+                  "bytes": 12,
+                  "sha256": "50b5ac2e2dca781a837d8a4120a90dd7c7fff8c373301f996af9967f7fcd1660"
+                }
+              }
+            },
+            "candidate": {
+              "status": "observed",
+              "reason": null,
+              "exit_code": 0,
+              "elapsed_ms": 83.445,
+              "peak_job_bytes": 15781888,
+              "output_truncated": false,
+              "memory_limit_mb": 512,
+              "cleanup": "owned Windows job closed after invocation",
+              "stdout": "eyJjb3VudCI6IDJ9DQo=",
+              "stderr": "",
+              "files": {
+                "state.json": {
+                  "status": "observed",
+                  "bytes": 12,
+                  "sha256": "50b5ac2e2dca781a837d8a4120a90dd7c7fff8c373301f996af9967f7fcd1660"
+                }
+              }
+            }
+          },
+          "differences": [],
+          "status": "pass"
+        },
+        {
+          "scenario": "state",
+          "step": 1,
+          "observations": {
+            "original": {
+              "status": "observed",
+              "reason": null,
+              "exit_code": 0,
+              "elapsed_ms": 77.907,
+              "peak_job_bytes": 15675392,
+              "output_truncated": false,
+              "memory_limit_mb": 512,
+              "cleanup": "owned Windows job closed after invocation",
+              "stdout": "eyJjb3VudCI6IDF9DQo=",
+              "stderr": "",
+              "files": {
+                "state.json": {
+                  "status": "observed",
+                  "bytes": 12,
+                  "sha256": "b81933e5fe6b56c806136319dafd84ed8280d60ed50b32dd46afa009030361e4"
+                }
+              }
+            },
+            "candidate": {
+              "status": "observed",
+              "reason": null,
+              "exit_code": 0,
+              "elapsed_ms": 67.907,
+              "peak_job_bytes": 15958016,
+              "output_truncated": false,
+              "memory_limit_mb": 512,
+              "cleanup": "owned Windows job closed after invocation",
+              "stdout": "eyJjb3VudCI6IDN9DQo=",
+              "stderr": "",
+              "files": {
+                "state.json": {
+                  "status": "observed",
+                  "bytes": 12,
+                  "sha256": "ba49b2396f8b07a81ec2d4b88458c2e73a8dd5e2d7878e088802b1ab0ed077ff"
+                }
+              }
+            }
+          },
+          "differences": [
+            "stdout",
+            "files"
+          ],
+          "status": "fail"
+        },
+        {
+          "scenario": "state",
+          "step": 2,
+          "observations": {
+            "original": {
+              "status": "observed",
+              "reason": null,
+              "exit_code": 0,
+              "elapsed_ms": 75.845,
+              "peak_job_bytes": 16035840,
+              "output_truncated": false,
+              "memory_limit_mb": 512,
+              "cleanup": "owned Windows job closed after invocation",
+              "stdout": "eyJjb3VudCI6IDF9DQo=",
+              "stderr": "",
+              "files": {
+                "state.json": {
+                  "status": "observed",
+                  "bytes": 12,
+                  "sha256": "b81933e5fe6b56c806136319dafd84ed8280d60ed50b32dd46afa009030361e4"
+                }
+              }
+            },
+            "candidate": {
+              "status": "observed",
+              "reason": null,
+              "exit_code": 0,
+              "elapsed_ms": 60.358,
+              "peak_job_bytes": 15687680,
+              "output_truncated": false,
+              "memory_limit_mb": 512,
+              "cleanup": "owned Windows job closed after invocation",
+              "stdout": "eyJjb3VudCI6IDN9DQo=",
+              "stderr": "",
+              "files": {
+                "state.json": {
+                  "status": "observed",
+                  "bytes": 12,
+                  "sha256": "ba49b2396f8b07a81ec2d4b88458c2e73a8dd5e2d7878e088802b1ab0ed077ff"
+                }
+              }
+            }
+          },
+          "differences": [
+            "stdout",
+            "files"
+          ],
+          "status": "fail"
+        },
+        {
+          "scenario": "error",
+          "step": 0,
+          "observations": {
+            "original": {
+              "status": "observed",
+              "reason": null,
+              "exit_code": 3,
+              "elapsed_ms": 69.236,
+              "peak_job_bytes": 15880192,
+              "output_truncated": false,
+              "memory_limit_mb": 512,
+              "cleanup": "owned Windows job closed after invocation",
+              "stdout": "",
+              "stderr": "aW52YWxpZCBpbnB1dA0K",
+              "files": {}
+            },
+            "candidate": {
+              "status": "observed",
+              "reason": null,
+              "exit_code": 3,
+              "elapsed_ms": 58.371,
+              "peak_job_bytes": 15691776,
+              "output_truncated": false,
+              "memory_limit_mb": 512,
+              "cleanup": "owned Windows job closed after invocation",
+              "stdout": "",
+              "stderr": "aW52YWxpZCBpbnB1dA0K",
+              "files": {}
+            }
+          },
+          "differences": [],
+          "status": "pass"
+        }
+      ],
+      "changed_inputs": [],
+      "failure": null,
+      "elapsed_ms": 573.99,
+      "rea_native_proof": "not-performed",
+      "whole_product_acceptance": "not-established",
+      "limitations": [
+        "Only declared ordered inputs, raw output, exit and named file effects were compared.",
+        "Working copies and owned cleanup are not filesystem or network isolation.",
+        "No UI, network, unlisted effects or whole-program equivalence established."
+      ]
+    },
+    "workflow": {
+      "status": "implementation",
+      "case_root": "work/current-case",
+      "revision": 4,
+      "original_request": "\u5206\u6790\u8fd9\u4e2a\u8ba1\u6570\u7a0b\u5e8f\uff0c\u7136\u540e\u590d\u523b\u5168\u90e8\u5df2\u58f0\u660e\u7684\u8ba1\u6570\u3001\u6301\u4e45\u5316\u548c\u9519\u8bef\u884c\u4e3a\u3002\u6211\u4e0d\u61c2\u6280\u672f\u3002",
+      "objective": "reconstruction",
+      "route": {
+        "primary_id": "R0",
+        "skill": "skills/reverse-engineering/SKILL.md",
+        "required_reads": [
+          "RULES.md",
+          "skills/reverse-engineering/SKILL.md"
+        ],
+        "hard_target": false
+      },
+      "supplements": [],
+      "features": {
+        "F1": {
+          "description": "Signed updates, persistence, restart and invalid input",
+          "ready": true,
+          "blocked_by": [],
+          "checks": {
+            "C1": "fail"
+          },
+          "complete": false
+        }
+      },
+      "ready_features": [
+        "F1"
+      ],
+      "blocked_features": {},
+      "unknowns": {},
+      "next_action": "Implement/check or refine ready features: F1",
+      "whole_product_acceptance": "not-established",
+      "limitations": [
+        "Readiness checks declared evidence, not automatic semantic understanding.",
+        "Completion covers only declared features and actual finite checks.",
+        "Host editing is permitted; these records are not an OS write sandbox."
+      ]
+    }
+  },
+  "corrected": {
+    "comparison": {
+      "schema_version": 2,
+      "operation": "independent-finite-replay",
+      "status": "pass",
+      "scope": "Owned stateful counter, restart and error path",
+      "plan": "plan.json",
+      "plan_sha256": "c08e3d973d3f2b2025f282c427d56ce2ba31bc6ded35ae0384536855936f22ad",
+      "sources": {
+        "original/app.py": "d2cc9c45349f6ed92b0abb04b207f3b001ba4a393d7015c88357f9635dd542c6",
+        "candidate/app.py": "2a4c4fd37693eb7628a3d158422b1da0a1e6200bd5a2c53294b09964af6c8011"
+      },
+      "input_trees": {
+        "original": {
+          "cwd": "original",
+          "files": {
+            "app.py": "d2cc9c45349f6ed92b0abb04b207f3b001ba4a393d7015c88357f9635dd542c6"
+          }
+        },
+        "candidate": {
+          "cwd": "candidate",
+          "files": {
+            "app.py": "2a4c4fd37693eb7628a3d158422b1da0a1e6200bd5a2c53294b09964af6c8011"
+          }
+        }
+      },
+      "cases": [
+        {
+          "scenario": "state",
+          "step": 0,
+          "observations": {
+            "original": {
+              "status": "observed",
+              "reason": null,
+              "exit_code": 0,
+              "elapsed_ms": 57.0,
+              "peak_job_bytes": 15728640,
+              "output_truncated": false,
+              "memory_limit_mb": 512,
+              "cleanup": "owned Windows job closed after invocation",
+              "stdout": "eyJjb3VudCI6IDJ9DQo=",
+              "stderr": "",
+              "files": {
+                "state.json": {
+                  "status": "observed",
+                  "bytes": 12,
+                  "sha256": "50b5ac2e2dca781a837d8a4120a90dd7c7fff8c373301f996af9967f7fcd1660"
+                }
+              }
+            },
+            "candidate": {
+              "status": "observed",
+              "reason": null,
+              "exit_code": 0,
+              "elapsed_ms": 57.639,
+              "peak_job_bytes": 15671296,
+              "output_truncated": false,
+              "memory_limit_mb": 512,
+              "cleanup": "owned Windows job closed after invocation",
+              "stdout": "eyJjb3VudCI6IDJ9DQo=",
+              "stderr": "",
+              "files": {
+                "state.json": {
+                  "status": "observed",
+                  "bytes": 12,
+                  "sha256": "50b5ac2e2dca781a837d8a4120a90dd7c7fff8c373301f996af9967f7fcd1660"
+                }
+              }
+            }
+          },
+          "differences": [],
+          "status": "pass"
+        },
+        {
+          "scenario": "state",
+          "step": 1,
+          "observations": {
+            "original": {
+              "status": "observed",
+              "reason": null,
+              "exit_code": 0,
+              "elapsed_ms": 64.146,
+              "peak_job_bytes": 15785984,
+              "output_truncated": false,
+              "memory_limit_mb": 512,
+              "cleanup": "owned Windows job closed after invocation",
+              "stdout": "eyJjb3VudCI6IDF9DQo=",
+              "stderr": "",
+              "files": {
+                "state.json": {
+                  "status": "observed",
+                  "bytes": 12,
+                  "sha256": "b81933e5fe6b56c806136319dafd84ed8280d60ed50b32dd46afa009030361e4"
+                }
+              }
+            },
+            "candidate": {
+              "status": "observed",
+              "reason": null,
+              "exit_code": 0,
+              "elapsed_ms": 61.042,
+              "peak_job_bytes": 15675392,
+              "output_truncated": false,
+              "memory_limit_mb": 512,
+              "cleanup": "owned Windows job closed after invocation",
+              "stdout": "eyJjb3VudCI6IDF9DQo=",
+              "stderr": "",
+              "files": {
+                "state.json": {
+                  "status": "observed",
+                  "bytes": 12,
+                  "sha256": "b81933e5fe6b56c806136319dafd84ed8280d60ed50b32dd46afa009030361e4"
+                }
+              }
+            }
+          },
+          "differences": [],
+          "status": "pass"
+        },
+        {
+          "scenario": "state",
+          "step": 2,
+          "observations": {
+            "original": {
+              "status": "observed",
+              "reason": null,
+              "exit_code": 0,
+              "elapsed_ms": 56.552,
+              "peak_job_bytes": 15720448,
+              "output_truncated": false,
+              "memory_limit_mb": 512,
+              "cleanup": "owned Windows job closed after invocation",
+              "stdout": "eyJjb3VudCI6IDF9DQo=",
+              "stderr": "",
+              "files": {
+                "state.json": {
+                  "status": "observed",
+                  "bytes": 12,
+                  "sha256": "b81933e5fe6b56c806136319dafd84ed8280d60ed50b32dd46afa009030361e4"
+                }
+              }
+            },
+            "candidate": {
+              "status": "observed",
+              "reason": null,
+              "exit_code": 0,
+              "elapsed_ms": 59.207,
+              "peak_job_bytes": 15851520,
+              "output_truncated": false,
+              "memory_limit_mb": 512,
+              "cleanup": "owned Windows job closed after invocation",
+              "stdout": "eyJjb3VudCI6IDF9DQo=",
+              "stderr": "",
+              "files": {
+                "state.json": {
+                  "status": "observed",
+                  "bytes": 12,
+                  "sha256": "b81933e5fe6b56c806136319dafd84ed8280d60ed50b32dd46afa009030361e4"
+                }
+              }
+            }
+          },
+          "differences": [],
+          "status": "pass"
+        },
+        {
+          "scenario": "error",
+          "step": 0,
+          "observations": {
+            "original": {
+              "status": "observed",
+              "reason": null,
+              "exit_code": 3,
+              "elapsed_ms": 59.581,
+              "peak_job_bytes": 15843328,
+              "output_truncated": false,
+              "memory_limit_mb": 512,
+              "cleanup": "owned Windows job closed after invocation",
+              "stdout": "",
+              "stderr": "aW52YWxpZCBpbnB1dA0K",
+              "files": {}
+            },
+            "candidate": {
+              "status": "observed",
+              "reason": null,
+              "exit_code": 3,
+              "elapsed_ms": 58.489,
+              "peak_job_bytes": 15810560,
+              "output_truncated": false,
+              "memory_limit_mb": 512,
+              "cleanup": "owned Windows job closed after invocation",
+              "stdout": "",
+              "stderr": "aW52YWxpZCBpbnB1dA0K",
+              "files": {}
+            }
+          },
+          "differences": [],
+          "status": "pass"
+        }
+      ],
+      "changed_inputs": [],
+      "failure": null,
+      "elapsed_ms": 483.393,
+      "rea_native_proof": "not-performed",
+      "whole_product_acceptance": "not-established",
+      "limitations": [
+        "Only declared ordered inputs, raw output, exit and named file effects were compared.",
+        "Working copies and owned cleanup are not filesystem or network isolation.",
+        "No UI, network, unlisted effects or whole-program equivalence established."
+      ]
+    },
+    "workflow": {
+      "status": "finite-scope-verified",
+      "case_root": "work/current-case",
+      "revision": 5,
+      "original_request": "\u5206\u6790\u8fd9\u4e2a\u8ba1\u6570\u7a0b\u5e8f\uff0c\u7136\u540e\u590d\u523b\u5168\u90e8\u5df2\u58f0\u660e\u7684\u8ba1\u6570\u3001\u6301\u4e45\u5316\u548c\u9519\u8bef\u884c\u4e3a\u3002\u6211\u4e0d\u61c2\u6280\u672f\u3002",
+      "objective": "reconstruction",
+      "route": {
+        "primary_id": "R0",
+        "skill": "skills/reverse-engineering/SKILL.md",
+        "required_reads": [
+          "RULES.md",
+          "skills/reverse-engineering/SKILL.md"
+        ],
+        "hard_target": false
+      },
+      "supplements": [],
+      "features": {
+        "F1": {
+          "description": "Signed updates, persistence, restart and invalid input",
+          "ready": true,
+          "blocked_by": [],
+          "checks": {
+            "C1": "pass"
+          },
+          "complete": true
+        }
+      },
+      "ready_features": [
+        "F1"
+      ],
+      "blocked_features": {},
+      "unknowns": {},
+      "next_action": "Review declared coverage against the full goal; unlisted requirements are not automatically verified.",
+      "whole_product_acceptance": "not-established",
+      "limitations": [
+        "Readiness checks declared evidence, not automatic semantic understanding.",
+        "Completion covers only declared features and actual finite checks.",
+        "Host editing is permitted; these records are not an OS write sandbox."
+      ]
+    }
+  },
+  "fresh_process_resume": {
+    "status": "finite-scope-verified",
+    "case_root": "work/current-case",
+    "revision": 5,
+    "original_request": "\u5206\u6790\u8fd9\u4e2a\u8ba1\u6570\u7a0b\u5e8f\uff0c\u7136\u540e\u590d\u523b\u5168\u90e8\u5df2\u58f0\u660e\u7684\u8ba1\u6570\u3001\u6301\u4e45\u5316\u548c\u9519\u8bef\u884c\u4e3a\u3002\u6211\u4e0d\u61c2\u6280\u672f\u3002",
+    "objective": "reconstruction",
+    "route": {
+      "primary_id": "R0",
+      "skill": "skills/reverse-engineering/SKILL.md",
+      "required_reads": [
+        "RULES.md",
+        "skills/reverse-engineering/SKILL.md"
+      ],
+      "hard_target": false
+    },
+    "supplements": [],
+    "features": {
+      "F1": {
+        "description": "Signed updates, persistence, restart and invalid input",
+        "ready": true,
+        "blocked_by": [],
+        "checks": {
+          "C1": "pass"
+        },
+        "complete": true
+      }
+    },
+    "ready_features": [
+      "F1"
+    ],
+    "blocked_features": {},
+    "unknowns": {},
+    "next_action": "Review declared coverage against the full goal; unlisted requirements are not automatically verified.",
+    "whole_product_acceptance": "not-established",
+    "limitations": [
+      "Readiness checks declared evidence, not automatic semantic understanding.",
+      "Completion covers only declared features and actual finite checks.",
+      "Host editing is permitted; these records are not an OS write sandbox."
+    ]
+  },
+  "runtime_dependencies": [
+    "Python standard library",
+    "owned Reverse router/process utilities"
+  ],
+  "craft_present": false,
+  "spec_present": false
+}

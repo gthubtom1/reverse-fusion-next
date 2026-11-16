@@ -3,7 +3,7 @@
   "version": "2.0.0.dev0",
   "baseline_commit": "022e61b803e41569cac1f116ebca2245b9c9b1f8",
   "goal_status": "active",
-  "stage": "S1",
+  "stage": "S2",
   "stages": {
     "S0": {
       "status": "done",
@@ -15,11 +15,16 @@
       ]
     },
     "S1": {
-      "status": "in_progress",
-      "evidence": []
+      "status": "done",
+      "evidence": [
+        "evidence/next/s1/vertical.json",
+        "tests_next/test_workflow.py",
+        "rea_enhanced/comparison.py",
+        "rea_enhanced/workflow.py"
+      ]
     },
     "S2": {
-      "status": "pending",
+      "status": "in_progress",
       "evidence": []
     },
     "S3": {
@@ -46,11 +51,26 @@
     "N02": [
       "docs/NEXT/RESUME.md",
       "docs/NEXT/STATUS.json"
+    ],
+    "N08": [
+      "tests_next/test_workflow.py"
+    ],
+    "N11": [
+      "tests_next/test_workflow.py"
+    ],
+    "N12": [
+      "evidence/next/s1/vertical.json"
+    ],
+    "N13": [
+      "evidence/next/s1/vertical.json"
+    ],
+    "N15": [
+      "tests_next/test_workflow.py"
     ]
   },
-  "next_action": "Implement and exercise an independent case/readiness/paired-comparison/refinement slice with host-native edits and no Craft/Spec runtime.",
+  "next_action": "Install the independent pinned REA runtime, add one enhanced MCP entry preserving official tools, and exercise actual provider/evidence operations.",
   "migration": "not_started; original checkout and desktop entry remain active",
   "limitations": [
-    "Development plan is not implementation or release acceptance."
+    "S1 covers owned finite process/state behavior; REA integration, visual verification, full installation and migration are not yet qualified."
   ]
 }
