@@ -180,7 +180,7 @@
   "long_task_repair": {
     "requirements": "docs/NEXT/LONG-TASK-REPAIR.md",
     "status": "local-qualified-installed-remote-pending",
-    "verification": "96 full source-bound tests passed, including 15 new failure cases and actual MCP execute; local owned install/probe passed. Public clone pending.",
+    "verification": "97 full source-bound tests passed (15 long-task cases and one archive integrity counterexample); installed enhanced entry remains selected. Public clone blocked by observed archive integrity failures, being investigated with unchanged pin.",
     "model_effectiveness": "not-established",
     "implemented": [
       "immutable observation snapshots and explicit live dependencies",

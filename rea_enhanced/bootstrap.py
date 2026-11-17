@@ -43,7 +43,9 @@ def acquire(url, destination, algorithm='sha256', expected=None):
     temporary = destination.with_suffix(destination.suffix + '.partial')
     for attempt in range(3):
         try:
-            with urllib.request.urlopen(url, timeout=60) as source, temporary.open('wb') as output:
+            request = urllib.request.Request(url, headers={
+                'User-Agent': 'Reverse-Fusion-Pinned-Asset/1', 'Accept-Encoding': 'identity'})
+            with urllib.request.urlopen(request, timeout=60) as source, temporary.open('wb') as output:
                 shutil.copyfileobj(source, output)
             if not valid(temporary): raise ValueError('Pinned asset checksum mismatch: ' + destination.name)
             os.replace(temporary, destination)

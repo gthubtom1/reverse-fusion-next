@@ -7,7 +7,7 @@
     "status": "fail",
     "scope": "Owned counter visual, click and persistence behavior",
     "plan": "plan.json",
-    "plan_sha256": "91ce7f6dccdd38ba1f5bf7ebe31b0e921dcc89e681e2aebb3f279cf73b8cd026",
+    "plan_sha256": "eff44aa046c07b0dc931aec18a2cfc561db7c8093dad6499134fe958fc7ea2a9",
     "engine": {
       "rea_enhanced/comparison.py": "09e96f0916472e635d1ba31f2b6c41847dd5d012d0ceaf51857b0f89cfe50d37",
       "reverse_fusion/owned_process.py": "4d0f4cfc0367116b084d0ec870fde2d90f0470d6da9887d59cd47be5c96e32fd",
@@ -117,14 +117,14 @@
       "status": "observed",
       "reason": null,
       "exit_code": 0,
-      "elapsed_ms": 2339.564,
-      "peak_job_bytes": 495382528,
+      "elapsed_ms": 2289.954,
+      "peak_job_bytes": 488308736,
       "output_truncated": false,
       "memory_limit_mb": 1536,
       "cleanup": "owned Windows job closed after invocation"
     },
     "capture_path": "work/bad-behavior/capture.json",
-    "elapsed_ms": 2339.564,
+    "elapsed_ms": 2289.954,
     "rea_native_proof": "not-performed",
     "whole_product_acceptance": "not-established",
     "limitations": [

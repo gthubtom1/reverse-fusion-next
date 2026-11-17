@@ -1,3 +1,4 @@
+test_explicit_archive_transfer_still_rejects_mismatched_bytes (test_bootstrap.ArchiveSafety.test_explicit_archive_transfer_still_rejects_mismatched_bytes) ... ok
 test_safe_archive_extracts_to_selected_root (test_bootstrap.ArchiveSafety.test_safe_archive_extracts_to_selected_root) ... ok
 test_tar_symlink_rejected_before_writes (test_bootstrap.ArchiveSafety.test_tar_symlink_rejected_before_writes) ... ok
 test_transient_tls_eof_retries_without_accepting_partial_download (test_bootstrap.ArchiveSafety.test_transient_tls_eof_retries_without_accepting_partial_download) ... ok
@@ -96,6 +97,6 @@ test_unchanged_success_is_reused_without_another_run (test_workflow.OwnedCase.te
 test_wrong_algorithm_fails (test_workflow.OwnedCase.test_wrong_algorithm_fails) ... ok
 
 ----------------------------------------------------------------------
-Ran 96 tests in 94.293s
+Ran 97 tests in 94.777s
 
 OK

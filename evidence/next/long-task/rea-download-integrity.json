@@ -1,0 +1,48 @@
+{
+  "expected": "sha512-KqDn1UR5BMqHoQ3MGAnPuWiSKwgdFaz1L/uUNgrKt+1W8kPtgYP8AWEOXIF1lDIOBVyPuYIIst2iamo1Wf3r8g==",
+  "observations": [
+    {
+      "url": "https://registry.npmjs.org/rea-agents/-/rea-agents-6.9.0.tgz",
+      "final_url": "https://registry.npmjs.org/rea-agents/-/rea-agents-6.9.0.tgz",
+      "status": 200,
+      "content_type": "application/octet-stream",
+      "content_encoding": null,
+      "size": 41851672,
+      "sha512_base64": "KqDn1UR5BMqHoQ3MGAnPuWiSKwgdFaz1L/uUNgrKt+1W8kPtgYP8AWEOXIF1lDIOBVyPuYIIst2iamo1Wf3r8g==",
+      "format": "gzip"
+    },
+    {
+      "url": "https://registry.npmjs.org/rea-agents/6.9.0",
+      "final_url": "https://registry.npmjs.org/rea-agents/6.9.0",
+      "status": 200,
+      "content_type": "application/json",
+      "content_encoding": null,
+      "size": 25677,
+      "sha512_base64": "Uj8GMnZ2aXtXnQbHDYJIgCsSyTivv6XJTY/2gC91C/NqcxHg3HCwyXVINgL52aJ3m1tTu6aKI5qkp/v4n4Z4OA==",
+      "version": "6.9.0",
+      "dist": {
+        "shasum": "d48047b60abccc7a9acdaf9097955ddea8f0df04",
+        "tarball": "https://registry.npmjs.org/rea-agents/-/rea-agents-6.9.0.tgz",
+        "fileCount": 10585,
+        "integrity": "sha512-KqDn1UR5BMqHoQ3MGAnPuWiSKwgdFaz1L/uUNgrKt+1W8kPtgYP8AWEOXIF1lDIOBVyPuYIIst2iamo1Wf3r8g==",
+        "signatures": [
+          {
+            "sig": "MEQCIDe92PpnV5ewqQHMtBLrBdvoTSxpA6Nd4Uxh6jYkJPvZAiBglRFZ/4tJHqX6baT5n0p7lr/7t3wFj9xotmSj9e1eoA==",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          },
+          {
+            "sig": "MEUCIQCsdFnmsIO2ifzg9jAf/jnVJRem0RWS3Ag/mQVI4y9rTQIgGkawopFZcnypvKRB6m6SReZnAoEpprXcHtB3w8wKL0E=",
+            "keyid": "SHA256:DhQ8wR5APBvFHLF/+Tc+AYvPOdTpcIDqOhxsBHRwC7U"
+          }
+        ],
+        "attestations": {
+          "url": "https://registry.npmjs.org/-/npm/v1/attestations/rea-agents@6.9.0",
+          "provenance": {
+            "predicateType": "https://slsa.dev/provenance/v1"
+          }
+        },
+        "unpackedSize": 189641205
+      }
+    }
+  ]
+}

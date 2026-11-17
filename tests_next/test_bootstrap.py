@@ -54,5 +54,18 @@ class ArchiveSafety(unittest.TestCase):
         self.assertEqual(result.read_bytes(),data)
         self.assertFalse((self.root/'asset.zip.partial').exists())
 
+    def test_explicit_archive_transfer_still_rejects_mismatched_bytes(self):
+        import hashlib
+        from unittest.mock import patch
+        with patch('urllib.request.urlopen',return_value=io.BytesIO(b'wrong archive')) as download:
+            with self.assertRaisesRegex(ValueError,'checksum mismatch'):
+                acquire('https://example.invalid/pinned',self.root/'asset.zip',expected=hashlib.sha256(b'expected archive').hexdigest())
+        request=download.call_args.args[0]
+        self.assertEqual(request.get_header('Accept-encoding'),'identity')
+        self.assertIn('Reverse-Fusion',request.get_header('User-agent'))
+        self.assertEqual(download.call_count,1)
+        self.assertFalse((self.root/'asset.zip').exists())
+        self.assertFalse((self.root/'asset.zip.partial').exists())
+
 
 if __name__=='__main__':unittest.main()
