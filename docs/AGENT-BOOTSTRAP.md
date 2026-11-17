@@ -10,6 +10,9 @@ powershell -NoProfile -File .\scripts\install.ps1
 
 安装器创建仓库.venv和固定Python依赖，按摘要从固定来源取得Node/REA/Frida/WABT/JADX；npm按锁文件下载且不运行生命周期脚本。随后保存本机工具路径。Ghidra/Java、浏览器、设备、ILSpy和其他provider按目标需要，路径存在不等于实际操作通过；缺少工具不会冒称该类目标可验收。
 
+支持分段的固定资源采用有界并发下载；分段断流/短读只重试失败段，保留完整段。
+分段位置、ETag、长度和最终完整文件摘要仍逐项验证，身份或摘要变化不会当作网络重试放行。
+
 唯一仓库是 https://github.com/gthubtom1/reverse-fusion-next ，默认分支main。
 不要从旧reverse-fusion仓库的codex/rea-next分支安装。公开release-check要求
 当前测试与工作流合同、真实工具记录和远端克隆安装证明相符；不是只读旧pass标记。

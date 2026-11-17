@@ -1,5 +1,7 @@
 test_changed_range_identity_is_rejected (test_bootstrap.ArchiveSafety.test_changed_range_identity_is_rejected) ... ok
 test_explicit_archive_transfer_still_rejects_mismatched_bytes (test_bootstrap.ArchiveSafety.test_explicit_archive_transfer_still_rejects_mismatched_bytes) ... ok
+test_only_truncated_range_is_retried_and_successful_ranges_are_preserved (test_bootstrap.ArchiveSafety.test_only_truncated_range_is_retried_and_successful_ranges_are_preserved) ... ok
+test_range_incomplete_read_is_retried_without_weakening_identity (test_bootstrap.ArchiveSafety.test_range_incomplete_read_is_retried_without_weakening_identity) ... ok
 test_ranged_asset_assembles_exact_bytes_and_keeps_full_checksum (test_bootstrap.ArchiveSafety.test_ranged_asset_assembles_exact_bytes_and_keeps_full_checksum) ... ok
 test_safe_archive_extracts_to_selected_root (test_bootstrap.ArchiveSafety.test_safe_archive_extracts_to_selected_root) ... ok
 test_tar_symlink_rejected_before_writes (test_bootstrap.ArchiveSafety.test_tar_symlink_rejected_before_writes) ... ok
@@ -120,6 +122,6 @@ test_unchanged_success_is_reused_without_another_run (test_workflow.OwnedCase.te
 test_wrong_algorithm_fails (test_workflow.OwnedCase.test_wrong_algorithm_fails) ... ok
 
 ----------------------------------------------------------------------
-Ran 120 tests in 86.182s
+Ran 122 tests in 86.323s
 
 OK

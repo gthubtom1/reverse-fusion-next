@@ -1,6 +1,7 @@
 """Checksum-bound, checkout-local Windows core bootstrap. No host writes."""
 import base64
 import hashlib
+import http.client
 import os
 from pathlib import Path
 import platform
@@ -64,21 +65,35 @@ def download_asset(url, temporary):
         selected = {**headers, 'Range': f'bytes={offset}-{stop}'}
         if etag:
             selected['If-Range'] = etag
-        with urllib.request.urlopen(urllib.request.Request(url, headers=selected), timeout=60) as source:
-            if getattr(source, 'status', 200) != 206 or extent(source) != (offset, stop, total):
-                raise ValueError('Pinned asset range changed during transfer')
-            if etag and source.headers.get('ETag') != etag:
-                raise ValueError('Pinned asset identity changed during transfer')
-            data = source.read(chunk_size + 1)
-            if len(data) != stop - offset + 1:
-                raise ConnectionError('Incomplete pinned asset range')
-            return offset, data
-    with ThreadPoolExecutor(max_workers=4) as pool, temporary.open('r+b') as output:
+        for attempt in range(4):
+            try:
+                with urllib.request.urlopen(urllib.request.Request(url, headers=selected), timeout=60) as source:
+                    if getattr(source, 'status', 200) != 206 or extent(source) != (offset, stop, total):
+                        raise ValueError('Pinned asset range changed during transfer')
+                    if etag and source.headers.get('ETag') != etag:
+                        raise ValueError('Pinned asset identity changed during transfer')
+                    data = source.read(chunk_size + 1)
+                    if len(data) != stop - offset + 1:
+                        raise ConnectionError('Incomplete pinned asset range')
+                    return offset, data
+            except (urllib.error.URLError, ssl.SSLError, TimeoutError, ConnectionError,
+                    http.client.IncompleteRead) as exc:
+                if isinstance(exc, urllib.error.HTTPError) and exc.code not in {408,429,500,502,503,504}:
+                    raise
+                if attempt == 3:
+                    raise
+                time.sleep(attempt + 1)
+    pool = ThreadPoolExecutor(max_workers=4)
+    try:
         pending = [pool.submit(part, offset) for offset in range(end + 1, total, chunk_size)]
-        for future in as_completed(pending):
-            offset, data = future.result()
-            output.seek(offset)
-            output.write(data)
+        with temporary.open('r+b') as output:
+            for future in as_completed(pending):
+                offset, data = future.result()
+                output.seek(offset)
+                output.write(data)
+    finally:
+        # A hard identity error must not launch every still-queued range.
+        pool.shutdown(wait=True, cancel_futures=True)
 
 
 def acquire(url, destination, algorithm='sha256', expected=None):
@@ -98,7 +113,7 @@ def acquire(url, destination, algorithm='sha256', expected=None):
             if not valid(temporary): raise ValueError('Pinned asset checksum mismatch: ' + destination.name)
             os.replace(temporary, destination)
             break
-        except (urllib.error.URLError,ssl.SSLError,TimeoutError,ConnectionError) as exc:
+        except (urllib.error.URLError,ssl.SSLError,TimeoutError,ConnectionError,http.client.IncompleteRead) as exc:
             if isinstance(exc,urllib.error.HTTPError) and exc.code not in {408,429,500,502,503,504}:raise
             if attempt==2:raise
             time.sleep(attempt+1)

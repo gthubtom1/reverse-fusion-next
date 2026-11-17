@@ -1,4 +1,4 @@
-Obtaining file:///D:/Project/reverse-next/work/remote-install-nao08p83
+Obtaining file:///D:/Project/reverse-next/work/remote-install-nce3ee5z
   Installing build dependencies: started
   Installing build dependencies: finished with status 'done'
   Checking if build backend supports build_editable: started
@@ -14,11 +14,19 @@ Using cached pillow-11.3.0-cp312-cp312-win_amd64.whl (7.0 MB)
 Building wheels for collected packages: reverse-rea-next
   Building editable for reverse-rea-next (pyproject.toml): started
   Building editable for reverse-rea-next (pyproject.toml): finished with status 'done'
-  Created wheel for reverse-rea-next: filename=reverse_rea_next-2.3.0-0.editable-py3-none-any.whl size=5328 sha256=0ab6b3d176881d54f31fec2e7c9f3304b21b8ecf9e8f1ee7cff45ad1d78e5952
-  Stored in directory: D:\tmp\pip-ephem-wheel-cache-e35z4vh5\wheels\d4\80\bc\fde8b778e08e018399458e4e86102420e4d25c278bd97c3a68
+  Created wheel for reverse-rea-next: filename=reverse_rea_next-2.3.0-0.editable-py3-none-any.whl size=5328 sha256=72ebf86e4dfb86e91ad60fe9a5c04f04a2c3c3b1d106984d9e254fc8eef08984
+  Stored in directory: D:\tmp\pip-ephem-wheel-cache-c82has29\wheels\89\21\d0\89ba7a63b42a07dcd864e2b3499aeb717919247353992af48c
 Successfully built reverse-rea-next
 Installing collected packages: Pillow, reverse-rea-next
 Successfully installed Pillow-11.3.0 reverse-rea-next-2.3.0
+{"status": "error", "message": "Incomplete pinned asset range"}
 
 [notice] A new release of pip is available: 23.2.1 -> 26.3
-[notice] To update, run: D:\Project\reverse-next\work\remote-install-nao08p83\.venv\Scripts\python.exe -m pip install --upgrade pip
+[notice] To update, run: D:\Project\reverse-next\work\remote-install-nce3ee5z\.venv\Scripts\python.exe -m pip install --upgrade pip
+Pinned runtime preparation failed
+ËùÔÚÎ»ÖÃ D:\Project\reverse-next\work\remote-install-nce3ee5z\scripts\install.ps1:19 ×Ö·û: 32
++ ... f ($LASTEXITCODE -ne 0) { throw 'Pinned runtime preparation failed' }
++                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Pinned runtime preparation failed:String) [], RuntimeException
+    + FullyQualifiedErrorId : Pinned runtime preparation failed
+ 

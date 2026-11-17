@@ -7,7 +7,7 @@
     "status": "fail",
     "scope": "Owned counter visual, click and persistence behavior",
     "plan": "plan.json",
-    "plan_sha256": "6bc5e97f98d35d941dbfc7675a737dac52522457fef0cf42a0f3ceca164bdbc7",
+    "plan_sha256": "30b25296bb8f481b4723cb49bfd29a1e2908b82a85b63db347d7cbe955eff793",
     "engine": {
       "rea_enhanced/comparison.py": "ae1fb038b188863e5569a96736fd5dedc81eec2049cefe7c40f75c5553ab662c",
       "rea_enhanced/disk.py": "9f495a47314b42aa1256dae20bccefc5ae1c5cbc429dee17035e6860e8c3c532",
@@ -118,17 +118,17 @@
       "status": "observed",
       "reason": null,
       "exit_code": 0,
-      "elapsed_ms": 1722.629,
-      "peak_job_bytes": 491986944,
+      "elapsed_ms": 1778.692,
+      "peak_job_bytes": 499240960,
       "output_truncated": false,
       "memory_limit_mb": 1536,
       "cleanup": "owned Windows job closed after invocation"
     },
     "capture_path": "work/bad-behavior/capture.json",
-    "elapsed_ms": 1722.629,
+    "elapsed_ms": 1778.692,
     "temporary_storage": {
       "status": "ok",
-      "project_root": "D:\\tmp\\tmp77cyr6nj",
+      "project_root": "D:\\tmp\\tmp7699i9_1",
       "policy": {
         "max_temporary_bytes": 4294967296,
         "minimum_free_bytes": 2147483648,
@@ -136,14 +136,14 @@
         "completed_ttl_seconds": 3600,
         "interrupted_ttl_seconds": 86400
       },
-      "free_bytes": 63277301760,
+      "free_bytes": 63280721920,
       "reclaimed_bytes": 126,
       "total_reclaimed_bytes": 126,
       "managed_temporary_bytes": 0,
       "entries": [
         {
-          "id": "c8c49bbb31c5429381f31efa0082ab0a",
-          "path": ".rea-enhanced/scratch/c8c49bbb31c5429381f31efa0082ab0a",
+          "id": "6f440eff931e4c288ad6a22bb2f7066e",
+          "path": ".rea-enhanced/scratch/6f440eff931e4c288ad6a22bb2f7066e",
           "purpose": "Browser comparison temporary profile",
           "bytes": 126,
           "state": "reclaimed"

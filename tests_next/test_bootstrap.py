@@ -99,5 +99,46 @@ class ArchiveSafety(unittest.TestCase):
                 acquire('https://example.invalid/pinned',self.root/'asset.zip',expected=hashlib.sha256(b'a'*size+b'b').hexdigest())
         self.assertFalse((self.root/'asset.zip').exists())
 
+    def test_only_truncated_range_is_retried_and_successful_ranges_are_preserved(self):
+        import hashlib
+        from unittest.mock import patch
+        width=1024*1024
+        data=b'a'*width+b'b'*width+b'final'
+        counts={}
+        class Response(io.BytesIO):
+            status=206
+            def __init__(self,start,end,truncate):
+                super().__init__(data[start:end+1] if not truncate else data[start:start+12])
+                self.headers={'Content-Range':f'bytes {start}-{end}/{len(data)}','ETag':'fixed'}
+        def response(request,timeout):
+            start,end=map(int,request.get_header('Range').removeprefix('bytes=').split('-'))
+            end=min(end,len(data)-1);counts[start]=counts.get(start,0)+1
+            return Response(start,end,start==width and counts[start]==1)
+        with patch('urllib.request.urlopen',side_effect=response),patch('rea_enhanced.bootstrap.time.sleep'):
+            result=acquire('https://example.invalid/pinned',self.root/'asset.zip',expected=hashlib.sha256(data).hexdigest())
+        self.assertEqual(result.read_bytes(),data)
+        self.assertEqual(counts,{0:1,width:2,width*2:1})
+
+    def test_range_incomplete_read_is_retried_without_weakening_identity(self):
+        import hashlib,http.client
+        from unittest.mock import patch
+        width=1024*1024;data=b'a'*width+b'last';counts={}
+        class Response(io.BytesIO):
+            status=206
+            def __init__(self,start,end,fail):
+                super().__init__(data[start:end+1]);self.fail=fail
+                self.headers={'Content-Range':f'bytes {start}-{end}/{len(data)}','ETag':'fixed'}
+            def read(self,*args):
+                if self.fail:raise http.client.IncompleteRead(b'la',2)
+                return super().read(*args)
+        def response(request,timeout):
+            start,end=map(int,request.get_header('Range').removeprefix('bytes=').split('-'))
+            end=min(end,len(data)-1);counts[start]=counts.get(start,0)+1
+            return Response(start,end,start==width and counts[start]==1)
+        with patch('urllib.request.urlopen',side_effect=response),patch('rea_enhanced.bootstrap.time.sleep'):
+            result=acquire('https://example.invalid/pinned',self.root/'asset.zip',expected=hashlib.sha256(data).hexdigest())
+        self.assertEqual(result.read_bytes(),data)
+        self.assertEqual(counts,{0:1,width:2})
+
 
 if __name__=='__main__':unittest.main()
