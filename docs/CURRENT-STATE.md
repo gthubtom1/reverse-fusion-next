@@ -11,7 +11,9 @@
 声明候选产品身份、按变化选择验证。宿主保留工具直达和自主判断，操作退出零不是验收通过。
 详细结论见NEXT/LONG-TASK-CONCLUSIONS.md；实现完成判据和本轮验证状态见NEXT/LONG-TASK-REPAIR.md和STATUS.json。
 
-当前源码正在完成新资格、托管入口更新与远端同步。读取release-check当前结果，勿把旧pass记录当新版本通过。
+当前固定源码99项工程检查通过；独立GitHub默认clone通过公共安装器取得自己的运行包，再通过同样99项检查，临时用户配置准确回退。
+最终release-check --require-deployed通过，本机仍只有259工具的一个增强入口。实现资格提交为b01eaf83c011a6eec9ac48cd53002f82c80d3211；后续进度和证据收尾不改变该实现。
+读取当前release-check，勿把工程通过当作所有目标已完成或模型效果优于裸宿主。
 安装唯一入口AGENT-BOOTSTRAP.md；用户白话使用BEGINNER-GUIDE.md。现有聊天更新后需要重连或绝对CLI，
 不关闭别的聊天、目标程序或无关MCP。旧项目由用户清理，其历史基线在本仓库可追溯，不要求恢复旧目录。
 

@@ -2,8 +2,8 @@
   "schema_version": 1,
   "version": "2.2.0",
   "baseline_commit": "022e61b803e41569cac1f116ebca2245b9c9b1f8",
-  "goal_status": "active",
-  "stage": "long-task-repair-qualification",
+  "goal_status": "complete",
+  "stage": "maintenance",
   "stages": {
     "S0": {
       "status": "done",
@@ -153,15 +153,16 @@
       "README.md"
     ]
   },
-  "next_action": "Qualify the generic long-task repair, preserve official tools, update the owned local entry and publish the reviewed source. Model effectiveness against a same-model/same-tool baseline remains unestablished.",
+  "next_action": "The scoped2.2.0 long-task repair is qualified, installed and published. New target work keeps its original full goal and uses current diagnostics. Same-model/same-tool effectiveness superiority and arbitrary future-target success remain unestablished.",
   "migration": "Final owned uninstall/empty entry/reinstall verified; legacy REA/Craft processes retired; one enhanced endpoint selected; final fresh desktop chat entry observed.",
   "limitations": [
     "Finite engineering qualification and the owned plain-language case are distinct from acceptance of arbitrary future targets.",
     "Final installed entry is verified in a fresh desktop chat; retired cached connections in existing chats are not claimed to hot-reload.",
-    "Existing external OS providers were used; clean OS, other hosts and model A/B are not claimed."
+    "Existing external OS providers were used; clean OS, other hosts and model A/B are not claimed.",
+    "2.2.0 operation measurement covers its optional runner, not every native host command; unrecorded chat supplements are not automatically captured."
   ],
   "acceptance": "docs/NEXT/ACCEPTANCE.json",
-  "clean_source_commit": "0eaa223e8da0f10dc41426163eb997b8b57a6208",
+  "clean_source_commit": "b01eaf83c011a6eec9ac48cd53002f82c80d3211",
   "final_audit": "docs/NEXT/FINAL-AUDIT.md",
   "independent_final_audit": {
     "status": "done",
@@ -179,8 +180,8 @@
   },
   "long_task_repair": {
     "requirements": "docs/NEXT/LONG-TASK-REPAIR.md",
-    "status": "local-qualified-ranged-transfer-verified-remote-pending",
-    "verification": "99 source-bound tests passed; actual bounded ranged transfer acquired the full41851672-byte REA archive with unchanged pin; public clone requalification next.",
+    "status": "engineering-qualified-installed-published",
+    "verification": "99 local source-bound checks and99 checks from an actual independent GitHub default clone passed. Public installer, real MCP/browser/provider operations, exact temporary-user rollback and final require-deployed release-check passed.",
     "model_effectiveness": "not-established",
     "implemented": [
       "immutable observation snapshots and explicit live dependencies",
@@ -194,6 +195,14 @@
       "same-model task speed or quality superiority",
       "arbitrary external script pass accepted as independent comparison",
       "automatic discovery of unrecorded chat supplements"
+    ],
+    "evidence": [
+      "evidence/next/s6/engineering-tests.json",
+      "evidence/next/final-audit/remote-install.json",
+      "evidence/next/long-task/local-install.json",
+      "evidence/next/long-task/release-check.json",
+      "evidence/next/long-task/archive-transfer.json",
+      "evidence/next/long-task/status-footprint.json"
     ]
   }
 }

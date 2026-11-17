@@ -1,0 +1,10 @@
+{
+  "status": "not-performed",
+  "reason": "Automatic execution policy rejected the native PowerShell recursive removal despite checked workspace targets; no deletion ran.",
+  "retained_failed_clone_names": [
+    "remote-install-bce79bd799",
+    "remote-install-d2210811bf",
+    "remote-install-33870a2a96"
+  ],
+  "release_effect": "none; successful independent clone and all verification evidence retained"
+}

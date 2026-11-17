@@ -26,8 +26,8 @@ test_unchanged_success_is_reused_without_another_run (test_workflow.OwnedCase.te
 test_wrong_algorithm_fails (test_workflow.OwnedCase.test_wrong_algorithm_fails) ... ok
 
 ----------------------------------------------------------------------
-Ran 81 tests in 88.588s
+Ran 99 tests in 78.845s
 
 OK
 
-{'status': 'pass', 'tests': 81}
+{'status': 'pass', 'tests': 99}
