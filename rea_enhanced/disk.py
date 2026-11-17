@@ -179,21 +179,34 @@ def reserved_space(project, amount):
     _retire_lease(token)
 
 
-def _strings(value):
-    if isinstance(value, str):
-        yield value
-    elif isinstance(value, dict):
-        for item in value.values():
-            yield from _strings(item)
-        # Source/file identities often use project paths as dictionary keys.
-        yield from value.keys()
-    elif isinstance(value, list):
-        for item in value:
-            yield from _strings(item)
-
-
 def protected_paths(project, value):
     names = list(value['protected'])
+    verified = {}
+    def references(obj):
+        if isinstance(obj, dict):
+            frozen = False
+            if obj.get('retention') == 'snapshot' and obj.get('source_path'):
+                key = (obj.get('path'), obj.get('sha256'))
+                if key not in verified:
+                    try:
+                        from .storage import digest
+                        verified[key] = digest(inside(project, key[0])) == key[1]
+                    except (OSError, ValueError, TypeError):
+                        verified[key] = False
+                frozen = verified[key]
+            for key, item in obj.items():
+                # Events are an audit trail, not active file dependencies. A
+                # verified immutable snapshot replaces its disposable origin;
+                # retain that origin when the snapshot is missing or corrupt.
+                if key == 'events' or key == 'source_path' and frozen:
+                    continue
+                yield key
+                yield from references(item)
+        elif isinstance(obj, list):
+            for item in obj:
+                yield from references(item)
+        elif isinstance(obj, str):
+            yield obj
     index_path = project / '.rea-enhanced/cases.json'
     if index_path.exists():
         index = read(index_path)
@@ -201,12 +214,12 @@ def protected_paths(project, value):
             case_path = inside(project, case_root + '/case-v2.json')
             names.append(case_root)
             case = read(case_path)
-            names.extend(_strings(case))
+            names.extend(references(case))
             for check in case.get('checks', {}).values():
                 if check.get('path'):
                     receipt = inside(project, check['path'])
                     if receipt.exists():
-                        names.extend(_strings(read(receipt)))
+                        names.extend(references(read(receipt)))
     result = set()
     for name in names:
         try:

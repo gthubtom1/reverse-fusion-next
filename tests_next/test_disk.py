@@ -69,6 +69,32 @@ class DiskLifecycle(unittest.TestCase):
         self.assertEqual(result['entries'][0]['state'], 'protected')
         self.assertTrue((area / 'fact.bin').exists())
 
+    def test_verified_immutable_snapshot_survives_reclaim_of_disposable_origin(self):
+        from rea_enhanced.workflow import record,status
+        helper=fixture.OwnedCase();helper.setUp();self.addCleanup(helper.doCleanups)
+        add=helper.prepare()
+        a=self.allocate(helper.root);area=Path(a['path'])
+        (area/'observation.txt').write_text('Original measured observation',encoding='utf-8')
+        add({'op':'evidence','id':'E-temp','path':a['relative_path']+'/observation.txt','authority':'observed'})
+        case=read(helper.root/'work/current-case/case-v2.json')
+        entry=case['evidence']['E-temp']
+        self.assertEqual(entry['retention'],'snapshot')
+        result=disk.complete(helper.root,a['id'])
+        self.assertEqual(result['entries'][0]['state'],'reclaimed')
+        self.assertFalse(area.exists())
+        self.assertEqual((helper.root/entry['path']).read_text(),'Original measured observation')
+        self.assertNotIn('E-temp',status(helper.root)['evidence'])
+
+    def test_corrupt_immutable_snapshot_retains_disposable_origin_for_recovery(self):
+        helper=fixture.OwnedCase();helper.setUp();self.addCleanup(helper.doCleanups)
+        add=helper.prepare();a=self.allocate(helper.root);area=Path(a['path'])
+        (area/'observation.txt').write_text('Only remaining original observation',encoding='utf-8')
+        add({'op':'evidence','id':'E-temp','path':a['relative_path']+'/observation.txt','authority':'observed'})
+        entry=read(helper.root/'work/current-case/case-v2.json')['evidence']['E-temp']
+        (helper.root/entry['path']).write_text('corrupted',encoding='utf-8')
+        self.assertEqual(disk.complete(helper.root,a['id'])['entries'][0]['state'],'protected')
+        self.assertTrue((area/'observation.txt').exists())
+
     def test_explicit_protection_covers_descendants_and_ancestors(self):
         a = self.allocate()
         disk.protect(self.root, [a['relative_path'] + '/future-delivery.bin'])

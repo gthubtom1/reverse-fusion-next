@@ -15,14 +15,14 @@
     "components/reverse-core/router.py": "ac016cdc7763097ccf699990a2b632652c94d8ed14ce21c7c3c5d2a9b62d2380",
     "components/reverse-core/routing.json": "fd4cb5ad6127e270342ea44d351c84d02828a024a70558f14639b623003c51f4",
     "docs/ACTIVE-DOCUMENTS.json": "c21b28c1e5422a58d25cb8d3cc62cb4ac9bca666aa290f90b4b799c51d5d6791",
-    "docs/AGENT-BOOTSTRAP.md": "24ff880f7b8704030e888fb50c6d0a22e472fb8ed042e9276deb59c1f3f2fd21",
+    "docs/AGENT-BOOTSTRAP.md": "6221c2895f76eb47f5555acfda9ca36d381f001654d942178c8daebee88cbfde",
     "docs/AGENT-WORKFLOW.md": "da4d93a70f808272133a7b337814261da1a53613963be793c60953b018de0387",
     "docs/BEGINNER-GUIDE.md": "9c80ef1b0d64d6a22c3883b490b0d5270a4973ade63dd6acf1ab91c6bd52b046",
     "docs/CODEX-INTEGRATION.md": "3bf9eb2a6ad3051115ddf366290a5d158ed3fc075a65b1a262cc2b1abd887e21",
     "docs/COMPARISON.md": "46a202a9d5abd657ceb3b50c6bb3a20617dca6a5098c54478eb3cec8bde5c09a",
     "docs/CROSS-PROJECT-WORKFLOW.md": "12d0114c4354ada122863f1427c30325d3d4d732a083be67d88a2065f9b89199",
     "docs/DEPLOYMENT-GUIDE.md": "e68f71aff02fea9a7ae39ff8e5945f6d712c4ca991dd80c1df1c6f0e3b268d8d",
-    "docs/DISK-MANAGEMENT.md": "8b92e7965da1990a2948531f35994ec244c885bac4aaacaf4b4948019d800d63",
+    "docs/DISK-MANAGEMENT.md": "36969d446984c4618e6c296d994ce2ad2df4616d669f2dcce8fb9884aa8f1960",
     "docs/HOST-PROJECT-CONNECTION.md": "4e6df65abacb27c6ebccf03fba153c8c2f7435dcc601cb5cc66b39a54538e785",
     "docs/INTEGRATION-CONTRACT.md": "9d97584361c06d710287ef1f3ee02cb4ee44038d718388ab44bcc8ee3bff6c75",
     "docs/MCP-INTEGRATION.md": "b77e48ee54b18d355d28a49897b139bdfa7124819a8931ac6d7d88214b958f68",
@@ -32,12 +32,12 @@
     "pyproject.toml": "94b875f2cca5772dc0fe6ae580dca84b41487b21ffbf317aedd51d5147444e62",
     "rea_enhanced/__init__.py": "c2869be5e942deaa0b0c552559af77bdbfc96cc892ca7e91f37ba97182da235e",
     "rea_enhanced/__main__.py": "79ee6f134c5c5193377cf9b189cbdcc3e2095e49ba9cec310114441c15a917c4",
-    "rea_enhanced/bootstrap.py": "5c1f582bae29cb8da627bb2d16cf96cc0891811ae57bb21d41184bfa0e75b274",
+    "rea_enhanced/bootstrap.py": "c8a260643485e60bb3aafd2670afe161ec2e3ffd54190ae9d6da27b7f1350ad3",
     "rea_enhanced/cli.py": "aaae06433f395ea0ab987d9f311198900252623f0a1df707ec2234144ff9c613",
-    "rea_enhanced/comparison.py": "db3ca9e215613a4d4808b5d6100fbe961da0fcc332e9e75223cd36949f81bba8",
+    "rea_enhanced/comparison.py": "b874eaca2899300713151430310ce8b876d908e31a4ca354bd47aeffacb978ce",
     "rea_enhanced/deployment.py": "8bc941b2540613a556f798641fb177c313433644d477693be97b3f600483e9ae",
     "rea_enhanced/diagnostics.py": "b6fb38b21a0d641d47b9839d497d69d7a18af22e310ce8dd0b1bcbd92065c7df",
-    "rea_enhanced/disk.py": "9f495a47314b42aa1256dae20bccefc5ae1c5cbc429dee17035e6860e8c3c532",
+    "rea_enhanced/disk.py": "32daf8287af12a61b30c0b6ee601eff7d1a2bf55d4280902fec5e0771c1bbb0c",
     "rea_enhanced/health.py": "afe4375f2d5d1be001421ed9cabe48cfbf66b4ffd4ed539c1eec08a6325550e7",
     "rea_enhanced/operations.py": "9aa3633576d404175a2fd00b08da96da4c585458992f787ee5d47059d8279b11",
     "rea_enhanced/providers.py": "4b5248aa26734e1cee84405be2fb26f7cdb716b97f025ac019d110e0312538ea",
@@ -53,7 +53,7 @@
     "reverse_fusion/cli.py": "698ecce2d348060eede1de6a094076479a579c36e67a7492de437071a2a564ec",
     "reverse_fusion/contracts.py": "d83c666a1c00d8513a426840e7e2da4a7ce04f2d26b5d736d348609c94d0f1ec",
     "reverse_fusion/file_updates.py": "708c8ea4496cda34ae41e37f623726b2d68c53299f1787b49329478a576fb502",
-    "reverse_fusion/global_adapter.py": "49483984616b87ed68b18d4d7c068f2747f3d17213439fea577e1957dc412030",
+    "reverse_fusion/global_adapter.py": "7e4c9edb73b09a661dab144ff277d13f7a398577e57e2e17826b4794c22fa303",
     "reverse_fusion/mcp_adapter.py": "4ba32923ab20d10efd00453d449f181ff376b0e0ac6b3230c4c15c2bf58666b8",
     "reverse_fusion/mcp_probe.py": "c936adc2adfc386a5de107e19decae887ef703326b60626ae4ca7705498c7120",
     "reverse_fusion/mcp_process.py": "cc366c8749d811c7b0e6d2c098fb8939ddff4c79d78452b5ed30e5004c61df2b",
@@ -64,10 +64,10 @@
     "scripts/next-clean-install.py": "24db5a4c09ada874e5cbd02d5e177541fb411eea2a8fd2236536883db59bf147",
     "scripts/next-cli.py": "d4ac81415ea7b0e884777d091477afada817d4e78a688ac72bbdbfde372c6670",
     "scripts/next-qualify.py": "5f2b4a8114a3e9cfc2c6847131a411f2d3c077d8741ce62ef33c851fed8951e2",
-    "scripts/next-remote-install.py": "76b0d342da03554ba9f05468ffd0821964fdfe2daf53b3cb29293c669de18443",
-    "tests_next/test_bootstrap.py": "a4c634442be119fd304184bf89e44d5314990ab668c4fecc439a29cd217936f5",
+    "scripts/next-remote-install.py": "9741fe118686cfc9b63e1a1656882265713447b7adc767e2d57c70b5175a0dce",
+    "tests_next/test_bootstrap.py": "bfb30e19d34368450f8d0966390bb12db2a9619821624c88e375602ddb7edfb6",
     "tests_next/test_deployment.py": "b3f3229605b257a1a082f5ea0fedea57093899bdaa9412aec746f326148c434c",
-    "tests_next/test_disk.py": "25aff13a50bc051c39818ef2f50e0feab0bff4675b02fbd5fb508db2864c756f",
+    "tests_next/test_disk.py": "5e08d0b69c276862f82d8e91a8b5ed66d14feaadceb7d7fb8487cb5caac11945",
     "tests_next/test_domains.py": "e5450f943808c437bbede6ac84396066ea0434d6374800c85fcdb2709d61ec6b",
     "tests_next/test_final_audit.py": "43911f7b4997f417d724b41a2fd7de6a03cf700df708d8d6753efa7e983a7839",
     "tests_next/test_inventory.py": "823727091975fd9ec00425369138dba342c7461defd75a43d1ef01a3b36b1ac9",
@@ -97,15 +97,15 @@
       "completed_ttl_seconds": 3600,
       "interrupted_ttl_seconds": 86400
     },
-    "free_bytes": 63212355584,
+    "free_bytes": 63159787520,
     "reclaimed_bytes": 0,
-    "total_reclaimed_bytes": 67109023,
+    "total_reclaimed_bytes": 134218046,
     "managed_temporary_bytes": 67109023,
     "entries": [
       {
-        "id": "11eb4b333b004e73968e0a8a5542134e",
-        "path": ".rea-enhanced/scratch/11eb4b333b004e73968e0a8a5542134e",
-        "purpose": "Actual D-drive cleanup qualification",
+        "id": "0d48f59acf4c4d7ba7314a312937b2a1",
+        "path": ".rea-enhanced/scratch/0d48f59acf4c4d7ba7314a312937b2a1",
+        "purpose": "Actual final D-drive cleanup qualification",
         "bytes": 67109023,
         "state": "active"
       }
@@ -122,15 +122,15 @@
       "completed_ttl_seconds": 3600,
       "interrupted_ttl_seconds": 86400
     },
-    "free_bytes": 63279464448,
+    "free_bytes": 63226896384,
     "reclaimed_bytes": 67109023,
-    "total_reclaimed_bytes": 134218046,
+    "total_reclaimed_bytes": 201327069,
     "managed_temporary_bytes": 0,
     "entries": [
       {
-        "id": "11eb4b333b004e73968e0a8a5542134e",
-        "path": ".rea-enhanced/scratch/11eb4b333b004e73968e0a8a5542134e",
-        "purpose": "Actual D-drive cleanup qualification",
+        "id": "0d48f59acf4c4d7ba7314a312937b2a1",
+        "path": ".rea-enhanced/scratch/0d48f59acf4c4d7ba7314a312937b2a1",
+        "purpose": "Actual final D-drive cleanup qualification",
         "bytes": 67109023,
         "state": "reclaimed"
       }
@@ -144,14 +144,14 @@
     "evidence.json": "4fad9ef539529f04c023943b4e2f91339cc4e2062df345fbebd2e4f4d94df383"
   },
   "free_bytes": {
-    "before_payload": 63279464448,
-    "after_payload": 63212355584,
-    "after_cleanup": 63279464448
+    "before_payload": 63226896384,
+    "after_payload": 63159787520,
+    "after_cleanup": 63226896384
   },
+  "scope": "Actual D-drive64MiB payload; logical deleted bytes and point-in-time free space, not legacy-target reclamation.",
   "process_cleanup": {
     "status": "verified",
     "scope": "owned Windows Job active-process count zero before close",
     "root_returncode": 0
-  },
-  "scope": "Actual registered scratch and 64 MiB payload on D:. Logical deleted file bytes and point-in-time free-space observations; not legacy-target reclamation."
+  }
 }

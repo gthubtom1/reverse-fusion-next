@@ -29,10 +29,17 @@ def qualify(destination):
     evidence=ROOT/'evidence/next/final-audit';evidence.mkdir(parents=True,exist_ok=True)
     started=time.monotonic()
     env=dict(os.environ);env.update(GIT_TERMINAL_PROMPT='0',GCM_INTERACTIVE='Never')
-    clone=subprocess.run(['git','-c','http.version=HTTP/1.1','clone','--single-branch',REPOSITORY,str(destination)],
-        cwd=ROOT,capture_output=True,timeout=180,env=env)
-    (evidence/'remote-clone.log').write_bytes(clone.stdout+clone.stderr)
-    if clone.returncode:raise ValueError('Independent remote clone failed')
+    clone_root=destination
+    clone_log=b''
+    for attempt in range(3):
+        destination=clone_root/('checkout-'+str(attempt+1))
+        clone=subprocess.run(['git','-c','http.version=HTTP/1.1','clone','--single-branch',REPOSITORY,str(destination)],
+            cwd=ROOT,capture_output=True,timeout=180,env=env)
+        clone_log+=clone.stdout+clone.stderr
+        (evidence/'remote-clone.log').write_bytes(clone_log)
+        if clone.returncode==0:break
+        if attempt==2:raise ValueError('Independent remote clone failed after three bounded attempts')
+        time.sleep(attempt+1)
     commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=destination,text=True).strip()
     branch=subprocess.check_output(['git','branch','--show-current'],cwd=destination,text=True).strip()
     if branch!='main':raise ValueError('Unexpected default branch: '+branch)

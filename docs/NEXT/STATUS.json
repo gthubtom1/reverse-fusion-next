@@ -153,7 +153,7 @@
       "README.md"
     ]
   },
-  "next_action": "Publish the qualified per-range repair and complete actual default-clone public install, exact rollback, owned temporary checkout reclamation and final require-deployed release-check.",
+  "next_action": "Publish this frozen exact implementation and complete default-clone installation, full checks, exact rollback, temporary checkout removal and final require-deployed release check.",
   "migration": "Final owned uninstall/empty entry/reinstall verified; legacy REA/Craft processes retired; one enhanced endpoint selected; final fresh desktop chat entry observed.",
   "limitations": [
     "Finite engineering qualification and the owned plain-language case are distinct from acceptance of arbitrary future targets.",
@@ -206,10 +206,10 @@
     ]
   },
   "disk_lifecycle": {
-    "status": "122-local-checks-pass-awaiting-final-public-install",
+    "status": "124-qualified-live-proved-awaiting-public-install",
     "requirements": "docs/NEXT/DISK-LIFECYCLE.md",
     "scope": "Owned disposable scratch; no automatic deletion of unregistered legacy outputs",
-    "engineering_tests": 122,
+    "engineering_tests": 124,
     "evidence": [
       "evidence/next/s6/engineering-tests.json",
       "evidence/next/disk-lifecycle/before.json",
