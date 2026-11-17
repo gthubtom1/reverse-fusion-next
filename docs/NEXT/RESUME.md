@@ -1,9 +1,14 @@
 # 从这里恢复
 
-当前独立项目Reverse Fusion Next2.3.0，本轮磁盘生命周期已实现、资格通过、本机安装并发布。
+当前工作为Reverse Fusion Next2.4.0生成时三级存储与操作边界审查，见TIERED-STORAGE.md。
+目标尚在推进：实现/反例→文档与架构→冻结资格→本地安装→GitHub收尾；以STATUS为准。
+独占编辑范围见EDIT-OWNERSHIP.json：root核心/发布；docs_architecture公共文档；tests_tiers新测试文件。
+旧目标与样本保持只读。不要拿旧资格证明新源码；下文是此前2.3.0完成记录。
+
+此前独立项目Reverse Fusion Next2.3.0，磁盘生命周期已实现、资格通过、本机安装并发布。
 冻结实现c9e1196861db4b987eaef8de02887b9bfe1d2581；后续状态/证据收尾不改变已测源码/合同。
 先读CURRENT-STATE.md、DISK-MANAGEMENT.md、STATUS.json与ACCEPTANCE.json，再读JOURNAL最后一项。
-本轮无待办恢复步骤；收到新需求时核对当前源码和受影响资格，不能拿旧pass证明新改动。
+此前本轮无待办恢复步骤；当前新需求需核对当前源码和受影响资格，不能拿旧pass证明新改动。
 
 124项本地检查和124项真实GitHub默认clone/公共安装检查通过；新checkout取得自己的运行包，
 精确回退临时用户配置后回收719420350字节/16214文件。真实MCP的64MiB回收及默认60秒周期

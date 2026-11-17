@@ -141,3 +141,12 @@ Final2.2.0 implementation b01eaf83c011a6eec9ac48cd53002f82c80d3211 passed99 curr
 同源码真实MCP回收64MiB负载，持久三个文件摘要不变；默认后台周期57.421秒自行回收已完成临时文件。最终本机安装与require-deployed release-check通过，2.3.0/260工具，当前回退回执state/migrations/d776586d119343c392fc0178b76fa0cc.json。STATUS/ACCEPTANCE/CURRENT-STATE/RESUME已统一，旧目标仅只读统计。当前资格是有限工程/部署证据，不声称任意目标成功或模型效果优胜。最后只提交并同步这些状态/证据，不再修改冻结源码。
 
 最终本机一致性检查发现继承的editable安装包元数据仍为2.1.0（模块实际运行已是2.3.0）；已对当前checkout重新pip install -e，元数据/运行/仓库均2.3.0，7.844秒完成，日志与local-package-version.json保留。重新require-deployed release-check仍通过，源码身份与远端124项资格一致。
+
+
+## 2.4.0 start — generation tiers / operation boundary
+
+User request recorded in TIERED-STORAGE.md. Current runtime2.3.0 remains installed. Read disk/workflow contracts and prior read-only target/upstream audits; no target changes. Next: tiers, cache validity/budget and host boundary review, then tests and architecture evaluation. Prior qualification is not evidence for new source.
+
+## 2.4.0 integration freeze
+
+Two user-authorized subagents used disjoint edit ownership (public docs/architecture and new tests); all ownership handed back. Core/schema/CLI/generated skill/global guidance integrated. Focused47 tests pass, including24 new tier tests and actual stdio/absolute CLI. Persistent trees are unscanned; reusable integrity binds declared inputs/files/empty dirs/executable bits, invalid production cannot be blessed by restored inputs. No old target changes. Freeze source and public contracts before full qualification.

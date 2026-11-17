@@ -7,10 +7,10 @@
     "status": "unknown",
     "scope": "Owned counter visual, click and persistence behavior",
     "plan": "plan.json",
-    "plan_sha256": "98be9a2bb0c12c0d8e0fb7105fe1f724abc80cb75ec1adc4f24c150bec3c236a",
+    "plan_sha256": "4079eb951b0bad8d3414e53aa34d1f2c25e5a998fb2241dc0033b4f7e3e3aee7",
     "engine": {
       "rea_enhanced/comparison.py": "ae1fb038b188863e5569a96736fd5dedc81eec2049cefe7c40f75c5553ab662c",
-      "rea_enhanced/disk.py": "32daf8287af12a61b30c0b6ee601eff7d1a2bf55d4280902fec5e0771c1bbb0c",
+      "rea_enhanced/disk.py": "c2ddcfd528186c2f3ca36aeb9681c65cd543f7d096cbdced10fac237d5b43936",
       "reverse_fusion/owned_process.py": "4d0f4cfc0367116b084d0ec870fde2d90f0470d6da9887d59cd47be5c96e32fd",
       "rea_enhanced/web.py": "1d8fac7183634844655577c24ad701704b78912f5284834494450119cbf1b344",
       "components/rea-enhanced/web-replay.mjs": "0a7251bf8cd023d51f46a7232bc28ef65068088ff5beacf4b3be603054b20a79"
@@ -91,43 +91,54 @@
     ],
     "changed_inputs": [],
     "browser_executable": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
-    "browser_sha256": "5b835c10836045119334d9524e62437110e00e1bd20612c9072a0ae155f94a17",
+    "browser_sha256": "a527591d96df1f30bdabf5599d257b8b80c83d90c405ff997ddbc202ba5e9ada",
     "process": {
       "status": "observed",
       "reason": null,
       "exit_code": 0,
-      "elapsed_ms": 1566.618,
-      "peak_job_bytes": 451559424,
+      "elapsed_ms": 1596.213,
+      "peak_job_bytes": 454406144,
       "output_truncated": false,
       "memory_limit_mb": 1536,
       "cleanup": "owned Windows job closed after invocation"
     },
     "capture_path": "work/unknown/capture.json",
-    "elapsed_ms": 1566.618,
+    "elapsed_ms": 1596.213,
     "temporary_storage": {
       "status": "ok",
-      "project_root": "D:\\tmp\\tmp7cssmx4s",
+      "project_root": "D:\\tmp\\tmpwa8lksz_",
       "policy": {
         "max_temporary_bytes": 4294967296,
         "minimum_free_bytes": 2147483648,
         "minimum_free_fraction": 0.02,
         "completed_ttl_seconds": 3600,
-        "interrupted_ttl_seconds": 86400
+        "interrupted_ttl_seconds": 86400,
+        "max_reusable_bytes": 2147483648,
+        "reuse_review_seconds": 86400
       },
-      "free_bytes": 63277858816,
+      "free_bytes": 64967876608,
       "reclaimed_bytes": 126,
       "total_reclaimed_bytes": 126,
       "managed_temporary_bytes": 0,
+      "tier_bytes": {
+        "persistent": 0,
+        "reusable": 0,
+        "disposable": 0
+      },
       "entries": [
         {
-          "id": "9f92223165f44708a12de0f51d989b45",
-          "path": ".rea-enhanced/scratch/9f92223165f44708a12de0f51d989b45",
+          "id": "772fe675395849ce81e7650ade567f88",
+          "path": ".rea-enhanced/scratch/772fe675395849ce81e7650ade567f88",
           "purpose": "Browser comparison temporary profile",
           "bytes": 126,
+          "tier": "disposable",
+          "declared_state": "completed",
+          "measured": true,
           "state": "reclaimed"
         }
       ],
-      "scope": "Registered scratch only. Evidence, products and unregistered folders are retained."
+      "last_review": null,
+      "scope": "Registered tiers only. Persistent data, active work, evidence, products and unregistered folders are retained."
     },
     "rea_native_proof": "not-performed",
     "whole_product_acceptance": "not-established",

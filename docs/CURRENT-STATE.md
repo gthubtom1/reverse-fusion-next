@@ -1,4 +1,9 @@
-# 当前状态：Reverse Fusion Next 2.3.0
+# 当前状态：Reverse Fusion Next 2.4.0验证中
+
+本轮增加生成时三级存储与操作边界审查，见DISK-MANAGEMENT.md及NEXT/TIERED-STORAGE.md。
+代码、文档与反例正在核对；本页后面的124项、2.3.0部署和磁盘实测是上一版历史证据，
+不能证明本轮新源码已经资格通过或已部署。最终以本轮源码绑定资格、安装与发布回执更新本页。
+本轮架构帮助、成本和困难目标能力复核见NEXT/ARCHITECTURE-REVIEW.md。
 
 独立项目：https://github.com/gthubtom1/reverse-fusion-next ，默认分支main，仓库D:/Project/reverse-next。
 运行架构为Reverse方法＋官方REA6.9.0＋增强层；宿主唯一推理编码，Craft不运行、Spec可选。

@@ -3,7 +3,8 @@
 Read docs/NEXT/RESUME.md, REQUIREMENTS.md, PLAN.md, STATUS.json and DECISIONS.md before work.
 
 - This independent checkout supersedes the inherited 1.4.0 mandatory Craft/Spec architecture.
-- D:/Project/reverse and its installed desktop entry remain read-only until the migration gate.
+- The retired D:/Project/reverse baseline is historical; do not recreate it or run its installers.
+  Update the current owned desktop entry only after this revision's qualification gate.
 - Runtime consists of Reverse domain methods and enhanced REA; it must work with no Craft source,
   binary or service, and without Spec. Learn useful bounded comparison/refinement principles.
 - The current host is the only reasoning/coding agent. Do not start another model loop.

@@ -68,11 +68,19 @@ TOOLS = [
           {'change':CHANGE,'expected_revision':{'type':'integer','minimum':1}},['change','expected_revision']),
     _tool('rf_next_compare','Execute the reviewed finite comparison plan in separate working copies. Actual executable effects; not an OS sandbox. Saves full receipts and returns a compact result.',
           {'check_id':{'type':'string'},'plan':{'type':'string'},'output':{'type':'string'},'retry_reason':{'type':'string'}},['check_id','plan','output']),
-    _tool('rf_next_storage','Manage owned disposable scratch, disk budgets and protected data. Status is read-only; sweep reclaims only eligible registered scratch. Complete only after all processes using a manual allocation have stopped. Never adopt old folders as garbage.',
-          {'action':{'enum':['status','sweep','allocate','complete','policy','protect'],'default':'status'},
+    _tool('rf_next_storage','Allocate persistent/reusable/disposable outputs at creation. Complete after all users stop; review at natural operation boundaries reclaims completed disposable data and requests host keep/release decisions for reusable data. Reuse verifies dependencies/content; promote returns a new persistent path. Persistent, active and protected data survive cleanup. Status is read-only; never adopt old folders.',
+          {'action':{'enum':['status','sweep','allocate','complete','policy','protect','review','reuse','promote'],'default':'status'},
            'purpose':TEXT,'rebuild':TEXT,'reserve_bytes':{'type':'integer','minimum':1},'id':TEXT,
+           'cleanup':{'type':'boolean','default':True},
+           'tier':{'enum':['persistent','reusable','disposable'],'default':'disposable'},
+           'reuse_key':TEXT,'reuse_reason':TEXT,'input_paths':STRINGS,
+           'boundary':{'enum':['operation-end','verification-end','stage-change','task-end','space-pressure','resume']},
+           'decisions':{'type':'array','items':{'type':'object','properties':{
+               'id':TEXT,'decision':{'enum':['keep','release']},'reason':TEXT},
+               'required':['id','decision','reason'],'additionalProperties':False}},
            'paths':STRINGS,'policy':{'type':'object','properties':{
                'max_temporary_bytes':{'type':'integer','minimum':1},'minimum_free_bytes':{'type':'integer','minimum':0},
+               'max_reusable_bytes':{'type':'integer','minimum':0},'reuse_review_seconds':{'type':'integer','minimum':0},
                'minimum_free_fraction':{'type':'number','minimum':0,'maximum':.5},
                'completed_ttl_seconds':{'type':'integer','minimum':0},'interrupted_ttl_seconds':{'type':'integer','minimum':0}},
                'additionalProperties':False}},[])]

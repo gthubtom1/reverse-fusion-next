@@ -1,75 +1,122 @@
-# 临时文件与磁盘空间
+# 生成时分级，操作结束时清理
 
-2.3.0 增加真实磁盘生命周期。旧版只管理进程清理，比较副本和宿主自行创建的工作目录
-会持续积累。新机制管理明确登记的临时空间，保护分析证据和成果。
+2.4.0在磁盘生命周期上增加三级用途。智能体先决定文件用途，再选择输出路径；
+清理时读取登记的用途和活动状态，无需反复根据文件名猜测。普通开发也适用，无需建立逆向case。
 
-默认策略：每个项目临时预算 4 GiB；每个磁盘保留至少 2 GiB 或总容量的 2%，取较大者。
-同一用户运行的多个 Codex/MCP/CLI 项目共用按卷加锁的预留登记，新任务同时扣除其他项目的
-预留后再判断余量。不同磁盘独立协调。预留是保守的并发协调，磁盘监测是软限制，
-不是操作系统配额；任意外部程序或未登记写入仍会占用磁盘。
+| 等级 | 用途 | 新分配目录 | 保留规则 |
+|---|---|---|---|
+| 一级 persistent | 原始材料、源码、有效观察、证据、交付和恢复资料 | `.rea-enhanced/persistent/<id>` | 自动维护和边界审查均保留，没有降级删除入口 |
+| 二级 reusable | 有具体后续用途、可以重建的缓存或中间材料 | `.rea-enhanced/reusable/<id>` | 完成后保留；复用前核身份/内容/声明输入，宿主在操作边界决定继续保留或释放 |
+| 三级 disposable | 本轮执行副本、测试输出、浏览器临时资料等 | `.rea-enhanced/scratch/<id>` | 所有使用者停止并complete后立即回收；必要内容先保存到一级 |
 
-增强比较逐场景创建执行副本，观察结束即回收，不累计所有场景的副本。
-退出码、标准输出/错误、比较结果继续保存；声明观察的文件以内容摘要去重保存到
-比较目录 effects，必要的网页截图、原生 REA bundle、源码、样本和交付文件继续保留。
-原生回放两侧各有独立的 TEMP/TMP/TMPDIR，也随场景结束回收，避免污染系统临时目录。
-这些必要证据仍会增长，应按实际验证需要选择观察范围，而不是每次编辑都重跑全部。
+原软件、源码、证据和成果可以继续使用当前项目的正常目录，不要求搬进隐藏目录。
+这里的三级路径用于新申请的受托管空间；旧调用不传tier时仍分配三级scratch。
+已有项目、未登记目录和未知材料原样保留，不按work/dist/cache名称收养或批量删除。
 
-可选 record execute 为每次脚本创建临时目录，将 TEMP/TMP/TMPDIR 和 RF_NEXT_SCRATCH
-指向它，结束后回收。脚本需要主动使用这些位置；artifacts 声明只标识成果，不改写
-脚本硬编码的输出路径。默认单次脚本临时预算 256 MiB；明确需要时传 scratch_bytes。
-正在运行的自有操作持有 OS 租约，定时清理读到活跃租约就保留，避免 PID 重用误判。
-每约 0.5 秒检测临时占用和磁盘余量，超预算/余量不足则取消自有进程并留记录。
-短时间大量写入可能在两次检测间超出预算，故启动前仍需估计真实峰值。
+## 清理时机
 
-MCP 连接存活期间，每 60 秒维护已登记项目；比较/脚本申请空间前也维护。
-退出 Codex 后没有常驻清理服务。异常退出的自动任务在失去 OS 租约并保留 24 小时后可回收；
-手动分配的目录始终保持 active，直到智能体确认所有使用者已停止并 complete。
-正常 complete 立即回收；显式暂存的 completed 目录默认一小时后回收。
-原始样本、源码和当前产品必须放在持久目录。临时目录一旦被 case 引用为证据、输入、
-产品、比较记录或交付，清理时自动保护；还可显式 protect。模糊/损坏登记、缺失 case、
-改动的归属标记、目录链接/reparse point、Git 数据和扫描错误均保留并报告。
-观察已复制为不可变快照且摘要核对正确时，source_path只保留来源记录，可重建的临时原文件
-可以回收；事件历史里的路径也不自动变成永久依赖。快照丢失或损坏时保留临时原文件供恢复。
+以自然工作边界为主：一个有意义的操作批次完成、验证完成、切换阶段、任务结束、
+中断后恢复，或下一次大写入前发现空间压力。无需每条命令后都登记、扫描和打断分析。
 
-面向用户的开场白可以直接说：
+三级由complete即时回收；显式暂存的已完成三级可在边界review时提前回收。
+二级由当前宿主模型根据下一步需要判断：有明确近期用途则keep并记录原因，
+确定可重建且无后续用途则release并记录原因，已成为长期资料则promote提升一级。
+review返回实际决定及待审列表，不会启动第二个AI或推断未登记文件的用途。
+普通operation-end/verification-end只提示到期的二级；阶段切换、任务结束、空间压力和恢复时
+审查可复用层整体，避免每一批操作都重复询问同一缓存。宿主有新判断时仍可主动提交决定。
+空间不足时先审查可回收材料，再决定是否启动大操作；不为继续运行降低保留线。
 
-> 帮我继续分析和开发。临时测试文件请自动回收，保留原软件、源码、有效证据和最终成果，磁盘空间不足时先停下相关大操作并告诉我。
+连接存活期间每60秒的维护只作兜底：清理符合既定规则的三级，不会因二级超过一天就删除。
+二级默认24小时提示重新评估复用价值，真正释放仍需宿主明确决定。
+退出Codex后没有额外常驻清理程序。手动active目录无论过多久都保留，
+必须由宿主确认所有使用者/进程停止后complete；review不会代替这项确认。
 
-智能体在调用会生成大量文件的本地工具、构建、原生 REA 工具或外部脚本前：
+## 分配、复用与审查
 
-1. 调 rf_next_storage action=status 核对余量和现有登记；明确大操作的空间需求。
-2. 用 action=allocate，填写 purpose、rebuild（如何重建）和 reserve_bytes（预期峰值字节）。
-   返回 path/relative_path/id。把可重建输出、解包副本、浏览器临时资料和中间包写到这里。
-3. 必要的日志、截图、bundle、实际输出及交付产物写到持久 case/成果路径，先核对完整性；
-   仍有需要的临时内容先保存或 protect，不能将完整软件包不断复制到不同轮次目录。
-4. 所有相关进程结束后 action=complete 并传 id；查看 reclaimed_bytes/保留原因。
-   重建原始样本或重复下载前先查是否有可复用的内容。不得为绕过低空间提示调低保留线。
+大操作前先用status确认余量和登记，再allocate声明purpose、rebuild、reserve_bytes和tier。
+默认单次预算256MiB；智能体按真实峰值调整，不要求零基础用户选专业参数。
 
-示例工具参数：
+三级示例：
 
 ```json
-{"project_root":"D:/Project/software-a","action":"allocate","purpose":"一次集成测试的可重建执行副本","rebuild":"用已保存的测试脚本和持久输入重新运行","reserve_bytes":536870912}
+{"project_root":"D:/Project/software-a","action":"allocate","tier":"disposable","purpose":"本批集成测试执行副本","rebuild":"用已保存的脚本和持久输入重新运行","reserve_bytes":536870912}
 ```
+
+二级示例，reuse_key应包含工具/格式/版本等实际身份；input_paths列出影响结果的项目相对文件：
+
+```json
+{"project_root":"D:/Project/software-a","action":"allocate","tier":"reusable","purpose":"后续多个检查复用同一解码结果","rebuild":"用tools/decode.py重新解码inputs/sample.bin","reserve_bytes":1073741824,"reuse_key":"decode-format-v2-tool-v1","reuse_reason":"下一批三个功能检查仍需要同一解码结果","input_paths":["inputs/sample.bin","tools/decode.py"]}
+```
+
+所有使用者停止后complete；二级此时保存内容摘要和声明输入摘要，一级继续保留，三级回收：
 
 ```json
 {"project_root":"D:/Project/software-a","action":"complete","id":"<allocate返回的id>"}
 ```
 
-policy 可修改 max_temporary_bytes、minimum_free_bytes、minimum_free_fraction、
-completed_ttl_seconds、interrupted_ttl_seconds，按明确工作量调整，不要求用户选择专业参数。
-status 只读，sweep 执行到期维护，protect 接受项目相对 paths 列表。
-工具报告只统计已登记临时空间；未登记历史目录不会被算作可回收垃圾。
-case status 的 storage 为轻量摘要，last_inventory/measured_at 标明上次实际统计时间。
-全局指引也覆盖普通项目的大量临时构建/测试输出，storage可独立使用，无需建立逆向case。
+后续action=reuse传id，检查声明输入和保存内容未变后取得active使用权；使用完再次complete。
+输入或内容变化时复用失败，保留材料供检查，按新的身份/依据重建。
+生产期间声明输入发生变化时，该二级完成使用但标记为失效，后续reuse拒绝复用；
+宿主仍可在操作边界判断保留检查或release，避免失效材料永远停在active状态。
+只核对已经声明的输入；遗漏的外部服务、工具配置、版本等依赖仍由宿主识别并纳入身份。
+缓存存在、脚本退出零或摘要一致，都不代表功能比较通过。
 
-旧聊天尚未重连时可使用绝对 CLI，在选定项目外也可运行：
+自然边界先review读取待审列表，再按当前任务给出有理由的决定；可以在同一次调用传决定：
 
-```powershell
-& 'D:/Project/reverse-next/.venv/Scripts/python.exe' 'D:/Project/reverse-next/scripts/next-cli.py' storage --project-root 'D:/Project/software-a' --action status
+```json
+{"project_root":"D:/Project/software-a","action":"review","boundary":"stage-change","decisions":[{"id":"<二级id>","decision":"keep","reason":"下一阶段仍要用同版本数据验证三个接口"}]}
 ```
 
-其他参数写 JSON 后用 --options-file 传入。登记位于项目 .rea-enhanced/disk.json，
-目录有独立归属标记；跨项目卷登记位于用户 .codex/state/reverse-fusion-disk。
-RF_NEXT_DISK_STATE 可显式隔离协调状态，仅用于隔离验证/自定义环境；需协调的所有进程必须使用同一位置。
-复制旧登记到别的项目不会取得清理权；没有按名称收养旧 work、dist、cache 文件夹的入口。
-升级安装会写入这些使用指引和第五个增强工具，新电脑通过公共安装入口取得同一行为。
+```json
+{"project_root":"D:/Project/software-a","action":"review","boundary":"verification-end","decisions":[{"id":"<二级id>","decision":"release","reason":"相关验证已结束，持久证据完整，后续可按登记脚本重建"}]}
+```
+
+boundary支持operation-end、verification-end、stage-change、task-end、space-pressure和resume。
+keep/release只适用于二级，一级没有释放或降级入口。
+promote接受已完成且未被引用的二级/三级id，移动到一级专用目录并返回新路径；
+后续使用者须采用新路径。已被case或显式保护引用的路径保持稳定，先保存持久快照，避免移动破坏引用。
+二级完成后可直接提升。三级中意外发现有用事实时，优先在complete前保存持久材料；
+确需保留完整目录时complete可传cleanup=false，随后立即promote，期间仍受completed保留时间约束。
+默认cleanup=true，已回收的三级目录没有可提升的文件。
+
+## 预算与保护优先级
+
+默认每项目二级与三级合计临时预算4GiB，其中二级预算2GiB；一级不属于自动淘汰预算。
+同一用户多个Codex/MCP/CLI项目按卷加锁协调预留，各磁盘保留至少2GiB或总容量2%，取较大者。
+超过预算时停止新的申请并请求边界审查，不自动牺牲有效证据或仍有价值的缓存。
+预留是保守的并发协调，监测为软限制，任意外部程序的写入不受操作系统硬配额约束。
+
+活动OS租约、手动active、当前case引用和显式protect优先于清理决定。
+归属标记/登记不明、缺失case、链接/reparse point、Git数据或扫描错误均保留并报告。
+经过摘要核对的不可变证据快照允许回收临时来源；快照缺失或损坏则保留尚存来源供恢复。
+事件历史里的路径是追溯信息，不自动形成永久文件依赖。
+
+增强比较逐场景回收执行副本，两侧TEMP/TMP/TMPDIR分离；实际退出码、输出、
+按内容摘要保存的文件效果、必要截图和原生REA bundle继续保存。
+record execute把TEMP/TMP/TMPDIR/RF_NEXT_SCRATCH指向独立三级目录，结束回收；
+脚本须主动使用这些位置，artifacts声明不会改写硬编码输出路径。
+自有工作约每0.5秒监测临时预算和磁盘余量，超限取消相关自有进程并留记录。
+短时间突发写入可能超过软限制，启动前仍须估计峰值。宿主直接命令及原REA工具
+要把可重建大输出明确写到已分配路径，避免每次修改重复制完整软件包。
+
+policy支持max_temporary_bytes、max_reusable_bytes、minimum_free_bytes、minimum_free_fraction、
+completed_ttl_seconds、interrupted_ttl_seconds和reuse_review_seconds。
+status只读；sweep执行既定维护；protect接受项目相对paths。
+报告覆盖已登记三级，tier_bytes显示已测分级占用，last_review保存最近边界判断；
+一级维护不扫描庞大持久树，返回bytes=0、measured=false表示未测，不能解读为空目录。
+case status中storage仍是轻量摘要，measured_at标明上次实际统计。
+
+登记位于项目`.rea-enhanced/disk.json`，独立归属标记验证当前项目与id；
+跨项目协调位于用户`.codex/state/reverse-fusion-disk`。
+RF_NEXT_DISK_STATE用于隔离验证或自定义环境，需要协调的进程须使用同位置。
+旧2.3.0登记保留并按disposable解释，不隐式迁移或认领其他目录。
+
+旧聊天尚未重连时可用绝对CLI，其他参数写JSON后用--options-file传入：
+
+```powershell
+& 'D:/Project/reverse-next/.venv/Scripts/python.exe' 'D:/Project/reverse-next/scripts/next-cli.py' storage --project-root 'D:/Project/software-a' --action review --options-file '<参数JSON的绝对路径>'
+```
+
+面向用户的白话补充即可：
+
+> 文件生成时请分清必须保留、可能复用和用完即删。每批操作或验证结束时检查清理，保留原软件、源码、有效证据和成果，空间不足时先处理相关临时输出。

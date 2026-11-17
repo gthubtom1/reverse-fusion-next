@@ -23,6 +23,7 @@ def main():
     (destination/'engineering-tests.txt').write_bytes(output)
     after=source_identity(ROOT)
     operations=['evidence/next/s2/protocol-qualified.json',
+        'evidence/next/tiered-storage/live-proof.json',
         'evidence/next/final-audit/native-provider.json',
         'evidence/next/s2/native-restart-qualified.json',
         *('evidence/next/final-audit/web-'+name+'.json' for name in

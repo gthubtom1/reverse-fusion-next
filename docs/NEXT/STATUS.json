@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "version": "2.3.0",
+  "version": "2.4.0",
   "baseline_commit": "022e61b803e41569cac1f116ebca2245b9c9b1f8",
-  "goal_status": "complete",
-  "stage": "maintenance",
+  "goal_status": "active",
+  "stage": "tiered-storage",
   "stages": {
     "S0": {
       "status": "done",
@@ -154,7 +154,7 @@
       "README.md"
     ]
   },
-  "next_action": "2.3.0 disk lifecycle is qualified, installed and published. New work uses the current project and owned scratch for large temporary outputs; reconnect existing cached MCP catalogs or use the absolute CLI. Do not resume the old target or delete unregistered legacy folders.",
+  "next_action": "Frozen2.4.0 source: run current full qualification, publish implementation for independent remote clone/install, then update owned local entry and close evidence.",
   "migration": "Historical migration retired the old REA/Craft entry. Current2.3.0 owned entry and fresh registered stdio connection passed; existing chat tool catalogs need reconnect and are not claimed to hot-reload.",
   "limitations": [
     "Finite engineering qualification and the owned plain-language case are distinct from acceptance of arbitrary future targets.",
@@ -229,6 +229,28 @@
       "evidence/next/disk-lifecycle/local-install.json",
       "evidence/next/disk-lifecycle/release-check.json",
       "evidence/next/disk-lifecycle/local-package-version.json"
+    ]
+  },
+  "tiered_storage": {
+    "status": "local-qualified-awaiting-public-install",
+    "requirements": "docs/NEXT/TIERED-STORAGE.md",
+    "architecture_effectiveness": "not-established; review pending",
+    "completed": [
+      "T01",
+      "T02",
+      "T03",
+      "T04",
+      "T05",
+      "T06",
+      "T07",
+      "T09"
+    ],
+    "focused_tests": 47,
+    "engineering_tests": 148,
+    "evidence": [
+      "evidence/next/s6/engineering-tests.json",
+      "evidence/next/tiered-storage/live-proof.json",
+      "docs/NEXT/ARCHITECTURE-REVIEW.md"
     ]
   }
 }

@@ -1,6 +1,6 @@
 {
-  "version": "2.3.0",
-  "status": "engineering-qualified-installed-published",
+  "version": "2.4.0",
+  "status": "local-qualified-awaiting-public-install",
   "scope": "Long-task and disk-lifecycle engineering on Windows x64 Codex; no task/model superiority claim",
   "requirements": [
     {
@@ -131,9 +131,9 @@
       ]
     }
   ],
-  "engineering_tests": 124,
-  "remote_clone_tests": 124,
-  "qualified_implementation_commit": "c9e1196861db4b987eaef8de02887b9bfe1d2581",
+  "engineering_tests": 148,
+  "remote_clone_tests": null,
+  "qualified_implementation_commit": null,
   "independent_repository": "https://github.com/gthubtom1/reverse-fusion-next.git",
   "local_deployment": "evidence/next/disk-lifecycle/local-install.json",
   "current_release_check": "evidence/next/disk-lifecycle/release-check.json",
@@ -153,5 +153,10 @@
     "commit": "7eb7283b535e7a2da31b1429d26d52ced45a0aa0",
     "engineering_tests": 99,
     "remote_clone_tests": 99
+  },
+  "historical_2_3_0": {
+    "qualified_implementation_commit": "c9e1196861db4b987eaef8de02887b9bfe1d2581",
+    "engineering_tests": 124,
+    "remote_clone_tests": 124
   }
 }

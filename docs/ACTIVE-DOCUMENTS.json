@@ -1,5 +1,5 @@
 {
-  "version": "2.3.0",
+  "version": "2.4.0",
   "active": [
     "README.md",
     "AGENTS.md",
@@ -20,7 +20,8 @@
     "docs/MCP-INTEGRATION.md",
     "docs/NATIVE-COMPONENTS.md",
     "docs/RECOVERY.md",
-    "docs/DISK-MANAGEMENT.md"
+    "docs/DISK-MANAGEMENT.md",
+    "docs/NEXT/ARCHITECTURE-REVIEW.md"
   ],
   "continuity": "docs/NEXT/*",
   "domain_methods": "skills/**; root contract supersedes inherited integration instructions",

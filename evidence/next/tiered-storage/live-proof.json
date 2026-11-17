@@ -1,0 +1,785 @@
+{
+  "status": "pass",
+  "server_info": {
+    "name": "rea-enhanced",
+    "version": "2.4.0"
+  },
+  "events": [
+    {
+      "action": "allocate",
+      "arguments": {
+        "tier": "reusable",
+        "purpose": "Real MCP reusable output",
+        "rebuild": "Rerun this fixture",
+        "reserve_bytes": 1048576,
+        "reuse_key": "stdio-fixture-v1",
+        "reuse_reason": "Reuse at the next boundary",
+        "input_paths": [
+          "source.txt"
+        ]
+      },
+      "result": {
+        "id": "1151cded5cd045ff92c09c4de753d5d5",
+        "path": "D:\\tmp\\tmpu4d1v3cd\\project\\.rea-enhanced\\reusable\\1151cded5cd045ff92c09c4de753d5d5",
+        "relative_path": ".rea-enhanced/reusable/1151cded5cd045ff92c09c4de753d5d5",
+        "reserve_bytes": 1048576,
+        "state": "active",
+        "tier": "reusable"
+      }
+    },
+    {
+      "action": "complete",
+      "arguments": {
+        "id": "1151cded5cd045ff92c09c4de753d5d5"
+      },
+      "result": {
+        "status": "ok",
+        "project_root": "D:\\tmp\\tmpu4d1v3cd\\project",
+        "policy": {
+          "max_temporary_bytes": 4294967296,
+          "minimum_free_bytes": 2147483648,
+          "minimum_free_fraction": 0.02,
+          "completed_ttl_seconds": 3600,
+          "interrupted_ttl_seconds": 86400,
+          "max_reusable_bytes": 2147483648,
+          "reuse_review_seconds": 86400
+        },
+        "free_bytes": 64968540160,
+        "reclaimed_bytes": 0,
+        "total_reclaimed_bytes": 0,
+        "managed_temporary_bytes": 153,
+        "tier_bytes": {
+          "persistent": 0,
+          "reusable": 153,
+          "disposable": 0
+        },
+        "entries": [
+          {
+            "id": "1151cded5cd045ff92c09c4de753d5d5",
+            "path": ".rea-enhanced/reusable/1151cded5cd045ff92c09c4de753d5d5",
+            "purpose": "Real MCP reusable output",
+            "bytes": 153,
+            "tier": "reusable",
+            "declared_state": "completed",
+            "measured": true,
+            "state": "reusable-retained",
+            "reuse_key": "stdio-fixture-v1",
+            "reuse_reason": "Reuse at the next boundary",
+            "last_used_at": 1794930481.638247
+          }
+        ],
+        "last_review": null,
+        "scope": "Registered tiers only. Persistent data, active work, evidence, products and unregistered folders are retained."
+      }
+    },
+    {
+      "action": "review",
+      "arguments": {
+        "boundary": "stage-change"
+      },
+      "result": {
+        "status": "ok",
+        "project_root": "D:\\tmp\\tmpu4d1v3cd\\project",
+        "policy": {
+          "max_temporary_bytes": 4294967296,
+          "minimum_free_bytes": 2147483648,
+          "minimum_free_fraction": 0.02,
+          "completed_ttl_seconds": 3600,
+          "interrupted_ttl_seconds": 86400,
+          "max_reusable_bytes": 2147483648,
+          "reuse_review_seconds": 86400
+        },
+        "free_bytes": 64968540160,
+        "reclaimed_bytes": 0,
+        "total_reclaimed_bytes": 0,
+        "managed_temporary_bytes": 153,
+        "tier_bytes": {
+          "persistent": 0,
+          "reusable": 153,
+          "disposable": 0
+        },
+        "entries": [
+          {
+            "id": "1151cded5cd045ff92c09c4de753d5d5",
+            "path": ".rea-enhanced/reusable/1151cded5cd045ff92c09c4de753d5d5",
+            "purpose": "Real MCP reusable output",
+            "bytes": 153,
+            "tier": "reusable",
+            "declared_state": "completed",
+            "measured": true,
+            "state": "reusable-retained",
+            "reuse_key": "stdio-fixture-v1",
+            "reuse_reason": "Reuse at the next boundary",
+            "last_used_at": 1794930481.638247
+          }
+        ],
+        "last_review": {
+          "boundary": "stage-change",
+          "at": 1794930481.6483676,
+          "decisions": []
+        },
+        "scope": "Registered tiers only. Persistent data, active work, evidence, products and unregistered folders are retained.",
+        "review": {
+          "boundary": "stage-change",
+          "decisions": [],
+          "pending": [
+            {
+              "id": "1151cded5cd045ff92c09c4de753d5d5",
+              "path": ".rea-enhanced/reusable/1151cded5cd045ff92c09c4de753d5d5",
+              "purpose": "Real MCP reusable output",
+              "bytes": 153,
+              "tier": "reusable",
+              "declared_state": "completed",
+              "measured": true,
+              "state": "reusable-retained",
+              "reuse_key": "stdio-fixture-v1",
+              "reuse_reason": "Reuse at the next boundary",
+              "last_used_at": 1794930481.638247,
+              "review_reason": "Consider upcoming reuse versus storage cost at this boundary"
+            }
+          ],
+          "guidance": "Keep with a concrete next use, release when rebuildable and no longer useful, or promote durable facts. Never complete active work just to free space."
+        }
+      }
+    },
+    {
+      "action": "review",
+      "arguments": {
+        "boundary": "stage-change",
+        "decisions": [
+          {
+            "id": "1151cded5cd045ff92c09c4de753d5d5",
+            "decision": "keep",
+            "reason": "The next MCP replay uses this payload"
+          }
+        ]
+      },
+      "result": {
+        "status": "ok",
+        "project_root": "D:\\tmp\\tmpu4d1v3cd\\project",
+        "policy": {
+          "max_temporary_bytes": 4294967296,
+          "minimum_free_bytes": 2147483648,
+          "minimum_free_fraction": 0.02,
+          "completed_ttl_seconds": 3600,
+          "interrupted_ttl_seconds": 86400,
+          "max_reusable_bytes": 2147483648,
+          "reuse_review_seconds": 86400
+        },
+        "free_bytes": 64968540160,
+        "reclaimed_bytes": 0,
+        "total_reclaimed_bytes": 0,
+        "managed_temporary_bytes": 153,
+        "tier_bytes": {
+          "persistent": 0,
+          "reusable": 153,
+          "disposable": 0
+        },
+        "entries": [
+          {
+            "id": "1151cded5cd045ff92c09c4de753d5d5",
+            "path": ".rea-enhanced/reusable/1151cded5cd045ff92c09c4de753d5d5",
+            "purpose": "Real MCP reusable output",
+            "bytes": 153,
+            "tier": "reusable",
+            "declared_state": "completed",
+            "measured": true,
+            "state": "reusable-retained",
+            "reuse_key": "stdio-fixture-v1",
+            "reuse_reason": "The next MCP replay uses this payload",
+            "last_used_at": 1794930481.638247
+          }
+        ],
+        "last_review": {
+          "boundary": "stage-change",
+          "at": 1794930481.660206,
+          "decisions": [
+            {
+              "id": "1151cded5cd045ff92c09c4de753d5d5",
+              "decision": "keep",
+              "reason": "The next MCP replay uses this payload",
+              "outcome": "kept-for-reuse"
+            }
+          ]
+        },
+        "scope": "Registered tiers only. Persistent data, active work, evidence, products and unregistered folders are retained.",
+        "review": {
+          "boundary": "stage-change",
+          "decisions": [
+            {
+              "id": "1151cded5cd045ff92c09c4de753d5d5",
+              "decision": "keep",
+              "reason": "The next MCP replay uses this payload",
+              "outcome": "kept-for-reuse"
+            }
+          ],
+          "pending": [
+            {
+              "id": "1151cded5cd045ff92c09c4de753d5d5",
+              "path": ".rea-enhanced/reusable/1151cded5cd045ff92c09c4de753d5d5",
+              "purpose": "Real MCP reusable output",
+              "bytes": 153,
+              "tier": "reusable",
+              "declared_state": "completed",
+              "measured": true,
+              "state": "reusable-retained",
+              "reuse_key": "stdio-fixture-v1",
+              "reuse_reason": "The next MCP replay uses this payload",
+              "last_used_at": 1794930481.638247,
+              "review_reason": "Consider upcoming reuse versus storage cost at this boundary"
+            }
+          ],
+          "guidance": "Keep with a concrete next use, release when rebuildable and no longer useful, or promote durable facts. Never complete active work just to free space."
+        }
+      }
+    },
+    {
+      "action": "reuse",
+      "arguments": {
+        "id": "1151cded5cd045ff92c09c4de753d5d5"
+      },
+      "result": {
+        "id": "1151cded5cd045ff92c09c4de753d5d5",
+        "path": "D:\\tmp\\tmpu4d1v3cd\\project\\.rea-enhanced\\reusable\\1151cded5cd045ff92c09c4de753d5d5",
+        "relative_path": ".rea-enhanced/reusable/1151cded5cd045ff92c09c4de753d5d5",
+        "tier": "reusable",
+        "state": "active",
+        "reuse_key": "stdio-fixture-v1",
+        "inputs_verified": true,
+        "content_verified": true
+      }
+    },
+    {
+      "action": "complete",
+      "arguments": {
+        "id": "1151cded5cd045ff92c09c4de753d5d5"
+      },
+      "result": {
+        "status": "ok",
+        "project_root": "D:\\tmp\\tmpu4d1v3cd\\project",
+        "policy": {
+          "max_temporary_bytes": 4294967296,
+          "minimum_free_bytes": 2147483648,
+          "minimum_free_fraction": 0.02,
+          "completed_ttl_seconds": 3600,
+          "interrupted_ttl_seconds": 86400,
+          "max_reusable_bytes": 2147483648,
+          "reuse_review_seconds": 86400
+        },
+        "free_bytes": 64968540160,
+        "reclaimed_bytes": 0,
+        "total_reclaimed_bytes": 0,
+        "managed_temporary_bytes": 153,
+        "tier_bytes": {
+          "persistent": 0,
+          "reusable": 153,
+          "disposable": 0
+        },
+        "entries": [
+          {
+            "id": "1151cded5cd045ff92c09c4de753d5d5",
+            "path": ".rea-enhanced/reusable/1151cded5cd045ff92c09c4de753d5d5",
+            "purpose": "Real MCP reusable output",
+            "bytes": 153,
+            "tier": "reusable",
+            "declared_state": "completed",
+            "measured": true,
+            "state": "reusable-retained",
+            "reuse_key": "stdio-fixture-v1",
+            "reuse_reason": "The next MCP replay uses this payload",
+            "last_used_at": 1794930481.680252
+          }
+        ],
+        "last_review": {
+          "boundary": "stage-change",
+          "at": 1794930481.660206,
+          "decisions": [
+            {
+              "id": "1151cded5cd045ff92c09c4de753d5d5",
+              "decision": "keep",
+              "reason": "The next MCP replay uses this payload",
+              "outcome": "kept-for-reuse"
+            }
+          ]
+        },
+        "scope": "Registered tiers only. Persistent data, active work, evidence, products and unregistered folders are retained."
+      }
+    },
+    {
+      "action": "promote",
+      "arguments": {
+        "id": "1151cded5cd045ff92c09c4de753d5d5"
+      },
+      "result": {
+        "id": "1151cded5cd045ff92c09c4de753d5d5",
+        "tier": "persistent",
+        "path": "D:\\tmp\\tmpu4d1v3cd\\project\\.rea-enhanced\\persistent\\1151cded5cd045ff92c09c4de753d5d5",
+        "relative_path": ".rea-enhanced/persistent/1151cded5cd045ff92c09c4de753d5d5",
+        "state": "persistent-preserved",
+        "update_consumers": "Use this new path for future consumers"
+      }
+    },
+    {
+      "action": "review",
+      "arguments": {
+        "boundary": "task-end"
+      },
+      "result": {
+        "status": "ok",
+        "project_root": "D:\\tmp\\tmpu4d1v3cd\\project",
+        "policy": {
+          "max_temporary_bytes": 4294967296,
+          "minimum_free_bytes": 2147483648,
+          "minimum_free_fraction": 0.02,
+          "completed_ttl_seconds": 3600,
+          "interrupted_ttl_seconds": 86400,
+          "max_reusable_bytes": 2147483648,
+          "reuse_review_seconds": 86400
+        },
+        "free_bytes": 64968540160,
+        "reclaimed_bytes": 0,
+        "total_reclaimed_bytes": 0,
+        "managed_temporary_bytes": 0,
+        "tier_bytes": {
+          "persistent": 0,
+          "reusable": 0,
+          "disposable": 0
+        },
+        "entries": [
+          {
+            "id": "1151cded5cd045ff92c09c4de753d5d5",
+            "path": ".rea-enhanced/persistent/1151cded5cd045ff92c09c4de753d5d5",
+            "purpose": "Real MCP reusable output",
+            "bytes": 0,
+            "tier": "persistent",
+            "declared_state": "completed",
+            "measured": false,
+            "state": "persistent-preserved"
+          }
+        ],
+        "last_review": {
+          "boundary": "task-end",
+          "at": 1794930481.6982288,
+          "decisions": []
+        },
+        "scope": "Registered tiers only. Persistent data, active work, evidence, products and unregistered folders are retained.",
+        "review": {
+          "boundary": "task-end",
+          "decisions": [],
+          "pending": [],
+          "guidance": "Keep with a concrete next use, release when rebuildable and no longer useful, or promote durable facts. Never complete active work just to free space."
+        }
+      }
+    },
+    {
+      "action": "allocate",
+      "arguments": {
+        "tier": "reusable",
+        "purpose": "Real MCP cache release",
+        "rebuild": "Rerun fixture",
+        "reserve_bytes": 1048576,
+        "reuse_key": "stdio-discard-v1",
+        "reuse_reason": "Only needed during this batch",
+        "input_paths": [
+          "source.txt"
+        ]
+      },
+      "result": {
+        "id": "91d1d195df414cf5b789fd94a86579c2",
+        "path": "D:\\tmp\\tmpu4d1v3cd\\project\\.rea-enhanced\\reusable\\91d1d195df414cf5b789fd94a86579c2",
+        "relative_path": ".rea-enhanced/reusable/91d1d195df414cf5b789fd94a86579c2",
+        "reserve_bytes": 1048576,
+        "state": "active",
+        "tier": "reusable"
+      }
+    },
+    {
+      "action": "complete",
+      "arguments": {
+        "id": "91d1d195df414cf5b789fd94a86579c2"
+      },
+      "result": {
+        "status": "ok",
+        "project_root": "D:\\tmp\\tmpu4d1v3cd\\project",
+        "policy": {
+          "max_temporary_bytes": 4294967296,
+          "minimum_free_bytes": 2147483648,
+          "minimum_free_fraction": 0.02,
+          "completed_ttl_seconds": 3600,
+          "interrupted_ttl_seconds": 86400,
+          "max_reusable_bytes": 2147483648,
+          "reuse_review_seconds": 86400
+        },
+        "free_bytes": 64968540160,
+        "reclaimed_bytes": 0,
+        "total_reclaimed_bytes": 0,
+        "managed_temporary_bytes": 156,
+        "tier_bytes": {
+          "persistent": 0,
+          "reusable": 156,
+          "disposable": 0
+        },
+        "entries": [
+          {
+            "id": "1151cded5cd045ff92c09c4de753d5d5",
+            "path": ".rea-enhanced/persistent/1151cded5cd045ff92c09c4de753d5d5",
+            "purpose": "Real MCP reusable output",
+            "bytes": 0,
+            "tier": "persistent",
+            "declared_state": "completed",
+            "measured": false,
+            "state": "persistent-preserved"
+          },
+          {
+            "id": "91d1d195df414cf5b789fd94a86579c2",
+            "path": ".rea-enhanced/reusable/91d1d195df414cf5b789fd94a86579c2",
+            "purpose": "Real MCP cache release",
+            "bytes": 156,
+            "tier": "reusable",
+            "declared_state": "completed",
+            "measured": true,
+            "state": "reusable-retained",
+            "reuse_key": "stdio-discard-v1",
+            "reuse_reason": "Only needed during this batch",
+            "last_used_at": 1794930481.723223
+          }
+        ],
+        "last_review": {
+          "boundary": "task-end",
+          "at": 1794930481.6982288,
+          "decisions": []
+        },
+        "scope": "Registered tiers only. Persistent data, active work, evidence, products and unregistered folders are retained."
+      }
+    },
+    {
+      "action": "review",
+      "arguments": {
+        "boundary": "verification-end",
+        "decisions": [
+          {
+            "id": "91d1d195df414cf5b789fd94a86579c2",
+            "decision": "release",
+            "reason": "The dependent work is finished; regenerate if needed"
+          }
+        ]
+      },
+      "result": {
+        "status": "ok",
+        "project_root": "D:\\tmp\\tmpu4d1v3cd\\project",
+        "policy": {
+          "max_temporary_bytes": 4294967296,
+          "minimum_free_bytes": 2147483648,
+          "minimum_free_fraction": 0.02,
+          "completed_ttl_seconds": 3600,
+          "interrupted_ttl_seconds": 86400,
+          "max_reusable_bytes": 2147483648,
+          "reuse_review_seconds": 86400
+        },
+        "free_bytes": 64968540160,
+        "reclaimed_bytes": 156,
+        "total_reclaimed_bytes": 156,
+        "managed_temporary_bytes": 0,
+        "tier_bytes": {
+          "persistent": 0,
+          "reusable": 0,
+          "disposable": 0
+        },
+        "entries": [
+          {
+            "id": "1151cded5cd045ff92c09c4de753d5d5",
+            "path": ".rea-enhanced/persistent/1151cded5cd045ff92c09c4de753d5d5",
+            "purpose": "Real MCP reusable output",
+            "bytes": 0,
+            "tier": "persistent",
+            "declared_state": "completed",
+            "measured": false,
+            "state": "persistent-preserved"
+          }
+        ],
+        "last_review": {
+          "boundary": "verification-end",
+          "at": 1794930481.737193,
+          "decisions": [
+            {
+              "id": "91d1d195df414cf5b789fd94a86579c2",
+              "decision": "release",
+              "reason": "The dependent work is finished; regenerate if needed",
+              "outcome": "reclaimed",
+              "reclaimed_bytes": 156
+            }
+          ]
+        },
+        "scope": "Registered tiers only. Persistent data, active work, evidence, products and unregistered folders are retained.",
+        "review": {
+          "boundary": "verification-end",
+          "decisions": [
+            {
+              "id": "91d1d195df414cf5b789fd94a86579c2",
+              "decision": "release",
+              "reason": "The dependent work is finished; regenerate if needed",
+              "outcome": "reclaimed",
+              "reclaimed_bytes": 156
+            }
+          ],
+          "pending": [],
+          "guidance": "Keep with a concrete next use, release when rebuildable and no longer useful, or promote durable facts. Never complete active work just to free space."
+        }
+      }
+    },
+    {
+      "action": "allocate",
+      "arguments": {
+        "purpose": "Real MCP throwaway",
+        "rebuild": "Rerun fixture",
+        "reserve_bytes": 1048576
+      },
+      "result": {
+        "id": "ed986a5dc7b3492cb6a821614863e79a",
+        "path": "D:\\tmp\\tmpu4d1v3cd\\project\\.rea-enhanced\\scratch\\ed986a5dc7b3492cb6a821614863e79a",
+        "relative_path": ".rea-enhanced/scratch/ed986a5dc7b3492cb6a821614863e79a",
+        "reserve_bytes": 1048576,
+        "state": "active",
+        "tier": "disposable"
+      }
+    },
+    {
+      "action": "complete",
+      "arguments": {
+        "id": "ed986a5dc7b3492cb6a821614863e79a"
+      },
+      "result": {
+        "status": "ok",
+        "project_root": "D:\\tmp\\tmpu4d1v3cd\\project",
+        "policy": {
+          "max_temporary_bytes": 4294967296,
+          "minimum_free_bytes": 2147483648,
+          "minimum_free_fraction": 0.02,
+          "completed_ttl_seconds": 3600,
+          "interrupted_ttl_seconds": 86400,
+          "max_reusable_bytes": 2147483648,
+          "reuse_review_seconds": 86400
+        },
+        "free_bytes": 64968540160,
+        "reclaimed_bytes": 144,
+        "total_reclaimed_bytes": 300,
+        "managed_temporary_bytes": 0,
+        "tier_bytes": {
+          "persistent": 0,
+          "reusable": 0,
+          "disposable": 0
+        },
+        "entries": [
+          {
+            "id": "1151cded5cd045ff92c09c4de753d5d5",
+            "path": ".rea-enhanced/persistent/1151cded5cd045ff92c09c4de753d5d5",
+            "purpose": "Real MCP reusable output",
+            "bytes": 0,
+            "tier": "persistent",
+            "declared_state": "completed",
+            "measured": false,
+            "state": "persistent-preserved"
+          },
+          {
+            "id": "ed986a5dc7b3492cb6a821614863e79a",
+            "path": ".rea-enhanced/scratch/ed986a5dc7b3492cb6a821614863e79a",
+            "purpose": "Real MCP throwaway",
+            "bytes": 144,
+            "tier": "disposable",
+            "declared_state": "completed",
+            "measured": true,
+            "state": "reclaimed"
+          }
+        ],
+        "last_review": {
+          "boundary": "verification-end",
+          "at": 1794930481.737193,
+          "decisions": [
+            {
+              "id": "91d1d195df414cf5b789fd94a86579c2",
+              "decision": "release",
+              "reason": "The dependent work is finished; regenerate if needed",
+              "outcome": "reclaimed",
+              "reclaimed_bytes": 156
+            }
+          ]
+        },
+        "scope": "Registered tiers only. Persistent data, active work, evidence, products and unregistered folders are retained."
+      }
+    },
+    {
+      "action": "allocate",
+      "arguments": {
+        "purpose": "MCP disposable-to-persistent upgrade",
+        "rebuild": "Rerun fixture",
+        "reserve_bytes": 1048576
+      },
+      "result": {
+        "id": "05886929cd364645a3370f6b99db2285",
+        "path": "D:\\tmp\\tmpu4d1v3cd\\project\\.rea-enhanced\\scratch\\05886929cd364645a3370f6b99db2285",
+        "relative_path": ".rea-enhanced/scratch/05886929cd364645a3370f6b99db2285",
+        "reserve_bytes": 1048576,
+        "state": "active",
+        "tier": "disposable"
+      }
+    },
+    {
+      "action": "complete",
+      "arguments": {
+        "id": "05886929cd364645a3370f6b99db2285",
+        "cleanup": false
+      },
+      "result": {
+        "status": "ok",
+        "project_root": "D:\\tmp\\tmpu4d1v3cd\\project",
+        "policy": {
+          "max_temporary_bytes": 4294967296,
+          "minimum_free_bytes": 2147483648,
+          "minimum_free_fraction": 0.02,
+          "completed_ttl_seconds": 3600,
+          "interrupted_ttl_seconds": 86400,
+          "max_reusable_bytes": 2147483648,
+          "reuse_review_seconds": 86400
+        },
+        "free_bytes": 64968540160,
+        "reclaimed_bytes": 0,
+        "total_reclaimed_bytes": 300,
+        "managed_temporary_bytes": 178,
+        "tier_bytes": {
+          "persistent": 0,
+          "reusable": 0,
+          "disposable": 178
+        },
+        "entries": [
+          {
+            "id": "1151cded5cd045ff92c09c4de753d5d5",
+            "path": ".rea-enhanced/persistent/1151cded5cd045ff92c09c4de753d5d5",
+            "purpose": "Real MCP reusable output",
+            "bytes": 0,
+            "tier": "persistent",
+            "declared_state": "completed",
+            "measured": false,
+            "state": "persistent-preserved"
+          },
+          {
+            "id": "05886929cd364645a3370f6b99db2285",
+            "path": ".rea-enhanced/scratch/05886929cd364645a3370f6b99db2285",
+            "purpose": "MCP disposable-to-persistent upgrade",
+            "bytes": 178,
+            "tier": "disposable",
+            "declared_state": "completed",
+            "measured": true,
+            "state": "retained"
+          }
+        ],
+        "last_review": {
+          "boundary": "verification-end",
+          "at": 1794930481.737193,
+          "decisions": [
+            {
+              "id": "91d1d195df414cf5b789fd94a86579c2",
+              "decision": "release",
+              "reason": "The dependent work is finished; regenerate if needed",
+              "outcome": "reclaimed",
+              "reclaimed_bytes": 156
+            }
+          ]
+        },
+        "scope": "Registered tiers only. Persistent data, active work, evidence, products and unregistered folders are retained."
+      }
+    },
+    {
+      "action": "promote",
+      "arguments": {
+        "id": "05886929cd364645a3370f6b99db2285"
+      },
+      "result": {
+        "id": "05886929cd364645a3370f6b99db2285",
+        "tier": "persistent",
+        "path": "D:\\tmp\\tmpu4d1v3cd\\project\\.rea-enhanced\\persistent\\05886929cd364645a3370f6b99db2285",
+        "relative_path": ".rea-enhanced/persistent/05886929cd364645a3370f6b99db2285",
+        "state": "persistent-preserved",
+        "update_consumers": "Use this new path for future consumers"
+      }
+    },
+    {
+      "action": "review",
+      "arguments": {
+        "boundary": "task-end"
+      },
+      "result": {
+        "status": "ok",
+        "project_root": "D:\\tmp\\tmpu4d1v3cd\\project",
+        "policy": {
+          "max_temporary_bytes": 4294967296,
+          "minimum_free_bytes": 2147483648,
+          "minimum_free_fraction": 0.02,
+          "completed_ttl_seconds": 3600,
+          "interrupted_ttl_seconds": 86400,
+          "max_reusable_bytes": 2147483648,
+          "reuse_review_seconds": 86400
+        },
+        "free_bytes": 64968540160,
+        "reclaimed_bytes": 0,
+        "total_reclaimed_bytes": 300,
+        "managed_temporary_bytes": 0,
+        "tier_bytes": {
+          "persistent": 0,
+          "reusable": 0,
+          "disposable": 0
+        },
+        "entries": [
+          {
+            "id": "1151cded5cd045ff92c09c4de753d5d5",
+            "path": ".rea-enhanced/persistent/1151cded5cd045ff92c09c4de753d5d5",
+            "purpose": "Real MCP reusable output",
+            "bytes": 0,
+            "tier": "persistent",
+            "declared_state": "completed",
+            "measured": false,
+            "state": "persistent-preserved"
+          },
+          {
+            "id": "05886929cd364645a3370f6b99db2285",
+            "path": ".rea-enhanced/persistent/05886929cd364645a3370f6b99db2285",
+            "purpose": "MCP disposable-to-persistent upgrade",
+            "bytes": 0,
+            "tier": "persistent",
+            "declared_state": "completed",
+            "measured": false,
+            "state": "persistent-preserved"
+          }
+        ],
+        "last_review": {
+          "boundary": "task-end",
+          "at": 1794930481.8048038,
+          "decisions": []
+        },
+        "scope": "Registered tiers only. Persistent data, active work, evidence, products and unregistered folders are retained.",
+        "review": {
+          "boundary": "task-end",
+          "decisions": [],
+          "pending": [],
+          "guidance": "Keep with a concrete next use, release when rebuildable and no longer useful, or promote durable facts. Never complete active work just to free space."
+        }
+      }
+    }
+  ],
+  "original_input_sha256_before": "42c62459b92d6a36f8ed42317cff80e11174b40416e3a5e10ea0d4facae60aeb",
+  "original_input_sha256_after": "42c62459b92d6a36f8ed42317cff80e11174b40416e3a5e10ea0d4facae60aeb",
+  "promoted_payload_sha256_before": "f1a3fb5b18598f2ae3ee0d047b5dd65e0d877b04b02bc3bc9604582b9646a8d9",
+  "promoted_payload_sha256_after": "f1a3fb5b18598f2ae3ee0d047b5dd65e0d877b04b02bc3bc9604582b9646a8d9",
+  "persistent_file_preserved_at_task_end": true,
+  "reusable_release_path_absent": true,
+  "disposable_complete_path_absent": true,
+  "disposable_promoted_payload_sha256_before": "9845155239c3762742d6a7648ab44dc2a0d18c149c01cb8c66ec4218d2ae42a5",
+  "disposable_promoted_payload_sha256_after": "9845155239c3762742d6a7648ab44dc2a0d18c149c01cb8c66ec4218d2ae42a5",
+  "disposable_promoted_path_preserved": true,
+  "actual_reclaimed_bytes": 300,
+  "cleanup": {
+    "status": "verified",
+    "scope": "owned Windows Job active-process count zero before close",
+    "root_returncode": 0
+  },
+  "scope": "Actual stdio MCP lifecycle on owned fixtures, original input and promoted payload preserved during the operation. Temporary test fixture is removed after assertions; not a real target or model-effectiveness result."
+}

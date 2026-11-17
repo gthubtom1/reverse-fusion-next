@@ -1,0 +1,7 @@
+{
+  "purpose": "2.4.0 exclusive edit ownership; both subagents completed and handed ownership back to root",
+  "root": ["rea_enhanced/**", "reverse_fusion/global_adapter.py", "scripts/**", "pyproject.toml", "VERSION", "release/**", "components/official/manifest.json", "SOURCE-MANIFEST.json", "docs/NEXT/** except ARCHITECTURE-REVIEW.md"],
+  "docs_architecture": ["README.md", "RULES.md", "docs/*.md", "docs/ACTIVE-DOCUMENTS.json", "docs/NEXT/ARCHITECTURE-REVIEW.md"],
+  "tests_tiers": ["tests_next/test_storage_tiers.py"],
+  "rule": "Delegation used disjoint files. Handoff completed; root owns final integration, verification and publishing. No further concurrent edits."
+}

@@ -81,14 +81,24 @@ is required after every edit. Register product identity before reconstruction de
 Record every substantive user supplement; a follow-up is not permission to drop the goal.
 
 Read `{repo}/docs/DISK-MANAGEMENT.md` before operations that can produce large temporary
-outputs. Use rf_next_storage allocate for disposable copies/profiles/intermediate packages,
-declare realistic reserve_bytes and reconstruction instructions, and route tool output to
-its returned path. Keep original inputs, code, useful observations and deliveries persistent.
-After all users/processes stop, complete the allocation to reclaim it; protect or save anything
-still needed first. Enhanced comparisons and optional execute manage their own temporary work.
-Do not keep making full copies or packages per edit. Inspect storage/free space before more
-large work. Manual scratch stays active until completed; background maintenance runs only
-while the MCP connection lives. Unregistered folders are retained, not guessed to be garbage.
+outputs. Classify outputs when created: tier=persistent for durable material (normal original,
+code, evidence and delivery paths also stay persistent); tier=reusable for rebuildable material
+with a concrete next use, reuse_key/reuse_reason and input_paths; tier=disposable (default) for
+single-operation copies/profiles/intermediate packages. Allocate realistic reserve_bytes and
+reconstruction instructions, route output to the returned path, and complete only after all
+users/processes stop. Disposable data is reclaimed immediately; other tiers stay. Use reuse
+to verify reusable inputs/content and mark a new active use; complete that use afterwards.
+At the end of a meaningful operation batch/verification, phase change, resume or space pressure,
+use storage review with the corresponding boundary. It reclaims completed disposable data and
+returns reusable items needing a host keep/release judgment with a concrete reason. Do not turn
+every command into a review ritual. Keep a useful cache for a stated next use; release it when
+rebuilding is preferable. Promote completed unreferenced durable material to persistent and use
+the returned new path; referenced paths remain stable and protected. Persistent data cannot be
+downgraded. Age prompts cache review, never automatic cache deletion. Active work and evidence
+protection take priority. Enhanced comparisons/execute manage their own disposable work.
+Avoid full copies/packages per edit. Manual allocations remain active until completed. The
+connection's timer only reclaims eligible disposable data; it starts no second reasoning agent.
+Unregistered folders are retained. These tiers also cover ordinary large builds without a case.
 
 For installation only, follow `{repo}/docs/AGENT-BOOTSTRAP.md`. Never run inherited v1
 installers or standalone REA setup over this managed install. One owned MCP endpoint

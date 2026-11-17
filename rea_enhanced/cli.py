@@ -18,7 +18,7 @@ def main(argv=None):
     commands.add_parser('bootstrap')
     storage_parser = commands.add_parser('storage')
     storage_parser.add_argument('--project-root', type=Path, default=Path.cwd())
-    storage_parser.add_argument('--action', choices=['status','sweep','allocate','complete','policy','protect'], default='status')
+    storage_parser.add_argument('--action', choices=['status','sweep','allocate','complete','policy','protect','review','reuse','promote'], default='status')
     storage_parser.add_argument('--options-file', type=Path)
     release_parser=commands.add_parser('release-check')
     release_parser.add_argument('--require-deployed',action='store_true')

@@ -35,7 +35,11 @@ unknown影响整个调查时显式scope=case；未指明影响范围的关键未
 
 操作见COMPARISON.md，安装见AGENT-BOOTSTRAP.md，恢复见RECOVERY.md。旧领域资料用于专业知识；旧Spec/Craft实现指令由本文件、根RULES和当前reconstruction技能取代。
 
-大量文件操作先读DISK-MANAGEMENT.md，使用rf_next_storage登记临时输出及空间预算，
-结束后complete；原始输入、当前成果和有效证据保存在持久路径。比较逐场景回收执行副本，
-execute接管其TEMP目录；宿主直接命令和原REA工具需明确把可重建输出指向分配空间。
-不能把任意旧work目录当作垃圾，也不能用反复整包复制填满磁盘。
+大量文件操作先读DISK-MANAGEMENT.md。生成时以rf_next_storage区分persistent、reusable、
+disposable及空间预算：原始输入、源码、当前成果和有效证据保存在持久路径；有明确后续用途的
+可重建材料放二级，复用先核输入/内容；本轮临时执行副本放三级，所有使用者结束后complete。
+在有意义的操作批次/验证结束、阶段切换、恢复或空间压力节点review，而非每条命令都记账。
+宿主根据后续工作决定二级keep/release并说明理由；一级不降级，活动与引用保护始终优先。
+比较逐场景回收执行副本，execute接管TEMP；宿主直接命令和原REA工具须将可重建大输出指向分配空间。
+不能把任意旧work目录当作垃圾，也不能用反复整包复制填满磁盘。困难目标按具体证据选择方法，
+工具接通与有限工程检查不等于任意壳/混淆/反调试目标均已验证，见NEXT/ARCHITECTURE-REVIEW.md。

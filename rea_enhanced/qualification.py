@@ -44,6 +44,7 @@ def release_check(root=ROOT,require_deployed=False):
         for name,expected in record.get('evidence_sha256',{}).items():
             if digest(root/name)!=expected:failures.append('Qualified operation evidence changed: '+name)
         for name in ('s2/protocol-qualified.json','s2/native-restart-qualified.json',
+                     'tiered-storage/live-proof.json',
                      'final-audit/native-provider.json',
                      *('final-audit/web-'+n+'.json' for n in ('equal','wrong-behavior','wrong-look','missing-observation','controls'))):
             key='evidence/next/'+name
