@@ -1,0 +1,93 @@
+{
+  "date": "2026-11-18",
+  "status": "published-prerelease;branch-pushed;pr-open;not-deployed",
+  "repository": "https://github.com/gthubtom1/reverse-fusion-next",
+  "branch": "fix/independent-audit-nine",
+  "source_commit": "5bc870b8b7c0723641efd4080cb596ea89230f38",
+  "remote_branch_matches": true,
+  "pull_request": "https://github.com/gthubtom1/reverse-fusion-next/pull/1",
+  "release_tag": "autonomy-20261118",
+  "channel": "prerelease",
+  "asset": {
+    "tag": "autonomy-20261118",
+    "source_commit": "5bc870b8b7c0723641efd4080cb596ea89230f38",
+    "archive": "reverse-fusion-next-autonomy-20261118-source.zip",
+    "sha256": "91be45c7b4c11efccd2f7e527223aac65c1acdc61001e6b7860b0e20040ac1be",
+    "bytes": 8247938,
+    "members": 1937,
+    "channel": "prerelease",
+    "runtime_verified": false,
+    "deployment_performed": false,
+    "state_directory": "Only tracked empty .gitkeep placeholder; no runtime state included"
+  },
+  "deployment_performed": false,
+  "user_entries_unchanged": 3,
+  "functional_tests_executed": 0,
+  "initial_release_attempt": "HTTP422 short target_commitish rejected; retried with verified full40-character commit SHA",
+  "main_merged": false,
+  "release": {
+    "assets": [
+      {
+        "apiUrl": "https://api.github.com/repos/gthubtom1/reverse-fusion-next/releases/assets/760630756",
+        "contentType": "application/zip",
+        "createdAt": "2026-11-17T21:04:41Z",
+        "digest": "sha256:91be45c7b4c11efccd2f7e527223aac65c1acdc61001e6b7860b0e20040ac1be",
+        "downloadCount": 0,
+        "id": "RA_kwDOVw0V6c4tVk3k",
+        "label": "",
+        "name": "reverse-fusion-next-autonomy-20261118-source.zip",
+        "size": 8247938,
+        "state": "uploaded",
+        "updatedAt": "2026-11-17T21:04:43Z",
+        "url": "https://github.com/gthubtom1/reverse-fusion-next/releases/download/autonomy-20261118/reverse-fusion-next-autonomy-20261118-source.zip"
+      },
+      {
+        "apiUrl": "https://api.github.com/repos/gthubtom1/reverse-fusion-next/releases/assets/760630737",
+        "contentType": "text/plain; charset=utf-8",
+        "createdAt": "2026-11-17T21:04:40Z",
+        "digest": "sha256:c3cabaf242d4a46dc7bd3e31605c7092ae833234b68be23c1e66e4f07e8206cf",
+        "downloadCount": 0,
+        "id": "RA_kwDOVw0V6c4tVk3R",
+        "label": "",
+        "name": "SHA256SUMS.txt",
+        "size": 116,
+        "state": "uploaded",
+        "updatedAt": "2026-11-17T21:04:41Z",
+        "url": "https://github.com/gthubtom1/reverse-fusion-next/releases/download/autonomy-20261118/SHA256SUMS.txt"
+      },
+      {
+        "apiUrl": "https://api.github.com/repos/gthubtom1/reverse-fusion-next/releases/assets/760630758",
+        "contentType": "application/json",
+        "createdAt": "2026-11-17T21:04:41Z",
+        "digest": "sha256:7d28ada185e68188d9b3bc4b30038d5d1b8ea74c0420b785f8251d2e454d0926",
+        "downloadCount": 0,
+        "id": "RA_kwDOVw0V6c4tVk3m",
+        "label": "",
+        "name": "source-manifest.json",
+        "size": 472,
+        "state": "uploaded",
+        "updatedAt": "2026-11-17T21:04:41Z",
+        "url": "https://github.com/gthubtom1/reverse-fusion-next/releases/download/autonomy-20261118/source-manifest.json"
+      }
+    ],
+    "isDraft": false,
+    "isPrerelease": true,
+    "publishedAt": "2026-11-17T21:04:44Z",
+    "tagName": "autonomy-20261118",
+    "targetCommitish": "5bc870b8b7c0723641efd4080cb596ea89230f38",
+    "url": "https://github.com/gthubtom1/reverse-fusion-next/releases/tag/autonomy-20261118"
+  },
+  "tag_ref": {
+    "ref": "refs/tags/autonomy-20261118",
+    "sha": "5bc870b8b7c0723641efd4080cb596ea89230f38",
+    "type": "commit"
+  },
+  "remote_asset_digest_matches": true,
+  "local_deployment": "unchanged",
+  "ci": {
+    "checks": 0,
+    "auto_fix": false,
+    "auto_merge": false
+  },
+  "record_scope": "Publication receipt after immutable source release; does not move the tag or change runtime source"
+}

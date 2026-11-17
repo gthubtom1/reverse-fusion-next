@@ -2,8 +2,8 @@
   "schema_version": 1,
   "version": "2.4.0",
   "baseline_commit": "022e61b803e41569cac1f116ebca2245b9c9b1f8",
-  "goal_status": "final-form-frozen-maintenance-static-only",
-  "stage": "github-prerelease-in-progress",
+  "goal_status": "final-form-prereleased-not-deployed",
+  "stage": "github-prerelease-complete",
   "slim_plan": {
     "date": "2026-11-18",
     "status": "historical-engineering-complete;superseded-by-static-recheck-repairs",
@@ -217,7 +217,7 @@
       "README.md"
     ]
   },
-  "next_action": "Commit/push the owned changes and publish autonomy-20261118 source prerelease with truthful validation notes; no local deployment or automatic main merge.",
+  "next_action": "GitHub commit/push/source prerelease complete. Keep main PR open pending user merge choice; no deployment, auto-merge, test run or model experiment scheduled.",
   "migration": "Current2.4.0 owned skill/AGENTS/one MCP updated; fresh registered stdio, exact package/runtime/repository versions2.4.0 and260 tools verified. Existing desktop chats may require reconnect.",
   "limitations": [
     "Finite engineering qualification and the owned plain-language case are distinct from acceptance of arbitrary future targets.",
@@ -414,7 +414,7 @@
   },
   "publication": {
     "date": "2026-11-18",
-    "status": "in-progress",
+    "status": "published-prerelease-not-deployed",
     "user_request": "提交、推送、GitHub发布；暂不部署",
     "channel": "prerelease-source-snapshot",
     "tag": "autonomy-20261118",
@@ -423,7 +423,15 @@
     "document": "docs/NEXT/PUBLICATION.md",
     "deployment": "not requested; no installer or owned-entry switch",
     "runtime_validation": "not-run; static-only implementation; historical179 is not current source qualification",
-    "main_merge": "Not performed; proposed via PR",
-    "package_version": "2.4.0 retained; not renewed release qualification"
+    "main_merge": "Not merged; PR open",
+    "package_version": "2.4.0 retained; not renewed release qualification",
+    "source_commit": "5bc870b8b7c0723641efd4080cb596ea89230f38",
+    "release_url": "https://github.com/gthubtom1/reverse-fusion-next/releases/tag/autonomy-20261118",
+    "pull_request": "https://github.com/gthubtom1/reverse-fusion-next/pull/1",
+    "assets_uploaded": 3,
+    "asset_digest_verified": true,
+    "evidence": "evidence/next/publication/github.json",
+    "ci": "No checks present; Auto-fix/auto-merge off",
+    "pending_deployment": false
   }
 }

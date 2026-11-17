@@ -27,4 +27,8 @@
 
 ## 当前状态
 
-发布操作进行中；最终结果以GitHub分支/PR/release的实际返回及evidence/next/publication记录为准。没有部署动作。
+GitHub预发布已实际创建并核对：isPrerelease=true、isDraft=false，标签指向源码提交5bc870b8b7c0723641efd4080cb596ea89230f38。分支已推送，PR：https://github.com/gthubtom1/reverse-fusion-next/pull/1 ，保持打开，未自动合并main。
+
+源码ZIP：reverse-fusion-next-autonomy-20261118-source.zip，8,247,938字节；SHA256：91be45c7b4c11efccd2f7e527223aac65c1acdc61001e6b7860b0e20040ac1be，与GitHub资产digest一致。SHA256SUMS.txt和source-manifest.json均上传完成。
+
+evidence/next/publication保存实际页面/标签/资产身份核对。发布后的记录提交只补充元数据，不移动已发布标签、不修改功能源码。没有部署动作；当前PR没有CI检查，Auto-fix及auto-merge均未开启。
