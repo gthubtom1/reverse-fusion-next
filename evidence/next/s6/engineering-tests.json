@@ -20,7 +20,7 @@
     "docs/ACTIVE-DOCUMENTS.json": "c21b28c1e5422a58d25cb8d3cc62cb4ac9bca666aa290f90b4b799c51d5d6791",
     "docs/AGENT-BOOTSTRAP.md": "24ff880f7b8704030e888fb50c6d0a22e472fb8ed042e9276deb59c1f3f2fd21",
     "docs/AGENT-WORKFLOW.md": "da4d93a70f808272133a7b337814261da1a53613963be793c60953b018de0387",
-    "docs/BEGINNER-GUIDE.md": "4390ed8c045d3aeb0dd0468d22f4587d62956f2c776996099d75851836c039ea",
+    "docs/BEGINNER-GUIDE.md": "9c80ef1b0d64d6a22c3883b490b0d5270a4973ade63dd6acf1ab91c6bd52b046",
     "docs/CODEX-INTEGRATION.md": "3bf9eb2a6ad3051115ddf366290a5d158ed3fc075a65b1a262cc2b1abd887e21",
     "docs/COMPARISON.md": "46a202a9d5abd657ceb3b50c6bb3a20617dca6a5098c54478eb3cec8bde5c09a",
     "docs/CROSS-PROJECT-WORKFLOW.md": "12d0114c4354ada122863f1427c30325d3d4d732a083be67d88a2065f9b89199",
@@ -40,9 +40,9 @@
     "rea_enhanced/comparison.py": "db3ca9e215613a4d4808b5d6100fbe961da0fcc332e9e75223cd36949f81bba8",
     "rea_enhanced/deployment.py": "8bc941b2540613a556f798641fb177c313433644d477693be97b3f600483e9ae",
     "rea_enhanced/diagnostics.py": "b6fb38b21a0d641d47b9839d497d69d7a18af22e310ce8dd0b1bcbd92065c7df",
-    "rea_enhanced/disk.py": "d3a55c97571c305771fd0d2e9f1263963033bc311b1782a763c644a149df9e02",
+    "rea_enhanced/disk.py": "9f495a47314b42aa1256dae20bccefc5ae1c5cbc429dee17035e6860e8c3c532",
     "rea_enhanced/health.py": "afe4375f2d5d1be001421ed9cabe48cfbf66b4ffd4ed539c1eec08a6325550e7",
-    "rea_enhanced/operations.py": "9d18546031bd886367d70c05ad9fafba0903cc88714011ad4cf92c7f33afa6b6",
+    "rea_enhanced/operations.py": "9aa3633576d404175a2fd00b08da96da4c585458992f787ee5d47059d8279b11",
     "rea_enhanced/providers.py": "4b5248aa26734e1cee84405be2fb26f7cdb716b97f025ac019d110e0312538ea",
     "rea_enhanced/qualification.py": "2697feb917dff2f728f0ee9eff7d2bf3d2f5ae388bcac7be6e6525a2db27ce1e",
     "rea_enhanced/server.py": "728316fb705f4ed5ea4049dee03fb7a528892ea0dbf0511765516abf9398c77b",
@@ -84,14 +84,14 @@
   },
   "evidence_sha256": {
     "evidence/next/s2/protocol-qualified.json": "c5d6649c326fe19371cb5437eba841d63ffa365d9708a76e901ed0edd640334d",
-    "evidence/next/final-audit/native-provider.json": "033ad884bc01745158caf8afd032b7942fef49ba52d76dfa347991a6e28ba2db",
+    "evidence/next/final-audit/native-provider.json": "04b1160ffe9e54fbac703a868a5cdac5db153414e834022f7479790f32a045b1",
     "evidence/next/s2/native-restart-qualified.json": "96883eb30ee3c2301402ebe2c814da634153972afea16ffd4cdb31ab1add1f66",
-    "evidence/next/final-audit/web-equal.json": "bd31984bcc92ff7a163676a9b699c51c1781ae761afb12a9134e8c452292f3b5",
-    "evidence/next/final-audit/web-wrong-behavior.json": "c314c88849d3ab46855dfbab7c3bfad13f8cd60912e9fc6bb705965a095e9b38",
-    "evidence/next/final-audit/web-wrong-look.json": "62438e6787901d00c39bbc9670f2bb6451d85953356cb5253128353aa2a06959",
-    "evidence/next/final-audit/web-missing-observation.json": "763f86a3617f8ad537681d67591788f940a6b051ca2abcebd558445b86e1772c",
-    "evidence/next/final-audit/web-controls.json": "893317748fcc7b25ea2ae50f4498dbec030f28bf79aee4c74b8367ad5c3cb1e3"
+    "evidence/next/final-audit/web-equal.json": "35950a6a0b8de163eb95a5743af4e6493ed290d9a1b1d7d110f26d03208948ad",
+    "evidence/next/final-audit/web-wrong-behavior.json": "d8265d3c9c7b2191768064a3a93d80743a5c7863ed1a79fbc9a63c56df09c4de",
+    "evidence/next/final-audit/web-wrong-look.json": "c575b28304e7bd21e2ef0d0cfaf83e0be6ace1c4d7fc1c2da6ea1b7da78db792",
+    "evidence/next/final-audit/web-missing-observation.json": "519cd47b42db86109701c7402cfb8793a7cba90e984e9a626d45bdb1d63cf9eb",
+    "evidence/next/final-audit/web-controls.json": "dd7504d2abe2b30bbfd39f4740969924c4bd15b6e7f7516ad4b4e13e984b3b75"
   },
-  "elapsed_seconds": 100.56200000000536,
+  "elapsed_seconds": 100.375,
   "scope": "Actual current unittest discovery, original protocol/provider operations, finite behavior/visual cases and negative cases. Tests and public contracts are bound. Not arbitrary target acceptance."
 }

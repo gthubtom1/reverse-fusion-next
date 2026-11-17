@@ -1,6 +1,6 @@
 [project]
 name = "reverse-rea-next"
-version = "2.2.0"
+version = "2.3.0"
 description = "Evidence-driven reverse engineering and reconstruction orchestration"
 requires-python = ">=3.11"
 dependencies = ["Pillow==11.3.0"]

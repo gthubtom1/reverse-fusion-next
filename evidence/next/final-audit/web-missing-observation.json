@@ -7,10 +7,10 @@
     "status": "unknown",
     "scope": "Owned counter visual, click and persistence behavior",
     "plan": "plan.json",
-    "plan_sha256": "74f1e118b96f089c6ab4748474accc8d55e30345ae6cf7c72801dd5e8002ee7f",
+    "plan_sha256": "203b4345045928fa3b71b7eb0337c6681fc52bd69081db5f5b3857cff8b6e03d",
     "engine": {
       "rea_enhanced/comparison.py": "b32462303ba433413bae7c891fbcc611c21b226dba64613915fa566ef187081e",
-      "rea_enhanced/disk.py": "d3a55c97571c305771fd0d2e9f1263963033bc311b1782a763c644a149df9e02",
+      "rea_enhanced/disk.py": "9f495a47314b42aa1256dae20bccefc5ae1c5cbc429dee17035e6860e8c3c532",
       "reverse_fusion/owned_process.py": "4d0f4cfc0367116b084d0ec870fde2d90f0470d6da9887d59cd47be5c96e32fd",
       "rea_enhanced/web.py": "1d8fac7183634844655577c24ad701704b78912f5284834494450119cbf1b344",
       "components/rea-enhanced/web-replay.mjs": "0a7251bf8cd023d51f46a7232bc28ef65068088ff5beacf4b3be603054b20a79"
@@ -96,17 +96,17 @@
       "status": "observed",
       "reason": null,
       "exit_code": 0,
-      "elapsed_ms": 1605.947,
-      "peak_job_bytes": 454418432,
+      "elapsed_ms": 1592.633,
+      "peak_job_bytes": 453976064,
       "output_truncated": false,
       "memory_limit_mb": 1536,
       "cleanup": "owned Windows job closed after invocation"
     },
     "capture_path": "work/unknown/capture.json",
-    "elapsed_ms": 1605.947,
+    "elapsed_ms": 1592.633,
     "temporary_storage": {
       "status": "ok",
-      "project_root": "D:\\tmp\\tmp7yecrgkt",
+      "project_root": "D:\\tmp\\tmpru3hteht",
       "policy": {
         "max_temporary_bytes": 4294967296,
         "minimum_free_bytes": 2147483648,
@@ -114,14 +114,14 @@
         "completed_ttl_seconds": 3600,
         "interrupted_ttl_seconds": 86400
       },
-      "free_bytes": 63282085888,
+      "free_bytes": 63279067136,
       "reclaimed_bytes": 126,
       "total_reclaimed_bytes": 126,
       "managed_temporary_bytes": 0,
       "entries": [
         {
-          "id": "fcb86f7cc37b429f8878e41ad7b98866",
-          "path": ".rea-enhanced/scratch/fcb86f7cc37b429f8878e41ad7b98866",
+          "id": "a445cbb0bef84526abe3d398b6f17656",
+          "path": ".rea-enhanced/scratch/a445cbb0bef84526abe3d398b6f17656",
           "purpose": "Browser comparison temporary profile",
           "bytes": 126,
           "state": "reclaimed"

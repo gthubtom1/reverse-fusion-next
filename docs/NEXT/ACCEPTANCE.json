@@ -1,7 +1,7 @@
 {
-  "version": "2.2.0",
-  "status": "engineering-qualified",
-  "scope": "Generic long-task repair on Windows x64 Codex; no task/model superiority claim",
+  "version": "2.3.0",
+  "status": "local-qualified-awaiting-remote",
+  "scope": "Long-task and disk-lifecycle engineering on Windows x64 Codex; no task/model superiority claim",
   "requirements": [
     {
       "id": "L01",
@@ -58,14 +58,67 @@
       "evidence": [
         "evidence/next/long-task/release-check.json"
       ]
+    },
+    {
+      "id": "D01",
+      "requirement": "Owned scratch identity and protection for evidence, product and inputs",
+      "status": "local-qualified",
+      "evidence": [
+        "tests_next/test_disk.py",
+        "evidence/next/disk-lifecycle/live-cleanup.json"
+      ]
+    },
+    {
+      "id": "D02",
+      "requirement": "Immediate comparison-copy reclamation with observed-file snapshots preserved",
+      "status": "local-qualified",
+      "evidence": [
+        "tests_next/test_disk.py",
+        "evidence/next/disk-lifecycle/live-cleanup.json"
+      ]
+    },
+    {
+      "id": "D03",
+      "requirement": "Project budgets and independent-process volume reservations",
+      "status": "local-qualified",
+      "evidence": [
+        "tests_next/test_disk.py",
+        "evidence/next/disk-lifecycle/live-cleanup.json"
+      ]
+    },
+    {
+      "id": "D04",
+      "requirement": "Active OS leases, interrupted retention and periodic connection maintenance",
+      "status": "local-qualified",
+      "evidence": [
+        "tests_next/test_disk.py",
+        "evidence/next/disk-lifecycle/live-cleanup.json"
+      ]
+    },
+    {
+      "id": "D05",
+      "requirement": "Actual MCP disk reclaim and persistent-file protection",
+      "status": "local-qualified",
+      "evidence": [
+        "tests_next/test_disk.py",
+        "evidence/next/disk-lifecycle/live-cleanup.json"
+      ]
+    },
+    {
+      "id": "D06",
+      "requirement": "Public installation and current deployed endpoint",
+      "status": "awaiting-remote",
+      "evidence": [
+        "evidence/next/disk-lifecycle/local-install.json"
+      ]
     }
   ],
-  "engineering_tests": 99,
-  "remote_clone_tests": 99,
-  "qualified_implementation_commit": "b01eaf83c011a6eec9ac48cd53002f82c80d3211",
+  "engineering_tests": 119,
+  "remote_clone_tests": "pending-current-source",
+  "qualified_implementation_commit": "pending",
   "independent_repository": "https://github.com/gthubtom1/reverse-fusion-next.git",
-  "local_deployment": "evidence/next/long-task/local-install.json",
-  "current_release_check": "evidence/next/long-task/release-check.json",
+  "local_deployment": "evidence/next/disk-lifecycle/local-install.json",
+  "current_release_check": "evidence/next/disk-lifecycle/release-check.json",
   "historical_2_1_0": {
     "requirements": "docs/NEXT/ACCEPTANCE.md",
     "record_at_commit": "https://github.com/gthubtom1/reverse-fusion-next/blob/39fb9d3deef857120b1b5777482845dd95e84f26/docs/NEXT/ACCEPTANCE.json",
@@ -77,5 +130,10 @@
     "arbitrary external script pass accepted as independent comparison",
     "automatic discovery of unrecorded chat supplements"
   ],
-  "whole_product_acceptance": "Target-specific behavior and complete user requirements must be reviewed in that target; unrelated product not modified."
+  "whole_product_acceptance": "Target-specific behavior and complete user requirements must be reviewed in that target; unrelated product not modified.",
+  "historical_2_2_0": {
+    "commit": "7eb7283b535e7a2da31b1429d26d52ced45a0aa0",
+    "engineering_tests": 99,
+    "remote_clone_tests": 99
+  }
 }

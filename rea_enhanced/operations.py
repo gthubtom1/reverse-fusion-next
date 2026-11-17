@@ -147,6 +147,7 @@ def execute(project, case_root, change, expected_revision, cancel_event=None):
     if not invoked:
         raise ValueError('Invoke a declared project script or executable; external tool/module dependencies need explicit input review')
     binding = {'kind': kind, 'features': sorted(set(features)), 'argv': run_argv, 'cwd': cwd_name,
+        'scratch_bytes': scratch_bytes,
         'inputs': inputs, 'artifacts': artifacts, 'runtime': {'path': str(binary), 'sha256': digest(binary)},
         'environment_sha256': sha256(repr(sorted(env.items())).encode()).hexdigest()}
     signature = sha256(json.dumps(binding, sort_keys=True).encode()).hexdigest()

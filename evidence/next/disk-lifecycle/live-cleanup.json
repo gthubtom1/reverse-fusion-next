@@ -17,7 +17,7 @@
     "docs/ACTIVE-DOCUMENTS.json": "c21b28c1e5422a58d25cb8d3cc62cb4ac9bca666aa290f90b4b799c51d5d6791",
     "docs/AGENT-BOOTSTRAP.md": "24ff880f7b8704030e888fb50c6d0a22e472fb8ed042e9276deb59c1f3f2fd21",
     "docs/AGENT-WORKFLOW.md": "da4d93a70f808272133a7b337814261da1a53613963be793c60953b018de0387",
-    "docs/BEGINNER-GUIDE.md": "4390ed8c045d3aeb0dd0468d22f4587d62956f2c776996099d75851836c039ea",
+    "docs/BEGINNER-GUIDE.md": "9c80ef1b0d64d6a22c3883b490b0d5270a4973ade63dd6acf1ab91c6bd52b046",
     "docs/CODEX-INTEGRATION.md": "3bf9eb2a6ad3051115ddf366290a5d158ed3fc075a65b1a262cc2b1abd887e21",
     "docs/COMPARISON.md": "46a202a9d5abd657ceb3b50c6bb3a20617dca6a5098c54478eb3cec8bde5c09a",
     "docs/CROSS-PROJECT-WORKFLOW.md": "12d0114c4354ada122863f1427c30325d3d4d732a083be67d88a2065f9b89199",
@@ -37,9 +37,9 @@
     "rea_enhanced/comparison.py": "db3ca9e215613a4d4808b5d6100fbe961da0fcc332e9e75223cd36949f81bba8",
     "rea_enhanced/deployment.py": "8bc941b2540613a556f798641fb177c313433644d477693be97b3f600483e9ae",
     "rea_enhanced/diagnostics.py": "b6fb38b21a0d641d47b9839d497d69d7a18af22e310ce8dd0b1bcbd92065c7df",
-    "rea_enhanced/disk.py": "c47848942583a41ecdf6e3db6b7340d1122df14277f2f58b6d5327c8716fd522",
+    "rea_enhanced/disk.py": "9f495a47314b42aa1256dae20bccefc5ae1c5cbc429dee17035e6860e8c3c532",
     "rea_enhanced/health.py": "afe4375f2d5d1be001421ed9cabe48cfbf66b4ffd4ed539c1eec08a6325550e7",
-    "rea_enhanced/operations.py": "9d18546031bd886367d70c05ad9fafba0903cc88714011ad4cf92c7f33afa6b6",
+    "rea_enhanced/operations.py": "9aa3633576d404175a2fd00b08da96da4c585458992f787ee5d47059d8279b11",
     "rea_enhanced/providers.py": "4b5248aa26734e1cee84405be2fb26f7cdb716b97f025ac019d110e0312538ea",
     "rea_enhanced/qualification.py": "2697feb917dff2f728f0ee9eff7d2bf3d2f5ae388bcac7be6e6525a2db27ce1e",
     "rea_enhanced/server.py": "728316fb705f4ed5ea4049dee03fb7a528892ea0dbf0511765516abf9398c77b",
@@ -63,11 +63,11 @@
     "scripts/install.ps1": "35a2f846a097b152a0694bcd49ddf37ed31f79c961761205c294cd150b1bd8b1",
     "scripts/next-clean-install.py": "24db5a4c09ada874e5cbd02d5e177541fb411eea2a8fd2236536883db59bf147",
     "scripts/next-cli.py": "d4ac81415ea7b0e884777d091477afada817d4e78a688ac72bbdbfde372c6670",
-    "scripts/next-qualify.py": "4e602f889296291ba75c87814b1bd0879d6ee83067bb40510f9678c9ea69b5ad",
+    "scripts/next-qualify.py": "5f2b4a8114a3e9cfc2c6847131a411f2d3c077d8741ce62ef33c851fed8951e2",
     "scripts/next-remote-install.py": "76b0d342da03554ba9f05468ffd0821964fdfe2daf53b3cb29293c669de18443",
     "tests_next/test_bootstrap.py": "a4c634442be119fd304184bf89e44d5314990ab668c4fecc439a29cd217936f5",
     "tests_next/test_deployment.py": "b3f3229605b257a1a082f5ea0fedea57093899bdaa9412aec746f326148c434c",
-    "tests_next/test_disk.py": "5c695390add02a521327de3c468f8725316081e23833a9b0cd742a4758d10af3",
+    "tests_next/test_disk.py": "25aff13a50bc051c39818ef2f50e0feab0bff4675b02fbd5fb508db2864c756f",
     "tests_next/test_domains.py": "e5450f943808c437bbede6ac84396066ea0434d6374800c85fcdb2709d61ec6b",
     "tests_next/test_final_audit.py": "43911f7b4997f417d724b41a2fd7de6a03cf700df708d8d6753efa7e983a7839",
     "tests_next/test_inventory.py": "823727091975fd9ec00425369138dba342c7461defd75a43d1ef01a3b36b1ac9",
@@ -97,14 +97,14 @@
       "completed_ttl_seconds": 3600,
       "interrupted_ttl_seconds": 86400
     },
-    "free_bytes": 63219716096,
+    "free_bytes": 63212355584,
     "reclaimed_bytes": 0,
-    "total_reclaimed_bytes": 0,
+    "total_reclaimed_bytes": 67109023,
     "managed_temporary_bytes": 67109023,
     "entries": [
       {
-        "id": "22a0a2dec6804602bee107dce8a80d6b",
-        "path": ".rea-enhanced/scratch/22a0a2dec6804602bee107dce8a80d6b",
+        "id": "11eb4b333b004e73968e0a8a5542134e",
+        "path": ".rea-enhanced/scratch/11eb4b333b004e73968e0a8a5542134e",
         "purpose": "Actual D-drive cleanup qualification",
         "bytes": 67109023,
         "state": "active"
@@ -122,14 +122,14 @@
       "completed_ttl_seconds": 3600,
       "interrupted_ttl_seconds": 86400
     },
-    "free_bytes": 63286824960,
+    "free_bytes": 63279464448,
     "reclaimed_bytes": 67109023,
-    "total_reclaimed_bytes": 67109023,
+    "total_reclaimed_bytes": 134218046,
     "managed_temporary_bytes": 0,
     "entries": [
       {
-        "id": "22a0a2dec6804602bee107dce8a80d6b",
-        "path": ".rea-enhanced/scratch/22a0a2dec6804602bee107dce8a80d6b",
+        "id": "11eb4b333b004e73968e0a8a5542134e",
+        "path": ".rea-enhanced/scratch/11eb4b333b004e73968e0a8a5542134e",
         "purpose": "Actual D-drive cleanup qualification",
         "bytes": 67109023,
         "state": "reclaimed"
@@ -144,9 +144,9 @@
     "evidence.json": "4fad9ef539529f04c023943b4e2f91339cc4e2062df345fbebd2e4f4d94df383"
   },
   "free_bytes": {
-    "before_payload": 63286824960,
-    "after_payload": 63219716096,
-    "after_cleanup": 63286824960
+    "before_payload": 63279464448,
+    "after_payload": 63212355584,
+    "after_cleanup": 63279464448
   },
   "process_cleanup": {
     "status": "verified",

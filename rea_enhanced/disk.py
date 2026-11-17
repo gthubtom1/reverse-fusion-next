@@ -104,6 +104,15 @@ def _lease_path(token):
     return coordinator() / 'leases' / token
 
 
+def _retire_lease(token):
+    # Unique IDs are never reused. Called only after retiring the owned registry
+    # entry/reservation, when no future operation may acquire this lease.
+    try:
+        _lease_path(token).with_suffix('.lock').unlink(missing_ok=True)
+    except OSError:
+        pass
+
+
 def _busy(token):
     try:
         with locked(_lease_path(token), timeout=0):
@@ -167,6 +176,7 @@ def reserved_space(project, amount):
             yield
         finally:
             _release(project, token)
+    _retire_lease(token)
 
 
 def _strings(value):
@@ -295,6 +305,7 @@ def maintain(project, apply=True, force_completed=False, force_ids=()):
             'entries': rows, 'scope': 'Registered scratch only. Evidence, products and unregistered folders are retained.'}
     for token in released:
         _release(project, token)
+        _retire_lease(token)
     return result
 
 
