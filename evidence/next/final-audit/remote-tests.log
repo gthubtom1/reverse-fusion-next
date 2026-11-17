@@ -1,4 +1,4 @@
-recorded_unknown) ... ok
+ecorded_unknown) ... ok
 test_concurrent_record_preserves_one_revision (test_workflow.OwnedCase.test_concurrent_record_preserves_one_revision) ... ok
 test_dependency_blocks_only_affected_feature (test_workflow.OwnedCase.test_dependency_blocks_only_affected_feature) ... ok
 test_escape_and_overwrite_rejected (test_workflow.OwnedCase.test_escape_and_overwrite_rejected) ... ok
@@ -26,8 +26,8 @@ test_unchanged_success_is_reused_without_another_run (test_workflow.OwnedCase.te
 test_wrong_algorithm_fails (test_workflow.OwnedCase.test_wrong_algorithm_fails) ... ok
 
 ----------------------------------------------------------------------
-Ran 124 tests in 86.649s
+Ran 148 tests in 103.717s
 
 OK
 
-{'status': 'pass', 'tests': 124}
+{'status': 'pass', 'tests': 148}

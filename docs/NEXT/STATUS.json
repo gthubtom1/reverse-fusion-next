@@ -2,8 +2,8 @@
   "schema_version": 1,
   "version": "2.4.0",
   "baseline_commit": "022e61b803e41569cac1f116ebca2245b9c9b1f8",
-  "goal_status": "active",
-  "stage": "tiered-storage",
+  "goal_status": "complete",
+  "stage": "maintenance",
   "stages": {
     "S0": {
       "status": "done",
@@ -133,7 +133,9 @@
       "tests_next/test_disk.py",
       "evidence/next/disk-lifecycle/live-cleanup.json",
       "evidence/next/disk-lifecycle/live-periodic.json",
-      "evidence/next/disk-lifecycle/public-install-cleanup.json"
+      "evidence/next/disk-lifecycle/public-install-cleanup.json",
+      "tests_next/test_storage_tiers.py",
+      "evidence/next/tiered-storage/live-proof.json"
     ],
     "N17": [
       "components/rea-enhanced/provider-bindings.json",
@@ -154,8 +156,8 @@
       "README.md"
     ]
   },
-  "next_action": "Frozen2.4.0 source: run current full qualification, publish implementation for independent remote clone/install, then update owned local entry and close evidence.",
-  "migration": "Historical migration retired the old REA/Craft entry. Current2.3.0 owned entry and fresh registered stdio connection passed; existing chat tool catalogs need reconnect and are not claimed to hot-reload.",
+  "next_action": "2.4.0 is qualified, installed and published. Generate outputs in persistent/reusable/disposable tiers and review at natural boundaries. Reconnect cached MCP catalogs or use absolute CLI; do not resume old targets or delete unregistered legacy folders.",
+  "migration": "Current2.4.0 owned skill/AGENTS/one MCP updated; fresh registered stdio, exact package/runtime/repository versions2.4.0 and260 tools verified. Existing desktop chats may require reconnect.",
   "limitations": [
     "Finite engineering qualification and the owned plain-language case are distinct from acceptance of arbitrary future targets.",
     "Final installed entry is verified in a fresh desktop chat; retired cached connections in existing chats are not claimed to hot-reload.",
@@ -164,7 +166,7 @@
     "Disk management reclaims registered disposable scratch, not needed persistent data or unregistered host outputs; monitoring is a soft bound and manual allocations remain active until completed."
   ],
   "acceptance": "docs/NEXT/ACCEPTANCE.json",
-  "clean_source_commit": "c9e1196861db4b987eaef8de02887b9bfe1d2581",
+  "clean_source_commit": "608170da42e391f8093025b59a8245b48ed06183",
   "final_audit": "docs/NEXT/FINAL-AUDIT.md",
   "independent_final_audit": {
     "status": "done",
@@ -182,8 +184,8 @@
   },
   "long_task_repair": {
     "requirements": "docs/NEXT/LONG-TASK-REPAIR.md",
-    "status": "retained-and-requalified-in-2.3.0",
-    "verification": "Historical2.2.0 ran99 local and99 remote checks. Its mechanisms remain covered by current2.3.0 source-bound124 local and124 actual remote checks; historical effectiveness conclusions are unchanged.",
+    "status": "retained-and-requalified-in-2.4.0",
+    "verification": "Historical2.2.0 ran99 checks and2.3.0 ran124. Current2.4.0 source-bound148 local and148 independent remote checks retain these mechanisms; model effectiveness remains unestablished.",
     "model_effectiveness": "not-established",
     "implemented": [
       "immutable observation snapshots and explicit live dependencies",
@@ -208,9 +210,9 @@
     ]
   },
   "disk_lifecycle": {
-    "status": "engineering-qualified-installed-published",
+    "status": "historical-2.3.0-mechanisms-retained-and-requalified-in-2.4.0",
     "requirements": "docs/NEXT/DISK-LIFECYCLE.md",
-    "scope": "Registered disposable scratch; persistent evidence/products and unregistered legacy folders retained. Not an OS quota over arbitrary host writes.",
+    "scope": "Historical2.3.0 actual64MiB/60-second proof remains source-bound to its recorded implementation. Current2.4.0 tiered_storage is separately qualified; shared current test/remote receipt paths now contain2.4.0 results.",
     "engineering_tests": 124,
     "remote_clone_tests": 124,
     "frozen_implementation_commit": "c9e1196861db4b987eaef8de02887b9bfe1d2581",
@@ -232,9 +234,9 @@
     ]
   },
   "tiered_storage": {
-    "status": "local-qualified-awaiting-public-install",
+    "status": "engineering-qualified-installed-published",
     "requirements": "docs/NEXT/TIERED-STORAGE.md",
-    "architecture_effectiveness": "not-established; review pending",
+    "architecture_effectiveness": "Engineering benefit mechanisms verified; same-model performance superiority not-established; difficult-target success remains target-specific.",
     "completed": [
       "T01",
       "T02",
@@ -243,14 +245,28 @@
       "T05",
       "T06",
       "T07",
-      "T09"
+      "T08",
+      "T09",
+      "T10"
     ],
     "focused_tests": 47,
     "engineering_tests": 148,
     "evidence": [
       "evidence/next/s6/engineering-tests.json",
+      "evidence/next/final-audit/remote-install.json",
       "evidence/next/tiered-storage/live-proof.json",
+      "evidence/next/tiered-storage/proof-binding.json",
+      "evidence/next/tiered-storage/local-package-version.json",
+      "evidence/next/tiered-storage/release-check.json",
       "docs/NEXT/ARCHITECTURE-REVIEW.md"
-    ]
-  }
+    ],
+    "frozen_implementation_commit": "608170da42e391f8093025b59a8245b48ed06183",
+    "remote_clone_tests": 148,
+    "local_deployment": "evidence/next/tiered-storage/local-install.json",
+    "current_release_check": "evidence/next/tiered-storage/release-check.json",
+    "public_install_bytes_reclaimed": 719773386,
+    "public_install_files_reclaimed": 16229
+  },
+  "initial_stages_scope": "S0-S6 retain the initial independent-architecture baseline; current release evidence is tiered_storage and current_release_check.",
+  "current_release_check": "evidence/next/tiered-storage/release-check.json"
 }

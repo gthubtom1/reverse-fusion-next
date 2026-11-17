@@ -150,3 +150,11 @@ User request recorded in TIERED-STORAGE.md. Current runtime2.3.0 remains install
 ## 2.4.0 integration freeze
 
 Two user-authorized subagents used disjoint edit ownership (public docs/architecture and new tests); all ownership handed back. Core/schema/CLI/generated skill/global guidance integrated. Focused47 tests pass, including24 new tier tests and actual stdio/absolute CLI. Persistent trees are unscanned; reusable integrity binds declared inputs/files/empty dirs/executable bits, invalid production cannot be blessed by restored inputs. No old target changes. Freeze source and public contracts before full qualification.
+
+## 2.4.0 local qualification and implementation published
+
+148 current-source checks passed in110.973s; source unchanged during tests. Actual stdio tier proof bound by qualification. Implementation608170d pushed to independent origin/main for real default-clone qualification. Full clone/new environment/public installer now running; final deployment and release check remain pending.
+
+## 2026-11-18 2.4.0 qualified, installed and closed
+
+Exact implementation608170da42e391f8093025b59a8245b48ed06183:148 local and148 actual remote default-clone checks passed. Independent install downloaded its own assets, restored temporary user configuration exactly, and reclaimed719773386 bytes/16229 files. Local owned skill/AGENTS/single MCP updated; runtime/package/repository2.4.0,260 tools, require-deployed release-check passed. Recovery receiptfaec6b242b1a47a6853b5ed526fd5c39.json. Source/receipts bound in tiered-storage/proof-binding.json. T01–T10 accepted in declared engineering scope. Architecture review retains lack of same-model A/B and difficult-target closed-loop evidence. No legacy-target modifications or cleanup. Final status/receipts to origin/main; no new runtime work required.
