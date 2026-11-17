@@ -19,6 +19,7 @@ REPOSITORY='https://github.com/gthubtom1/reverse-fusion-next.git'
 def execute(argv,cwd,timeout,log):
     result=run_owned(argv,cwd=cwd,stdin=b'',timeout=timeout,memory_mb=2048,max_output_bytes=8*1024*1024)
     log.write_bytes(result['stdout']+result['stderr'])
+    write(log.with_suffix('.execution.json'), {k:v for k,v in result.items() if k not in {'stdout','stderr'}})
     if result['status']!='observed' or result['exit_code']:
         raise ValueError('Remote qualification step failed: '+str(log))
     return result
@@ -42,7 +43,7 @@ def qualify(destination):
     (home/'.codex/config.toml').write_bytes(original)
     print('Installing the actual independent remote clone through its public installer',flush=True)
     installed=execute(['powershell','-NoProfile','-File',str(destination/'scripts/install.ps1'),
-        '-Python',sys.executable,'-HomeDirectory',str(home)],destination,600,evidence/'remote-install.log')
+        '-Python',sys.executable,'-HomeDirectory',str(home)],destination,1200,evidence/'remote-install.log')
     python=destination/'.venv/Scripts/python.exe'
     print('Running the complete current suite from the clone, including real MCP and browser operations',flush=True)
     execute([str(python),str(destination/'scripts/next-qualify.py')],destination,300,evidence/'remote-tests.log')
@@ -77,16 +78,42 @@ def qualify(destination):
 def main():
     from rea_enhanced.disk import reserved_space, GiB
     work=(ROOT/'work').resolve();work.mkdir(parents=True,exist_ok=True)
-    with reserved_space(ROOT, GiB):
-        with tempfile.TemporaryDirectory(prefix='remote-install-',dir=work) as selected:
-            destination=Path(selected).resolve()
-            if destination.parent!=work or not destination.is_relative_to(ROOT.resolve()):
-                raise ValueError('Temporary clone must remain within the selected checkout work directory')
-            qualify(destination)
+    cleanup={}
+    destination=None
+    try:
+        with reserved_space(ROOT, GiB):
+            with tempfile.TemporaryDirectory(prefix='remote-install-',dir=work) as selected:
+                destination=Path(selected).resolve()
+                if destination.parent!=work or not destination.is_relative_to(ROOT.resolve()):
+                    raise ValueError('Temporary clone must remain within the selected checkout work directory')
+                try:
+                    qualify(destination)
+                finally:
+                    total=count=0
+                    skipped=[]
+                    for base,dirs,files in os.walk(destination,followlinks=False):
+                        kept=[]
+                        for name in dirs:
+                            p=Path(base)/name
+                            if p.is_symlink() or getattr(p.lstat(),'st_file_attributes',0)&1024:
+                                skipped.append(str(p));continue
+                            kept.append(name)
+                        dirs[:]=kept
+                        for name in files:
+                            p=Path(base)/name
+                            if p.is_symlink() or getattr(p.lstat(),'st_file_attributes',0)&1024:
+                                skipped.append(str(p));continue
+                            total+=p.stat().st_size;count+=1
+                    cleanup.update(path=str(destination),logical_file_bytes=total,files=count,skipped_links=skipped)
+    finally:
+        if destination is not None:
+            cleanup['path_absent_after_cleanup']=not destination.exists()
+            write(ROOT/'evidence/next/disk-lifecycle/public-install-cleanup.json',cleanup)
     report_path=ROOT/'evidence/next/final-audit/remote-install.json'
     report=read(report_path)
     if destination.exists():raise ValueError('New owned installation checkout was not reclaimed')
     report.update(destination_retained=False,
+        cleanup=cleanup,
         temporary_cleanup='New exclusively owned temporary checkout removed after actual qualification and exact rollback; old checkouts untouched')
     write(report_path,report)
     print('New temporary installation checkout reclaimed; qualification receipts retained',flush=True)

@@ -153,7 +153,7 @@
       "README.md"
     ]
   },
-  "next_action": "Publish2.3.0 implementation, qualify actual independent default GitHub clone/public installation, then close current source-bound release.",
+  "next_action": "Qualify final script identity, publish, then run actual independent GitHub installer with its1200-second network window. Previous600-second attempt was incomplete and its new checkout was reclaimed.",
   "migration": "Final owned uninstall/empty entry/reinstall verified; legacy REA/Craft processes retired; one enhanced endpoint selected; final fresh desktop chat entry observed.",
   "limitations": [
     "Finite engineering qualification and the owned plain-language case are distinct from acceptance of arbitrary future targets.",
@@ -206,7 +206,7 @@
     ]
   },
   "disk_lifecycle": {
-    "status": "final-local-source-qualified",
+    "status": "final-local-qualification-and-public-install",
     "requirements": "docs/NEXT/DISK-LIFECYCLE.md",
     "scope": "Owned disposable scratch; no automatic deletion of unregistered legacy outputs",
     "engineering_tests": 120,
@@ -215,6 +215,7 @@
       "evidence/next/disk-lifecycle/before.json",
       "evidence/next/disk-lifecycle/live-cleanup.json",
       "evidence/next/disk-lifecycle/local-install.json"
-    ]
+    ],
+    "periodic_maintenance_evidence": "evidence/next/disk-lifecycle/live-periodic.json"
   }
 }

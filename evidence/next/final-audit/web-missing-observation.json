@@ -7,7 +7,7 @@
     "status": "unknown",
     "scope": "Owned counter visual, click and persistence behavior",
     "plan": "plan.json",
-    "plan_sha256": "5cec7c2f50d8d7a43e58d2f75edbfefa5233a2b925b0d0572d0950c3f1e89423",
+    "plan_sha256": "062ddc7dd7c6c3d9d05ee7fb016a002429415cacde7ef09d0126518cda2dd295",
     "engine": {
       "rea_enhanced/comparison.py": "ae1fb038b188863e5569a96736fd5dedc81eec2049cefe7c40f75c5553ab662c",
       "rea_enhanced/disk.py": "9f495a47314b42aa1256dae20bccefc5ae1c5cbc429dee17035e6860e8c3c532",
@@ -96,17 +96,17 @@
       "status": "observed",
       "reason": null,
       "exit_code": 0,
-      "elapsed_ms": 1592.963,
-      "peak_job_bytes": 451366912,
+      "elapsed_ms": 1579.855,
+      "peak_job_bytes": 450764800,
       "output_truncated": false,
       "memory_limit_mb": 1536,
       "cleanup": "owned Windows job closed after invocation"
     },
     "capture_path": "work/unknown/capture.json",
-    "elapsed_ms": 1592.963,
+    "elapsed_ms": 1579.855,
     "temporary_storage": {
       "status": "ok",
-      "project_root": "D:\\tmp\\tmpo42zx0ug",
+      "project_root": "D:\\tmp\\tmpiyp6y9qc",
       "policy": {
         "max_temporary_bytes": 4294967296,
         "minimum_free_bytes": 2147483648,
@@ -114,14 +114,14 @@
         "completed_ttl_seconds": 3600,
         "interrupted_ttl_seconds": 86400
       },
-      "free_bytes": 62774603776,
+      "free_bytes": 63277309952,
       "reclaimed_bytes": 126,
       "total_reclaimed_bytes": 126,
       "managed_temporary_bytes": 0,
       "entries": [
         {
-          "id": "164356612875490eb54d0985a3d85352",
-          "path": ".rea-enhanced/scratch/164356612875490eb54d0985a3d85352",
+          "id": "708f38d13b3e473ab2c3d566f5e94473",
+          "path": ".rea-enhanced/scratch/708f38d13b3e473ab2c3d566f5e94473",
           "purpose": "Browser comparison temporary profile",
           "bytes": 126,
           "state": "reclaimed"

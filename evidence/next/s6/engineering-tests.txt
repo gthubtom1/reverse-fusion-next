@@ -120,6 +120,6 @@ test_unchanged_success_is_reused_without_another_run (test_workflow.OwnedCase.te
 test_wrong_algorithm_fails (test_workflow.OwnedCase.test_wrong_algorithm_fails) ... ok
 
 ----------------------------------------------------------------------
-Ran 120 tests in 87.304s
+Ran 120 tests in 86.182s
 
 OK
