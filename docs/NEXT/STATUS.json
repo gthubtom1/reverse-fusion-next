@@ -2,8 +2,8 @@
   "schema_version": 1,
   "version": "2.3.0",
   "baseline_commit": "022e61b803e41569cac1f116ebca2245b9c9b1f8",
-  "goal_status": "active",
-  "stage": "disk-lifecycle",
+  "goal_status": "complete",
+  "stage": "maintenance",
   "stages": {
     "S0": {
       "status": "done",
@@ -130,9 +130,10 @@
       "tests_next/test_workflow.py"
     ],
     "N16": [
-      "tests_next/test_mcp.py",
-      "tests_next/test_workflow.py",
-      "tests_next/test_bootstrap.py"
+      "tests_next/test_disk.py",
+      "evidence/next/disk-lifecycle/live-cleanup.json",
+      "evidence/next/disk-lifecycle/live-periodic.json",
+      "evidence/next/disk-lifecycle/public-install-cleanup.json"
     ],
     "N17": [
       "components/rea-enhanced/provider-bindings.json",
@@ -153,16 +154,17 @@
       "README.md"
     ]
   },
-  "next_action": "Publish this frozen exact implementation and complete default-clone installation, full checks, exact rollback, temporary checkout removal and final require-deployed release check.",
-  "migration": "Final owned uninstall/empty entry/reinstall verified; legacy REA/Craft processes retired; one enhanced endpoint selected; final fresh desktop chat entry observed.",
+  "next_action": "2.3.0 disk lifecycle is qualified, installed and published. New work uses the current project and owned scratch for large temporary outputs; reconnect existing cached MCP catalogs or use the absolute CLI. Do not resume the old target or delete unregistered legacy folders.",
+  "migration": "Historical migration retired the old REA/Craft entry. Current2.3.0 owned entry and fresh registered stdio connection passed; existing chat tool catalogs need reconnect and are not claimed to hot-reload.",
   "limitations": [
     "Finite engineering qualification and the owned plain-language case are distinct from acceptance of arbitrary future targets.",
     "Final installed entry is verified in a fresh desktop chat; retired cached connections in existing chats are not claimed to hot-reload.",
     "Existing external OS providers were used; clean OS, other hosts and model A/B are not claimed.",
-    "2.2.0 operation measurement covers its optional runner, not every native host command; unrecorded chat supplements are not automatically captured."
+    "Optional operation measurement covers its runner, not every native host command; unrecorded chat supplements are not automatically captured.",
+    "Disk management reclaims registered disposable scratch, not needed persistent data or unregistered host outputs; monitoring is a soft bound and manual allocations remain active until completed."
   ],
   "acceptance": "docs/NEXT/ACCEPTANCE.json",
-  "clean_source_commit": "b01eaf83c011a6eec9ac48cd53002f82c80d3211",
+  "clean_source_commit": "c9e1196861db4b987eaef8de02887b9bfe1d2581",
   "final_audit": "docs/NEXT/FINAL-AUDIT.md",
   "independent_final_audit": {
     "status": "done",
@@ -180,8 +182,8 @@
   },
   "long_task_repair": {
     "requirements": "docs/NEXT/LONG-TASK-REPAIR.md",
-    "status": "engineering-qualified-installed-published",
-    "verification": "99 local source-bound checks and99 checks from an actual independent GitHub default clone passed. Public installer, real MCP/browser/provider operations, exact temporary-user rollback and final require-deployed release-check passed.",
+    "status": "retained-and-requalified-in-2.3.0",
+    "verification": "Historical2.2.0 ran99 local and99 remote checks. Its mechanisms remain covered by current2.3.0 source-bound124 local and124 actual remote checks; historical effectiveness conclusions are unchanged.",
     "model_effectiveness": "not-established",
     "implemented": [
       "immutable observation snapshots and explicit live dependencies",
@@ -206,16 +208,27 @@
     ]
   },
   "disk_lifecycle": {
-    "status": "124-qualified-live-proved-awaiting-public-install",
+    "status": "engineering-qualified-installed-published",
     "requirements": "docs/NEXT/DISK-LIFECYCLE.md",
-    "scope": "Owned disposable scratch; no automatic deletion of unregistered legacy outputs",
+    "scope": "Registered disposable scratch; persistent evidence/products and unregistered legacy folders retained. Not an OS quota over arbitrary host writes.",
     "engineering_tests": 124,
+    "remote_clone_tests": 124,
+    "frozen_implementation_commit": "c9e1196861db4b987eaef8de02887b9bfe1d2581",
+    "actual_payload_bytes_reclaimed": 67108864,
+    "actual_installer_logical_bytes_reclaimed": 719420350,
+    "actual_installer_files_reclaimed": 16214,
+    "actual_periodic_seconds": 57.421,
     "evidence": [
       "evidence/next/s6/engineering-tests.json",
+      "evidence/next/final-audit/remote-install.json",
       "evidence/next/disk-lifecycle/before.json",
       "evidence/next/disk-lifecycle/live-cleanup.json",
-      "evidence/next/disk-lifecycle/local-install.json"
-    ],
-    "periodic_maintenance_evidence": "evidence/next/disk-lifecycle/live-periodic.json"
+      "evidence/next/disk-lifecycle/live-periodic.json",
+      "evidence/next/disk-lifecycle/proof-binding.json",
+      "evidence/next/disk-lifecycle/public-install-cleanup.json",
+      "evidence/next/disk-lifecycle/local-install.json",
+      "evidence/next/disk-lifecycle/release-check.json",
+      "evidence/next/disk-lifecycle/local-package-version.json"
+    ]
   }
 }

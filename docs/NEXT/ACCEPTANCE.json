@@ -1,6 +1,6 @@
 {
   "version": "2.3.0",
-  "status": "local-qualified-awaiting-remote",
+  "status": "engineering-qualified-installed-published",
   "scope": "Long-task and disk-lifecycle engineering on Windows x64 Codex; no task/model superiority claim",
   "requirements": [
     {
@@ -56,13 +56,13 @@
       "requirement": "Current source-bound qualification, public install and deployed entry",
       "status": "qualified-in-declared-scope",
       "evidence": [
-        "evidence/next/long-task/release-check.json"
+        "evidence/next/disk-lifecycle/release-check.json"
       ]
     },
     {
       "id": "D01",
       "requirement": "Owned scratch identity and protection for evidence, product and inputs",
-      "status": "local-qualified",
+      "status": "qualified-in-declared-scope",
       "evidence": [
         "tests_next/test_disk.py",
         "evidence/next/disk-lifecycle/live-cleanup.json"
@@ -71,7 +71,7 @@
     {
       "id": "D02",
       "requirement": "Immediate comparison-copy reclamation with observed-file snapshots preserved",
-      "status": "local-qualified",
+      "status": "qualified-in-declared-scope",
       "evidence": [
         "tests_next/test_disk.py",
         "evidence/next/disk-lifecycle/live-cleanup.json"
@@ -80,7 +80,7 @@
     {
       "id": "D03",
       "requirement": "Project budgets and independent-process volume reservations",
-      "status": "local-qualified",
+      "status": "qualified-in-declared-scope",
       "evidence": [
         "tests_next/test_disk.py",
         "evidence/next/disk-lifecycle/live-cleanup.json"
@@ -89,33 +89,51 @@
     {
       "id": "D04",
       "requirement": "Active OS leases, interrupted retention and periodic connection maintenance",
-      "status": "local-qualified",
+      "status": "qualified-in-declared-scope",
       "evidence": [
         "tests_next/test_disk.py",
-        "evidence/next/disk-lifecycle/live-cleanup.json"
+        "evidence/next/disk-lifecycle/live-periodic.json"
       ]
     },
     {
       "id": "D05",
       "requirement": "Actual MCP disk reclaim and persistent-file protection",
-      "status": "local-qualified",
+      "status": "qualified-in-declared-scope",
       "evidence": [
-        "tests_next/test_disk.py",
-        "evidence/next/disk-lifecycle/live-cleanup.json"
+        "evidence/next/disk-lifecycle/live-cleanup.json",
+        "evidence/next/disk-lifecycle/public-install-cleanup.json"
       ]
     },
     {
       "id": "D06",
       "requirement": "Public installation and current deployed endpoint",
-      "status": "awaiting-remote",
+      "status": "qualified-in-declared-scope",
       "evidence": [
-        "evidence/next/disk-lifecycle/local-install.json"
+        "evidence/next/final-audit/remote-install.json",
+        "evidence/next/disk-lifecycle/release-check.json"
+      ]
+    },
+    {
+      "id": "D07",
+      "requirement": "Verified snapshot origins reclaimed; corrupt/missing snapshot origins preserved",
+      "status": "qualified-in-declared-scope",
+      "evidence": [
+        "tests_next/test_disk.py"
+      ]
+    },
+    {
+      "id": "D08",
+      "requirement": "Actual public install with bounded transient range/clone retry and unchanged archive identities",
+      "status": "qualified-in-declared-scope",
+      "evidence": [
+        "tests_next/test_bootstrap.py",
+        "evidence/next/final-audit/remote-install.json"
       ]
     }
   ],
-  "engineering_tests": 119,
-  "remote_clone_tests": "pending-current-source",
-  "qualified_implementation_commit": "pending",
+  "engineering_tests": 124,
+  "remote_clone_tests": 124,
+  "qualified_implementation_commit": "c9e1196861db4b987eaef8de02887b9bfe1d2581",
   "independent_repository": "https://github.com/gthubtom1/reverse-fusion-next.git",
   "local_deployment": "evidence/next/disk-lifecycle/local-install.json",
   "current_release_check": "evidence/next/disk-lifecycle/release-check.json",

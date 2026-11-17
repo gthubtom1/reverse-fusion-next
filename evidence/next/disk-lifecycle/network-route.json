@@ -1,0 +1,11 @@
+{
+  "status": "observed",
+  "url": "https://nodejs.org/dist/v24.22.1/node-v24.22.1-win-x64.zip",
+  "range": "bytes=0-1048575",
+  "range_bytes": 1048576,
+  "normal_seconds": 17.781,
+  "direct_seconds": 4.218,
+  "same_range_sha256": "43a8dfdc863ece4177d7ada9915b5213af783aa0bc8a6064c772067a9a964ee8",
+  "qualification_override": "Process-only NO_PROXY adds nodejs.org; discovered original http/https/ftp proxy routes preserved in child environment without storing their values. No persistent proxy/configuration edits.",
+  "prior_attempt": "Deliberately stopped only identified owned installer before rerun using measured route; not classified as a source failure."
+}

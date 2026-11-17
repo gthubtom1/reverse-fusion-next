@@ -1,9 +1,9 @@
 {
   "status": "observed",
   "reason": null,
-  "exit_code": 1,
-  "elapsed_ms": 521122.619,
-  "peak_job_bytes": 194940928,
+  "exit_code": 0,
+  "elapsed_ms": 422191.191,
+  "peak_job_bytes": 927481856,
   "output_truncated": false,
   "memory_limit_mb": 2048,
   "cleanup": "owned Windows job closed after invocation"

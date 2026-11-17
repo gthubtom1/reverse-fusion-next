@@ -1,0 +1,11 @@
+{
+  "status": "pass",
+  "before_installed_metadata": "2.1.0",
+  "after": {
+    "runtime": "2.3.0",
+    "installed": "2.3.0"
+  },
+  "exit_code": 0,
+  "elapsed_seconds": 7.844000000011874,
+  "scope": "Refresh this checkout editable package metadata and console entry; source/runtime behavior unchanged."
+}

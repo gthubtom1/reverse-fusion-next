@@ -1,0 +1,25 @@
+Obtaining file:///D:/Project/reverse-next
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Checking if build backend supports build_editable: started
+  Checking if build backend supports build_editable: finished with status 'done'
+  Getting requirements to build editable: started
+  Getting requirements to build editable: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Preparing editable metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: Pillow==11.3.0 in d:\project\reverse-next\.venv\lib\site-packages (from reverse-rea-next==2.3.0) (11.3.0)
+Building wheels for collected packages: reverse-rea-next
+  Building editable for reverse-rea-next (pyproject.toml): started
+  Building editable for reverse-rea-next (pyproject.toml): finished with status 'done'
+  Created wheel for reverse-rea-next: filename=reverse_rea_next-2.3.0-0.editable-py3-none-any.whl size=5306 sha256=231588424e45d6543c1d169719b14910a45a28b66dc149084a5987106961590e
+  Stored in directory: D:\tmp\pip-ephem-wheel-cache-7x0_btb1\wheels\b0\ad\6b\b64ddb655127bdeac9584afa3e2e79f7e7ed495fb0670e1edf
+Successfully built reverse-rea-next
+Installing collected packages: reverse-rea-next
+  Attempting uninstall: reverse-rea-next
+    Found existing installation: reverse-rea-next 2.1.0
+    Uninstalling reverse-rea-next-2.1.0:
+      Successfully uninstalled reverse-rea-next-2.1.0
+Successfully installed reverse-rea-next-2.3.0
+
+[notice] A new release of pip is available: 23.2.1 -> 26.3
+[notice] To update, run: D:\Project\reverse-next\.venv\Scripts\python.exe -m pip install --upgrade pip

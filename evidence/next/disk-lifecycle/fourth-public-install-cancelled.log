@@ -1,0 +1,24 @@
+Obtaining file:///D:/Project/reverse-next/work/remote-install-cd80fg5p/checkout-1
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Checking if build backend supports build_editable: started
+  Checking if build backend supports build_editable: finished with status 'done'
+  Getting requirements to build editable: started
+  Getting requirements to build editable: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Preparing editable metadata (pyproject.toml): finished with status 'done'
+Collecting Pillow==11.3.0 (from reverse-rea-next==2.3.0)
+  Obtaining dependency information for Pillow==11.3.0 from https://files.pythonhosted.org/packages/8c/ce/e7dfc873bdd9828f3b6e5c2bbb74e47a98ec23cc5c74fc4e54462f0d9204/pillow-11.3.0-cp312-cp312-win_amd64.whl.metadata
+  Using cached pillow-11.3.0-cp312-cp312-win_amd64.whl.metadata (9.2 kB)
+Using cached pillow-11.3.0-cp312-cp312-win_amd64.whl (7.0 MB)
+Building wheels for collected packages: reverse-rea-next
+  Building editable for reverse-rea-next (pyproject.toml): started
+  Building editable for reverse-rea-next (pyproject.toml): finished with status 'done'
+  Created wheel for reverse-rea-next: filename=reverse_rea_next-2.3.0-0.editable-py3-none-any.whl size=5343 sha256=df0002b7b09a03b7eb95fc46cf0dfbfc5c675c4c8df0d17aed6c0fef26b278e7
+  Stored in directory: D:\tmp\pip-ephem-wheel-cache-lb0o9sel\wheels\c6\83\f6\2812c0e895264adf9a09d8944e551c473a8701185f499a095a
+Successfully built reverse-rea-next
+Installing collected packages: Pillow, reverse-rea-next
+Successfully installed Pillow-11.3.0 reverse-rea-next-2.3.0
+
+[notice] A new release of pip is available: 23.2.1 -> 26.3
+[notice] To update, run: D:\Project\reverse-next\work\remote-install-cd80fg5p\checkout-1\.venv\Scripts\python.exe -m pip install --upgrade pip

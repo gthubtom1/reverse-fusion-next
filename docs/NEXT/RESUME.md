@@ -1,22 +1,23 @@
-当前优先任务为2.3.0磁盘生命周期，读DISK-LIFECYCLE.md与STATUS.json。此前2.2.0结论为历史资格，当前修改待重新验证。
-
 # 从这里恢复
 
-当前独立项目Reverse Fusion Next2.2.0，本轮通用长任务修复、99项工程检查、真实远端安装/99项检查及本机入口已核对；模型效果A/B未建立。
-先读LONG-TASK-REPAIR.md、LONG-TASK-CONCLUSIONS.md与STATUS.json。
-先读REQUIREMENTS.md、STATUS.json、DECISIONS.md、FINAL-AUDIT.md和ACCEPTANCE.md，
-再看JOURNAL最后一项。旧S0–S6与旧RF记录是历史，不重启其任务或重复旧迁移脚本。
+当前独立项目Reverse Fusion Next2.3.0，本轮磁盘生命周期已实现、资格通过、本机安装并发布。
+冻结实现c9e1196861db4b987eaef8de02887b9bfe1d2581；后续状态/证据收尾不改变已测源码/合同。
+先读CURRENT-STATE.md、DISK-MANAGEMENT.md、STATUS.json与ACCEPTANCE.json，再读JOURNAL最后一项。
+本轮无待办恢复步骤；收到新需求时核对当前源码和受影响资格，不能拿旧pass证明新改动。
 
-仓库D:/Project/reverse-next；origin=https://github.com/gthubtom1/reverse-fusion-next.git；main。
-旧版基线为022e61b803e41569cac1f116ebca2245b9c9b1f8；旧D:/Project/reverse已由用户清理，不作为现存回退目录。
-本地baseline远端及baseline/rf-1.4.0保留；误发旧分支的历史保存在独立项目和本地archive标签。
+124项本地检查和124项真实GitHub默认clone/公共安装检查通过；新checkout取得自己的运行包，
+精确回退临时用户配置后回收719420350字节/16214文件。真实MCP的64MiB回收及默认60秒周期
+都绑定同一确切源码。本机最终require-deployed release-check通过，版本2.3.0/260工具。
+证据在evidence/next/disk-lifecycle、s6/engineering-tests.json与final-audit/remote-install.json。
+旧2.1/2.2的工程数字、RF记录和下载失败均是历史，不重启其任务、安装脚本或已完成验证。
 
-当前架构为Reverse方法＋增强REA，宿主唯一推理编码，Craft无运行依赖、Spec可选。
-实际代码/测试/公共合同身份由release-check确认，不能只读旧pass报告或按历史数字宣称新变化已通过。
-当前20条要求、16类审查修复、真实远端安装、白话交付和新聊天入口均有记录。
-本机只管理自有skill、AGENTS段与一个MCP；旧运行包保留为回退材料，不是活动安装。
+架构Reverse方法＋官方REA6.9.0＋增强层，当前宿主唯一推理编码，Craft零运行依赖，Spec可选。
+保持用户完整目标、观察、未知项和独立比较；模型优胜A/B与任意目标成功仍未建立。
+成果留当前用户项目，临时大输出用storage；原始输入、源码、证据、产品和恢复状态保持持久。
+旧项目只读统计，不恢复换肤任务/聊天，不批量删除历史未登记目录。
 
-本轮保留旧资格为历史，当前源码/合同已重新核对。之后的新代码/合同仍须核对来源绑定、安装入口和真实MCP兼容；
-不得用工程检查或一次小案例推断模型优于裸宿主。下一次有新需求时保存原话，核对当前源码和受影响资格，再推进该需求；
-成果留当前用户项目，不写共享库。新版本或工具路径更新后重连，旧连接不得静默执行变更的增强工作流。
-不恢复旧真实目标、不改样本授权、不把有限工程资格当任意软件已复刻。
+仓库D:/Project/reverse-next，origin=https://github.com/gthubtom1/reverse-fusion-next.git，main。
+用户清理的旧D:/Project/reverse不作为现存回退目录，其基线仍可追溯。
+本机只托管自有skill、AGENTS段和一个MCP；保留无关配置/凭据，回退材料留state/migrations。
+当前聊天工具清单可能缓存旧接口；重连/新聊天读取新版或用绝对scripts/next-cli.py。
+不承诺客户端热更新，不关闭其它聊天、目标程序和无关MCP。
