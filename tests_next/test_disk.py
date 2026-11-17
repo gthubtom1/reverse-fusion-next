@@ -224,6 +224,31 @@ with patch.object(disk.shutil,'disk_usage',return_value=usage):
         self.assertFalse(scratch['path'].exists())
         self.assertGreater(scratch['cleanup']['reclaimed_bytes'], 0)
 
+    def test_native_replay_routes_temporary_writes_to_owned_space(self):
+        helper = fixture.OwnedCase(); helper.setUp(); self.addCleanup(helper.doCleanups)
+        code = """import tempfile,json
+from pathlib import Path
+temporary=Path(tempfile.gettempdir())/'native-operation.tmp'
+temporary.write_bytes(b'rebuildable runtime temporary')
+Path('observed.json').write_text(json.dumps({'temporary':str(temporary)}))
+print('observed')
+"""
+        for side in ['original', 'candidate']:
+            (helper.root / side / 'app.py').write_text(code + '\n# '+side, encoding='utf-8')
+        helper.plan['scenarios'] = [{'id':'native-temp','steps':[{
+            'stdin':'', 'args':[], 'files':['observed.json'], 'expected_exit_codes':[0]}]}]
+        write(helper.root/'plan.json', helper.plan)
+        result = compare(helper.root, 'plan.json', 'work/native-temp')
+        # Each side records its separate temporary path, so the file difference
+        # is real. Its contents survive as evidence after temp removal.
+        self.assertEqual(result['status'], 'fail', result.get('failure'))
+        import json
+        for side in ['original', 'candidate']:
+            effect = result['cases'][0]['observations'][side]['files']['observed.json']['snapshot']
+            location = Path(json.loads((helper.root / effect).read_text())['temporary'])
+            self.assertTrue(location.is_relative_to(helper.root / '.rea-enhanced/scratch'))
+            self.assertFalse(location.exists())
+
     def test_space_exhaustion_stops_before_workspace_use(self):
         usage = namedtuple('Usage', 'total used free')(10 * disk.GiB, 10 * disk.GiB, 0)
         with patch.object(disk.shutil, 'disk_usage', return_value=usage):

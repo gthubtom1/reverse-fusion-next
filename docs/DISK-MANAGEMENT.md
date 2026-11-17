@@ -11,6 +11,7 @@
 增强比较逐场景创建执行副本，观察结束即回收，不累计所有场景的副本。
 退出码、标准输出/错误、比较结果继续保存；声明观察的文件以内容摘要去重保存到
 比较目录 effects，必要的网页截图、原生 REA bundle、源码、样本和交付文件继续保留。
+原生回放两侧各有独立的 TEMP/TMP/TMPDIR，也随场景结束回收，避免污染系统临时目录。
 这些必要证据仍会增长，应按实际验证需要选择观察范围，而不是每次编辑都重跑全部。
 
 可选 record execute 为每次脚本创建临时目录，将 TEMP/TMP/TMPDIR 和 RF_NEXT_SCRATCH
@@ -57,6 +58,7 @@ completed_ttl_seconds、interrupted_ttl_seconds，按明确工作量调整，不
 status 只读，sweep 执行到期维护，protect 接受项目相对 paths 列表。
 工具报告只统计已登记临时空间；未登记历史目录不会被算作可回收垃圾。
 case status 的 storage 为轻量摘要，last_inventory/measured_at 标明上次实际统计时间。
+全局指引也覆盖普通项目的大量临时构建/测试输出，storage可独立使用，无需建立逆向case。
 
 旧聊天尚未重连时可使用绝对 CLI，在选定项目外也可运行：
 

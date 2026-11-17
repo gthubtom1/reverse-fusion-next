@@ -29,6 +29,7 @@ test_live_inventory_tolerates_disappearing_browser_files_but_deletion_is_strict 
 test_manual_work_never_expires_while_declared_active (test_disk.DiskLifecycle.test_manual_work_never_expires_while_declared_active) ... ok
 test_marker_tampering_is_retained (test_disk.DiskLifecycle.test_marker_tampering_is_retained) ... ok
 test_monitor_cancels_owned_process_when_temporary_growth_exceeds_budget (test_disk.DiskLifecycle.test_monitor_cancels_owned_process_when_temporary_growth_exceeds_budget) ... ok
+test_native_replay_routes_temporary_writes_to_owned_space (test_disk.DiskLifecycle.test_native_replay_routes_temporary_writes_to_owned_space) ... ok
 test_os_lease_prevents_even_explicit_completion (test_disk.DiskLifecycle.test_os_lease_prevents_even_explicit_completion) ... ok
 test_periodic_worker_cleans_completed_data (test_disk.DiskLifecycle.test_periodic_worker_cleans_completed_data) ... ok
 test_project_budget_accounts_for_other_active_work (test_disk.DiskLifecycle.test_project_budget_accounts_for_other_active_work) ... ok
@@ -119,6 +120,6 @@ test_unchanged_success_is_reused_without_another_run (test_workflow.OwnedCase.te
 test_wrong_algorithm_fails (test_workflow.OwnedCase.test_wrong_algorithm_fails) ... ok
 
 ----------------------------------------------------------------------
-Ran 119 tests in 100.210s
+Ran 120 tests in 87.304s
 
 OK

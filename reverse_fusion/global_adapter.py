@@ -92,6 +92,7 @@ def agents_block(repo_root: Path) -> str:
     return f"""{MARKER_START}
 - When a task involves reverse engineering, protected or obfuscated software, APK/DEX, PE/.NET, JavaScript/WASM reverse work, protocol reconstruction, behavior equivalence, specialist security analysis or forensics, a plain request to analyze/recreate a supplied target, or an explicit request to use Reverse Fusion, use the user-level `reverse-fusion` skill before acting.
 - Keep the current project directory as the work area. The Reverse Fusion checkout is a shared reference and router at `{repo}`; do not write unrelated project output there.
+- Before large temporary builds, tests, unpacking or comparison in any project, read `{repo}/docs/DISK-MANAGEMENT.md` and use `rf_next_storage` to allocate disposable output with a realistic byte budget and reconstruction instructions. Preserve original inputs, code, evidence and deliveries; complete only after all users stop. Ordinary development remains host-native and needs no reverse case. Unregistered folders are retained.
 {MARKER_END}"""
 
 

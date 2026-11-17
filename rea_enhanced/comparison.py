@@ -192,6 +192,7 @@ def compare(project: Path, plan_name: str, output: str, cancel_event=None) -> di
                     area = scratch['path'] / side
                     shutil.copytree(conf['cwd'], area)
                     places[side] = area
+                    (scratch['path'] / ('temp-' + side)).mkdir()
                 for index, step in enumerate(scenario['steps']):
                     if cancel_event and cancel_event.is_set():
                         raise ValueError('Comparison cancelled')
@@ -207,10 +208,12 @@ def compare(project: Path, plan_name: str, output: str, cancel_event=None) -> di
                                 arg = str(area / p.resolve().relative_to(conf['cwd']))
                             argv.append(arg)
                         try:
+                            temp = str(scratch['path'] / ('temp-' + side))
+                            environment = {**launch_environment(plan), 'TEMP': temp, 'TMP': temp, 'TMPDIR': temp}
                             run = run_owned([*argv, *step['args']], cwd=area, stdin=step['stdin'].encode('utf-8'),
                                 timeout=min(plan['timeout_seconds'], max(.001, 600 - (time.perf_counter() - started))),
                                 memory_mb=512, max_output_bytes=1024 * 1024, cancel_event=scratch['cancel_event'],
-                                env=launch_environment(plan))
+                                env=environment)
                             observed = {k: v for k, v in run.items() if k not in {'stdout', 'stderr'}}
                             observed.update(stdout=base64.b64encode(run['stdout']).decode('ascii'),
                                 stderr=base64.b64encode(run['stderr']).decode('ascii'),

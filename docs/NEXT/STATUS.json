@@ -206,10 +206,10 @@
     ]
   },
   "disk_lifecycle": {
-    "status": "local-qualified-installed",
+    "status": "final-local-source-qualified",
     "requirements": "docs/NEXT/DISK-LIFECYCLE.md",
     "scope": "Owned disposable scratch; no automatic deletion of unregistered legacy outputs",
-    "engineering_tests": 119,
+    "engineering_tests": 120,
     "evidence": [
       "evidence/next/s6/engineering-tests.json",
       "evidence/next/disk-lifecycle/before.json",
