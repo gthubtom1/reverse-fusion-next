@@ -1,0 +1,46 @@
+{
+  "status": "pass",
+  "scope": "Mechanical instructions/recording fixture only; no model quality/cost/speed experiment",
+  "rollback": {
+    "status": "extracted-and-rehashed",
+    "files": 1464,
+    "archive_sha256": "257c7fb8e90d38f0dc012e0621e181b2bb55295313a75e8b2f5e8498532a4e52",
+    "restored": "D:\\tmp\\reverse-slim-rollback-bdvwfz06\\restored"
+  },
+  "baseline": {
+    "public_contract_bytes": 17253,
+    "public_contract_parts": {
+      "RULES.md": 5363,
+      "docs/AGENT-WORKFLOW.md": 5538,
+      "owned_entry_skill": 6352
+    },
+    "difficult_apk_required_files": [
+      "RULES.md",
+      "skills/apk-reverse/SKILL.md",
+      "skills/reverse-engineering/references/hard-target-decision-framework.md",
+      "skills/reverse-engineering/references/provider-neutral-failure-matrix.md",
+      "skills/ops/analysis-decision-framework.md",
+      "skills/ops/rea-delegation-contract.md",
+      "skills/ops/process-lifecycle.md",
+      "skills/apk-reverse/references/high-difficulty-android-playbook.md",
+      "skills/apk-reverse/references/android-advanced.md",
+      "skills/reverse-engineering/anti-analysis.md"
+    ],
+    "difficult_apk_required_bytes": 93161,
+    "technical_methods_retained": true
+  },
+  "candidate": {
+    "public_contract_bytes": 6014,
+    "public_contract_parts": {
+      "RULES.md": 2801,
+      "docs/AGENT-WORKFLOW.md": 1595,
+      "owned_entry_skill": 1618
+    },
+    "difficult_apk_required_files": [
+      "RULES.md"
+    ],
+    "difficult_apk_required_bytes": 2801,
+    "technical_methods_retained": true
+  },
+  "model_effectiveness": "not-established"
+}

@@ -1,0 +1,26 @@
+test_forged_bundle_pass_is_rejected_by_official_import (tests_next.test_slim.SlimNative.test_forged_bundle_pass_is_rejected_by_official_import) ... ok
+test_interrupted_native_call_preserves_unknown_and_cleans_owned_process (tests_next.test_slim.SlimNative.test_interrupted_native_call_preserves_unknown_and_cleans_owned_process) ... ok
+test_missing_observation_changed_subject_runtime_or_receipt_invalidates (tests_next.test_slim.SlimNative.test_missing_observation_changed_subject_runtime_or_receipt_invalidates) ... ok
+test_native_and_owned_in_one_case_without_duplicate_evidence_or_coverage (tests_next.test_slim.SlimNative.test_native_and_owned_in_one_case_without_duplicate_evidence_or_coverage) ... ok
+test_native_unknown_remains_native_and_blocks_only_affected_requirement (tests_next.test_slim.SlimNative.test_native_unknown_remains_native_and_blocks_only_affected_requirement) ... FAIL
+test_relocation_preserves_wording_but_does_not_rebind_native_pass (tests_next.test_slim.SlimNative.test_relocation_preserves_wording_but_does_not_rebind_native_pass) ... ok
+test_structural_pass_does_not_cover_required_behavior (tests_next.test_slim.SlimNative.test_structural_pass_does_not_cover_required_behavior) ... ok
+test_supplement_invalidates_coverage_without_discarding_original_requirement (tests_next.test_slim.SlimNative.test_supplement_invalidates_coverage_without_discarding_original_requirement) ... ok
+test_wrong_candidate_and_missing_selected_subject_not_accepted (tests_next.test_slim.SlimNative.test_wrong_candidate_and_missing_selected_subject_not_accepted) ... ok
+
+======================================================================
+FAIL: test_native_unknown_remains_native_and_blocks_only_affected_requirement (tests_next.test_slim.SlimNative.test_native_unknown_remains_native_and_blocks_only_affected_requirement)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\tmp\reverse-next-slim-55fuatfp\source\tests_next\test_slim.py", line 129, in test_native_unknown_remains_native_and_blocks_only_affected_requirement
+    native_fixture(self.project, residual_unknown=True)
+  File "D:\tmp\reverse-next-slim-55fuatfp\source\tests_next\test_slim.py", line 45, in native_fixture
+    call('record_unknown', {'question': 'Unresolved meaning of this structural claim', 'severity': 'high',
+  File "D:\tmp\reverse-next-slim-55fuatfp\source\tests_next\test_slim.py", line 36, in call
+    raise AssertionError((name, response))
+AssertionError: ('record_unknown', {'content': [{'type': 'text', 'text': '{"error":{"code":"invalid_request","category":"invalid_input","message":"Analysis input is invalid. Check the arguments and try again.","retryable":false,"remediation":{"action":"Read the declared input schema or CLI usage for record_unknown; if using MCP and the catalog may be stale, call tools/list. Correct the listed fields, then retry. Do not repeat the unchanged call."},"recovery":{"kind":"inspect_input_contract","operation":"record_unknown"},"details":{"operation":"record_unknown","issues":[{"path":["comparison_conclusion_scope"],"reason":"invalid_value","message":"Scoped comparison Evidence must support or contradict the unknown"},{"path":["comparison_conclusion_scope"],"reason":"invalid_value","message":"Comparison conclusion scope requires function-comparison domain"}]}}}'}], 'isError': True})
+
+----------------------------------------------------------------------
+Ran 9 tests in 46.772s
+
+FAILED (failures=1)

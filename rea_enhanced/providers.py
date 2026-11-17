@@ -79,7 +79,9 @@ def write_index(root,selected):
 def environment(root: Path):
     env={k:v for k,v in os.environ.items() if k not in PATH_KEYS and not k.startswith('REVERSE_FUSION_CRAFT_TOOL_')}
     selected=providers(root)
-    if selected['unavailable']:raise ValueError('Configured provider paths changed; refresh and recheck')
-    env.update(selected['paths'])
+    # An unavailable optional provider must not prevent unrelated tools starting.
+    # Keep its diagnostic in providers(); never pass a stale selected path onward.
+    env.update({key: value for key, value in selected['paths'].items()
+                if key not in selected['unavailable']})
     env.update(REA_MCP_INPUT_SCHEMA_PROFILE='compact',REA_MCP_OUTPUT_SCHEMA_PROFILE='compact')
     return env

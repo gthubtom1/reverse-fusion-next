@@ -40,12 +40,31 @@ CHANGE={'oneOf':[
                        'retention':{'enum':['snapshot','live'],'default':'snapshot'}},['id','path','authority']),
     _change('feature',{'id':TEXT,'description':TEXT,'evidence':STRINGS,'checks':STRINGS,'dependencies':STRINGS,'review':TEXT},
             ['id','description','evidence','checks','dependencies','review']),
+    _change('requirement',{'id':TEXT,'description':TEXT,'checks':STRINGS,'dimensions':STRINGS,
+        'source':TEXT,'review':TEXT,'evaluation':{'enum':['automatic','host-review'],'default':'automatic'}},
+        ['id','description','checks','dimensions','source','review']),
+    _change('checkpoint',{'note':TEXT,'next_action':TEXT,'paths':STRINGS},['note','next_action']),
+    _change('output_goal',{'kinds':{'type':'array','minItems':1,'items':{'enum':[
+        'analysis-report','independent-reimplementation','specification-implementation','modified-original']}},
+        'source':TEXT,'review':TEXT},['kinds','source','review']),
+    _change('assessment',{'id':TEXT,'features':STRINGS,'observations':STRINGS,
+        'candidate_files':STRINGS,'reference_files':STRINGS,'input_paths':STRINGS,'dimensions':STRINGS,
+        'producer':TEXT,'operation':TEXT,'context':TEXT,'scope':TEXT,
+        'basis':{'enum':['original-comparison','specification','observation']},
+        'outcome':{'enum':['pass','fail','unknown']},'review':TEXT,'limitations':STRINGS,
+        'valid_for_seconds':{'type':'integer','minimum':1,'maximum':86400}},
+        ['id','features','observations','candidate_files','reference_files','input_paths','dimensions',
+         'producer','operation','context','scope','basis','outcome','review','limitations','valid_for_seconds']),
+    _change('deliver_reviewed',{'kind':{'enum':['analysis-report','independent-reimplementation',
+        'specification-implementation','modified-original']},'scope':{'enum':['full','stage']},
+        'features':STRINGS,'summary':TEXT,'artifacts':STRINGS},['kind','scope','features','summary','artifacts']),
     _change('unknown',{'id':TEXT,'question':TEXT,'critical':{'type':'boolean'},'features':STRINGS,'scope':{'enum':['features','case']}},
             ['id','question','critical','features']),
     _change('resolve',{'id':TEXT,'evidence':STRINGS},['id','evidence']),
     _change('refine_route',{'hint':TEXT,'primary':TEXT},['hint']),
     _change('deliver_analysis',{'report':TEXT,'evidence':STRINGS},['report','evidence']),
-    _change('product',{'candidate_files':STRINGS,'reference_files':STRINGS,'review':TEXT},
+    _change('product',{'candidate_files':STRINGS,'reference_files':STRINGS,'review':TEXT,
+        'kind':{'enum':['independent-reimplementation','specification-implementation','modified-original']}},
             ['candidate_files','reference_files','review']),
     _change('execute',{'id':TEXT,'kind':{'enum':['investigate','verify','visual','package']},
         'features':STRINGS,'argv':STRINGS,'cwd':TEXT,'inputs':STRINGS,'artifacts':STRINGS,
@@ -53,23 +72,25 @@ CHANGE={'oneOf':[
         'reusable':{'type':'boolean','default':False},'retry_reason':TEXT,'environment_keys':STRINGS,
         'scratch_bytes':{'type':'integer','minimum':1048576}},
         ['id','kind','features','argv','inputs','purpose']),
-    _change('budget',{'max_checks_per_feature':{'type':'integer','minimum':1,'maximum':100},'reason':TEXT},['max_checks_per_feature','reason']),
+    _change('budget',{'max_checks_per_feature':{'type':'integer','minimum':1,'maximum':100},
+                      'max_operation_failures':{'type':'integer','minimum':1,'maximum':100},'reason':TEXT},['reason']),
     _change('coverage',{'review':TEXT,'requirements':{'type':'array','minItems':1,'items':{
         'type':'object','properties':{'id':TEXT,'text':TEXT,'source':TEXT,'features':STRINGS},
         'required':['id','text','source','features'],'additionalProperties':False}}},['review','requirements']),
+    _change('deliver_stage',{'summary':TEXT,'artifacts':STRINGS,'features':STRINGS},['summary','artifacts','features']),
     _change('deliver',{'summary':TEXT,'artifacts':STRINGS},['summary','artifacts'])]}
 
 
 TOOLS = [
-    _tool('rf_next_case_open','Preserve a plain-language goal or resume its existing case. Ordinary development remains host-native.',
-          {'request':{'type':'string'}},['request']),
-    _tool('rf_next_case_status','Read original goal, feature readiness, affected unknowns and fresh finite checks. Does not claim whole-product completion.',{},[]),
-    _tool('rf_next_case_record','Record evidence, a feature, a dependent unknown or a user supplement with optimistic revision checking. Cannot post a check pass.',
+    _tool('rf_next_case_open','Optional goal memory. Use native host records when sufficient; skip creates no case, case explicitly opts in. Route hints are advisory.',
+          {'request':{'type':'string'},'recording':{'enum':['auto','case','skip'],'default':'auto'}},['request']),
+    _tool('rf_next_case_status','Read optional task memory, acceptance diagnostics, automatic checks and separately labeled external host reviews. Readiness never forbids native investigation or editing.',{},[]),
+    _tool('rf_next_case_record','Optional checkpoint, requirement, external evidence assessment or explicit output agreement/delivery. Optimistic revisions; host review never writes automatic/native pass.',
           {'change':CHANGE,'expected_revision':{'type':'integer','minimum':1}},['change','expected_revision']),
-    _tool('rf_next_compare','Execute the reviewed finite comparison plan in separate working copies. Actual executable effects; not an OS sandbox. Saves full receipts and returns a compact result.',
+    _tool('rf_next_compare','Optional finite process/web comparison or public REA verification adapter. Source execution uses owned copies where applicable; not an OS sandbox. Other tools and host-reviewed external evidence remain available.',
           {'check_id':{'type':'string'},'plan':{'type':'string'},'output':{'type':'string'},'retry_reason':{'type':'string'}},['check_id','plan','output']),
     _tool('rf_next_storage','Allocate persistent/reusable/disposable outputs at creation. Complete after all users stop; review at natural operation boundaries reclaims completed disposable data and requests host keep/release decisions for reusable data. Reuse verifies dependencies/content; promote returns a new persistent path. Persistent, active and protected data survive cleanup. Status is read-only; never adopt old folders.',
-          {'action':{'enum':['status','sweep','allocate','complete','policy','protect','review','reuse','promote'],'default':'status'},
+          {'action':{'enum':['status','sweep','allocate','complete','policy','protect','unprotect','review','reuse','promote'],'default':'status'},
            'purpose':TEXT,'rebuild':TEXT,'reserve_bytes':{'type':'integer','minimum':1},'id':TEXT,
            'cleanup':{'type':'boolean','default':True},
            'tier':{'enum':['persistent','reusable','disposable'],'default':'disposable'},
@@ -89,7 +110,10 @@ NAMES={tool['name'] for tool in TOOLS}
 
 def connection_identity(root=ROOT):
     names=[p.relative_to(root).as_posix() for p in (root/'rea_enhanced').glob('*.py')]
-    names+=['components/rea-enhanced/web-replay.mjs','vendor/rea/manifest.json','vendor/node/manifest.json']
+    names += [p.relative_to(root).as_posix() for p in (root/'reverse_fusion').glob('*.py')]
+    names+=['components/rea-enhanced/web-replay.mjs','components/reverse-core/router.py',
+            'components/reverse-core/runtime.json','components/reverse-core/routing.json',
+            'vendor/rea/manifest.json','vendor/node/manifest.json']
     return {name:digest(root/name) for name in sorted(names)}
 
 
@@ -110,9 +134,11 @@ def call_owned(name, args, cancel_event=None):
     if name=='rf_next_storage':
         from .disk import dispatch
         return dispatch(project, **{k:v for k,v in args.items() if k not in {'project_root','case_root'}})
-    if name=='rf_next_case_open':return open_case(project,args['request'],case)
+    if name=='rf_next_case_open':return open_case(project,args['request'],case,recording=args.get('recording','auto'))
     if name=='rf_next_case_status':return status(project,case)
     if name=='rf_next_case_record':
+        if not isinstance(args['change'], dict) or not isinstance(args['change'].get('op'), str):
+            raise ValueError('change must be an object with a string operation')
         if args['change'].get('op') == 'execute':
             from .operations import execute
             return execute(project,case,args['change'],args['expected_revision'],cancel_event=cancel_event)
@@ -123,7 +149,7 @@ def call_owned(name, args, cancel_event=None):
     return {'status':receipt['status'],'result_path':str(project/result['receipt_path']), 'reused':result.get('reused',False),
         'differences':[{'scenario':r['scenario'],'step':r['step'],'channels':r['differences'],'status':r['status']}
             for r in receipt['cases'] if r['status']!='pass'][:20],
-        'workflow':result['workflow'],'rea_native_proof':'not-performed'}
+        'workflow':result['workflow'],'rea_native_proof':receipt.get('rea_native_proof','not-performed')}
 
 
 def serve():
@@ -159,7 +185,7 @@ def serve():
                     if kind=='initialize':
                         original=result.get('serverInfo',{})
                         result['serverInfo']={'name':'rea-enhanced','version':__version__}
-                        result['instructions']=result.get('instructions','')+'\nEnhanced REA retains original tools and evidence. rf_next_* manages one outcome case and finite checks. Current host remains the only coding agent. Upstream: '+str(original.get('name'))+' '+str(original.get('version'))
+                        result['instructions']=result.get('instructions','')+'\nOriginal REA tools and Evidence are unchanged. rf_next_* is optional task memory/check support, not a required tool order. Use native/other suitable tools directly. Readiness is acceptance guidance only. External host-reviewed results are distinct from automatic/native proof. Upstream: '+str(original.get('name'))+' '+str(original.get('version'))
                     elif kind=='tools/list:first':
                         if any(t['name'] in NAMES for t in result.get('tools',[])):
                             raise ValueError('Upstream tool names collide with owned enhancement names')
@@ -219,6 +245,9 @@ def serve():
             params=message.get('params',{})
             if not isinstance(params,dict):
                 emit({'jsonrpc':'2.0','id':identity,'error':{'code':-32602,'message':'Parameters must be an object'}});continue
+            if message.get('method') == 'tools/call' and not isinstance(params.get('name'), str):
+                emit({'jsonrpc':'2.0','id':identity,'error':{'code':-32602,'message':'Tool name must be a string'}})
+                continue
             if message.get('method')=='notifications/cancelled':
                 cancel_id=params.get('requestId')
                 if type(cancel_id) in (int,str):

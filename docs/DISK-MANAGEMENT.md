@@ -101,7 +101,8 @@ record execute把TEMP/TMP/TMPDIR/RF_NEXT_SCRATCH指向独立三级目录，结�
 
 policy支持max_temporary_bytes、max_reusable_bytes、minimum_free_bytes、minimum_free_fraction、
 completed_ttl_seconds、interrupted_ttl_seconds和reuse_review_seconds。
-status只读；sweep执行既定维护；protect接受项目相对paths。
+status只读；sweep执行既定维护；protect接受项目相对paths。unprotect以同样paths显式退役旧保护，仅移除该清单，当前case引用、一级保留和活动租约仍然优先。
+execute／compare的输入输出使用操作期路径租约，结束后自动退役；中断后OS租约释放，不把一次使用永久变成保护。
 报告覆盖已登记三级，tier_bytes显示已测分级占用，last_review保存最近边界判断；
 一级维护不扫描庞大持久树，返回bytes=0、measured=false表示未测，不能解读为空目录。
 case status中storage仍是轻量摘要，measured_at标明上次实际统计。

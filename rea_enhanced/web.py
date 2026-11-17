@@ -1,6 +1,7 @@
 """Actual finite browser replay with separate behavior and pixel verdicts."""
 import json
 import shutil
+from hashlib import sha256
 from pathlib import Path
 from urllib.parse import urlsplit
 from PIL import Image,ImageChops
@@ -10,6 +11,30 @@ from .storage import digest,inside,read,write
 from .providers import providers,environment
 
 ROOT=Path(__file__).resolve().parents[1]
+
+
+def web_runtime_identity():
+    from .comparison import launch_environment
+    selected = providers(ROOT)
+    browser = selected['paths'].get('REA_BROWSER_EXECUTABLE')
+    node, _ = node_runtime(ROOT)
+    if not browser or 'REA_BROWSER_EXECUTABLE' in selected['unavailable'] or not node:
+        raise ValueError('Current browser/Node provider unavailable')
+    package = ROOT/'vendor/rea/package/node_modules/playwright-core'
+    files = sorted(p for p in package.rglob('*')
+                   if p.is_file() and p.suffix in {'.js', '.mjs', '.cjs', '.json', '.node'})
+    if not (package/'index.mjs').is_file() or not files:
+        raise ValueError('Current Playwright implementation missing')
+    code = sha256()
+    for path in files:
+        code.update((path.relative_to(package).as_posix()+'\0'+digest(path)+'\n').encode())
+    env = environment(ROOT)
+    inherited = launch_environment({})
+    inherited.update({k: v for k, v in env.items() if k.startswith('REA_')})
+    return {'node': str(node), 'node_sha256': digest(Path(node)),
+        'browser': str(Path(browser).resolve()), 'browser_sha256': digest(Path(browser)),
+        'playwright_sha256': code.hexdigest(), 'playwright_files': len(files),
+        'environment_sha256': sha256(json.dumps(inherited, sort_keys=True).encode()).hexdigest()}
 
 
 def compare_web(project,plan_name,output,cancel_event=None):
@@ -44,13 +69,13 @@ def compare_web(project,plan_name,output,cancel_event=None):
         for step in scenario['steps']:
             allowed={'action'}
             action=step.get('action')
-            if action in {'click','fill','press','select','check'}:allowed.add('selector')
+            if action in {'click','fill','press','select','check','scroll'}:allowed.add('selector')
             if action in {'fill','press','select','dialog','storage'}:allowed.add('value')
             if action=='check':allowed.add('checked')
             if action=='dialog':allowed.add('decision')
             if action=='storage':allowed.add('key')
             if action=='wait':allowed.add('ms')
-            if action not in {'click','fill','press','select','check','dialog','storage','reload','wait','observe'} or set(step)!=allowed:
+            if action not in {'click','fill','press','select','check','dialog','storage','reload','wait','observe','scroll'} or set(step)!=allowed:
                 raise ValueError('Unsupported or malformed web action')
             if action=='check' and type(step['checked']) is not bool:raise ValueError('Check action requires boolean checked')
             if action=='dialog' and step['decision'] not in {'accept','dismiss'}:raise ValueError('Dialog decision must be accept or dismiss')
@@ -77,9 +102,8 @@ def compare_web(project,plan_name,output,cancel_event=None):
             or {sources[n] for n in a['sources']}=={sources[n] for n in b['sources']}):
         raise ValueError('Independent reference/candidate URLs and source identities required')
     if destination.exists():raise ValueError('Preserve earlier runs; use a new output path')
-    selected=providers(ROOT);browser=selected['paths'].get('REA_BROWSER_EXECUTABLE')
-    if not browser:raise ValueError('Browser provider unavailable; configure its explicit path')
-    node,_=node_runtime(ROOT)
+    runtime = web_runtime_identity()
+    browser, node = runtime['browser'], runtime['node']
     plan_sha=digest(plan_path);engine=engine_identity(web=True);destination.mkdir(parents=True)
     for side in ('original','candidate'):
         cwd=inside(project,plan[side]['cwd'])
@@ -89,8 +113,7 @@ def compare_web(project,plan_name,output,cancel_event=None):
             target.parent.mkdir(parents=True,exist_ok=True)
             shutil.copyfile(source,target)
     request=destination/'request.json';write(request,{'plan':plan,'output':str(destination),'browser':browser})
-    from .disk import protect, workspace, MiB
-    protect(project, [plan_name, output, plan['original']['cwd'], plan['candidate']['cwd']])
+    from .disk import workspace, MiB
     with workspace(project, 'Browser comparison temporary profile', 'Rerun ' + plan_name, 256 * MiB,
                    cancel_event=cancel_event) as scratch:
         env = {**environment(ROOT), 'TEMP':str(scratch['path']), 'TMP':str(scratch['path']),
@@ -102,6 +125,11 @@ def compare_web(project,plan_name,output,cancel_event=None):
     try:captured=json.loads(result['stdout'])
     except (ValueError,UnicodeError):captured={'records':[],'error':'Browser did not produce complete JSON'}
     write(destination/'capture.json',captured)
+    observation_files = {output+'/capture.json': digest(destination/'capture.json')}
+    for item in captured.get('records', []):
+        if item.get('screenshot'):
+            screenshot = inside(destination, item['screenshot'])
+            observation_files[screenshot.relative_to(project).as_posix()] = digest(screenshot)
     records={(r['scenario'],r['width'],r['step'],r['side']):r for r in captured.get('records',[])}
     cases=[]
     for scenario in plan['scenarios']:
@@ -143,17 +171,24 @@ def compare_web(project,plan_name,output,cancel_event=None):
         except (OSError,ValueError):changed.append(side)
     if not plan_path.is_file() or digest(plan_path)!=plan_sha:changed.append(plan_name)
     if engine_identity(web=True)!=engine:changed.append('comparison-engine')
+    try:
+        if web_runtime_identity() != runtime:changed.append('web-runtime')
+    except (OSError, ValueError, KeyError, TypeError):
+        changed.append('web-runtime')
     state=('unknown' if changed or result['status']!='observed' or result['exit_code']!=0 or captured.get('error')
            else 'fail' if any(c['status']=='fail' for c in cases)
            else 'unknown' if any(c['status']=='unknown' for c in cases) else 'pass')
     report={'schema_version':2,'operation':'independent-web-replay','status':state,'scope':plan['scope'],
         'plan':plan_name,'plan_sha256':plan_sha,'engine':engine,'sources':sources,'input_trees':trees,'cases':cases,
-        'changed_inputs':changed,'browser_executable':browser,'browser_sha256':digest(Path(browser)),
+        'changed_inputs':changed,'browser_executable':browser,'browser_sha256':runtime['browser_sha256'],
+        'web_runtime':runtime,
         'process':{k:v for k,v in result.items() if k not in {'stdout','stderr'}},
-        'capture_path':output+'/capture.json','elapsed_ms':result['elapsed_ms'],
+        'capture_path':output+'/capture.json','observation_files':observation_files,
+        'visual_coverage':'full-page screenshots; scroll actions for lazy or nested content; at most 16 million pixels per image',
+        'elapsed_ms':result['elapsed_ms'],
         'temporary_storage':scratch['cleanup'],
         'rea_native_proof':'not-performed','whole_product_acceptance':'not-established',
-        'limitations':['Only declared actions/selectors/storage keys/viewport screenshots were compared.',
+        'limitations':['Only declared actions/selectors/storage keys and full-page screenshots were compared; lazy or nested content needs explicit scroll scenarios.',
             'Source-to-served-URL correspondence is declared by the host, not automatically authenticated.',
             'No unobserved server, API, device or whole-program equivalence established.',
             'Disposable browser contexts and owned process cleanup are not OS/network isolation.']}

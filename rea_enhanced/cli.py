@@ -16,9 +16,14 @@ def main(argv=None):
     commands.add_parser('mcp')
     commands.add_parser('doctor')
     commands.add_parser('bootstrap')
+    relocation_parser = commands.add_parser('relocate')
+    relocation_parser.add_argument('--project-root', type=Path, required=True)
+    relocation_parser.add_argument('--from-root', required=True)
+    relocation_parser.add_argument('--reason', required=True)
+    relocation_parser.add_argument('--inactive', action='store_true')
     storage_parser = commands.add_parser('storage')
     storage_parser.add_argument('--project-root', type=Path, default=Path.cwd())
-    storage_parser.add_argument('--action', choices=['status','sweep','allocate','complete','policy','protect','review','reuse','promote'], default='status')
+    storage_parser.add_argument('--action', choices=['status','sweep','allocate','complete','policy','protect','unprotect','review','reuse','promote'], default='status')
     storage_parser.add_argument('--options-file', type=Path)
     release_parser=commands.add_parser('release-check')
     release_parser.add_argument('--require-deployed',action='store_true')
@@ -36,6 +41,7 @@ def main(argv=None):
         p.add_argument('--case-root', default='work/current-case')
         if name == 'open':
             p.add_argument('--request', required=True)
+            p.add_argument('--recording', choices=['auto', 'case', 'skip'], default='auto')
         if name == 'record':
             p.add_argument('--change-file', type=Path, required=True)
             p.add_argument('--revision', type=int, required=True)
@@ -46,6 +52,11 @@ def main(argv=None):
             p.add_argument('--retry-reason')
     args = parser.parse_args(argv)
     try:
+        if args.command == 'relocate':
+            from .relocation import relocate
+            result = relocate(args.project_root, args.from_root, args.reason, args.inactive)
+            print(json.dumps(result, ensure_ascii=True, indent=2))
+            return 0
         if args.command == 'storage':
             from .disk import dispatch
             result = dispatch(args.project_root, args.action, **(read(args.options_file) if args.options_file else {}))
@@ -83,7 +94,7 @@ def main(argv=None):
             print(json.dumps(result,ensure_ascii=True,indent=2))
             return 0 if not result['unavailable'] else 2
         if args.command == 'open':
-            result = open_case(args.project_root, args.request, args.case_root)
+            result = open_case(args.project_root, args.request, args.case_root, recording=args.recording)
         elif args.command == 'record':
             result = record(args.project_root, args.case_root, read(args.change_file), args.revision)
         elif args.command == 'status':

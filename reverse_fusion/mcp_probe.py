@@ -67,14 +67,22 @@ class StdioMcp:
         self.process.stdin.write((json.dumps(message, ensure_ascii=True) + '\n').encode('ascii'))
         self.process.stdin.flush()
 
-    def request(self, method, params=None):
+    def request(self, method, params=None, *, cancel_event=None):
         self.sequence += 1
         identity = self.sequence
         self.send({'jsonrpc': '2.0', 'id': identity, 'method': method, 'params': params or {}})
         deadline = time.monotonic() + self.timeout
         while True:
-            try: message = self.messages.get(timeout=max(.001, deadline-time.monotonic()))
-            except queue.Empty: raise TimeoutError(f'MCP deadline: {method}') from None
+            if cancel_event is not None and cancel_event.is_set():
+                raise ValueError('MCP operation cancelled')
+            remaining = deadline-time.monotonic()
+            if remaining <= 0:
+                raise TimeoutError(f'MCP deadline: {method}')
+            try: message = self.messages.get(timeout=min(.1, remaining) if cancel_event is not None else remaining)
+            except queue.Empty:
+                if time.monotonic() >= deadline:
+                    raise TimeoutError(f'MCP deadline: {method}') from None
+                continue
             if isinstance(message, Exception): raise message
             if message.get('id') == identity:
                 if 'error' in message: raise ValueError(f'MCP {method}: {message["error"]}')

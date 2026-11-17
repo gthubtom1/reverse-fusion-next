@@ -12,7 +12,7 @@ HELPERS=('case_bridge','contracts','runtime','owned_process','global_adapter','m
 def source_identity(root=ROOT):
     names=[p.relative_to(root).as_posix() for p in (root/'rea_enhanced').glob('*.py')]
     names += ['reverse_fusion/'+name+'.py' for name in HELPERS]
-    names += ['components/reverse-core/router.py','components/reverse-core/routing.json',
+    names += ['components/reverse-core/router.py','components/reverse-core/routing.json','components/reverse-core/runtime.json',
         'components/reverse-core/preservation.json','components/rea-enhanced/web-replay.mjs',
         'components/rea-enhanced/provider-package.json','components/rea-enhanced/provider-package-lock.json',
         'components/rea-enhanced/provider-bindings.json','vendor/rea/manifest.json','vendor/node/manifest.json',

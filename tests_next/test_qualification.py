@@ -10,7 +10,7 @@ ROOT=Path(__file__).resolve().parents[1]
 class Qualification(unittest.TestCase):
     def test_test_and_public_contract_edits_change_release_identity(self):
         before=source_identity(ROOT)
-        for target in ('tests_next/test_final_audit.py','docs/AGENT-WORKFLOW.md','scripts/install.ps1'):
+        for target in ('tests_next/test_final_audit.py','docs/AGENT-WORKFLOW.md','components/reverse-core/runtime.json','scripts/install.ps1'):
             with self.subTest(target=target), tempfile.TemporaryDirectory() as td:
                 root=Path(td)
                 for name in before:

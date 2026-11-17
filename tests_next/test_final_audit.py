@@ -95,6 +95,8 @@ class FinalAudit(unittest.TestCase):
 
     def test_delivery_requires_whole_goal_review_and_invalidates_on_supplement(self):
         add=self.prepare()
+        add({'op':'product','candidate_files':['candidate/app.py'],
+             'reference_files':['original/app.py'],'review':'Independent compared counter products'})
         run_check(self.root,'work/current-case','C1','plan.json','work/pass')
         delivery={'op':'deliver','summary':'Counter source delivery','artifacts':['candidate/app.py']}
         with self.assertRaisesRegex(ValueError,'coverage'):
@@ -112,6 +114,8 @@ class FinalAudit(unittest.TestCase):
 
     def test_partial_coverage_and_changed_artifacts_cannot_close(self):
         add=self.prepare()
+        add({'op':'product','candidate_files':['candidate/app.py'],
+             'reference_files':['original/app.py'],'review':'Independent compared counter products'})
         add({'op':'supplement','text':'继续保留错误处理'})
         row={'id':'R1','text':'Counter','source':'original','features':['F1']}
         with self.assertRaisesRegex(ValueError,'every'):

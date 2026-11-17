@@ -27,17 +27,78 @@ def digest(path: Path) -> str:
     return h.hexdigest()
 
 
+MAX_RECORD_BYTES = 16 * 1024 * 1024
+
+
+def _encoded(value):
+    data = (json.dumps(value, ensure_ascii=True, indent=2) + '\n').encode('ascii')
+    if len(data) > MAX_RECORD_BYTES:
+        raise ValueError('Record exceeds 16 MiB; save large material as separate evidence')
+    return data
+
+
 def read(path: Path) -> dict:
-    if path.stat().st_size > 16 * 1024 * 1024:
+    if path.stat().st_size > MAX_RECORD_BYTES:
         raise ValueError('Record exceeds 16 MiB')
     value = json.loads(path.read_text(encoding='utf-8-sig'))
     if not isinstance(value, dict):
         raise ValueError('Expected a JSON object')
+    if path.name == 'case-v2.json' and value.get('schema_version') == 2:
+        def expand(item):
+            if isinstance(item, dict):
+                if set(item) == {'$rf_record', 'sha256', 'kind'}:
+                    name = item['$rf_record']
+                    if not isinstance(name, str) or not name.startswith('case-records/'):
+                        raise ValueError('Invalid case record reference')
+                    target = inside(path.parent, name)
+                    if target.stat().st_size > 64 * 1024 * 1024:
+                        raise ValueError('Case record exceeds 64 MiB')
+                    data = target.read_bytes()
+                    if sha256(data).hexdigest() != item['sha256']:
+                        raise ValueError('Case record reference changed')
+                    if item['kind'] == 'text':
+                        return data.decode('utf-8')
+                    if item['kind'] != 'event' or len(data) > MAX_RECORD_BYTES:
+                        raise ValueError('Invalid case record kind or size')
+                    return expand(json.loads(data))
+                return {key: expand(child) for key, child in item.items()}
+            if isinstance(item, list):
+                return [expand(child) for child in item]
+            return item
+        value = expand(value)
     return value
 
 
 def write(path: Path, value: dict) -> None:
-    atomic_write(path, (json.dumps(value, ensure_ascii=True, indent=2) + '\n').encode('ascii'))
+    pending = {}
+    if path.name == 'case-v2.json' and value.get('schema_version') == 2:
+        def reference(data, kind):
+            if len(data) > 64 * 1024 * 1024:
+                raise ValueError('Case material exceeds 64 MiB; save it as explicit evidence')
+            checksum = sha256(data).hexdigest()
+            name = 'case-records/' + checksum + ('.txt' if kind == 'text' else '.json')
+            pending[name] = data
+            return {'$rf_record': name, 'sha256': checksum, 'kind': kind}
+        def compact(item):
+            if isinstance(item, str) and len(item.encode('utf-8')) > 65536:
+                return reference(item.encode('utf-8'), 'text')
+            if isinstance(item, dict):
+                return {key: compact(child) for key, child in item.items()}
+            if isinstance(item, list):
+                return [compact(child) for child in item]
+            return item
+        value = {key: ([reference(_encoded(compact(e)), 'event') for e in child]
+                       if key == 'events' else compact(child)) for key, child in value.items()}
+    # Preflight the entire main record before touching the previous readable state.
+    data = _encoded(value)
+    for name, payload in pending.items():
+        target = inside(path.parent, name)
+        if target.exists():
+            if target.read_bytes() != payload:
+                raise ValueError('Stored case record changed; preserve and investigate it')
+        else:
+            atomic_write(target, payload)
+    atomic_write(path, data)
 
 
 @contextmanager

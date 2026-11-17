@@ -1,0 +1,43 @@
+{
+  "status": "pass",
+  "condition": "candidate",
+  "calls": [
+    {
+      "operation": "open",
+      "elapsed_ms": 32.0
+    },
+    {
+      "operation": "record:requirement",
+      "elapsed_ms": 16.0
+    },
+    {
+      "operation": "compare",
+      "elapsed_ms": 609.0
+    },
+    {
+      "operation": "record:product",
+      "elapsed_ms": 15.0
+    },
+    {
+      "operation": "record:deliver",
+      "elapsed_ms": 47.0
+    }
+  ],
+  "explicit_record_calls": 3,
+  "response_utf8_bytes": [
+    3326,
+    3815,
+    11799,
+    3988,
+    4251
+  ],
+  "total_response_bytes": 27179,
+  "elapsed_seconds": 0.766,
+  "sampled_project_peak_bytes": 22697,
+  "peak_scope": "After API boundaries only; not OS/process RSS or transient high-water mark",
+  "comparison_reused": false,
+  "comparison_cases": 4,
+  "delivery_status": "reviewed-delivery",
+  "extra_model_calls": 0,
+  "scope": "Same finite fixture, one deterministic API trace per condition; not model/task outcome experiment."
+}

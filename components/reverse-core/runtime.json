@@ -1,5 +1,6 @@
 {
   "schema_version": 1,
+  "method_loading": "on-demand",
   "base_reads": ["RULES.md"],
   "route_reads": {
     "R41": ["CTF-Sandbox-Orchestrator/ctf-sandbox-orchestrator/SKILL.md"],
