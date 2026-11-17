@@ -13,6 +13,8 @@ import zipfile
 import ssl
 import time
 import urllib.error
+import re
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from .storage import digest, read, write
 
 
@@ -30,6 +32,55 @@ def verify_rea_archive(root, archive):
     return failures
 
 
+def download_asset(url, temporary):
+    """Use bounded ranges when advertised; every archive still needs its full pin."""
+    chunk_size = 1024 * 1024
+    headers = {'User-Agent': 'Reverse-Fusion-Pinned-Asset/1', 'Accept-Encoding': 'identity',
+               'Range': 'bytes=0-' + str(chunk_size - 1)}
+    def extent(source):
+        value = source.headers.get('Content-Range', '')
+        match = re.fullmatch(r'bytes (\d+)-(\d+)/(\d+)', value)
+        if not match:
+            raise ValueError('Invalid pinned asset byte range')
+        return tuple(map(int, match.groups()))
+    with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=60) as source:
+        if getattr(source, 'status', 200) != 206:
+            with temporary.open('wb') as output:
+                shutil.copyfileobj(source, output)
+            length = getattr(source, 'headers', {}).get('Content-Length')
+            if length is not None and temporary.stat().st_size != int(length):
+                raise ConnectionError('Incomplete pinned asset transfer')
+            return
+        start, end, total = extent(source)
+        if start != 0 or end != min(total, chunk_size) - 1 or not 0 < total <= 512 * 1024 * 1024:
+            raise ValueError('Unexpected pinned asset range or size')
+        etag = source.headers.get('ETag')
+        first = source.read(chunk_size + 1)
+        if len(first) != end + 1:
+            raise ConnectionError('Incomplete initial pinned asset range')
+    temporary.write_bytes(first)
+    def part(offset):
+        stop = min(offset + chunk_size, total) - 1
+        selected = {**headers, 'Range': f'bytes={offset}-{stop}'}
+        if etag:
+            selected['If-Range'] = etag
+        with urllib.request.urlopen(urllib.request.Request(url, headers=selected), timeout=60) as source:
+            if getattr(source, 'status', 200) != 206 or extent(source) != (offset, stop, total):
+                raise ValueError('Pinned asset range changed during transfer')
+            if etag and source.headers.get('ETag') != etag:
+                raise ValueError('Pinned asset identity changed during transfer')
+            data = source.read(chunk_size + 1)
+            if len(data) != stop - offset + 1:
+                raise ConnectionError('Incomplete pinned asset range')
+            return offset, data
+    with ThreadPoolExecutor(max_workers=4) as pool, temporary.open('r+b') as output:
+        pending = [pool.submit(part, offset) for offset in range(end + 1, total, chunk_size)]
+        for future in as_completed(pending):
+            offset, data = future.result()
+            output.seek(offset)
+            output.write(data)
+
+
 def acquire(url, destination, algorithm='sha256', expected=None):
     if not url.startswith('https://'):
         raise ValueError('Pinned assets require HTTPS')
@@ -43,10 +94,7 @@ def acquire(url, destination, algorithm='sha256', expected=None):
     temporary = destination.with_suffix(destination.suffix + '.partial')
     for attempt in range(3):
         try:
-            request = urllib.request.Request(url, headers={
-                'User-Agent': 'Reverse-Fusion-Pinned-Asset/1', 'Accept-Encoding': 'identity'})
-            with urllib.request.urlopen(request, timeout=60) as source, temporary.open('wb') as output:
-                shutil.copyfileobj(source, output)
+            download_asset(url, temporary)
             if not valid(temporary): raise ValueError('Pinned asset checksum mismatch: ' + destination.name)
             os.replace(temporary, destination)
             break

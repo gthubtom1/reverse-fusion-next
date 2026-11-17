@@ -1,0 +1,19 @@
+{
+  "status": 200,
+  "headers": {
+    "Date": "Tue, 17 Nov 2026 13:38:14 GMT",
+    "Content-Type": "application/octet-stream",
+    "Content-Length": "41851672",
+    "Connection": "close",
+    "CF-Ray": "a5bf2276aacfe858-FRA",
+    "CF-Cache-Status": "HIT",
+    "Accept-Ranges": "bytes",
+    "Access-Control-Allow-Origin": "*",
+    "Age": "445479",
+    "Cache-Control": "public, immutable, max-age=31557600",
+    "ETag": "\"d8ad959bff1f1a54837dcdb451357072\"",
+    "Last-Modified": "Thu, 12 Nov 2026 09:53:35 GMT",
+    "Server": "cloudflare"
+  },
+  "prefix": "1f"
+}

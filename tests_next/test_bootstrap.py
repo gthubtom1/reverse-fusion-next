@@ -67,5 +67,37 @@ class ArchiveSafety(unittest.TestCase):
         self.assertFalse((self.root/'asset.zip').exists())
         self.assertFalse((self.root/'asset.zip.partial').exists())
 
+    def test_ranged_asset_assembles_exact_bytes_and_keeps_full_checksum(self):
+        import hashlib
+        from unittest.mock import patch
+        data=b'a'*(1024*1024)+b'b'*(1024*1024)+b'last range'
+        ranges=[]
+        class Response(io.BytesIO):
+            status=206
+            def __init__(self,start,end):
+                super().__init__(data[start:end+1])
+                self.headers={'Content-Range':f'bytes {start}-{end}/{len(data)}','ETag':'fixed-identity'}
+        def response(request,timeout):
+            start,end=map(int,request.get_header('Range').removeprefix('bytes=').split('-'))
+            end=min(end,len(data)-1);ranges.append((start,end))
+            return Response(start,end)
+        with patch('urllib.request.urlopen',side_effect=response):
+            result=acquire('https://example.invalid/pinned',self.root/'asset.zip',expected=hashlib.sha256(data).hexdigest())
+        self.assertEqual(result.read_bytes(),data)
+        self.assertEqual(len(ranges),3)
+
+    def test_changed_range_identity_is_rejected(self):
+        import hashlib
+        from unittest.mock import patch
+        size=1024*1024
+        class Response(io.BytesIO):
+            status=206
+        first=Response(b'a'*size);first.headers={'Content-Range':f'bytes 0-{size-1}/{size+1}','ETag':'first'}
+        second=Response(b'b');second.headers={'Content-Range':f'bytes {size}-{size}/{size+1}','ETag':'changed'}
+        with patch('urllib.request.urlopen',side_effect=[first,second]):
+            with self.assertRaisesRegex(ValueError,'identity changed'):
+                acquire('https://example.invalid/pinned',self.root/'asset.zip',expected=hashlib.sha256(b'a'*size+b'b').hexdigest())
+        self.assertFalse((self.root/'asset.zip').exists())
+
 
 if __name__=='__main__':unittest.main()

@@ -1,0 +1,31 @@
+[
+  {
+    "mode": "read-all",
+    "error": "IncompleteRead(8732519 bytes read, 33119153 more expected)",
+    "size": 0,
+    "elapsed_seconds": 121.39000000001397
+  },
+  {
+    "mode": "copy-stream",
+    "size": 8359508,
+    "integrity": "sha512-hxFU1Q5/nguFqkdTei6H7RryzKDakBwNF+1AURt9wXGwDn4ksvKcNNM9vYeGhA+8nASmyt3QChVNRmZFwkL4Ug==",
+    "matches_pin": false,
+    "response_headers": {
+      "Date": "Tue, 17 Nov 2026 13:35:26 GMT",
+      "Content-Type": "application/octet-stream",
+      "Content-Length": "41851672",
+      "Connection": "close",
+      "CF-Ray": "a5bf1e5ffb9de7b5-FRA",
+      "CF-Cache-Status": "HIT",
+      "Accept-Ranges": "bytes",
+      "Access-Control-Allow-Origin": "*",
+      "Age": "445311",
+      "Cache-Control": "public, immutable, max-age=31557600",
+      "ETag": "\"d8ad959bff1f1a54837dcdb451357072\"",
+      "Last-Modified": "Thu, 12 Nov 2026 09:53:35 GMT",
+      "Server": "cloudflare"
+    },
+    "elapsed_seconds": 216.39000000001397,
+    "prefix_hex": "1f8b08000000000002ffecbd7b73e336"
+  }
+]

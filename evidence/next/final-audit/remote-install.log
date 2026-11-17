@@ -1,4 +1,4 @@
-Obtaining file:///D:/Project/reverse-next/work/remote-install-d2210811bf
+Obtaining file:///D:/Project/reverse-next/work/remote-install-33870a2a96
   Installing build dependencies: started
   Installing build dependencies: finished with status 'done'
   Checking if build backend supports build_editable: started
@@ -14,17 +14,17 @@ Using cached pillow-11.3.0-cp312-cp312-win_amd64.whl (7.0 MB)
 Building wheels for collected packages: reverse-rea-next
   Building editable for reverse-rea-next (pyproject.toml): started
   Building editable for reverse-rea-next (pyproject.toml): finished with status 'done'
-  Created wheel for reverse-rea-next: filename=reverse_rea_next-2.2.0-0.editable-py3-none-any.whl size=5131 sha256=199787ce72820633596d8d554068acc685ac88512b16a4c5e3a5594936ce9565
-  Stored in directory: D:\tmp\pip-ephem-wheel-cache-__cqdg2y\wheels\52\f6\d4\869567da1169b0bb3f17343ecce296ad021616999d3e48986c
+  Created wheel for reverse-rea-next: filename=reverse_rea_next-2.2.0-0.editable-py3-none-any.whl size=5136 sha256=1513b8743dbf21089c5bac012216f8f4a5666b1d0b9c2915ee3001a7a48f0aaa
+  Stored in directory: D:\tmp\pip-ephem-wheel-cache-e0etj0on\wheels\ed\50\16\1c7341797236de8143b7050a454379c15aa0104ec1dedc8573
 Successfully built reverse-rea-next
 Installing collected packages: Pillow, reverse-rea-next
 Successfully installed Pillow-11.3.0 reverse-rea-next-2.2.0
-{"status": "error", "message": "Pinned asset checksum mismatch: rea.tgz"}
+{"status": "error", "message": "Pinned asset checksum mismatch: node.zip"}
 
 [notice] A new release of pip is available: 23.2.1 -> 26.3
-[notice] To update, run: D:\Project\reverse-next\work\remote-install-d2210811bf\.venv\Scripts\python.exe -m pip install --upgrade pip
+[notice] To update, run: D:\Project\reverse-next\work\remote-install-33870a2a96\.venv\Scripts\python.exe -m pip install --upgrade pip
 Pinned runtime preparation failed
-所在位置 D:\Project\reverse-next\work\remote-install-d2210811bf\scripts\install.ps1:19 字符: 32
+所在位置 D:\Project\reverse-next\work\remote-install-33870a2a96\scripts\install.ps1:19 字符: 32
 + ... f ($LASTEXITCODE -ne 0) { throw 'Pinned runtime preparation failed' }
 +                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     + CategoryInfo          : OperationStopped: (Pinned runtime preparation failed:String) [], RuntimeException

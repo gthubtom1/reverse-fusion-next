@@ -1,7 +1,7 @@
 {
   "status": "pass",
   "exit_code": 0,
-  "tests": 97,
+  "tests": 99,
   "source_unchanged_during_tests": true,
   "source_identity": {
     "AGENTS.md": "55b0f8e4541791b7b95ea9f93b738d494f2b7b06c3b1d2bd8dceb9680924e3f2",
@@ -34,7 +34,7 @@
     "pyproject.toml": "b05ca3bd45fee5be39a6610d63b6e4d0f73c81d4656261f6314b6819a6acacf9",
     "rea_enhanced/__init__.py": "ecef063c3c74a8380e75338155edac937686dd771a3016ff0620e6bdaaa24ae7",
     "rea_enhanced/__main__.py": "79ee6f134c5c5193377cf9b189cbdcc3e2095e49ba9cec310114441c15a917c4",
-    "rea_enhanced/bootstrap.py": "9d7975aeb85bb7b44ba1782d673b52bac7ceac73525af399cdbde3799dd00fb5",
+    "rea_enhanced/bootstrap.py": "5c1f582bae29cb8da627bb2d16cf96cc0891811ae57bb21d41184bfa0e75b274",
     "rea_enhanced/cli.py": "009a5f9a9640242f06a733ddb56e0241288ed8a72b2b61ec7a4249b9924bf01e",
     "rea_enhanced/comparison.py": "87440a62f937bfaa0b6ce6598d5a7ed6cdd7790527525b4917460a93de9c7884",
     "rea_enhanced/deployment.py": "387b5fa3adbb8a9b3dea0c3d20521da10b6595037a07de437136a1b91ad6b98c",
@@ -66,7 +66,7 @@
     "scripts/next-cli.py": "d4ac81415ea7b0e884777d091477afada817d4e78a688ac72bbdbfde372c6670",
     "scripts/next-qualify.py": "4e602f889296291ba75c87814b1bd0879d6ee83067bb40510f9678c9ea69b5ad",
     "scripts/next-remote-install.py": "4e07cb37378a516c62bde44ab11a6043c1326245fa96c72f72ba170deb91c201",
-    "tests_next/test_bootstrap.py": "84eadc8e93554ca3d75681e9ca125d638c5089c24e761633092e86cfb704afb3",
+    "tests_next/test_bootstrap.py": "a4c634442be119fd304184bf89e44d5314990ab668c4fecc439a29cd217936f5",
     "tests_next/test_deployment.py": "07de1f20f7ddfa9ae5a6856bd1f161a5bb090df3c1da995ca88b584f5af0fe37",
     "tests_next/test_domains.py": "e5450f943808c437bbede6ac84396066ea0434d6374800c85fcdb2709d61ec6b",
     "tests_next/test_final_audit.py": "43911f7b4997f417d724b41a2fd7de6a03cf700df708d8d6753efa7e983a7839",
@@ -81,14 +81,14 @@
   },
   "evidence_sha256": {
     "evidence/next/s2/protocol-qualified.json": "7cfaeeb8eee18cfc0ecaafce09e20f0253400d46e39c00f28261f99f83032f47",
-    "evidence/next/final-audit/native-provider.json": "6015ed64638481da8b6d0c48d27628216de3381918f6ee4df206a59030d465c4",
+    "evidence/next/final-audit/native-provider.json": "daf64df68e2af4202e99c4a1ed9ba0700bf95240235fc7ba9178374ef9b21c3e",
     "evidence/next/s2/native-restart-qualified.json": "96883eb30ee3c2301402ebe2c814da634153972afea16ffd4cdb31ab1add1f66",
-    "evidence/next/final-audit/web-equal.json": "a64c0b914ebed81e352c00a31617a85acd124415b8c7155a7051086d3fdba2a8",
-    "evidence/next/final-audit/web-wrong-behavior.json": "bf592208c98d84b11ff4c6763252d3d8cfb106a65fcae8e2fcaa3ca429194328",
-    "evidence/next/final-audit/web-wrong-look.json": "7a118cd8d221b5c508132d57e6e99711e96e2423f8e528b7922e7e917b06e53e",
-    "evidence/next/final-audit/web-missing-observation.json": "dbafb8c94c1a421918a1388a735836e8654a5b8497e984175dcaac8753cd1b35",
-    "evidence/next/final-audit/web-controls.json": "9d04dbc2923bfd565b96752f9eb50072dd0eb543bcac1b83cae73606c3c01d2f"
+    "evidence/next/final-audit/web-equal.json": "f7df5ec42968fac79cda56096d0f222efb9211724cb50a8a8d0c62b52d7c9447",
+    "evidence/next/final-audit/web-wrong-behavior.json": "372755796c8335d0ea002420ac43a11acc7ae196516d07a6dfa4aff73fc4fb91",
+    "evidence/next/final-audit/web-wrong-look.json": "f34d3197e970f82be43dffce606f99efd1f5f7a97c2415279333a1005ae374ed",
+    "evidence/next/final-audit/web-missing-observation.json": "67b37b3b12aa40a19bd904f44f55b40bbbbc0afb8e7f5b9d12b823727d67b96c",
+    "evidence/next/final-audit/web-controls.json": "c7b0abc3beb237b89d0fee6f30be6342a67a644355475d2c12e7d9325f8c2247"
   },
-  "elapsed_seconds": 94.98499999998603,
+  "elapsed_seconds": 81.3289999999979,
   "scope": "Actual current unittest discovery, original protocol/provider operations, finite behavior/visual cases and negative cases. Tests and public contracts are bound. Not arbitrary target acceptance."
 }

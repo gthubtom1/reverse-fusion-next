@@ -1,0 +1,8 @@
+{
+  "status": "pass",
+  "archive_bytes": 41851672,
+  "integrity": "sha512-KqDn1UR5BMqHoQ3MGAnPuWiSKwgdFaz1L/uUNgrKt+1W8kPtgYP8AWEOXIF1lDIOBVyPuYIIst2iamo1Wf3r8g==",
+  "sha256": "322338a1505e2557702a16012e7d46abdb5729641d98938662762dfbfb79262a",
+  "elapsed_seconds": 74.40599999998813,
+  "scope": "Actual bounded ranged REA transfer with unchanged full archive checksum."
+}

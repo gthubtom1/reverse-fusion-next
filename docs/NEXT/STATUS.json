@@ -179,8 +179,8 @@
   },
   "long_task_repair": {
     "requirements": "docs/NEXT/LONG-TASK-REPAIR.md",
-    "status": "local-qualified-installed-remote-pending",
-    "verification": "97 full source-bound tests passed (15 long-task cases and one archive integrity counterexample); installed enhanced entry remains selected. Public clone blocked by observed archive integrity failures, being investigated with unchanged pin.",
+    "status": "local-qualified-ranged-transfer-verified-remote-pending",
+    "verification": "99 source-bound tests passed; actual bounded ranged transfer acquired the full41851672-byte REA archive with unchanged pin; public clone requalification next.",
     "model_effectiveness": "not-established",
     "implemented": [
       "immutable observation snapshots and explicit live dependencies",
