@@ -1,0 +1,9 @@
+{
+  "logical_bytes_reclaimed": 515196447,
+  "files_reclaimed": 15854,
+  "removed_owned_directories": [
+    "source",
+    "coordinator",
+    "temp"
+  ]
+}

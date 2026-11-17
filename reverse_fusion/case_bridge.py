@@ -330,18 +330,22 @@ def _reverse_intent(hint: str) -> bool:
     text = hint or ''
     # A task may name a protection or use the English verb "reverse" in normal
     # development. Those bare words alone are not an analysis request.
-    target = r'(?:软件|程序|应用|网站|算法|安装包|文件(?:夹)?|代码|抓包|协议|二进制|样本|APK|DEX|DLL|EXE|WASM|ELF)'
+    target = r'(?:软件|程序|应用|网站|算法|安装包|文件(?:夹)?|抓包|协议|二进制|样本|固件|镜像|驱动|APK|DEX|DLL|EXE|WASM|ELF|firmware)'
     explicit = r'逆向|反编译|脱壳|复刻|重构目标|取证|渗透测试|(?:安全|漏洞|代码)审计|\breverse[- ]engineering\b|\breverse[- ]fusion\b|decompil|reconstruct|replica|re-?implement|clone.?behavior|implementation.?equivalence|\bforensic|penetration test|\b(?:binary|apk) analysis\b'
     if re.search(explicit, text, re.I):
         return True
     if re.search(r'\breverse\s+(?:(?:this|the)\s+)?(?:binary|software|application|app|apk|dex|firmware)\b', text, re.I):
         return True
+    if re.search(r'(?:源码|源代码|代码库|source[- ]code|source repository).{0,24}(?:架构|architecture)|(?:架构|architecture).{0,24}(?:源码|源代码|代码库|source repository)', text, re.I):
+        return False
     if re.search(r'(?:分析|研究|看懂|弄懂|搞懂).{0,24}' + target, text, re.I):
         return True
     if re.search(target + r'.{0,12}(?:怎么工作|工作原理|内部实现|反编译|逆向)', text, re.I):
         return True
-    # Recognizable supplied artifacts can enter analysis; ordinary source files
-    # and protected routes/layouts do not activate this path on their own.
+    # A named artifact alone must not override an explicit normal-development
+    # action. Explicit reverse/analysis requests above still take precedence.
+    if re.search(r'(?:增加|添加|修复|实现|开发|构建|打包|编写|设计)|\b(?:build|create|implement|develop|fix|add|write|design|package)\b', text, re.I):
+        return False
     if re.search(r'\.(?:exe|dll|apk|dex|wasm|elf|so|dylib|ipa)\b', text, re.I):
         return True
     analysis = r'\b(?:analy[sz]e|inspect|decompile|investigate|unpack|disassemble)\b'

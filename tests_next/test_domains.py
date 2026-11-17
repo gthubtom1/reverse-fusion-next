@@ -35,7 +35,8 @@ class DomainMethods(unittest.TestCase):
             result=dry_run_route(hint,source='local');self.assertEqual(result['skill'],skill)
         result=dry_run_route(cases[0][0],source='local')
         self.assertTrue(result['hard_target'])
-        self.assertIn('skills/apk-reverse/references/high-difficulty-android-playbook.md',result['required_reads'])
+        self.assertEqual(result['required_reads'], ['RULES.md'])
+        self.assertIn('skills/apk-reverse/references/high-difficulty-android-playbook.md',result['method_reads'])
 
     def test_domain_refinement_keeps_original_goal(self):
         with tempfile.TemporaryDirectory() as td:

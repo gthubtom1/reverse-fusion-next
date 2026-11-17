@@ -43,6 +43,7 @@ try {
             else if(step.action==='storage') await page.evaluate(({key,value})=>localStorage.setItem(key,value),step);
             else if(step.action==='reload') await page.reload({waitUntil:'domcontentloaded'});
             else if(step.action==='wait') await page.waitForTimeout(step.ms);
+            else if(step.action==='scroll') await page.locator(step.selector).scrollIntoViewIfNeeded();
             else if(step.action!=='observe') throw new Error('Unsupported action');
           } catch(e) {error=e.message;}
           const observations=[];
@@ -60,7 +61,9 @@ try {
           const relative=path.posix.join('screens',scenario.id,String(width),side+'-'+index+'.png');
           const screenshot=path.join(output,...relative.split('/'));
           fs.mkdirSync(path.dirname(screenshot),{recursive:true});
-          await page.screenshot({path:screenshot,animations:'disabled',caret:'hide'});
+          const dimensions=await page.evaluate(()=>({width:document.documentElement.scrollWidth,height:document.documentElement.scrollHeight}));
+          if(dimensions.width*dimensions.height>16000000) throw new Error('Full-page capture exceeds 16 million pixels; narrow the page fixture');
+          await page.screenshot({path:screenshot,fullPage:true,animations:'disabled',caret:'hide'});
           if(dialogs.some(d=>d.decision==='unexpected-dismiss')) error=error??'Undeclared dialog was dismissed';
           if(index===scenario.steps.length-1&&nextDialog) error=error??'Expected dialog did not occur';
           records.push({scenario:scenario.id,width,side,step:index,error,observations,storage,dialogs:[...dialogs],screenshot:relative});

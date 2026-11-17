@@ -1,0 +1,14 @@
+{
+  "project": "D:\\tmp\\reverse-next-slim-55fuatfp",
+  "tests": 9,
+  "failures": [
+    [
+      "tests_next.test_slim.SlimNative.test_native_unknown_remains_native_and_blocks_only_affected_requirement",
+      "Traceback (most recent call last):\n  File \"D:\\tmp\\reverse-next-slim-55fuatfp\\source\\tests_next\\test_slim.py\", line 129, in test_native_unknown_remains_native_and_blocks_only_affected_requirement\n    native_fixture(self.project, residual_unknown=True)\n  File \"D:\\tmp\\reverse-next-slim-55fuatfp\\source\\tests_next\\test_slim.py\", line 45, in native_fixture\n    call('record_unknown', {'question': 'Unresolved meaning of this structural claim', 'severity': 'high',\n  File \"D:\\tmp\\reverse-next-slim-55fuatfp\\source\\tests_next\\test_slim.py\", line 36, in call\n    raise AssertionError((name, response))\nAssertionError: ('record_unknown', {'content': [{'type': 'text', 'text': '{\"error\":{\"code\":\"invalid_request\",\"category\":\"invalid_input\",\"message\":\"Analysis input is invalid. Check the arguments and try again.\",\"retryable\":false,\"remediation\":{\"action\":\"Read the declared input schema or CLI usage for record_unknown; if using MCP and the catalog may be stale, call tools/list. Correct the listed fields, then retry. Do not repeat the unchanged call.\"},\"recovery\":{\"kind\":\"inspect_input_contract\",\"operation\":\"record_unknown\"},\"details\":{\"operation\":\"record_unknown\",\"issues\":[{\"path\":[\"comparison_conclusion_scope\"],\"reason\":\"invalid_value\",\"message\":\"Scoped comparison Evidence must support or contradict the unknown\"},{\"path\":[\"comparison_conclusion_scope\"],\"reason\":\"invalid_value\",\"message\":\"Comparison conclusion scope requires function-comparison domain\"}]}}}'}], 'isError': True})\n"
+    ]
+  ],
+  "errors": [],
+  "skipped": [],
+  "excluded_native_provider": [],
+  "elapsed_seconds": 46.86
+}

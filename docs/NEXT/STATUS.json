@@ -2,8 +2,69 @@
   "schema_version": 1,
   "version": "2.4.0",
   "baseline_commit": "022e61b803e41569cac1f116ebca2245b9c9b1f8",
-  "goal_status": "complete",
-  "stage": "maintenance",
+  "goal_status": "final-form-prereleased-not-deployed",
+  "stage": "github-prerelease-complete",
+  "slim_plan": {
+    "date": "2026-11-18",
+    "status": "historical-engineering-complete;superseded-by-static-recheck-repairs",
+    "document": "docs/NEXT/SLIM-PLAN.md",
+    "baseline": "Current uncommitted nine-finding repair source, verified by164 isolated regressions",
+    "scope": "User approved engineering implementation S0-S4; no commit, push, installer or deployment switch",
+    "effectiveness": "Mechanical context/recording reduction measured; model net benefit and independent hidden-task acceptance not established",
+    "stages": {
+      "S0": {
+        "status": "rollback-extracted-rehashed",
+        "evidence": "evidence/next/slim/mechanical.json"
+      },
+      "S1": {
+        "status": "implemented-native-and-owned-slice",
+        "evidence": "tests_next/test_slim.py"
+      },
+      "S2": {
+        "status": "implemented-regression-passed"
+      },
+      "S3": {
+        "status": "implemented-compatibility-tested"
+      },
+      "S4": {
+        "status": "engineering-complete; product-model-effectiveness-not-established",
+        "evidence": [
+          "evidence/next/slim/regressions.json",
+          "evidence/next/slim/mechanical.json",
+          "evidence/next/slim/cleanup.json",
+          "docs/NEXT/SLIM-RESULT.md"
+        ]
+      }
+    },
+    "handoff": "docs/NEXT/HANDOFF.md",
+    "regressions": {
+      "tests": 179,
+      "failures": 0,
+      "errors": 0,
+      "elapsed_seconds": 197.438,
+      "source_files": 85,
+      "evidence": "evidence/next/slim/regressions.json",
+      "excluded": "real Ghidra provider startup",
+      "applicability": "Historical previous slim source; not current static-repaired source"
+    },
+    "result": "docs/NEXT/SLIM-RESULT.md",
+    "cleanup": {
+      "evidence": "evidence/next/slim/cleanup.json",
+      "logical_bytes": 562871817,
+      "files": 18824,
+      "source_evidence_archive_user_entries_unchanged": true
+    },
+    "publication": "No commit, push, real user installer, publication or owned-entry switch performed; editable source changes affect new connections",
+    "release_qualification": "Current source-bound engineering checks only; new public clone/install, real Ghidra, clean OS, cross-machine and device qualification not performed"
+  },
+  "audit_repairs": {
+    "date": "2026-11-18",
+    "scope": "Nine user-selected findings; minimal fixes and regression tests, no new review",
+    "status": "fixed-regression-verified",
+    "deployment": "User skill/AGENTS/config digests unchanged; no installer, migration, commit or publication performed. Existing editable checkout reads these source edits after reconnect",
+    "qualification": "164 final isolated regression checks passed; one real Ghidra-provider startup excluded. No new review or public release qualification",
+    "evidence": "evidence/next/audit-repairs/regressions.json"
+  },
   "stages": {
     "S0": {
       "status": "done",
@@ -156,7 +217,7 @@
       "README.md"
     ]
   },
-  "next_action": "2.4.0 is qualified, installed and published. Generate outputs in persistent/reusable/disposable tiers and review at natural boundaries. Reconnect cached MCP catalogs or use absolute CLI; do not resume old targets or delete unregistered legacy folders.",
+  "next_action": "GitHub commit/push/source prerelease complete. Keep main PR open pending user merge choice; no deployment, auto-merge, test run or model experiment scheduled.",
   "migration": "Current2.4.0 owned skill/AGENTS/one MCP updated; fresh registered stdio, exact package/runtime/repository versions2.4.0 and260 tools verified. Existing desktop chats may require reconnect.",
   "limitations": [
     "Finite engineering qualification and the owned plain-language case are distinct from acceptance of arbitrary future targets.",
@@ -268,5 +329,109 @@
     "public_install_files_reclaimed": 16229
   },
   "initial_stages_scope": "S0-S6 retain the initial independent-architecture baseline; current release evidence is tiered_storage and current_release_check.",
-  "current_release_check": "evidence/next/tiered-storage/release-check.json"
+  "current_release_check": "evidence/next/tiered-storage/release-check.json",
+  "static_recheck": {
+    "date": "2026-11-18",
+    "status": "complete-static-only-repairs-applied",
+    "scope": "User requested detailed static architecture/code review and fixes; no installation, functional/target/MCP execution or real conversation experiment",
+    "agents": "User explicitly permitted three fresh read-only reviewers for this turn; no delegated writers or model loops",
+    "baseline": "state/static-recheck-20261118/identity.json",
+    "validation": {
+      "evidence": "evidence/next/static-recheck/validation.json",
+      "python_parse_compile_files": 63,
+      "json_contract_files": 7,
+      "new_regression_specs": 17,
+      "executed_regression_specs": 0,
+      "preserved_domain_files": 603,
+      "official_method_files": 9,
+      "user_entry_files_unchanged": 3,
+      "diff_check": "pass"
+    },
+    "reviewed_findings": 17,
+    "fixed": 17,
+    "skipped": 0,
+    "architecture": "Retain official REA core + on-demand Reverse methods + explicitly owned thin requirement/platform/storage adapters. Static review does not establish host compliance, live tool health or arbitrary-target success.",
+    "prior_tests": "179 passed on the previous slim source only; new repaired source has static checks but no new functional results",
+    "deployment": "No user installation, migration, commit, push or owned-entry switch; editable source changes affect new connections",
+    "review_method": "Three user-authorized fresh-context read-only reviewers plus host inline review across correctness, removed guards, cross-file callers, reuse, simplification, efficiency, altitude and project contracts; no permanent change to project agent policy",
+    "applicability": "Historical preceding17-finding static repair source; current final-form source has separate autonomy-final validation"
+  },
+  "autonomy_finalization": {
+    "date": "2026-11-18",
+    "status": "implemented-static-checked;user-frozen-for-maintenance",
+    "baseline": "state/autonomy-final-20261118/identity.json",
+    "scope": "Optional workflow records, autonomous method choice, separate host-reviewed external evidence and explicit output kinds; no installs/live target/model conversations or runtime tests",
+    "automatic_proof": "External human/host reviews never fabricate automatic checks or official REA Evidence",
+    "publication": "No commit/push/owned deployment switch authorized",
+    "result": "docs/NEXT/FINAL-FORM.md",
+    "remaining_implementation": [],
+    "implementation": {
+      "workflow": "Optional native records/case/checkpoint; route/readiness advisory, no fixed tool or method order",
+      "external_review": "assessment with saved observations, current input/product identities, scope/context/limits/expiry; host-reviewed state remains distinct from automatic/native proof",
+      "delivery": "Explicit output_goal and product kinds; reviewed full/stage deliveries preserve remaining requirements and original wording",
+      "compatibility": "Original five owned tool names, official forwarding, legacy automatic feature/check/deliver interfaces retained; external review cannot write automatic pass"
+    },
+    "validation": {
+      "evidence": "evidence/next/autonomy-final/validation.json",
+      "python_parse_compile_files": 65,
+      "json_contract_files": 7,
+      "new_regression_specifications": 18,
+      "executed_regression_specifications": 0,
+      "public_instruction_bytes": 5984,
+      "long_checkout_example_bytes": 6052,
+      "preserved_domain_files": 603,
+      "official_method_files": 9,
+      "user_entry_files_unchanged": 3,
+      "rollback_archive_members_rehashed": 1469,
+      "diff_check": "pass"
+    },
+    "boundaries": "User-selected static-only closure. No installation, functional tests, targets/providers/MCP starts or real model conversations; historical179 does not qualify the current source.",
+    "deployment": "Uncommitted, unpushed, no owned-entry migration/installer. Editable source changes affect new connections. Installed older skill/AGENTS remain unchanged.",
+    "model_effectiveness": "Not established; implementation and static consistency are not success-rate, speed or cost proof"
+  },
+  "final_freeze": {
+    "date": "2026-11-18",
+    "status": "user-approved-freeze",
+    "user_decision": "按此定档",
+    "boundary": "Implementation complete; static checks passed; current source runtime unverified; unreleased",
+    "identity": "evidence/next/final-freeze/identity.json",
+    "source_snapshot": "state/final-freeze-20261118/current-source.zip",
+    "version_policy": "Package metadata remains2.4.0; not a new release or renewed qualification",
+    "maintenance_triggers": [
+      "Concrete defect",
+      "Actual task blocker",
+      "Repeated identifiable usage overhead",
+      "Explicit new user requirement"
+    ],
+    "not_scheduled": [
+      "Further generic architecture optimization",
+      "New components without a concrete need",
+      "Live acceptance/model experiments",
+      "Commit/tag/push/publication/owned-entry migration"
+    ],
+    "runtime_evidence": "Historical179 only qualifies earlier slim source, not current implementation",
+    "pending_work": []
+  },
+  "publication": {
+    "date": "2026-11-18",
+    "status": "published-prerelease-not-deployed",
+    "user_request": "提交、推送、GitHub发布；暂不部署",
+    "channel": "prerelease-source-snapshot",
+    "tag": "autonomy-20261118",
+    "branch": "fix/independent-audit-nine",
+    "repository": "https://github.com/gthubtom1/reverse-fusion-next",
+    "document": "docs/NEXT/PUBLICATION.md",
+    "deployment": "not requested; no installer or owned-entry switch",
+    "runtime_validation": "not-run; static-only implementation; historical179 is not current source qualification",
+    "main_merge": "Not merged; PR open",
+    "package_version": "2.4.0 retained; not renewed release qualification",
+    "source_commit": "5bc870b8b7c0723641efd4080cb596ea89230f38",
+    "release_url": "https://github.com/gthubtom1/reverse-fusion-next/releases/tag/autonomy-20261118",
+    "pull_request": "https://github.com/gthubtom1/reverse-fusion-next/pull/1",
+    "assets_uploaded": 3,
+    "asset_digest_verified": true,
+    "evidence": "evidence/next/publication/github.json",
+    "ci": "No checks present; Auto-fix/auto-merge off",
+    "pending_deployment": false
+  }
 }

@@ -1,0 +1,14 @@
+{
+  "status": "pass",
+  "before": {
+    "C:\\Users\\toti\\.agents\\skills\\reverse-fusion\\SKILL.md": "8d1a3b642d9db747679c214ff3de0247a3aeb3c2fb3620406e04a6d4c902a91a",
+    "C:\\Users\\toti\\.codex\\AGENTS.md": "5cd0edeb63a220eae161e8f4e3bdece5c07b3e6d9f793ed1a92bb518d5e96013",
+    "C:\\Users\\toti\\.codex\\config.toml": "c75aaccfa31e6acd3bfe1f9e48266311502149ce90dafc3aa3bbbff7b360a8be"
+  },
+  "after": {
+    "C:\\Users\\toti\\.agents\\skills\\reverse-fusion\\SKILL.md": "8d1a3b642d9db747679c214ff3de0247a3aeb3c2fb3620406e04a6d4c902a91a",
+    "C:\\Users\\toti\\.codex\\AGENTS.md": "5cd0edeb63a220eae161e8f4e3bdece5c07b3e6d9f793ed1a92bb518d5e96013",
+    "C:\\Users\\toti\\.codex\\config.toml": "c75aaccfa31e6acd3bfe1f9e48266311502149ce90dafc3aa3bbbff7b360a8be"
+  },
+  "scope": "User entry files unchanged; file bytes not copied"
+}

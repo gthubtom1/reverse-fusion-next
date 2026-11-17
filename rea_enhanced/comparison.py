@@ -1,9 +1,10 @@
 """Independent finite replay; the candidate never grades itself."""
-import base64
 from pathlib import Path
 import shutil
 import time
 import os
+import re
+import sys
 from hashlib import sha256
 from reverse_fusion.owned_process import run_owned
 from .storage import digest, inside, read, write
@@ -19,17 +20,53 @@ def launch_environment(plan):
     return {key:value for key,value in os.environ.items() if key in keys}
 
 
+def replay_executable(argv, cwd):
+    local = cwd/argv[0]
+    executable = (Path(argv[0]) if Path(argv[0]).is_absolute() else local if local.is_file()
+                  else Path(shutil.which(argv[0]) or ''))
+    if not executable.is_file():
+        raise ValueError('Replay executable is missing: ' + argv[0])
+    return executable.resolve()
+
+
+def replay_entry(argv, cwd, sources):
+    """Recognize the actual program entry, not an arbitrary filename argument."""
+    executable = replay_executable(argv, cwd)
+    stem = executable.stem.lower()
+    if executable in sources:
+        return executable
+    python = bool(re.fullmatch(r'python(?:w|[0-9]+(?:\.[0-9]+)*)?', stem))
+    if not python and stem not in {'node', 'nodejs'}:
+        # Exact copies of the host interpreter are used by runtime-identity
+        # checks; a renamed launcher is accepted only with this byte identity.
+        python = digest(executable) == digest(Path(sys.executable))
+    node = stem in {'node', 'nodejs'}
+    if not python and not node:
+        raise ValueError('External launcher needs a supported Python/Node script entry; arbitrary argument filenames are not execution proof')
+    index = 1
+    safe_options = {'-B', '-E', '-I', '-s', '-S', '-u', '-O', '-OO'} if python else {'--no-warnings', '--enable-source-maps'}
+    while index < len(argv) and argv[index].startswith('-'):
+        if argv[index] == '--':
+            index += 1
+            break
+        if argv[index] not in safe_options:
+            raise ValueError('Unsupported interpreter option; invoke the declared script directly, not help/version/eval/module input')
+        index += 1
+    if index >= len(argv):
+        raise ValueError('Replay interpreter needs a declared script entry')
+    entry = Path(argv[index]) if Path(argv[index]).is_absolute() else cwd/argv[index]
+    entry = entry.resolve()
+    if entry not in sources:
+        raise ValueError('Actual interpreter script entry must be a declared source')
+    return entry
+
+
 def process_identity(sides, plan):
     """Bind executable resolution and relevant inherited launch configuration, without secrets."""
     result = {}
     for side, conf in sides.items():
         argv = conf['config']['argv']
-        local = conf['cwd']/argv[0]
-        executable = (Path(argv[0]) if Path(argv[0]).is_absolute() else local if local.is_file()
-                      else Path(shutil.which(argv[0]) or ''))
-        if not executable.is_file():
-            raise ValueError('Replay executable is missing: ' + argv[0])
-        executable = executable.resolve()
+        executable = replay_executable(argv, conf['cwd'])
         result[side] = {'path':str(executable),'sha256':digest(executable)}
     result['environment_sha256'] = sha256(repr(sorted(launch_environment(plan).items())).encode()).hexdigest()
     return result
@@ -126,7 +163,6 @@ def validate_plan(project, plan, destination):
             if not p.is_file() or not p.is_relative_to(cwd):
                 raise ValueError('Sources must be files under the side cwd')
             refs[name] = digest(p)
-        invoked = []
         for i, arg in enumerate(conf['argv']):
             if arg.startswith('-'):
                 continue
@@ -134,10 +170,7 @@ def validate_plan(project, plan, destination):
             resolved = p.resolve() if p.is_absolute() else (cwd/p).resolve()
             if i and p.is_absolute() and not resolved.is_relative_to(cwd):
                 raise ValueError('External argv input must be copied into the declared source tree')
-            if resolved.is_file() and resolved.is_relative_to(cwd):
-                invoked.append(resolved)
-        if not any(inside(project,name) in invoked for name in conf['sources']):
-            raise ValueError('Replay argv must actually invoke a declared source, not an unrelated external command')
+        replay_entry(conf['argv'], cwd, {inside(project, name) for name in conf['sources']})
         if any(arg in {'-c','-e','--eval','/c','/C','-Command','-EncodedCommand'} for arg in conf['argv'][1:]):
             raise ValueError('Inline argv code is not a declared source; save it in the side source tree')
         sides[side] = {'config': conf, 'cwd': cwd, 'tree': snapshot, 'sources': refs}
@@ -157,9 +190,27 @@ def engine_identity(web=False):
 
 
 def compare(project: Path, plan_name: str, output: str, cancel_event=None) -> dict:
+    from .disk import using_paths
+    project = project.resolve()
+    plan = read(inside(project, plan_name))
+    if any(not isinstance(plan.get(side), dict) or not isinstance(plan[side].get('cwd'), str)
+           for side in ('original', 'candidate')):
+        raise ValueError('Comparison needs two declared source directories')
+    protected = [plan_name, output, plan['original']['cwd'], plan['candidate']['cwd']]
+    if plan.get('kind') == 'rea':
+        inside(project, plan.get('bundle'))
+        protected.append(plan['bundle'])
+    with using_paths(project, protected):
+        return _compare(project, plan_name, output, cancel_event)
+
+
+def _compare(project: Path, plan_name: str, output: str, cancel_event=None) -> dict:
     project = project.resolve()
     plan_path, destination = inside(project, plan_name), inside(project, output)
     plan = read(plan_path)
+    if plan.get('kind') == 'rea':
+        from .native_verification import compare_native
+        return compare_native(project, plan_name, output, cancel_event=cancel_event)
     if plan.get('kind') == 'web':
         from .web import compare_web
         return compare_web(project,plan_name,output,cancel_event=cancel_event)
@@ -176,12 +227,12 @@ def compare(project: Path, plan_name: str, output: str, cancel_event=None) -> di
     plan_sha = digest(plan_path)
     engine=engine_identity()
     launch=process_identity(sides,plan)
-    from .disk import protect, workspace, MiB
-    protect(project, [plan_name, output, *(c['config']['cwd'] for c in sides.values())])
+    from .disk import workspace, MiB
     destination.mkdir(parents=True)
     cleanup = []
     scratch_budget = max(64 * MiB, sum(sum(p.stat().st_size for p in c['cwd'].rglob('*') if p.is_file()) for c in sides.values()) + 32 * MiB)
     started, results, failure = time.perf_counter(), [], None
+    output_bytes = 0
     try:
         for scenario in plan['scenarios']:
             with workspace(project, 'Finite comparison ' + scenario['id'],
@@ -202,10 +253,12 @@ def compare(project: Path, plan_name: str, output: str, cancel_event=None) -> di
                     for side, conf in sides.items():
                         area = places[side]
                         argv = []
-                        for arg in conf['config']['argv']:
-                            p = Path(arg)
+                        for index_arg, arg in enumerate(conf['config']['argv']):
+                            p = Path(launch[side]['path']) if index_arg == 0 else Path(arg)
                             if p.is_absolute() and p.resolve().is_relative_to(conf['cwd']):
                                 arg = str(area / p.resolve().relative_to(conf['cwd']))
+                            elif index_arg == 0:
+                                arg = str(p)
                             argv.append(arg)
                         try:
                             temp = str(scratch['path'] / ('temp-' + side))
@@ -215,12 +268,27 @@ def compare(project: Path, plan_name: str, output: str, cancel_event=None) -> di
                                 memory_mb=512, max_output_bytes=1024 * 1024, cancel_event=scratch['cancel_event'],
                                 env=environment)
                             observed = {k: v for k, v in run.items() if k not in {'stdout', 'stderr'}}
-                            observed.update(stdout=base64.b64encode(run['stdout']).decode('ascii'),
-                                stderr=base64.b64encode(run['stderr']).decode('ascii'),
-                                files=observe_files(area, step['files'], project, destination))
+                            output_bytes += len(run['stdout']) + len(run['stderr'])
+                            channels = {}
+                            for channel in ('stdout', 'stderr'):
+                                data = run[channel]
+                                checksum = sha256(data).hexdigest()
+                                snapshot = destination/'channels'/checksum
+                                snapshot.parent.mkdir(parents=True, exist_ok=True)
+                                if not snapshot.exists():
+                                    snapshot.write_bytes(data)
+                                elif digest(snapshot) != checksum:
+                                    raise ValueError('Saved output channel changed')
+                                channels[channel] = {'bytes': len(data), 'sha256': checksum,
+                                    'snapshot': snapshot.relative_to(project).as_posix()}
+                            observed.update(**channels, files=observe_files(area, step['files'], project, destination))
                         except OSError as exc:
                             observed = {'status': 'unknown', 'reason': str(exc), 'cleanup': 'no invocation established'}
                         pair['observations'][side] = observed
+                    if output_bytes > 64 * 1024 * 1024:
+                        pair.update(status='unknown', reason='Total replay channel output exceeds 64 MiB')
+                        results.append(pair)
+                        raise ValueError(pair['reason'])
                     left, right = pair['observations']['original'], pair['observations']['candidate']
                     comparable = (left['status'] == right['status'] == 'observed'
                         and left['exit_code'] in step['expected_exit_codes']
@@ -229,7 +297,7 @@ def compare(project: Path, plan_name: str, output: str, cancel_event=None) -> di
                         for channel in ('exit_code', 'stdout', 'stderr', 'files'):
                             if left[channel] != right[channel]:
                                 pair['differences'].append(channel)
-                        has_observation = bool(left['stdout'] or left['stderr'] or step['files'])
+                        has_observation = bool(left['stdout']['bytes'] or left['stderr']['bytes'] or step['files'])
                         pair['status'] = 'fail' if pair['differences'] else 'pass' if has_observation else 'unknown'
                         if not has_observation:
                             pair['reason'] = 'No output or declared effect to establish comparable behavior'
@@ -279,6 +347,9 @@ def compare(project: Path, plan_name: str, output: str, cancel_event=None) -> di
 
 def fresh(project: Path, result: dict) -> bool:
     try:
+        if result.get('operation') == 'rea-verified-claims':
+            from .native_verification import fresh_native
+            return fresh_native(project, result)
         if result.get('engine')!=engine_identity(web=result.get('operation')=='independent-web-replay'):
             return False
         if result.get('browser_executable') and digest(Path(result['browser_executable']))!=result['browser_sha256']:
@@ -288,8 +359,24 @@ def fresh(project: Path, result: dict) -> bool:
         for conf in result['input_trees'].values():
             if tree(inside(project, conf['cwd'])) != conf['files']:
                 return False
+        if result.get('operation') == 'independent-web-replay':
+            from .web import web_runtime_identity
+            if result.get('web_runtime') != web_runtime_identity():
+                return False
+            files = result.get('observation_files', {})
+            if result.get('capture_path') not in files or not any('/screens/' in p for p in files):
+                return False
+            if any(digest(inside(project, name)) != checksum for name, checksum in files.items()):
+                return False
         for case in result.get('cases', []):
             for observation in case.get('observations', {}).values():
+                for channel in ('stdout', 'stderr'):
+                    observed_channel = observation.get(channel)
+                    if isinstance(observed_channel, dict):
+                        channel_path = inside(project, observed_channel['snapshot'])
+                        if (channel_path.stat().st_size != observed_channel['bytes']
+                                or digest(channel_path) != observed_channel['sha256']):
+                            return False
                 for observed in observation.get('files', {}).values():
                     if observed.get('snapshot') and digest(inside(project, observed['snapshot'])) != observed['sha256']:
                         return False

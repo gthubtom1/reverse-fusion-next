@@ -40,6 +40,7 @@ class LocalRoute:
     missing_support: tuple[str, ...]
     related_routes: tuple[dict[str, Any], ...] = ()
     next_stage: dict[str, Any] | None = None
+    method_reads: tuple[str, ...] = ()
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -57,17 +58,17 @@ class LocalRoute:
             "skill_available": self.skill_available,
             "hard_target": self.hard_target,
             "required_reads": list(self.required_reads),
+            "method_reads": list(self.method_reads),
             "missing_support": list(self.missing_support),
             "related_routes": list(self.related_routes),
             "next_stage": self.next_stage,
         }
 
 
-def runtime_context(route_id: str, hint: str, skill: str) -> tuple[bool, tuple[str, ...], tuple[str, ...]]:
-    """Expose the actual downstream instructions, including difficulty overlays.
+def runtime_context(route_id: str, hint: str, skill: str, *, methods=False) -> tuple[bool, tuple[str, ...], tuple[str, ...]]:
+    """Return the short contract, or on-demand technical method hints.
 
-    This is a read-only handoff, not a choice of tools or an execution recipe.
-    RULES also requires these overlays when difficulty is discovered later.
+    This read-only route is not a stage controller or an execution recipe.
     """
     repo = ROOT.parent.parent
     runtime_file = ROOT / "runtime.json"
@@ -82,6 +83,8 @@ def runtime_context(route_id: str, hint: str, skill: str) -> tuple[bool, tuple[s
         groups = [data["base_reads"], [skill], data["route_reads"].get(route_id, [])]
         if difficult:
             groups.extend([hard["common_reads"], hard["route_reads"].get(route_id, [])])
+        if data.get('method_loading') == 'on-demand' and not methods:
+            groups = [data['base_reads']]
         reads: list[str] = []
         for group in groups:
             if not isinstance(group, list) or any(not isinstance(item, str) for item in group):
@@ -261,5 +264,6 @@ def route(hint: str, *, primary: str | None = None) -> LocalRoute:
         missing_support=missing_support,
         related_routes=tuple(related),
         next_stage=next_stage,
+        method_reads=runtime_context(selected, hint, skill, methods=True)[1],
     )
 

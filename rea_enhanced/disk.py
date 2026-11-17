@@ -149,6 +149,9 @@ def _reserve(project, token, amount, mode, policy):
     with locked(path):
         value = _global(project)
         _prune(value)
+        existing = value['reservations'].get(token)
+        if existing and existing['project'] != str(project):
+            raise ValueError('Storage identity is reserved by another project; preserve its reservation')
         usage = shutil.disk_usage(project)
         reserve = max(policy['minimum_free_bytes'], int(usage.total * policy['minimum_free_fraction']))
         other = sum(e['bytes'] for e in value['reservations'].values())
@@ -163,7 +166,8 @@ def _release(project, token):
     path = _global_path(project)
     with locked(path):
         value = _global(project)
-        value['reservations'].pop(token, None)
+        if value['reservations'].get(token, {}).get('project') == str(project):
+            value['reservations'].pop(token, None)
         write(path, value)
 
 
@@ -185,6 +189,9 @@ def reserved_space(project, amount):
 
 def protected_paths(project, value):
     names = list(value['protected'])
+    for token, use in value.get('uses', {}).items():
+        if _busy(token):
+            names.extend(use['paths'])
     verified = {}
     def references(obj):
         if isinstance(obj, dict):
@@ -231,6 +238,42 @@ def protected_paths(project, value):
         except (ValueError, TypeError):
             continue
     return result
+
+
+@contextmanager
+def using_paths(project, names):
+    """Protect operation inputs only while their OS lease is held."""
+    project = project.resolve()
+    for name in names:
+        inside(project, name)
+    token = uuid.uuid4().hex
+    try:
+        with locked(_lease_path(token)):
+            with locked(_path(project)):
+                value = _load(project)
+                value['uses'] = {key: use for key, use in value.get('uses', {}).items() if _busy(key)}
+                value['uses'][token] = {'paths': names}
+                _save(project, value)
+            try:
+                yield
+            finally:
+                with locked(_path(project)):
+                    value = _load(project)
+                    value.get('uses', {}).pop(token, None)
+                    _save(project, value)
+    finally:
+        _retire_lease(token)
+
+
+def unprotect(project, names):
+    """Retire explicit/legacy protection; case references and active leases still win."""
+    project = project.resolve()
+    for name in names:
+        inside(project, name)
+    with locked(_path(project)):
+        value = _load(project)
+        value['protected'] = sorted(set(value['protected']) - set(names))
+        _save(project, value)
 
 
 def protect(project, names):
@@ -703,11 +746,11 @@ def dispatch(project, action='status', **args):
         return promote(project, args.get('id'))
     if action == 'review':
         return review(project, args.get('boundary'), args.get('decisions'))
-    if action == 'protect':
+    if action in {'protect', 'unprotect'}:
         names = args.get('paths')
         if not isinstance(names, list) or not names or any(not isinstance(p, str) for p in names):
             raise ValueError('Declare protected project-relative paths')
-        protect(project, names)
+        (protect if action == 'protect' else unprotect)(project, names)
         return maintain(project, apply=False)
     raise ValueError('Unknown storage action')
 

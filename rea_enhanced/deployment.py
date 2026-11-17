@@ -23,89 +23,27 @@ ROOT=Path(__file__).resolve().parents[1]
 
 def skill_text(root):
     repo=root.resolve().as_posix()
-    return f'''---
+    return f"""---
 name: reverse-fusion
-description: 分析软件并复刻、APK/网站/原生程序逆向、行为重建、专业安全分析，以及显式Reverse Fusion任务。使用共享Reverse方法和增强REA，保留完整目标。
+description: 软件/APK/网站分析与复刻；官方REA、按需Reverse和薄任务适配，保留完整目标。
 ---
 
 # Reverse Fusion cross-project adapter
 
-The canonical checkout is `{repo}` (enhanced REA v2). Keep the current user project
-as the outcome workspace. Ordinary development remains host-native without a case.
-Read `{repo}/docs/AGENT-WORKFLOW.md` and `{repo}/RULES.md` before specialist work.
-
-Use MCP `rf_next_case_open` with absolute project_root and the original plain-language
-request. Resume the same case on follow-up; record new requirements as supplements.
-If MCP is absent in this chat, use the identical CLI:
-`& "{repo}/.venv/Scripts/python.exe" "{repo}/scripts/next-cli.py" open --project-root "<outcome project>" --request "<original words>"`.
-Its returned domain skill/required_read_paths and official REA skill are mandatory
-reads before selecting methods. Do not copy the domain tree or change cwd to the
-shared checkout. Tool paths come from saved providers; actual operations determine health.
-
-Read status and readiness before implementation. Preserve the full objective, evidence,
-affected unknowns and remaining features in the same case. Current host is the only
-reasoning/coding agent and edits/builds in its native tools. Craft is not used; Spec is
-optional. Do not start another AI loop. Export the original REA evidence bundle into
-the outcome case before ending its investigation and import it on restart. Do not
-invent native evidence IDs or call owned comparison receipts official REA proof.
-
-Use existing official REA tools and appropriate installed tools; do not handwrite
-replacement decompilers. Refine the domain in the same case as evidence changes.
-Authorization/key availability is a dependency, not a fixed instruction to bypass,
-debug or dump; choose methods from evidence and the authorized task. Missing facts
-block dependent functions while independent work continues. Ask concrete human
-questions only for unavailable information or product decisions.
-
-Record features with evidence, dependencies, semantic review and declared checks.
-Before delivery, record coverage mapping every original/supplement source to features,
-then deliver with actual artifacts after fresh comparisons. Read the operation schemas
-from rf_next_case_record or COMPARISON.md; do not guess required fields. A new goal
-against an occupied case returns needs-context; choose a new case or explicit supplement.
-Run rf_next_compare or CLI compare against an independent reference with a reviewed
-finite plan. Separate visual and behavior results. A screenshot, exit zero or candidate
-unit test does not close the whole product goal. Changes invalidate old checks. Reuse
-unchanged passes, require new information to retry failures, retain unknowns and stop
-unproductive loops. Read `{repo}/docs/COMPARISON.md` for schemas and boundaries,
-`{repo}/docs/RECOVERY.md` for interruption and recovery. Do not shrink the request to a
-demo. Report actual tested scope, remaining requirements and concrete next steps.
-
-Keep the host's judgment and normal tools. Work on independent observable behaviors,
-with unknowns limited to affected behavior. Inspect status diagnostics when progress
-drifts. Observations default to immutable snapshots; use retention=live for changing
-specifications or dependencies. Do not re-register a historical report against a
-mutable build-current file. Use the optional record execute operation for expensive
-scripts when measured cost/reuse helps; exit zero is never acceptance. Prefer focused
-source/API replay for backend changes, affected full-scroll UI checks for UI changes,
-and package checks at integration milestones. No screenshot or clean-package loop
-is required after every edit. Register product identity before reconstruction delivery.
-Record every substantive user supplement; a follow-up is not permission to drop the goal.
-
-Read `{repo}/docs/DISK-MANAGEMENT.md` before operations that can produce large temporary
-outputs. Classify outputs when created: tier=persistent for durable material (normal original,
-code, evidence and delivery paths also stay persistent); tier=reusable for rebuildable material
-with a concrete next use, reuse_key/reuse_reason and input_paths; tier=disposable (default) for
-single-operation copies/profiles/intermediate packages. Allocate realistic reserve_bytes and
-reconstruction instructions, route output to the returned path, and complete only after all
-users/processes stop. Disposable data is reclaimed immediately; other tiers stay. Use reuse
-to verify reusable inputs/content and mark a new active use; complete that use afterwards.
-At the end of a meaningful operation batch/verification, phase change, resume or space pressure,
-use storage review with the corresponding boundary. It reclaims completed disposable data and
-returns reusable items needing a host keep/release judgment with a concrete reason. Do not turn
-every command into a review ritual. Keep a useful cache for a stated next use; release it when
-rebuilding is preferable. Promote completed unreferenced durable material to persistent and use
-the returned new path; referenced paths remain stable and protected. Persistent data cannot be
-downgraded. Age prompts cache review, never automatic cache deletion. Active work and evidence
-protection take priority. Enhanced comparisons/execute manage their own disposable work.
-Avoid full copies/packages per edit. Manual allocations remain active until completed. The
-connection's timer only reclaims eligible disposable data; it starts no second reasoning agent.
-Unregistered folders are retained. These tiers also cover ordinary large builds without a case.
-
-For installation only, follow `{repo}/docs/AGENT-BOOTSTRAP.md`. Never run inherited v1
-installers or standalone REA setup over this managed install. One owned MCP endpoint
-reverse-fusion-rea serves original tools plus enhancements. mcp-check probes the
-registered command; existing chats may require reconnect. No model/config/credential
-changes beyond this installer's owned skill, AGENTS block and MCP block.
-'''
+The canonical checkout is `{repo}`. Outcomes stay in the user's project.
+Read `{repo}/RULES.md`; operations: `{repo}/docs/AGENT-WORKFLOW.md`.
+The host chooses methods, order and tools. REA, Reverse and rf_next_* are optional support,
+not a required controller. Reuse reliable host records; no mandatory case/workitem or repeated
+bookkeeping. Use case/checkpoint only when useful for full-goal retention and recovery.
+Readiness describes acceptance gaps, never permission to investigate or edit. Methods load
+on demand. Keep official Evidence unchanged; external observations may receive an explicitly
+labeled host review, never automatic/native pass. Separate independent source, spec-based
+implementation, analysis and modified-original outputs; no silent goal substitution.
+Schemas: COMPARISON.md; recovery: RECOVERY.md. Large outputs: DISK-MANAGEMENT.md.
+MCP: reverse-fusion-rea; optional CLI: `{repo}/scripts/next-cli.py` with the checkout Python.
+Install only through AGENT-BOOTSTRAP.md; retain unrelated configuration and rollback.
+No Craft runtime, mandatory Spec or product-internal model loop.
+"""
 
 
 def _paths(home=None):
@@ -247,6 +185,23 @@ def probe(root=ROOT,home=None):
     return report
 
 
+def _verify_skill(payload, owner, path):
+    """Accept the canonical skill or a byte-exact skill from an installed receipt."""
+    if payload.replace(b'\r\n', b'\n') == skill_text(owner).encode().replace(b'\r\n', b'\n'):
+        return
+    for receipt in (owner/'state/migrations').glob('*.json'):
+        saved = read(receipt)
+        entry = saved.get('files', {}).get('skill', {})
+        if (saved.get('status') == 'installed' and saved.get('repository') == str(owner)
+                and entry.get('path') == str(path) and entry.get('after_sha256') == sha256(payload).hexdigest()):
+            return
+    # Explicit migration from the preserved v1 adapter still checks its full text.
+    from reverse_fusion.global_adapter import skill_text as legacy_skill_text
+    if payload.replace(b'\r\n', b'\n') == legacy_skill_text(owner).encode().replace(b'\r\n', b'\n'):
+        return
+    raise ValueError('Owned skill changed; preserve it for review before installation')
+
+
 def install(root=ROOT, home=None, replace_from=None, check=True):
     root=root.resolve();paths=_paths(home);allowed={root}
     if replace_from:allowed.add(Path(replace_from).resolve())
@@ -261,6 +216,8 @@ def install(root=ROOT, home=None, replace_from=None, check=True):
             owner=_skill_owner(payload) if kind=='skill' and payload else region.get('owner') if region else None
             if payload and kind=='skill' or region:
                 if owner not in allowed:raise ValueError('Entry belongs to another checkout; explicit --replace-from is required')
+        if originals['skill']:
+            _verify_skill(originals['skill'], skill_owner, paths['skill'])
         config=originals['config'];parsed=tomllib.loads(config.decode('utf-8-sig'))
         current=regions['config'];servers=parsed.get('mcp_servers',{})
         if not current and any(k in servers for k in ('reverse-fusion-rea','reverse-fusion-craft')):
@@ -310,8 +267,8 @@ def uninstall(root=ROOT,home=None):
         current=root if skill_owner==root and agents_region and agents_region.get('owner')==root else None
         regions={k:_region(k,v,root,current) for k,v in originals.items()}
         if originals['skill'] and skill_owner!=root:raise ValueError('Skill belongs to another checkout')
-        if originals['skill'].replace(b'\r\n',b'\n')!=skill_text(root).encode().replace(b'\r\n',b'\n') and originals['skill']:
-            raise ValueError('Owned skill changed; preserve it for review')
+        if originals['skill']:
+            _verify_skill(originals['skill'], root, paths['skill'])
         for kind in ('agents','config'):
             if regions[kind] and regions[kind]['owner']!=root:raise ValueError('Entry belongs to another checkout')
         if agents_region:
@@ -356,9 +313,9 @@ def rollback(receipt,root=ROOT):
             if not region or (sha256(payload[region['start']:region['end']]).hexdigest()!=record['after_sha256'] and not semantic_config):
                 raise ValueError('Owned entry changed after installation; preserve it for review')
             outputs[path]=(payload[:region['start']]+base64.b64decode(record['before'])+payload[region['end']:],record['file_existed'])
-        with file_transaction(paths):
+        with file_transaction([*paths, Path(receipt)]):
             for path,(data,existed) in outputs.items():
                 if not data and not existed:path.unlink()
                 else:atomic_write(path,data)
-        snapshot['status']='rolled-back';write(Path(receipt),snapshot)
+            snapshot['status']='rolled-back';write(Path(receipt),snapshot)
     return {'status':'rolled-back','receipt':str(receipt),'scope':'Owned regions restored; current unrelated bytes retained'}

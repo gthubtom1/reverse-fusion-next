@@ -54,14 +54,17 @@ def frozen_evidence(project, case_root, name):
 def product_record(project, change):
     candidates = file_identities(project, change.get('candidate_files'))
     references = file_identities(project, change.get('reference_files'))
-    if not candidates or not references:
-        raise ValueError('Product identity needs distinct candidate and reference identity files')
+    kind = change.get('kind', 'independent-reimplementation')
+    if kind not in {'independent-reimplementation', 'specification-implementation', 'modified-original'}:
+        raise ValueError('Product kind must distinguish independent, specification or modified-original output')
+    if not candidates or not references and kind != 'specification-implementation':
+        raise ValueError('Product identity needs candidate and reference files; specification implementation may omit the reference')
     if set(candidates) & set(references) or set(candidates.values()) & set(references.values()):
         raise ValueError('The reference identity cannot substitute for the candidate product')
     review = change.get('review')
     if not isinstance(review, str) or not review.strip():
         raise ValueError('Explain which files identify the candidate product and its reference')
-    return {'candidate_files': candidates, 'reference_files': references, 'review': review,
+    return {'candidate_files': candidates, 'reference_files': references, 'review': review, 'kind': kind,
             'qualification': 'Declared product files only; runtime launch and update identity require actual checks'}
 
 
@@ -75,7 +78,7 @@ def product_status(project, case):
             'reference_files': list(product['reference_files'])})
         valid = all(current[k] == product[k] for k in ('candidate_files', 'reference_files'))
         return {'status': 'current' if valid else 'stale', 'candidate_files': list(product['candidate_files']),
-                'reference_files': list(product['reference_files'])}
+                'reference_files': list(product['reference_files']), 'kind': product.get('kind', 'independent-reimplementation')}
     except (ValueError, OSError, KeyError, TypeError) as exc:
         return {'status': 'stale', 'reason': str(exc)}
 
@@ -152,7 +155,8 @@ def execute(project, case_root, change, expected_revision, cancel_event=None):
         'environment_sha256': sha256(repr(sorted(env.items())).encode()).hexdigest()}
     signature = sha256(json.dumps(binding, sort_keys=True).encode()).hexdigest()
     path = _record_path(project, case_root)
-    with locked(inside(project, case_root + '/operation-run')):
+    from .disk import using_paths
+    with locked(inside(project, case_root + '/operation-run')), using_paths(project, [*inputs, *artifacts]):
         with locked(path):
             case = _load(project, case_root)
             if type(expected_revision) is not int or expected_revision != case['revision']:
@@ -172,9 +176,19 @@ def execute(project, case_root, change, expected_revision, cancel_event=None):
                                 'workflow': status(project, case_root)}
                 except (OSError, ValueError, KeyError, TypeError):
                     pass
-            if len(previous) >= 3:
-                raise ValueError('Three identical operations already started; investigate or change relevant inputs before retrying')
-            if previous and latest and latest.get('exit_code') != 0 and not reason:
+            failed = 0
+            for event in reversed(previous):
+                try:
+                    old = read(inside(project, event['detail']['output']+'/operation.json'))
+                    if old.get('status') == 'observed' and old.get('exit_code') == 0:
+                        break
+                    failed += 1
+                except (OSError, ValueError):
+                    failed += 1
+            limit = case.get('limits', {}).get('max_operation_failures', 3)
+            if failed >= limit:
+                raise ValueError('Three identical unsuccessful operations or configured failure budget exhausted; investigate or record a justified budget change')
+            if failed and not reason:
                 raise ValueError('Unchanged unsuccessful operation needs concrete new information or corrected inputs')
             attempt = sum(e['operation'] == 'operation-start' for e in case['events']) + 1
             output = case_root + '/operations/' + str(attempt) + '-' + identity
@@ -186,8 +200,7 @@ def execute(project, case_root, change, expected_revision, cancel_event=None):
                 'features': features, 'purpose': purpose, 'output': output, 'retry_reason': reason})
             write(path, case)
         started = time.monotonic()
-        from .disk import protect, workspace
-        protect(project, [*inputs, *artifacts])
+        from .disk import workspace
         scratch_cleanup = {}
         try:
             with workspace(project, purpose, 'Rerun the recorded script with its bound inputs', scratch_bytes,

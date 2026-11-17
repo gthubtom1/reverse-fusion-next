@@ -1,0 +1,37 @@
+{
+  "project": "D:\\tmp\\reverse-next-slim-55fuatfp",
+  "tests": 177,
+  "failures": [
+    [
+      "tests_next.test_audit_repairs.InstallationRepairs.test_reinstall_preserves_modified_skill_and_accepts_recorded_previous_version",
+      "ValueError: Existing skill is unmanaged\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"D:\\tmp\\reverse-next-slim-55fuatfp\\source\\tests_next\\test_audit_repairs.py\", line 236, in test_reinstall_preserves_modified_skill_and_accepts_recorded_previous_version\n    with self.assertRaisesRegex(ValueError, 'skill changed'):\nAssertionError: \"skill changed\" does not match \"Existing skill is unmanaged\"\n"
+    ],
+    [
+      "tests_next.test_deployment.Deployment.test_uninstall_does_not_remove_modified_owned_skill",
+      "ValueError: Existing skill is unmanaged\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"D:\\tmp\\reverse-next-slim-55fuatfp\\source\\tests_next\\test_deployment.py\", line 96, in test_uninstall_does_not_remove_modified_owned_skill\n    with self.assertRaisesRegex(ValueError,'changed'):\nAssertionError: \"changed\" does not match \"Existing skill is unmanaged\"\n"
+    ],
+    [
+      "tests_next.test_slim.SlimInstructions.test_public_owned_contract_under_six_kibibytes",
+      "Traceback (most recent call last):\n  File \"D:\\tmp\\reverse-next-slim-55fuatfp\\source\\tests_next\\test_slim.py\", line 199, in test_public_owned_contract_under_six_kibibytes\n    self.assertLessEqual(len(payload), 6*1024)\nAssertionError: 6237 not less than or equal to 6144\n"
+    ]
+  ],
+  "errors": [
+    [
+      "tests_next.test_deployment.Deployment.test_clean_uninstall_and_reinstall_has_only_one_owned_server",
+      "Traceback (most recent call last):\n  File \"D:\\tmp\\reverse-next-slim-55fuatfp\\source\\tests_next\\test_deployment.py\", line 82, in test_clean_uninstall_and_reinstall_has_only_one_owned_server\n    result=uninstall(ROOT,self.home)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\tmp\\reverse-next-slim-55fuatfp\\source\\rea_enhanced\\deployment.py\", line 265, in uninstall\n    skill_owner=_skill_owner(originals['skill']) if originals['skill'] else None\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\tmp\\reverse-next-slim-55fuatfp\\source\\rea_enhanced\\deployment.py\", line 137, in _skill_owner\n    if b'# Reverse Fusion cross-project adapter' not in payload:raise ValueError('Existing skill is unmanaged')\n                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: Existing skill is unmanaged\n"
+    ],
+    [
+      "tests_next.test_deployment.Deployment.test_retired_orphan_end_comment_survives_clean_reinstall",
+      "Traceback (most recent call last):\n  File \"D:\\tmp\\reverse-next-slim-55fuatfp\\source\\tests_next\\test_deployment.py\", line 104, in test_retired_orphan_end_comment_survives_clean_reinstall\n    uninstall(ROOT,self.home)\n  File \"D:\\tmp\\reverse-next-slim-55fuatfp\\source\\rea_enhanced\\deployment.py\", line 265, in uninstall\n    skill_owner=_skill_owner(originals['skill']) if originals['skill'] else None\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\tmp\\reverse-next-slim-55fuatfp\\source\\rea_enhanced\\deployment.py\", line 137, in _skill_owner\n    if b'# Reverse Fusion cross-project adapter' not in payload:raise ValueError('Existing skill is unmanaged')\n                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: Existing skill is unmanaged\n"
+    ],
+    [
+      "tests_next.test_qualification.Qualification.test_test_and_public_contract_edits_change_release_identity",
+      "Traceback (most recent call last):\n  File \"D:\\tmp\\reverse-next-slim-55fuatfp\\source\\tests_next\\test_qualification.py\", line 12, in test_test_and_public_contract_edits_change_release_identity\n    before=source_identity(ROOT)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\tmp\\reverse-next-slim-55fuatfp\\source\\rea_enhanced\\qualification.py\", line 29, in source_identity\n    return {name:sha256((root/name).read_bytes().replace(b'\\r\\n',b'\\n')).hexdigest() for name in sorted(set(names))}\n                        ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\EXE\\python\\Lib\\pathlib.py\", line 1020, in read_bytes\n    with self.open(mode='rb') as f:\n         ^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\EXE\\python\\Lib\\pathlib.py\", line 1014, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'D:\\\\tmp\\\\reverse-next-slim-55fuatfp\\\\source\\\\docs\\\\DOMAIN-METHODS.md'\n"
+    ]
+  ],
+  "skipped": [],
+  "excluded_native_provider": [
+    "tests_next.test_mcp.LiveMCP.test_actual_native_provider_and_new_server_bundle_roundtrip"
+  ],
+  "elapsed_seconds": 123.406
+}

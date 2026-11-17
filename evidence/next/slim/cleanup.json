@@ -1,0 +1,75 @@
+{
+  "date": "2026-11-18",
+  "status": "pass",
+  "targets": [
+    {
+      "path": "D:\\tmp\\reverse-next-slim-55fuatfp\\source",
+      "files": 15881,
+      "bytes": 515785436,
+      "existed": true,
+      "absent_after": true
+    },
+    {
+      "path": "D:\\tmp\\reverse-next-slim-55fuatfp\\temp",
+      "files": 0,
+      "bytes": 0,
+      "existed": true,
+      "absent_after": true
+    },
+    {
+      "path": "D:\\tmp\\reverse-next-slim-55fuatfp\\coordinator",
+      "files": 2,
+      "bytes": 148,
+      "existed": true,
+      "absent_after": true
+    },
+    {
+      "path": "D:\\tmp\\reverse-slim-native-foo2sqex",
+      "files": 9,
+      "bytes": 63053,
+      "existed": true,
+      "absent_after": true
+    },
+    {
+      "path": "D:\\tmp\\reverse-slim-rollback-_cv0dlk5",
+      "files": 1464,
+      "bytes": 23511476,
+      "existed": true,
+      "absent_after": true
+    },
+    {
+      "path": "D:\\tmp\\reverse-slim-rollback-bdvwfz06",
+      "files": 1464,
+      "bytes": 23511476,
+      "existed": true,
+      "absent_after": true
+    },
+    {
+      "path": "D:\\Project\\reverse-next\\evidence\\next\\slim\\coordinator-baseline",
+      "files": 2,
+      "bytes": 114,
+      "existed": true,
+      "absent_after": true
+    },
+    {
+      "path": "D:\\Project\\reverse-next\\evidence\\next\\slim\\coordinator-candidate",
+      "files": 2,
+      "bytes": 114,
+      "existed": true,
+      "absent_after": true
+    }
+  ],
+  "scope": "Logical bytes/files of explicit owned inactive test copies only, not allocated disk space.",
+  "process_check": "psutil command/cwd inventory; no matching process; no AccessDenied ignored",
+  "archive_retained": "D:\\Project\\reverse-next\\state\\slim-baseline-20261118\\repaired-source.zip",
+  "archive_sha256": "257c7fb8e90d38f0dc012e0621e181b2bb55295313a75e8b2f5e8498532a4e52",
+  "evidence_files_protected": 20,
+  "source_files_protected": 85,
+  "reclaimed_logical_bytes": 562871817,
+  "reclaimed_files": 18824,
+  "source_unchanged": true,
+  "protected_evidence_unchanged": true,
+  "user_entries_unchanged": true,
+  "preserved_small_test_reports": "D:\\tmp\\reverse-next-slim-55fuatfp",
+  "finished_epoch": 1794943209.1802416
+}
