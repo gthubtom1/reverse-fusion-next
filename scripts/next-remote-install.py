@@ -5,7 +5,7 @@ from pathlib import Path
 import subprocess
 import sys
 import time
-import uuid
+import tempfile
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
@@ -24,8 +24,7 @@ def execute(argv,cwd,timeout,log):
     return result
 
 
-def main():
-    destination=ROOT/'work'/('remote-install-'+uuid.uuid4().hex[:10])
+def qualify(destination):
     evidence=ROOT/'evidence/next/final-audit';evidence.mkdir(parents=True,exist_ok=True)
     started=time.monotonic()
     env=dict(os.environ);env.update(GIT_TERMINAL_PROMPT='0',GCM_INTERACTIVE='Never')
@@ -73,6 +72,24 @@ def main():
         'scope':'Actual public default clone, new checkout/venv/download cache and temporary user install on this Windows x64 machine. Existing external OS providers remain discoverable; not a clean OS or another host model.'}
     write(evidence/'remote-install.json',report)
     print(json.dumps({'status':'pass','source_commit':commit,'tests':report['tests'],'seconds':report['elapsed_seconds']}))
+
+
+def main():
+    from rea_enhanced.disk import reserved_space, GiB
+    work=(ROOT/'work').resolve();work.mkdir(parents=True,exist_ok=True)
+    with reserved_space(ROOT, GiB):
+        with tempfile.TemporaryDirectory(prefix='remote-install-',dir=work) as selected:
+            destination=Path(selected).resolve()
+            if destination.parent!=work or not destination.is_relative_to(ROOT.resolve()):
+                raise ValueError('Temporary clone must remain within the selected checkout work directory')
+            qualify(destination)
+    report_path=ROOT/'evidence/next/final-audit/remote-install.json'
+    report=read(report_path)
+    if destination.exists():raise ValueError('New owned installation checkout was not reclaimed')
+    report.update(destination_retained=False,
+        temporary_cleanup='New exclusively owned temporary checkout removed after actual qualification and exact rollback; old checkouts untouched')
+    write(report_path,report)
+    print('New temporary installation checkout reclaimed; qualification receipts retained',flush=True)
 
 
 if __name__=='__main__':main()

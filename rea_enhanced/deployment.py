@@ -80,6 +80,16 @@ and package checks at integration milestones. No screenshot or clean-package loo
 is required after every edit. Register product identity before reconstruction delivery.
 Record every substantive user supplement; a follow-up is not permission to drop the goal.
 
+Read `{repo}/docs/DISK-MANAGEMENT.md` before operations that can produce large temporary
+outputs. Use rf_next_storage allocate for disposable copies/profiles/intermediate packages,
+declare realistic reserve_bytes and reconstruction instructions, and route tool output to
+its returned path. Keep original inputs, code, useful observations and deliveries persistent.
+After all users/processes stop, complete the allocation to reclaim it; protect or save anything
+still needed first. Enhanced comparisons and optional execute manage their own temporary work.
+Do not keep making full copies or packages per edit. Inspect storage/free space before more
+large work. Manual scratch stays active until completed; background maintenance runs only
+while the MCP connection lives. Unregistered folders are retained, not guessed to be garbage.
+
 For installation only, follow `{repo}/docs/AGENT-BOOTSTRAP.md`. Never run inherited v1
 installers or standalone REA setup over this managed install. One owned MCP endpoint
 reverse-fusion-rea serves original tools plus enhancements. mcp-check probes the
@@ -213,7 +223,7 @@ def probe(root=ROOT,home=None):
     with StdioMcp([entry['command'],*entry['args']],cwd=Path(entry['cwd']),env=environment(root),timeout=60) as client:
         identity=client.initialize();tools=catalog(client)
         if identity['serverInfo']['name']!='rea-enhanced':raise ValueError('Unexpected enhanced REA server')
-        if not {'binary_session','rf_next_case_open','rf_next_compare'}<={t['name'] for t in tools}:raise ValueError('Required tool interfaces missing')
+        if not {'binary_session','rf_next_case_open','rf_next_compare','rf_next_storage'}<={t['name'] for t in tools}:raise ValueError('Required tool interfaces missing')
         observed={}
         for name in ('binary_session','list_frida_devices'):
             result=client.request('tools/call',{'name':name,'arguments':{}})

@@ -34,3 +34,8 @@
 unknown影响整个调查时显式scope=case；未指明影响范围的关键未知不能悄悄放行。
 
 操作见COMPARISON.md，安装见AGENT-BOOTSTRAP.md，恢复见RECOVERY.md。旧领域资料用于专业知识；旧Spec/Craft实现指令由本文件、根RULES和当前reconstruction技能取代。
+
+大量文件操作先读DISK-MANAGEMENT.md，使用rf_next_storage登记临时输出及空间预算，
+结束后complete；原始输入、当前成果和有效证据保存在持久路径。比较逐场景回收执行副本，
+execute接管其TEMP目录；宿主直接命令和原REA工具需明确把可重建输出指向分配空间。
+不能把任意旧work目录当作垃圾，也不能用反复整包复制填满磁盘。

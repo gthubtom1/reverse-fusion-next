@@ -12,6 +12,9 @@ from rea_enhanced.storage import write,digest
 
 
 def main():
+    # Preserve readable output in Windows pipes regardless of the legacy console code page.
+    if hasattr(sys.stdout, 'reconfigure'):
+        sys.stdout.reconfigure(encoding='utf-8', errors='replace')
     before=source_identity(ROOT);started=time.monotonic()
     run=subprocess.run([sys.executable,'-m','unittest','discover','-s','tests_next','-v'],
         cwd=ROOT,capture_output=True,timeout=240)

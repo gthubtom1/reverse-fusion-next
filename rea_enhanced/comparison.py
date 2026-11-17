@@ -50,7 +50,7 @@ def tree(root):
     return files
 
 
-def observe_files(root, names):
+def observe_files(root, names, project=None, destination=None):
     result = {}
     for name in names:
         p = inside(root, name)
@@ -59,7 +59,14 @@ def observe_files(root, names):
         elif p.stat().st_size > 4 * 1024 * 1024:
             result[name] = {'status': 'output-limit'}
         else:
-            result[name] = {'status': 'observed', 'bytes': p.stat().st_size, 'sha256': digest(p)}
+            checksum = digest(p)
+            result[name] = {'status': 'observed', 'bytes': p.stat().st_size, 'sha256': checksum}
+            if destination is not None:
+                target = destination / 'effects' / checksum
+                if not target.exists():
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copyfile(p, target)
+                result[name]['snapshot'] = target.relative_to(project).as_posix()
     return result
 
 
@@ -144,7 +151,7 @@ def validate_plan(project, plan, destination):
 
 def engine_identity(web=False):
     root=Path(__file__).resolve().parents[1]
-    names=['rea_enhanced/comparison.py','reverse_fusion/owned_process.py']
+    names=['rea_enhanced/comparison.py','rea_enhanced/disk.py','reverse_fusion/owned_process.py']
     if web:names+=['rea_enhanced/web.py','components/rea-enhanced/web-replay.mjs']
     return {name:digest(root/name) for name in names}
 
@@ -169,57 +176,69 @@ def compare(project: Path, plan_name: str, output: str, cancel_event=None) -> di
     plan_sha = digest(plan_path)
     engine=engine_identity()
     launch=process_identity(sides,plan)
+    from .disk import protect, workspace, MiB
+    protect(project, [plan_name, output, *(c['config']['cwd'] for c in sides.values())])
     destination.mkdir(parents=True)
+    cleanup = []
+    scratch_budget = max(64 * MiB, sum(sum(p.stat().st_size for p in c['cwd'].rglob('*') if p.is_file()) for c in sides.values()) + 32 * MiB)
     started, results, failure = time.perf_counter(), [], None
     try:
         for scenario in plan['scenarios']:
-            places = {}
-            for side, conf in sides.items():
-                area = destination / 'runs' / scenario['id'] / side
-                shutil.copytree(conf['cwd'], area)
-                places[side] = area
-            for index, step in enumerate(scenario['steps']):
-                if cancel_event and cancel_event.is_set():
-                    raise ValueError('Comparison cancelled')
-                if time.perf_counter() - started >= 600:
-                    raise ValueError('Total comparison deadline exceeded')
-                pair = {'scenario': scenario['id'], 'step': index, 'observations': {}, 'differences': []}
+            with workspace(project, 'Finite comparison ' + scenario['id'],
+                           'Rerun ' + plan_name + ' with unchanged declared fixtures', scratch_budget,
+                           cancel_event=cancel_event) as scratch:
+                places = {}
                 for side, conf in sides.items():
-                    area = places[side]
-                    argv = []
-                    for arg in conf['config']['argv']:
-                        p = Path(arg)
-                        if p.is_absolute() and p.resolve().is_relative_to(conf['cwd']):
-                            arg = str(area / p.resolve().relative_to(conf['cwd']))
-                        argv.append(arg)
-                    try:
-                        run = run_owned([*argv, *step['args']], cwd=area, stdin=step['stdin'].encode('utf-8'),
-                            timeout=min(plan['timeout_seconds'], max(.001, 600 - (time.perf_counter() - started))),
-                            memory_mb=512, max_output_bytes=1024 * 1024, cancel_event=cancel_event,
-                            env=launch_environment(plan))
-                        observed = {k: v for k, v in run.items() if k not in {'stdout', 'stderr'}}
-                        observed.update(stdout=base64.b64encode(run['stdout']).decode('ascii'),
-                            stderr=base64.b64encode(run['stderr']).decode('ascii'),
-                            files=observe_files(area, step['files']))
-                    except OSError as exc:
-                        observed = {'status': 'unknown', 'reason': str(exc), 'cleanup': 'no invocation established'}
-                    pair['observations'][side] = observed
-                left, right = pair['observations']['original'], pair['observations']['candidate']
-                comparable = (left['status'] == right['status'] == 'observed'
-                    and left['exit_code'] in step['expected_exit_codes']
-                    and all(f['status'] == 'observed' for f in left['files'].values()))
-                if comparable:
-                    for channel in ('exit_code', 'stdout', 'stderr', 'files'):
-                        if left[channel] != right[channel]:
-                            pair['differences'].append(channel)
-                    has_observation = bool(left['stdout'] or left['stderr'] or step['files'])
-                    pair['status'] = 'fail' if pair['differences'] else 'pass' if has_observation else 'unknown'
-                    if not has_observation:
-                        pair['reason'] = 'No output or declared effect to establish comparable behavior'
-                else:
-                    pair['status'] = 'unknown'
-                    pair['reason'] = 'Incomplete runtime, unexpected reference exit, or missing effect'
-                results.append(pair)
+                    area = scratch['path'] / side
+                    shutil.copytree(conf['cwd'], area)
+                    places[side] = area
+                for index, step in enumerate(scenario['steps']):
+                    if cancel_event and cancel_event.is_set():
+                        raise ValueError('Comparison cancelled')
+                    if time.perf_counter() - started >= 600:
+                        raise ValueError('Total comparison deadline exceeded')
+                    pair = {'scenario': scenario['id'], 'step': index, 'observations': {}, 'differences': []}
+                    for side, conf in sides.items():
+                        area = places[side]
+                        argv = []
+                        for arg in conf['config']['argv']:
+                            p = Path(arg)
+                            if p.is_absolute() and p.resolve().is_relative_to(conf['cwd']):
+                                arg = str(area / p.resolve().relative_to(conf['cwd']))
+                            argv.append(arg)
+                        try:
+                            run = run_owned([*argv, *step['args']], cwd=area, stdin=step['stdin'].encode('utf-8'),
+                                timeout=min(plan['timeout_seconds'], max(.001, 600 - (time.perf_counter() - started))),
+                                memory_mb=512, max_output_bytes=1024 * 1024, cancel_event=scratch['cancel_event'],
+                                env=launch_environment(plan))
+                            observed = {k: v for k, v in run.items() if k not in {'stdout', 'stderr'}}
+                            observed.update(stdout=base64.b64encode(run['stdout']).decode('ascii'),
+                                stderr=base64.b64encode(run['stderr']).decode('ascii'),
+                                files=observe_files(area, step['files'], project, destination))
+                        except OSError as exc:
+                            observed = {'status': 'unknown', 'reason': str(exc), 'cleanup': 'no invocation established'}
+                        pair['observations'][side] = observed
+                    left, right = pair['observations']['original'], pair['observations']['candidate']
+                    comparable = (left['status'] == right['status'] == 'observed'
+                        and left['exit_code'] in step['expected_exit_codes']
+                        and all(f['status'] == 'observed' for f in left['files'].values()))
+                    if comparable:
+                        for channel in ('exit_code', 'stdout', 'stderr', 'files'):
+                            if left[channel] != right[channel]:
+                                pair['differences'].append(channel)
+                        has_observation = bool(left['stdout'] or left['stderr'] or step['files'])
+                        pair['status'] = 'fail' if pair['differences'] else 'pass' if has_observation else 'unknown'
+                        if not has_observation:
+                            pair['reason'] = 'No output or declared effect to establish comparable behavior'
+                    else:
+                        pair['status'] = 'unknown'
+                        pair['reason'] = 'Incomplete runtime, unexpected reference exit, or missing effect'
+                    results.append(pair)
+                if scratch['failure']:
+                    raise ValueError(scratch['failure'][0])
+            cleanup.append(scratch['cleanup'])
+            if scratch['failure']:
+                raise ValueError(scratch['failure'][0])
     except (OSError, ValueError) as exc:
         failure = str(exc)
     changed = []
@@ -244,6 +263,8 @@ def compare(project: Path, plan_name: str, output: str, cancel_event=None) -> di
         'engine':engine, 'process_runtime':launch,
         'input_trees': {side: {'cwd': conf['config']['cwd'], 'files': conf['tree']} for side, conf in sides.items()},
         'cases': results, 'changed_inputs': changed, 'failure': failure,
+        'storage': {'cleanup': cleanup, 'working_copies': 'owned scratch; reclaimed after each scenario',
+                    'observed_files': 'content-addressed snapshots retained under effects'},
         'elapsed_ms': round((time.perf_counter() - started) * 1000, 3),
         'rea_native_proof': 'not-performed', 'whole_product_acceptance': 'not-established',
         'limitations': ['Only declared ordered inputs, raw output, exit and named file effects were compared.',
@@ -264,6 +285,11 @@ def fresh(project: Path, result: dict) -> bool:
         for conf in result['input_trees'].values():
             if tree(inside(project, conf['cwd'])) != conf['files']:
                 return False
+        for case in result.get('cases', []):
+            for observation in case.get('observations', {}).values():
+                for observed in observation.get('files', {}).values():
+                    if observed.get('snapshot') and digest(inside(project, observed['snapshot'])) != observed['sha256']:
+                        return False
         if result.get('operation') == 'independent-finite-replay':
             plan = read(inside(project,result['plan']))
             sides = {side:{'config':plan[side],'cwd':inside(project,plan[side]['cwd'])}

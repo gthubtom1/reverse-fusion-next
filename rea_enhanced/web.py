@@ -89,8 +89,16 @@ def compare_web(project,plan_name,output,cancel_event=None):
             target.parent.mkdir(parents=True,exist_ok=True)
             shutil.copyfile(source,target)
     request=destination/'request.json';write(request,{'plan':plan,'output':str(destination),'browser':browser})
-    result=run_owned([node,str(ROOT/'components/rea-enhanced/web-replay.mjs'),str(ROOT),str(request)],
-        cwd=ROOT,stdin=b'',timeout=180,memory_mb=1536,max_output_bytes=8*1024*1024,env=environment(ROOT),cancel_event=cancel_event)
+    from .disk import protect, workspace, MiB
+    protect(project, [plan_name, output, plan['original']['cwd'], plan['candidate']['cwd']])
+    with workspace(project, 'Browser comparison temporary profile', 'Rerun ' + plan_name, 256 * MiB,
+                   cancel_event=cancel_event) as scratch:
+        env = {**environment(ROOT), 'TEMP':str(scratch['path']), 'TMP':str(scratch['path']),
+               'TMPDIR':str(scratch['path'])}
+        result=run_owned([node,str(ROOT/'components/rea-enhanced/web-replay.mjs'),str(ROOT),str(request)],
+            cwd=ROOT,stdin=b'',timeout=180,memory_mb=1536,max_output_bytes=8*1024*1024,env=env,cancel_event=scratch['cancel_event'])
+    if scratch['failure']:
+        result.update(status='unknown',reason=scratch['failure'][0])
     try:captured=json.loads(result['stdout'])
     except (ValueError,UnicodeError):captured={'records':[],'error':'Browser did not produce complete JSON'}
     write(destination/'capture.json',captured)
@@ -143,6 +151,7 @@ def compare_web(project,plan_name,output,cancel_event=None):
         'changed_inputs':changed,'browser_executable':browser,'browser_sha256':digest(Path(browser)),
         'process':{k:v for k,v in result.items() if k not in {'stdout','stderr'}},
         'capture_path':output+'/capture.json','elapsed_ms':result['elapsed_ms'],
+        'temporary_storage':scratch['cleanup'],
         'rea_native_proof':'not-performed','whole_product_acceptance':'not-established',
         'limitations':['Only declared actions/selectors/storage keys/viewport screenshots were compared.',
             'Source-to-served-URL correspondence is declared by the host, not automatically authenticated.',

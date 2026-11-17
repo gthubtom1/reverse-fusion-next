@@ -102,6 +102,9 @@ def execute(project, case_root, change, expected_revision, cancel_event=None):
     timeout = change.get('timeout_seconds', 120)
     if type(timeout) not in (int, float) or not 0 < timeout <= 600:
         raise ValueError('Operation timeout must be in (0, 600]')
+    scratch_bytes = change.get('scratch_bytes', 256 * 1024 ** 2)
+    if type(scratch_bytes) is not int or scratch_bytes < 1024 ** 2:
+        raise ValueError('Declare at least 1 MiB of temporary working capacity')
     cwd_name = change.get('cwd', '.')
     cwd = project if cwd_name == '.' else inside(project, cwd_name)
     if not cwd.is_dir():
@@ -182,10 +185,22 @@ def execute(project, case_root, change, expected_revision, cancel_event=None):
                 'features': features, 'purpose': purpose, 'output': output, 'retry_reason': reason})
             write(path, case)
         started = time.monotonic()
+        from .disk import protect, workspace
+        protect(project, [*inputs, *artifacts])
+        scratch_cleanup = {}
         try:
-            result = run_owned(run_argv, cwd=cwd, stdin=b'', timeout=timeout, memory_mb=2048,
-                               max_output_bytes=4 * 1024 * 1024, env=env, cancel_event=cancel_event)
-        except OSError as exc:
+            with workspace(project, purpose, 'Rerun the recorded script with its bound inputs', scratch_bytes,
+                           cancel_event=cancel_event) as scratch:
+                run_env = {**env, 'TEMP': str(scratch['path']), 'TMP': str(scratch['path']),
+                           'TMPDIR': str(scratch['path']), 'RF_NEXT_SCRATCH': str(scratch['path'])}
+                result = run_owned(run_argv, cwd=cwd, stdin=b'', timeout=timeout, memory_mb=2048,
+                                   max_output_bytes=4 * 1024 * 1024, env=run_env, cancel_event=scratch['cancel_event'])
+                if scratch['failure']:
+                    result.update(status='unknown', reason=scratch['failure'][0])
+            scratch_cleanup = scratch['cleanup']
+            if scratch['failure']:
+                result.update(status='unknown', reason=scratch['failure'][0])
+        except (OSError, ValueError) as exc:
             result = {'status': 'unknown', 'exit_code': None, 'reason': str(exc),
                       'stdout': b'', 'stderr': b'', 'cleanup': 'no process established'}
         (destination / 'stdout.log').write_bytes(result.pop('stdout'))
@@ -208,6 +223,7 @@ def execute(project, case_root, change, expected_revision, cancel_event=None):
             if artifact.is_file():
                 produced[name] = digest(artifact)
         receipt = {**result, 'id': identity, 'kind': kind, 'features': features, 'purpose': purpose,
+            'temporary_storage': scratch_cleanup,
             'binding': binding, 'reusable': reusable, 'artifacts': produced, 'changed_inputs': changed,
             'elapsed_seconds': round(time.monotonic() - started, 3),
             'acceptance': 'not-established; execution and artifacts only',

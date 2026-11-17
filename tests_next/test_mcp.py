@@ -74,7 +74,7 @@ class LiveMCP(unittest.TestCase):
             frida=enhanced.request('tools/call',{'name':'list_frida_devices','arguments':{}})
         original_by={t['name']:t for t in source};actual_by={t['name']:t for t in actual}
         self.assertEqual({name:actual_by[name] for name in original_by},original_by)
-        self.assertEqual(len(actual),len(source)+4)
+        self.assertEqual(len(actual),len(source)+5)
         self.assertEqual(prompts,actual_prompts)
         self.assertFalse(frida.get('isError'),frida)
         self.assertTrue(any(d['type']=='local' for d in frida['structuredContent']['devices']))
@@ -114,6 +114,14 @@ class LiveMCP(unittest.TestCase):
                         'artifacts':['result.txt'],'purpose':'Verify measured MCP operation','reusable':True}})
                 self.assertEqual(result['operation']['exit_code'],0)
                 self.assertFalse(result['workflow']['features']['F1']['complete'])
+                allocation=call('rf_next_storage',{'action':'allocate','purpose':'Owned MCP storage test',
+                    'rebuild':'Rerun this test','reserve_bytes':1048576})
+                temporary=Path(allocation['path']);(temporary/'tmp').write_bytes(b'owned temporary')
+                observed=call('rf_next_storage',{'action':'status'})
+                self.assertEqual(observed['entries'][0]['state'],'active')
+                completed=call('rf_next_storage',{'action':'complete','id':allocation['id']})
+                self.assertGreater(completed['reclaimed_bytes'],0)
+                self.assertFalse(temporary.exists())
             self.assertEqual(client.cleanup['status'],'verified')
 
     def test_native_bundle_survives_new_server(self):

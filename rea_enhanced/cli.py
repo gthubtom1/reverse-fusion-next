@@ -16,6 +16,10 @@ def main(argv=None):
     commands.add_parser('mcp')
     commands.add_parser('doctor')
     commands.add_parser('bootstrap')
+    storage_parser = commands.add_parser('storage')
+    storage_parser.add_argument('--project-root', type=Path, default=Path.cwd())
+    storage_parser.add_argument('--action', choices=['status','sweep','allocate','complete','policy','protect'], default='status')
+    storage_parser.add_argument('--options-file', type=Path)
     release_parser=commands.add_parser('release-check')
     release_parser.add_argument('--require-deployed',action='store_true')
     for name in ('install','uninstall','mcp-check'):
@@ -42,6 +46,11 @@ def main(argv=None):
             p.add_argument('--retry-reason')
     args = parser.parse_args(argv)
     try:
+        if args.command == 'storage':
+            from .disk import dispatch
+            result = dispatch(args.project_root, args.action, **(read(args.options_file) if args.options_file else {}))
+            print(json.dumps(result, ensure_ascii=True, indent=2))
+            return 0
         if args.command == 'mcp':
             from .server import serve
             return serve()

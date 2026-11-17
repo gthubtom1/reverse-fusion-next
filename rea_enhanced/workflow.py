@@ -353,6 +353,7 @@ def status(project: Path, case_root='work/current-case'):
         next_action='Deliver saved artifacts with finite tested scope and coverage review; preserve remaining external limitations.'
     def brief(value):
         return {k: v for k, v in value.items() if k not in {'inputs', 'checks'}} if value else value
+    from .disk import summary as storage_summary
     return {'status': stage, 'case_root': case_root, 'revision': case['revision'],
         'original_request': case['original_request'], 'objective': case['objective'],
         'route':{**case['route'],'required_read_paths':[str(ROOT/name) for name in case['route'].get('required_reads',[])]},
@@ -369,6 +370,7 @@ def status(project: Path, case_root='work/current-case'):
         'diagnostics': inspect_case(case, features, evidence_state),
         'validation_guidance': validation_guidance(features),
         'operations': operation_summary(case),
+        'storage': storage_summary(project),
         'evidence': {ref: {'path': e['path'], 'source_path': e.get('source_path', e['path']),
                          'retention': e.get('retention', 'live'), 'current': evidence_state[ref]}
                      for ref, e in case['evidence'].items() if not evidence_state[ref]},

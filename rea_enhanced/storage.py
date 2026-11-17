@@ -41,13 +41,13 @@ def write(path: Path, value: dict) -> None:
 
 
 @contextmanager
-def locked(path: Path):
+def locked(path: Path, timeout=5):
     lock = path.with_suffix('.lock')
     lock.parent.mkdir(parents=True, exist_ok=True)
     with lock.open('a+b') as stream:
         if stream.seek(0, os.SEEK_END) == 0:
             stream.write(b'\0'); stream.flush()
-        until = time.monotonic() + 5
+        until = time.monotonic() + timeout
         while True:
             try:
                 stream.seek(0)

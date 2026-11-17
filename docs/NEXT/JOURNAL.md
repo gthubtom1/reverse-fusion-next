@@ -113,3 +113,11 @@ Transfer diagnosis confirmed transport truncation: response advertised41851672 b
 Actual ranged transfer completed in74.406 seconds with the unchanged REA full pin and41851672 bytes. All99 source/contract-bound engineering tests pass. Publishing this final implementation before a new public clone/install qualification.
 
 Final2.2.0 implementation b01eaf83c011a6eec9ac48cd53002f82c80d3211 passed99 current tests locally and99 from an actual independent GitHub default clone. Public install acquired its own pinned assets via verified bounded ranges; real original provider/MCP/browser operations passed and temporary-user rollback was exact. Registered local require-deployed release-check passed with259 tools and a single owned endpoint. Current acceptance/status/resume separate these engineering facts from unmeasured model effectiveness; failed transfers retained. Target reconstruction files/chat remained untouched.
+
+## 2026-11-17 磁盘生命周期开始
+
+用户补充并确认新目标。旧版仅有进程清理，无充分磁盘保留策略。按DISK-LIFECYCLE逐项实现，先统计，再加入归属/保护/租约/预留/周期维护，不恢复旧样本任务。
+
+磁盘增量已实现归属标记、项目预算、跨进程卷预留、租约和周期维护，比较逐场景回收并保存观察文件，execute管理TEMP。17项初步反例通过，新增独立进程和安装测试自清理后将跑全套当前资格。示例目录只读扫描已读到66,210,291,687字节/1,046,780文件，有超长路径错误；不猜测删除旧资料。
+
+2.3.0全部119项源码绑定工程检查通过（含20项磁盘反例、真实MCP/原生/浏览器）。首次全套发现浏览器自行删除文件与占用扫描竞态，已区分live统计与严格删除扫描并加入反例；旧失败记录保留。真实D盘MCP回收64MiB数据，持久三文件摘要不变。本机入口已更新为2.3.0/260工具；下一步真实公共clone安装验证。

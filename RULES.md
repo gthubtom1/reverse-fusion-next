@@ -27,4 +27,11 @@ package checks for integration milestones or package/runtime changes. Do not man
 Register candidate/reference product identities before reconstruction delivery, and verify updates keep the candidate product.
 No model-performance gain or arbitrary-target completeness follows from passing the engineering suite.
 
+Before large temporary writes, read docs/DISK-MANAGEMENT.md. Allocate owned scratch with
+realistic byte capacity/reconstruction instructions via rf_next_storage; direct external
+tools to it and complete only after all users stop. Keep original inputs, code, useful
+observations and deliveries persistent. Protect anything still needed. Comparisons reclaim
+execution copies per scenario; execute manages its TEMP directory. Unregistered directories
+are retained. Volume reservation/monitoring is not an OS quota over arbitrary host commands.
+
 Installation: docs/AGENT-BOOTSTRAP.md is the only public entry. Only owned skill/AGENTS/MCP regions may be changed. Preserve unrelated configuration and credentials. Legacy v1 installers/checkpoints/source are historical. docs/ACTIVE-DOCUMENTS.json lists current public documentation; development resumes from docs/NEXT/RESUME.md and STATUS.json.

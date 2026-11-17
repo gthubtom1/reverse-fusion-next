@@ -1,0 +1,440 @@
+{
+  "started_at": 1794924396.432393,
+  "roots": [
+    {
+      "root": "D:\\Project\\\u82f1\u96c4\u8054\u76df",
+      "bytes": 66210291687,
+      "files": 1046780,
+      "largest_directories": [
+        {
+          "path": "",
+          "bytes": 66210291687,
+          "files": 1046780
+        },
+        {
+          "path": "work",
+          "bytes": 64650967133,
+          "files": 1005108
+        },
+        {
+          "path": "work/reconstruction-v2",
+          "bytes": 63188388887,
+          "files": 948430
+        },
+        {
+          "path": "work/current-case",
+          "bytes": 1462578246,
+          "files": 56678
+        },
+        {
+          "path": "skinforge-rebuild",
+          "bytes": 1180245484,
+          "files": 41657
+        },
+        {
+          "path": "skinforge-rebuild/dist-292",
+          "bytes": 296470491,
+          "files": 10723
+        },
+        {
+          "path": "skinforge-rebuild/dist-local",
+          "bytes": 292699932,
+          "files": 10677
+        },
+        {
+          "path": "skinforge-rebuild/dist",
+          "bytes": 292677884,
+          "files": 10673
+        },
+        {
+          "path": "skinforge-rebuild/resources",
+          "bytes": 200745767,
+          "files": 9329
+        },
+        {
+          "path": "skinforge-rebuild/build-local",
+          "bytes": 47416897,
+          "files": 16
+        },
+        {
+          "path": "skinforge-rebuild/build",
+          "bytes": 46669273,
+          "files": 16
+        },
+        {
+          "path": "skinforge-rebuild/web",
+          "bytes": 2233187,
+          "files": 67
+        },
+        {
+          "path": "skinforge-rebuild/skinforge",
+          "bytes": 680826,
+          "files": 60
+        },
+        {
+          "path": "skinforge-rebuild/tests",
+          "bytes": 437297,
+          "files": 42
+        },
+        {
+          "path": "skinforge-rebuild/tools",
+          "bytes": 165310,
+          "files": 36
+        },
+        {
+          "path": ".pytest_cache",
+          "bytes": 9596,
+          "files": 5
+        },
+        {
+          "path": "skinforge-rebuild/.pytest_cache",
+          "bytes": 9565,
+          "files": 4
+        },
+        {
+          "path": ".pytest_cache/v",
+          "bytes": 9066,
+          "files": 2
+        },
+        {
+          "path": ".rea-enhanced",
+          "bytes": 79,
+          "files": 2
+        },
+        {
+          "path": ".reverse-fusion",
+          "bytes": 74,
+          "files": 2
+        }
+      ],
+      "largest_files": [
+        {
+          "path": "D:\\Project\\\u82f1\u96c4\u8054\u76df\\work\\reconstruction-v2\\fixtures\\game\\DATA\\FINAL\\Maps\\Shipping\\Map22.wad.client",
+          "bytes": 2752779717
+        },
+        {
+          "path": "D:\\Project\\\u82f1\u96c4\u8054\u76df\\work\\reconstruction-v2\\fixtures\\game\\DATA\\FINAL\\Maps\\Shipping\\Map11.wad.client",
+          "bytes": 2528886306
+        },
+        {
+          "path": "D:\\Project\\\u82f1\u96c4\u8054\u76df\\work\\reconstruction-v2\\runs\\reference-292-ward-apply-02\\data\\roaming\\com.congroof.skinforge\\apply\\profiles\\skinforge_7560446eac5e26ee\\DATA\\FINAL\\Maps\\Shipping\\Map11.wad.client",
+          "bytes": 2169425579
+        },
+        {
+          "path": "D:\\Project\\\u82f1\u96c4\u8054\u76df\\work\\reconstruction-v2\\fixtures\\game\\DATA\\FINAL\\Maps\\Shipping\\Map12.wad.client",
+          "bytes": 1392038346
+        },
+        {
+          "path": "D:\\Project\\\u82f1\u96c4\u8054\u76df\\work\\reconstruction-v2\\runs\\reference-292-ward-apply-02\\data\\roaming\\com.congroof.skinforge\\apply\\profiles\\skinforge_7560446eac5e26ee\\DATA\\FINAL\\Maps\\Shipping\\Map12.wad.client",
+          "bytes": 1370949990
+        },
+        {
+          "path": "D:\\Project\\\u82f1\u96c4\u8054\u76df\\work\\reconstruction-v2\\fixtures\\game\\DATA\\FINAL\\Maps\\Shipping\\Map30.wad.client",
+          "bytes": 646898154
+        },
+        {
+          "path": "D:\\Project\\\u82f1\u96c4\u8054\u76df\\work\\reconstruction-v2\\fixtures\\game\\DATA\\FINAL\\Maps\\Shipping\\Map453.wad.client",
+          "bytes": 492921463
+        },
+        {
+          "path": "D:\\Project\\\u82f1\u96c4\u8054\u76df\\work\\reconstruction-v2\\runs\\reference-292-ward-apply-02\\data\\roaming\\com.congroof.skinforge\\apply\\profiles\\skinforge_7560446eac5e26ee\\DATA\\FINAL\\Maps\\Shipping\\Map453.wad.client",
+          "bytes": 464340886
+        },
+        {
+          "path": "D:\\Project\\\u82f1\u96c4\u8054\u76df\\work\\reconstruction-v2\\generation-extra-20261117-092540\\profile\\hashes\\hashes.game.txt",
+          "bytes": 233727528
+        },
+        {
+          "path": "D:\\Project\\\u82f1\u96c4\u8054\u76df\\work\\reconstruction-v2\\generation-extra-20261117-092905\\profile\\hashes\\hashes.game.txt",
+          "bytes": 233727528
+        },
+        {
+          "path": "D:\\Project\\\u82f1\u96c4\u8054\u76df\\work\\reconstruction-v2\\generation-extra-20261117-093330\\profile\\hashes\\hashes.game.txt",
+          "bytes": 233727528
+        },
+        {
+          "path": "D:\\Project\\\u82f1\u96c4\u8054\u76df\\work\\reconstruction-v2\\generation-extra-20261117-093600\\profile\\hashes\\hashes.game.txt",
+          "bytes": 233727528
+        },
+        {
+          "path": "D:\\Project\\\u82f1\u96c4\u8054\u76df\\work\\reconstruction-v2\\generation-extra-20261117-094736\\profile\\hashes\\hashes.game.txt",
+          "bytes": 233727528
+        },
+        {
+          "path": "D:\\Project\\\u82f1\u96c4\u8054\u76df\\work\\reconstruction-v2\\generation-extra-20261117-100031\\profile\\hashes\\hashes.game.txt",
+          "bytes": 233727528
+        },
+        {
+          "path": "D:\\Project\\\u82f1\u96c4\u8054\u76df\\work\\reconstruction-v2\\generation-extra-20261117-100404\\profile\\hashes\\hashes.game.txt",
+          "bytes": 233727528
+        }
+      ],
+      "errors": [
+        "[WinError 3] \u7cfb\u7edf\u627e\u4e0d\u5230\u6307\u5b9a\u7684\u8def\u5f84\u3002: 'D:\\\\Project\\\\\u82f1\u96c4\u8054\u76df\\\\work\\\\reconstruction-v2\\\\generation-extra-20261117-092540\\\\profile\\\\generation\\\\39f31379-bd14-4146-918a-637f269de88c\\\\Aatrox.wad\\\\data\\\\characters\\\\aatrox\\\\aatrox_multi_skins_skin0_skins_skin1_skins_skin2_skins_skin3_skins_skin4_skins_skin40_skins_skin5_skins_skin6_skins_skin7.bin'",
+        "[WinError 3] \u7cfb\u7edf\u627e\u4e0d\u5230\u6307\u5b9a\u7684\u8def\u5f84\u3002: 'D:\\\\Project\\\\\u82f1\u96c4\u8054\u76df\\\\work\\\\reconstruction-v2\\\\generation-extra-20261117-092540\\\\profile\\\\generation\\\\39f31379-bd14-4146-918a-637f269de88c\\\\Aatrox.wad\\\\data\\\\characters\\\\aatrox\\\\aatrox_multi_skins_skin33_skins_skin34_skins_skin35_skins_skin36_skins_skin37_skins_skin38_skins_skin39.bin'",
+        "[WinError 3] \u7cfb\u7edf\u627e\u4e0d\u5230\u6307\u5b9a\u7684\u8def\u5f84\u3002: 'D:\\\\Project\\\\\u82f1\u96c4\u8054\u76df\\\\work\\\\reconstruction-v2\\\\generation-extra-20261117-092540\\\\profile\\\\generation\\\\62350aae-d1e5-4e44-82c7-fe55e9c2bd0a\\\\Aatrox.wad\\\\data\\\\characters\\\\aatrox\\\\aatrox_multi_skins_skin0_skins_skin1_skins_skin2_skins_skin3_skins_skin4_skins_skin40_skins_skin5_skins_skin6_skins_skin7.bin'",
+        "[WinError 3] \u7cfb\u7edf\u627e\u4e0d\u5230\u6307\u5b9a\u7684\u8def\u5f84\u3002: 'D:\\\\Project\\\\\u82f1\u96c4\u8054\u76df\\\\work\\\\reconstruction-v2\\\\generation-extra-20261117-092540\\\\profile\\\\generation\\\\62350aae-d1e5-4e44-82c7-fe55e9c2bd0a\\\\Aatrox.wad\\\\data\\\\characters\\\\aatrox\\\\aatrox_multi_skins_skin33_skins_skin34_skins_skin35_skins_skin36_skins_skin37_skins_skin38_skins_skin39.bin'",
+        "[WinError 3] \u7cfb\u7edf\u627e\u4e0d\u5230\u6307\u5b9a\u7684\u8def\u5f84\u3002: 'D:\\\\Project\\\\\u82f1\u96c4\u8054\u76df\\\\work\\\\reconstruction-v2\\\\generation-extra-20261117-092540\\\\profile\\\\generation\\\\96c8c773-7aef-4f6b-86ac-410d04fb1e77\\\\Aatrox.wad\\\\data\\\\characters\\\\aatrox\\\\aatrox_multi_skins_skin0_skins_skin1_skins_skin2_skins_skin3_skins_skin4_skins_skin40_skins_skin5_skins_skin6_skins_skin7.bin'",
+        "[WinError 3] \u7cfb\u7edf\u627e\u4e0d\u5230\u6307\u5b9a\u7684\u8def\u5f84\u3002: 'D:\\\\Project\\\\\u82f1\u96c4\u8054\u76df\\\\work\\\\reconstruction-v2\\\\generation-extra-20261117-092540\\\\profile\\\\generation\\\\96c8c773-7aef-4f6b-86ac-410d04fb1e77\\\\Aatrox.wad\\\\data\\\\characters\\\\aatrox\\\\aatrox_multi_skins_skin33_skins_skin34_skins_skin35_skins_skin36_skins_skin37_skins_skin38_skins_skin39.bin'",
+        "[WinError 3] \u7cfb\u7edf\u627e\u4e0d\u5230\u6307\u5b9a\u7684\u8def\u5f84\u3002: 'D:\\\\Project\\\\\u82f1\u96c4\u8054\u76df\\\\work\\\\reconstruction-v2\\\\generation-extra-20261117-092540\\\\profile\\\\generation\\\\b51a0e44-8e6c-4847-b8db-5e2799afa095\\\\Aatrox.wad\\\\data\\\\characters\\\\aatrox\\\\aatrox_multi_skins_skin0_skins_skin1_skins_skin2_skins_skin3_skins_skin4_skins_skin40_skins_skin5_skins_skin6_skins_skin7.bin'",
+        "[WinError 3] \u7cfb\u7edf\u627e\u4e0d\u5230\u6307\u5b9a\u7684\u8def\u5f84\u3002: 'D:\\\\Project\\\\\u82f1\u96c4\u8054\u76df\\\\work\\\\reconstruction-v2\\\\generation-extra-20261117-092540\\\\profile\\\\generation\\\\b51a0e44-8e6c-4847-b8db-5e2799afa095\\\\Aatrox.wad\\\\data\\\\characters\\\\aatrox\\\\aatrox_multi_skins_skin33_skins_skin34_skins_skin35_skins_skin36_skins_skin37_skins_skin38_skins_skin39.bin'",
+        "[WinError 3] \u7cfb\u7edf\u627e\u4e0d\u5230\u6307\u5b9a\u7684\u8def\u5f84\u3002: 'D:\\\\Project\\\\\u82f1\u96c4\u8054\u76df\\\\work\\\\reconstruction-v2\\\\generation-extra-20261117-092905\\\\profile\\\\generation\\\\7218a05e-5272-42df-b03f-ee91a77bc5bd\\\\Aatrox.wad\\\\data\\\\characters\\\\aatrox\\\\aatrox_multi_skins_skin0_skins_skin1_skins_skin2_skins_skin3_skins_skin4_skins_skin40_skins_skin5_skins_skin6_skins_skin7.bin'",
+        "[WinError 3] \u7cfb\u7edf\u627e\u4e0d\u5230\u6307\u5b9a\u7684\u8def\u5f84\u3002: 'D:\\\\Project\\\\\u82f1\u96c4\u8054\u76df\\\\work\\\\reconstruction-v2\\\\generation-extra-20261117-092905\\\\profile\\\\generation\\\\7218a05e-5272-42df-b03f-ee91a77bc5bd\\\\Aatrox.wad\\\\data\\\\characters\\\\aatrox\\\\aatrox_multi_skins_skin33_skins_skin34_skins_skin35_skins_skin36_skins_skin37_skins_skin38_skins_skin39.bin'",
+        "[WinError 3] \u7cfb\u7edf\u627e\u4e0d\u5230\u6307\u5b9a\u7684\u8def\u5f84\u3002: 'D:\\\\Project\\\\\u82f1\u96c4\u8054\u76df\\\\work\\\\reconstruction-v2\\\\generation-extra-20261117-092905\\\\profile\\\\generation\\\\7758fad2-bc91-4c80-9080-148fbb3392f3\\\\Aatrox.wad\\\\data\\\\characters\\\\aatrox\\\\aatrox_multi_skins_skin0_skins_skin1_skins_skin2_skins_skin3_skins_skin4_skins_skin40_skins_skin5_skins_skin6_skins_skin7.bin'",
+        "[WinError 3] \u7cfb\u7edf\u627e\u4e0d\u5230\u6307\u5b9a\u7684\u8def\u5f84\u3002: 'D:\\\\Project\\\\\u82f1\u96c4\u8054\u76df\\\\work\\\\reconstruction-v2\\\\generation-extra-20261117-092905\\\\profile\\\\generation\\\\7758fad2-bc91-4c80-9080-148fbb3392f3\\\\Aatrox.wad\\\\data\\\\characters\\\\aatrox\\\\aatrox_multi_skins_skin33_skins_skin34_skins_skin35_skins_skin36_skins_skin37_skins_skin38_skins_skin39.bin'",
+        "[WinError 3] \u7cfb\u7edf\u627e\u4e0d\u5230\u6307\u5b9a\u7684\u8def\u5f84\u3002: 'D:\\\\Project\\\\\u82f1\u96c4\u8054\u76df\\\\work\\\\reconstruction-v2\\\\generation-extra-20261117-092905\\\\profile\\\\generation\\\\80c35ae9-df2a-482b-9e9d-0b4d5c5d25a5\\\\Aatrox.wad\\\\data\\\\characters\\\\aatrox\\\\aatrox_multi_skins_skin0_skins_skin1_skins_skin2_skins_skin3_skins_skin4_skins_skin40_skins_skin5_skins_skin6_skins_skin7.bin'",
+        "[WinError 3] \u7cfb\u7edf\u627e\u4e0d\u5230\u6307\u5b9a\u7684\u8def\u5f84\u3002: 'D:\\\\Project\\\\\u82f1\u96c4\u8054\u76df\\\\work\\\\reconstruction-v2\\\\generation-extra-20261117-092905\\\\profile\\\\generation\\\\80c35ae9-df2a-482b-9e9d-0b4d5c5d25a5\\\\Aatrox.wad\\\\data\\\\characters\\\\aatrox\\\\aatrox_multi_skins_skin33_skins_skin34_skins_skin35_skins_skin36_skins_skin37_skins_skin38_skins_skin39.bin'",
+        "[WinError 3] \u7cfb\u7edf\u627e\u4e0d\u5230\u6307\u5b9a\u7684\u8def\u5f84\u3002: 'D:\\\\Project\\\\\u82f1\u96c4\u8054\u76df\\\\work\\\\reconstruction-v2\\\\generation-extra-20261117-092905\\\\profile\\\\generation\\\\d7a97dc9-2440-4a89-89ee-53b75185fc01\\\\Aatrox.wad\\\\data\\\\characters\\\\aatrox\\\\aatrox_multi_skins_skin0_skins_skin1_skins_skin2_skins_skin3_skins_skin4_skins_skin40_skins_skin5_skins_skin6_skins_skin7.bin'",
+        "[WinError 3] \u7cfb\u7edf\u627e\u4e0d\u5230\u6307\u5b9a\u7684\u8def\u5f84\u3002: 'D:\\\\Project\\\\\u82f1\u96c4\u8054\u76df\\\\work\\\\reconstruction-v2\\\\generation-extra-20261117-092905\\\\profile\\\\generation\\\\d7a97dc9-2440-4a89-89ee-53b75185fc01\\\\Aatrox.wad\\\\data\\\\characters\\\\aatrox\\\\aatrox_multi_skins_skin33_skins_skin34_skins_skin35_skins_skin36_skins_skin37_skins_skin38_skins_skin39.bin'",
+        "[WinError 3] \u7cfb\u7edf\u627e\u4e0d\u5230\u6307\u5b9a\u7684\u8def\u5f84\u3002: 'D:\\\\Project\\\\\u82f1\u96c4\u8054\u76df\\\\work\\\\reconstruction-v2\\\\generation-extra-20261117-093330\\\\profile\\\\generation\\\\d2258a9d-1ba9-40ef-ba7b-e00e81a239a9\\\\Nidalee.wad\\\\data\\\\characters\\\\jade_nidalee\\\\jade_nidalee_multi_skins_skin11_skins_skin12_skins_skin13_skins_skin14_skins_skin15_skins_skin16_skins_skin17.bin'",
+        "[WinError 3] \u7cfb\u7edf\u627e\u4e0d\u5230\u6307\u5b9a\u7684\u8def\u5f84\u3002: 'D:\\\\Project\\\\\u82f1\u96c4\u8054\u76df\\\\work\\\\reconstruction-v2\\\\generation-extra-20261117-093330\\\\profile\\\\generation\\\\d2258a9d-1ba9-40ef-ba7b-e00e81a239a9\\\\Nidalee.wad\\\\data\\\\characters\\\\nidalee\\\\nidalee_multi_skins_skin11_skins_skin12_skins_skin13_skins_skin14_skins_skin15_skins_skin16_skins_skin17.bin'",
+        "[WinError 3] \u7cfb\u7edf\u627e\u4e0d\u5230\u6307\u5b9a\u7684\u8def\u5f84\u3002: 'D:\\\\Project\\\\\u82f1\u96c4\u8054\u76df\\\\work\\\\reconstruction-v2\\\\generation-extra-20261117-093600\\\\profile\\\\generation\\\\bf599494-2d39-4e48-a07d-d4778f27a749\\\\Nidalee.wad\\\\data\\\\characters\\\\jade_nidalee\\\\jade_nidalee_multi_skins_skin11_skins_skin12_skins_skin13_skins_skin14_skins_skin15_skins_skin16_skins_skin17.bin'",
+        "[WinError 3] \u7cfb\u7edf\u627e\u4e0d\u5230\u6307\u5b9a\u7684\u8def\u5f84\u3002: 'D:\\\\Project\\\\\u82f1\u96c4\u8054\u76df\\\\work\\\\reconstruction-v2\\\\generation-extra-20261117-093600\\\\profile\\\\generation\\\\bf599494-2d39-4e48-a07d-d4778f27a749\\\\Nidalee.wad\\\\data\\\\characters\\\\nidalee\\\\nidalee_multi_skins_skin11_skins_skin12_skins_skin13_skins_skin14_skins_skin15_skins_skin16_skins_skin17.bin'",
+        "[WinError 3] \u7cfb\u7edf\u627e\u4e0d\u5230\u6307\u5b9a\u7684\u8def\u5f84\u3002: 'D:\\\\Project\\\\\u82f1\u96c4\u8054\u76df\\\\work\\\\reconstruction-v2\\\\generation-extra-20261117-094736\\\\profile\\\\generation\\\\1c5a08ef-6690-41aa-b702-933cedddf989\\\\Aatrox.wad\\\\data\\\\characters\\\\aatrox\\\\aatrox_multi_skins_skin0_skins_skin1_skins_skin2_skins_skin3_skins_skin4_skins_skin40_skins_skin5_skins_skin6_skins_skin7.bin'",
+        "[WinError 3] \u7cfb\u7edf\u627e\u4e0d\u5230\u6307\u5b9a\u7684\u8def\u5f84\u3002: 'D:\\\\Project\\\\\u82f1\u96c4\u8054\u76df\\\\work\\\\reconstruction-v2\\\\generation-extra-20261117-094736\\\\profile\\\\generation\\\\1c5a08ef-6690-41aa-b702-933cedddf989\\\\Aatrox.wad\\\\data\\\\characters\\\\aatrox\\\\aatrox_multi_skins_skin33_skins_skin34_skins_skin35_skins_skin36_skins_skin37_skins_skin38_skins_skin39.bin'",
+        "[WinError 3] \u7cfb\u7edf\u627e\u4e0d\u5230\u6307\u5b9a\u7684\u8def\u5f84\u3002: 'D:\\\\Project\\\\\u82f1\u96c4\u8054\u76df\\\\work\\\\reconstruction-v2\\\\generation-extra-20261117-094736\\\\profile\\\\generation\\\\27e93568-f1f2-49e2-a589-9b5cd284ca7d\\\\Aatrox.wad\\\\data\\\\characters\\\\aatrox\\\\aatrox_multi_skins_skin0_skins_skin1_skins_skin2_skins_skin3_skins_skin4_skins_skin40_skins_skin5_skins_skin6_skins_skin7.bin'",
+        "[WinError 3] \u7cfb\u7edf\u627e\u4e0d\u5230\u6307\u5b9a\u7684\u8def\u5f84\u3002: 'D:\\\\Project\\\\\u82f1\u96c4\u8054\u76df\\\\work\\\\reconstruction-v2\\\\generation-extra-20261117-094736\\\\profile\\\\generation\\\\27e93568-f1f2-49e2-a589-9b5cd284ca7d\\\\Aatrox.wad\\\\data\\\\characters\\\\aatrox\\\\aatrox_multi_skins_skin33_skins_skin34_skins_skin35_skins_skin36_skins_skin37_skins_skin38_skins_skin39.bin'",
+        "[WinError 3] \u7cfb\u7edf\u627e\u4e0d\u5230\u6307\u5b9a\u7684\u8def\u5f84\u3002: 'D:\\\\Project\\\\\u82f1\u96c4\u8054\u76df\\\\work\\\\reconstruction-v2\\\\generation-extra-20261117-094736\\\\profile\\\\generation\\\\4a5a8704-f85f-4bbd-aa17-8b7e1f6defec\\\\Aatrox.wad\\\\data\\\\characters\\\\aatrox\\\\aatrox_multi_skins_skin0_skins_skin1_skins_skin2_skins_skin3_skins_skin4_skins_skin40_skins_skin5_skins_skin6_skins_skin7.bin'",
+        "[WinError 3] \u7cfb\u7edf\u627e\u4e0d\u5230\u6307\u5b9a\u7684\u8def\u5f84\u3002: 'D:\\\\Project\\\\\u82f1\u96c4\u8054\u76df\\\\work\\\\reconstruction-v2\\\\generation-extra-20261117-094736\\\\profile\\\\generation\\\\4a5a8704-f85f-4bbd-aa17-8b7e1f6defec\\\\Aatrox.wad\\\\data\\\\characters\\\\aatrox\\\\aatrox_multi_skins_skin33_skins_skin34_skins_skin35_skins_skin36_skins_skin37_skins_skin38_skins_skin39.bin'",
+        "[WinError 3] \u7cfb\u7edf\u627e\u4e0d\u5230\u6307\u5b9a\u7684\u8def\u5f84\u3002: 'D:\\\\Project\\\\\u82f1\u96c4\u8054\u76df\\\\work\\\\reconstruction-v2\\\\generation-extra-20261117-094736\\\\profile\\\\generation\\\\d01c51ab-42c0-4ff2-a271-2864b96aa96b\\\\Aatrox.wad\\\\data\\\\characters\\\\aatrox\\\\aatrox_multi_skins_skin0_skins_skin1_skins_skin2_skins_skin3_skins_skin4_skins_skin40_skins_skin5_skins_skin6_skins_skin7.bin'",
+        "[WinError 3] \u7cfb\u7edf\u627e\u4e0d\u5230\u6307\u5b9a\u7684\u8def\u5f84\u3002: 'D:\\\\Project\\\\\u82f1\u96c4\u8054\u76df\\\\work\\\\reconstruction-v2\\\\generation-extra-20261117-094736\\\\profile\\\\generation\\\\d01c51ab-42c0-4ff2-a271-2864b96aa96b\\\\Aatrox.wad\\\\data\\\\characters\\\\aatrox\\\\aatrox_multi_skins_skin33_skins_skin34_skins_skin35_skins_skin36_skins_skin37_skins_skin38_skins_skin39.bin'",
+        "[WinError 3] \u7cfb\u7edf\u627e\u4e0d\u5230\u6307\u5b9a\u7684\u8def\u5f84\u3002: 'D:\\\\Project\\\\\u82f1\u96c4\u8054\u76df\\\\work\\\\reconstruction-v2\\\\generation-extra-20261117-094736\\\\profile\\\\generation\\\\f07db47a-482b-43c6-86f1-222851403e5e\\\\Aatrox.wad\\\\data\\\\characters\\\\aatrox\\\\aatrox_multi_skins_skin0_skins_skin1_skins_skin2_skins_skin3_skins_skin4_skins_skin40_skins_skin5_skins_skin6_skins_skin7.bin'",
+        "[WinError 3] \u7cfb\u7edf\u627e\u4e0d\u5230\u6307\u5b9a\u7684\u8def\u5f84\u3002: 'D:\\\\Project\\\\\u82f1\u96c4\u8054\u76df\\\\work\\\\reconstruction-v2\\\\generation-extra-20261117-094736\\\\profile\\\\generation\\\\f07db47a-482b-43c6-86f1-222851403e5e\\\\Aatrox.wad\\\\data\\\\characters\\\\aatrox\\\\aatrox_multi_skins_skin33_skins_skin34_skins_skin35_skins_skin36_skins_skin37_skins_skin38_skins_skin39.bin'"
+      ],
+      "skipped_links": [],
+      "elapsed_seconds": 170.2
+    },
+    {
+      "root": "D:\\Project\\reverse-next",
+      "bytes": 6251062542,
+      "files": 152027,
+      "largest_directories": [
+        {
+          "path": "",
+          "bytes": 6251062542,
+          "files": 152027
+        },
+        {
+          "path": "work",
+          "bytes": 5250063172,
+          "files": 124777
+        },
+        {
+          "path": "work/remote-install-ec42907bf8",
+          "bytes": 718896798,
+          "files": 16192
+        },
+        {
+          "path": "work/remote-install-b7b0b240fa",
+          "bytes": 718621336,
+          "files": 16172
+        },
+        {
+          "path": "work/remote-install-3b046e61dd",
+          "bytes": 717920377,
+          "files": 16139
+        },
+        {
+          "path": "work/clean-install-53ceef8a",
+          "bytes": 709612399,
+          "files": 16039
+        },
+        {
+          "path": "work/clean-install-4f753b72",
+          "bytes": 709455343,
+          "files": 16031
+        },
+        {
+          "path": "work/clean-install-4a3523a5",
+          "bytes": 709128161,
+          "files": 16013
+        },
+        {
+          "path": "vendor",
+          "bytes": 600139469,
+          "files": 13444
+        },
+        {
+          "path": "work/remote-install-32f2ff1145",
+          "bytes": 443162530,
+          "files": 16018
+        },
+        {
+          "path": "vendor/rea",
+          "bytes": 373457854,
+          "files": 11354
+        },
+        {
+          "path": "state",
+          "bytes": 338973171,
+          "files": 10859
+        },
+        {
+          "path": "work/remote-install-bce79bd799",
+          "bytes": 205921515,
+          "files": 4694
+        },
+        {
+          "path": "work/remote-install-d2210811bf",
+          "bytes": 205921515,
+          "files": 4694
+        },
+        {
+          "path": "state/rea-package-after-optional-install",
+          "bytes": 178987106,
+          "files": 10640
+        },
+        {
+          "path": "vendor/node",
+          "bytes": 145094358,
+          "files": 1996
+        },
+        {
+          "path": "state/downloads",
+          "bytes": 86119294,
+          "files": 3
+        },
+        {
+          "path": "work/remote-install-33870a2a96",
+          "bytes": 60786899,
+          "files": 2702
+        },
+        {
+          "path": "vendor/jadx-headless-mcp",
+          "bytes": 42620983,
+          "files": 3
+        },
+        {
+          "path": "work/ranged-transfer-verification",
+          "bytes": 41851672,
+          "files": 1
+        },
+        {
+          "path": "vendor/wabt",
+          "bytes": 38963597,
+          "files": 87
+        },
+        {
+          "path": ".venv",
+          "bytes": 30548922,
+          "files": 1240
+        },
+        {
+          "path": ".venv/Lib",
+          "bytes": 29446768,
+          "files": 1228
+        },
+        {
+          "path": "evidence",
+          "bytes": 13908803,
+          "files": 402
+        },
+        {
+          "path": "work/transfer-diagnostics",
+          "bytes": 8359508,
+          "files": 2
+        },
+        {
+          "path": ".git",
+          "bytes": 7862975,
+          "files": 251
+        },
+        {
+          "path": ".git/objects",
+          "bytes": 7645738,
+          "files": 214
+        },
+        {
+          "path": "skills",
+          "bytes": 6189106,
+          "files": 456
+        },
+        {
+          "path": "evidence/rf36",
+          "bytes": 4628699,
+          "files": 57
+        },
+        {
+          "path": "evidence/rf33",
+          "bytes": 4139975,
+          "files": 89
+        },
+        {
+          "path": "skills/pentest-tools",
+          "bytes": 3766862,
+          "files": 114
+        },
+        {
+          "path": "evidence/next",
+          "bytes": 1891071,
+          "files": 135
+        },
+        {
+          "path": "evidence/rf22",
+          "bytes": 1350110,
+          "files": 56
+        },
+        {
+          "path": "state/migrations",
+          "bytes": 1200027,
+          "files": 184
+        },
+        {
+          "path": ".venv/Scripts",
+          "bytes": 1101925,
+          "files": 11
+        }
+      ],
+      "largest_files": [
+        {
+          "path": "D:\\Project\\reverse-next\\vendor\\rea\\node_modules\\frida\\build\\frida_binding.node",
+          "bytes": 135663104
+        },
+        {
+          "path": "D:\\Project\\reverse-next\\work\\clean-install-4a3523a5\\vendor\\rea\\node_modules\\frida\\build\\frida_binding.node",
+          "bytes": 135663104
+        },
+        {
+          "path": "D:\\Project\\reverse-next\\work\\clean-install-4f753b72\\vendor\\rea\\node_modules\\frida\\build\\frida_binding.node",
+          "bytes": 135663104
+        },
+        {
+          "path": "D:\\Project\\reverse-next\\work\\clean-install-53ceef8a\\vendor\\rea\\node_modules\\frida\\build\\frida_binding.node",
+          "bytes": 135663104
+        },
+        {
+          "path": "D:\\Project\\reverse-next\\work\\remote-install-3b046e61dd\\vendor\\rea\\node_modules\\frida\\build\\frida_binding.node",
+          "bytes": 135663104
+        },
+        {
+          "path": "D:\\Project\\reverse-next\\work\\remote-install-b7b0b240fa\\vendor\\rea\\node_modules\\frida\\build\\frida_binding.node",
+          "bytes": 135663104
+        },
+        {
+          "path": "D:\\Project\\reverse-next\\work\\remote-install-ec42907bf8\\vendor\\rea\\node_modules\\frida\\build\\frida_binding.node",
+          "bytes": 135663104
+        }
+      ],
+      "errors": [],
+      "skipped_links": [],
+      "elapsed_seconds": 24.75
+    }
+  ],
+  "volumes": {
+    "C:/": {
+      "free_bytes": 52820303872,
+      "used_bytes": 159539507200,
+      "total_bytes": 212359811072
+    },
+    "D:/": {
+      "free_bytes": 63289192448,
+      "used_bytes": 233199861760,
+      "total_bytes": 296489054208
+    },
+    "E:/": {
+      "free_bytes": 164739899392,
+      "used_bytes": 347352109056,
+      "total_bytes": 512092008448
+    }
+  }
+}

@@ -27,7 +27,7 @@ class Deployment(unittest.TestCase):
         result=install(ROOT,self.home)
         self.assertEqual(result['mcp_check']['status'],'pass')
         self.assertEqual(result['mcp_check']['server']['name'],'rea-enhanced')
-        self.assertEqual(result['mcp_check']['tools'],259)
+        self.assertEqual(result['mcp_check']['tools'],260)
         receipt=read(Path(result['rollback_receipt']))
         self.assertNotIn(b'retained',base64.b64decode(receipt['files']['config']['before']))
         # User adds content after install: rollback must retain these new bytes too.

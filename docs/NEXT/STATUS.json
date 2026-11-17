@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "version": "2.2.0",
+  "version": "2.3.0",
   "baseline_commit": "022e61b803e41569cac1f116ebca2245b9c9b1f8",
-  "goal_status": "complete",
-  "stage": "maintenance",
+  "goal_status": "active",
+  "stage": "disk-lifecycle",
   "stages": {
     "S0": {
       "status": "done",
@@ -153,7 +153,7 @@
       "README.md"
     ]
   },
-  "next_action": "The scoped2.2.0 long-task repair is qualified, installed and published. New target work keeps its original full goal and uses current diagnostics. Same-model/same-tool effectiveness superiority and arbitrary future-target success remain unestablished.",
+  "next_action": "Publish2.3.0 implementation, qualify actual independent default GitHub clone/public installation, then close current source-bound release.",
   "migration": "Final owned uninstall/empty entry/reinstall verified; legacy REA/Craft processes retired; one enhanced endpoint selected; final fresh desktop chat entry observed.",
   "limitations": [
     "Finite engineering qualification and the owned plain-language case are distinct from acceptance of arbitrary future targets.",
@@ -203,6 +203,18 @@
       "evidence/next/long-task/release-check.json",
       "evidence/next/long-task/archive-transfer.json",
       "evidence/next/long-task/status-footprint.json"
+    ]
+  },
+  "disk_lifecycle": {
+    "status": "local-qualified-installed",
+    "requirements": "docs/NEXT/DISK-LIFECYCLE.md",
+    "scope": "Owned disposable scratch; no automatic deletion of unregistered legacy outputs",
+    "engineering_tests": 119,
+    "evidence": [
+      "evidence/next/s6/engineering-tests.json",
+      "evidence/next/disk-lifecycle/before.json",
+      "evidence/next/disk-lifecycle/live-cleanup.json",
+      "evidence/next/disk-lifecycle/local-install.json"
     ]
   }
 }

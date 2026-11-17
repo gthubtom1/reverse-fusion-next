@@ -17,6 +17,26 @@ test_reserialized_legacy_comments_require_explicit_exact_adoption (test_deployme
 test_retired_orphan_end_comment_survives_clean_reinstall (test_deployment.Deployment.test_retired_orphan_end_comment_survives_clean_reinstall) ... ok
 test_uninstall_does_not_remove_modified_owned_skill (test_deployment.Deployment.test_uninstall_does_not_remove_modified_owned_skill) ... ok
 test_unmanaged_conflict_is_not_overwritten (test_deployment.Deployment.test_unmanaged_conflict_is_not_overwritten) ... ok
+test_comparison_reclaims_copies_and_retains_real_effect_snapshots (test_disk.DiskLifecycle.test_comparison_reclaims_copies_and_retains_real_effect_snapshots) ... ok
+test_complete_reclaims_actual_files_and_leaves_unregistered_data (test_disk.DiskLifecycle.test_complete_reclaims_actual_files_and_leaves_unregistered_data) ... ok
+test_completing_one_allocation_does_not_force_expire_another (test_disk.DiskLifecycle.test_completing_one_allocation_does_not_force_expire_another) ... ok
+test_dead_managed_lease_waits_for_interrupted_retention_then_reclaims (test_disk.DiskLifecycle.test_dead_managed_lease_waits_for_interrupted_retention_then_reclaims) ... ok
+test_explicit_protection_covers_descendants_and_ancestors (test_disk.DiskLifecycle.test_explicit_protection_covers_descendants_and_ancestors) ... ok
+test_incomplete_case_index_preserves_all_scratch (test_disk.DiskLifecycle.test_incomplete_case_index_preserves_all_scratch) ... ok
+test_independent_processes_share_the_same_volume_reservation (test_disk.DiskLifecycle.test_independent_processes_share_the_same_volume_reservation) ... ok
+test_junction_or_symlink_causes_retention_and_external_data_survives (test_disk.DiskLifecycle.test_junction_or_symlink_causes_retention_and_external_data_survives) ... ok
+test_live_inventory_tolerates_disappearing_browser_files_but_deletion_is_strict (test_disk.DiskLifecycle.test_live_inventory_tolerates_disappearing_browser_files_but_deletion_is_strict) ... ok
+test_manual_work_never_expires_while_declared_active (test_disk.DiskLifecycle.test_manual_work_never_expires_while_declared_active) ... ok
+test_marker_tampering_is_retained (test_disk.DiskLifecycle.test_marker_tampering_is_retained) ... ok
+test_monitor_cancels_owned_process_when_temporary_growth_exceeds_budget (test_disk.DiskLifecycle.test_monitor_cancels_owned_process_when_temporary_growth_exceeds_budget) ... ok
+test_os_lease_prevents_even_explicit_completion (test_disk.DiskLifecycle.test_os_lease_prevents_even_explicit_completion) ... ok
+test_periodic_worker_cleans_completed_data (test_disk.DiskLifecycle.test_periodic_worker_cleans_completed_data) ... ok
+test_project_budget_accounts_for_other_active_work (test_disk.DiskLifecycle.test_project_budget_accounts_for_other_active_work) ... ok
+test_referenced_evidence_and_product_scratch_are_protected (test_disk.DiskLifecycle.test_referenced_evidence_and_product_scratch_are_protected) ... ok
+test_registry_cannot_redirect_deletion_to_original (test_disk.DiskLifecycle.test_registry_cannot_redirect_deletion_to_original) ... ok
+test_space_exhaustion_stops_before_workspace_use (test_disk.DiskLifecycle.test_space_exhaustion_stops_before_workspace_use) ... ok
+test_volume_reservations_serialize_two_concurrent_projects (test_disk.DiskLifecycle.test_volume_reservations_serialize_two_concurrent_projects) ... ok
+test_workspace_exception_and_external_cancel_keep_cleanup (test_disk.DiskLifecycle.test_workspace_exception_and_external_cancel_keep_cleanup) ... ok
 test_all_domain_descriptors_and_support_are_available (test_domains.DomainMethods.test_all_domain_descriptors_and_support_are_available) ... ok
 test_chinese_adjacent_technical_names_keep_specialist_routes (test_domains.DomainMethods.test_chinese_adjacent_technical_names_keep_specialist_routes) ... ok
 test_domain_refinement_keeps_original_goal (test_domains.DomainMethods.test_domain_refinement_keeps_original_goal) ... ok
@@ -99,6 +119,6 @@ test_unchanged_success_is_reused_without_another_run (test_workflow.OwnedCase.te
 test_wrong_algorithm_fails (test_workflow.OwnedCase.test_wrong_algorithm_fails) ... ok
 
 ----------------------------------------------------------------------
-Ran 99 tests in 81.189s
+Ran 119 tests in 100.379s
 
 OK

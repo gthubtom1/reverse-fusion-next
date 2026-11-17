@@ -50,7 +50,8 @@ CHANGE={'oneOf':[
     _change('execute',{'id':TEXT,'kind':{'enum':['investigate','verify','visual','package']},
         'features':STRINGS,'argv':STRINGS,'cwd':TEXT,'inputs':STRINGS,'artifacts':STRINGS,
         'purpose':TEXT,'timeout_seconds':{'type':'number','exclusiveMinimum':0,'maximum':600},
-        'reusable':{'type':'boolean','default':False},'retry_reason':TEXT,'environment_keys':STRINGS},
+        'reusable':{'type':'boolean','default':False},'retry_reason':TEXT,'environment_keys':STRINGS,
+        'scratch_bytes':{'type':'integer','minimum':1048576}},
         ['id','kind','features','argv','inputs','purpose']),
     _change('budget',{'max_checks_per_feature':{'type':'integer','minimum':1,'maximum':100},'reason':TEXT},['max_checks_per_feature','reason']),
     _change('coverage',{'review':TEXT,'requirements':{'type':'array','minItems':1,'items':{
@@ -66,7 +67,15 @@ TOOLS = [
     _tool('rf_next_case_record','Record evidence, a feature, a dependent unknown or a user supplement with optimistic revision checking. Cannot post a check pass.',
           {'change':CHANGE,'expected_revision':{'type':'integer','minimum':1}},['change','expected_revision']),
     _tool('rf_next_compare','Execute the reviewed finite comparison plan in separate working copies. Actual executable effects; not an OS sandbox. Saves full receipts and returns a compact result.',
-          {'check_id':{'type':'string'},'plan':{'type':'string'},'output':{'type':'string'},'retry_reason':{'type':'string'}},['check_id','plan','output'])]
+          {'check_id':{'type':'string'},'plan':{'type':'string'},'output':{'type':'string'},'retry_reason':{'type':'string'}},['check_id','plan','output']),
+    _tool('rf_next_storage','Manage owned disposable scratch, disk budgets and protected data. Status is read-only; sweep reclaims only eligible registered scratch. Complete only after all processes using a manual allocation have stopped. Never adopt old folders as garbage.',
+          {'action':{'enum':['status','sweep','allocate','complete','policy','protect'],'default':'status'},
+           'purpose':TEXT,'rebuild':TEXT,'reserve_bytes':{'type':'integer','minimum':1},'id':TEXT,
+           'paths':STRINGS,'policy':{'type':'object','properties':{
+               'max_temporary_bytes':{'type':'integer','minimum':1},'minimum_free_bytes':{'type':'integer','minimum':0},
+               'minimum_free_fraction':{'type':'number','minimum':0,'maximum':.5},
+               'completed_ttl_seconds':{'type':'integer','minimum':0},'interrupted_ttl_seconds':{'type':'integer','minimum':0}},
+               'additionalProperties':False}},[])]
 NAMES={tool['name'] for tool in TOOLS}
 
 
@@ -90,6 +99,9 @@ def call_owned(name, args, cancel_event=None):
     if not project.is_absolute() or not project.is_dir() or project.resolve()==ROOT.resolve():
         raise ValueError('Select an existing absolute outcome project, not the shared tool checkout')
     case=args.get('case_root','work/current-case')
+    if name=='rf_next_storage':
+        from .disk import dispatch
+        return dispatch(project, **{k:v for k,v in args.items() if k not in {'project_root','case_root'}})
     if name=='rf_next_case_open':return open_case(project,args['request'],case)
     if name=='rf_next_case_status':return status(project,case)
     if name=='rf_next_case_record':
@@ -118,6 +130,10 @@ def serve():
     output_lock, input_lock, pending_lock = threading.Lock(), threading.Lock(), threading.Lock()
     pending={}
     ended=threading.Event()
+    from .disk import maintenance_loop
+    janitor=threading.Thread(target=maintenance_loop,args=(ended,),
+        kwargs={'guard':lambda: connection_identity()==loaded_identity},daemon=True)
+    janitor.start()
     def emit(message):
         with output_lock:
             sys.stdout.buffer.write((json.dumps(message,ensure_ascii=True)+'\n').encode('ascii'))
@@ -225,4 +241,5 @@ def serve():
         for worker in workers:worker.join(timeout=max(0,deadline-time.monotonic()))
         owner.close()
         for thread in threads:thread.join(timeout=1)
+        janitor.join(timeout=2)
     return 0

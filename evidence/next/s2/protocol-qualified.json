@@ -6,10 +6,10 @@
   },
   "enhanced_server": {
     "name": "rea-enhanced",
-    "version": "2.2.0"
+    "version": "2.3.0"
   },
   "official_tool_count": 255,
-  "enhanced_tool_count": 259,
+  "enhanced_tool_count": 260,
   "canonical_tools_equal": true,
   "prompts_equal": true,
   "frida": {

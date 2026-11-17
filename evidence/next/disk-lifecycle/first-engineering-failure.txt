@@ -1,0 +1,134 @@
+test_changed_range_identity_is_rejected (test_bootstrap.ArchiveSafety.test_changed_range_identity_is_rejected) ... ok
+test_explicit_archive_transfer_still_rejects_mismatched_bytes (test_bootstrap.ArchiveSafety.test_explicit_archive_transfer_still_rejects_mismatched_bytes) ... ok
+test_ranged_asset_assembles_exact_bytes_and_keeps_full_checksum (test_bootstrap.ArchiveSafety.test_ranged_asset_assembles_exact_bytes_and_keeps_full_checksum) ... ok
+test_safe_archive_extracts_to_selected_root (test_bootstrap.ArchiveSafety.test_safe_archive_extracts_to_selected_root) ... ok
+test_tar_symlink_rejected_before_writes (test_bootstrap.ArchiveSafety.test_tar_symlink_rejected_before_writes) ... ok
+test_transient_tls_eof_retries_without_accepting_partial_download (test_bootstrap.ArchiveSafety.test_transient_tls_eof_retries_without_accepting_partial_download) ... ok
+test_unmodified_entry_cannot_hide_missing_execution_module (test_bootstrap.ArchiveSafety.test_unmodified_entry_cannot_hide_missing_execution_module) ... ok
+test_zip_escape_rejected_before_any_write (test_bootstrap.ArchiveSafety.test_zip_escape_rejected_before_any_write) ... ok
+test_clean_uninstall_and_reinstall_has_only_one_owned_server (test_deployment.Deployment.test_clean_uninstall_and_reinstall_has_only_one_owned_server) ... ok
+test_codex_reserialized_enhanced_entry_still_connects_and_rolls_back (test_deployment.Deployment.test_codex_reserialized_enhanced_entry_still_connects_and_rolls_back) ... ok
+test_interrupted_prepared_transaction_can_be_recovered (test_deployment.Deployment.test_interrupted_prepared_transaction_can_be_recovered) ... ok
+test_migrate_legacy_two_servers_then_restore_exact_owned_sections (test_deployment.Deployment.test_migrate_legacy_two_servers_then_restore_exact_owned_sections) ... ok
+test_modified_owned_entry_refuses_rollback (test_deployment.Deployment.test_modified_owned_entry_refuses_rollback) ... ok
+test_probe_failure_restores_and_retains_unrelated_edit (test_deployment.Deployment.test_probe_failure_restores_and_retains_unrelated_edit) ... ok
+test_real_registered_server_and_owned_rollback (test_deployment.Deployment.test_real_registered_server_and_owned_rollback) ... ok
+test_reserialized_legacy_comments_require_explicit_exact_adoption (test_deployment.Deployment.test_reserialized_legacy_comments_require_explicit_exact_adoption) ... ok
+test_retired_orphan_end_comment_survives_clean_reinstall (test_deployment.Deployment.test_retired_orphan_end_comment_survives_clean_reinstall) ... ok
+test_uninstall_does_not_remove_modified_owned_skill (test_deployment.Deployment.test_uninstall_does_not_remove_modified_owned_skill) ... ok
+test_unmanaged_conflict_is_not_overwritten (test_deployment.Deployment.test_unmanaged_conflict_is_not_overwritten) ... ok
+test_comparison_reclaims_copies_and_retains_real_effect_snapshots (test_disk.DiskLifecycle.test_comparison_reclaims_copies_and_retains_real_effect_snapshots) ... ok
+test_complete_reclaims_actual_files_and_leaves_unregistered_data (test_disk.DiskLifecycle.test_complete_reclaims_actual_files_and_leaves_unregistered_data) ... ok
+test_completing_one_allocation_does_not_force_expire_another (test_disk.DiskLifecycle.test_completing_one_allocation_does_not_force_expire_another) ... ok
+test_dead_managed_lease_waits_for_interrupted_retention_then_reclaims (test_disk.DiskLifecycle.test_dead_managed_lease_waits_for_interrupted_retention_then_reclaims) ... ok
+test_explicit_protection_covers_descendants_and_ancestors (test_disk.DiskLifecycle.test_explicit_protection_covers_descendants_and_ancestors) ... ok
+test_incomplete_case_index_preserves_all_scratch (test_disk.DiskLifecycle.test_incomplete_case_index_preserves_all_scratch) ... ok
+test_independent_processes_share_the_same_volume_reservation (test_disk.DiskLifecycle.test_independent_processes_share_the_same_volume_reservation) ... ok
+test_junction_or_symlink_causes_retention_and_external_data_survives (test_disk.DiskLifecycle.test_junction_or_symlink_causes_retention_and_external_data_survives) ... ok
+test_manual_work_never_expires_while_declared_active (test_disk.DiskLifecycle.test_manual_work_never_expires_while_declared_active) ... ok
+test_marker_tampering_is_retained (test_disk.DiskLifecycle.test_marker_tampering_is_retained) ... ok
+test_monitor_cancels_owned_process_when_temporary_growth_exceeds_budget (test_disk.DiskLifecycle.test_monitor_cancels_owned_process_when_temporary_growth_exceeds_budget) ... ok
+test_os_lease_prevents_even_explicit_completion (test_disk.DiskLifecycle.test_os_lease_prevents_even_explicit_completion) ... ok
+test_periodic_worker_cleans_completed_data (test_disk.DiskLifecycle.test_periodic_worker_cleans_completed_data) ... ok
+test_project_budget_accounts_for_other_active_work (test_disk.DiskLifecycle.test_project_budget_accounts_for_other_active_work) ... ok
+test_referenced_evidence_and_product_scratch_are_protected (test_disk.DiskLifecycle.test_referenced_evidence_and_product_scratch_are_protected) ... ok
+test_registry_cannot_redirect_deletion_to_original (test_disk.DiskLifecycle.test_registry_cannot_redirect_deletion_to_original) ... ok
+test_space_exhaustion_stops_before_workspace_use (test_disk.DiskLifecycle.test_space_exhaustion_stops_before_workspace_use) ... ok
+test_volume_reservations_serialize_two_concurrent_projects (test_disk.DiskLifecycle.test_volume_reservations_serialize_two_concurrent_projects) ... ok
+test_workspace_exception_and_external_cancel_keep_cleanup (test_disk.DiskLifecycle.test_workspace_exception_and_external_cancel_keep_cleanup) ... ok
+test_all_domain_descriptors_and_support_are_available (test_domains.DomainMethods.test_all_domain_descriptors_and_support_are_available) ... ok
+test_chinese_adjacent_technical_names_keep_specialist_routes (test_domains.DomainMethods.test_chinese_adjacent_technical_names_keep_specialist_routes) ... ok
+test_domain_refinement_keeps_original_goal (test_domains.DomainMethods.test_domain_refinement_keeps_original_goal) ... ok
+test_fixed_domain_files_and_recorded_adaptations (test_domains.DomainMethods.test_fixed_domain_files_and_recorded_adaptations) ... ok
+test_inherited_routing_corpus (test_domains.DomainMethods.test_inherited_routing_corpus) ... ok
+test_plain_analysis_can_deliver_without_building (test_domains.DomainMethods.test_plain_analysis_can_deliver_without_building) ... ok
+test_analysis_report_is_invalidated_by_new_request (test_final_audit.FinalAudit.test_analysis_report_is_invalidated_by_new_request) ... ok
+test_application_environment_change_invalidates_success (test_final_audit.FinalAudit.test_application_environment_change_invalidates_success) ... ok
+test_case_scoped_unknown_blocks_current_and_future_features (test_final_audit.FinalAudit.test_case_scoped_unknown_blocks_current_and_future_features) ... ok
+test_critical_unknown_cannot_have_no_affected_scope (test_final_audit.FinalAudit.test_critical_unknown_cannot_have_no_affected_scope) ... ok
+test_delivery_requires_whole_goal_review_and_invalidates_on_supplement (test_final_audit.FinalAudit.test_delivery_requires_whole_goal_review_and_invalidates_on_supplement) ... ok
+test_dependency_evidence_replacement_invalidates_dependent_pass (test_final_audit.FinalAudit.test_dependency_evidence_replacement_invalidates_dependent_pass) ... ok
+test_different_new_target_is_not_silently_discarded (test_final_audit.FinalAudit.test_different_new_target_is_not_silently_discarded) ... ok
+test_external_runtime_change_invalidates_comparison (test_final_audit.FinalAudit.test_external_runtime_change_invalidates_comparison) ... ok
+test_external_script_cannot_substitute_both_real_sides (test_final_audit.FinalAudit.test_external_script_cannot_substitute_both_real_sides) ... ok
+test_host_internal_environment_does_not_break_shared_cli_mcp_freshness (test_final_audit.FinalAudit.test_host_internal_environment_does_not_break_shared_cli_mcp_freshness) ... ok
+test_mcp_reused_result_points_to_real_original_receipt (test_final_audit.FinalAudit.test_mcp_reused_result_points_to_real_original_receipt) ... ok
+test_modified_failure_receipt_cannot_be_reused_as_pass (test_final_audit.FinalAudit.test_modified_failure_receipt_cannot_be_reused_as_pass) ... ok
+test_partial_coverage_and_changed_artifacts_cannot_close (test_final_audit.FinalAudit.test_partial_coverage_and_changed_artifacts_cannot_close) ... ok
+test_plain_continue_with_new_requirement_is_preserved (test_final_audit.FinalAudit.test_plain_continue_with_new_requirement_is_preserved) ... ok
+test_resolution_does_not_follow_replaced_evidence (test_final_audit.FinalAudit.test_resolution_does_not_follow_replaced_evidence) ... ok
+test_returned_cli_works_outside_checkout_with_colliding_module (test_final_audit.FinalAudit.test_returned_cli_works_outside_checkout_with_colliding_module) ... ok
+test_shared_dependency_graph_does_not_explode_saved_inputs (test_final_audit.FinalAudit.test_shared_dependency_graph_does_not_explode_saved_inputs) ... ok
+test_missing_node_binding_makes_core_doctor_incomplete (test_inventory.Inventory.test_missing_node_binding_makes_core_doctor_incomplete) ... ok
+test_refresh_generates_current_index_without_fabricated_readiness (test_inventory.Inventory.test_refresh_generates_current_index_without_fabricated_readiness) ... ok
+test_accumulated_reports_surface_missing_integration (test_long_tasks.LongTasks.test_accumulated_reports_surface_missing_integration) ... ok
+test_changed_declared_input_is_unknown_even_on_exit_zero (test_long_tasks.LongTasks.test_changed_declared_input_is_unknown_even_on_exit_zero) ... ok
+test_default_reply_does_not_repeat_saved_qualification_inputs (test_long_tasks.LongTasks.test_default_reply_does_not_repeat_saved_qualification_inputs) ... ok
+test_external_environment_change_prevents_operation_reuse (test_long_tasks.LongTasks.test_external_environment_change_prevents_operation_reuse) ... ok
+test_live_specification_still_invalidates_when_it_changes (test_long_tasks.LongTasks.test_live_specification_still_invalidates_when_it_changes) ... ok
+test_operation_cancellation_keeps_unknown_and_actual_receipt (test_long_tasks.LongTasks.test_operation_cancellation_keeps_unknown_and_actual_receipt) ... ok
+test_overwriting_work_report_keeps_original_observation (test_long_tasks.LongTasks.test_overwriting_work_report_keeps_original_observation) ... ok
+test_product_identity_is_required_after_declaration_and_invalidates_delivery (test_long_tasks.LongTasks.test_product_identity_is_required_after_declaration_and_invalidates_delivery) ... ok
+test_reference_file_cannot_be_declared_as_candidate (test_long_tasks.LongTasks.test_reference_file_cannot_be_declared_as_candidate) ... ok
+test_successful_operation_does_not_certify_product (test_long_tasks.LongTasks.test_successful_operation_does_not_certify_product) ... ok
+test_tampered_artifact_prevents_operation_reuse (test_long_tasks.LongTasks.test_tampered_artifact_prevents_operation_reuse) ... ok
+test_tampered_snapshot_is_not_ready_and_is_named (test_long_tasks.LongTasks.test_tampered_snapshot_is_not_ready_and_is_named) ... ok
+test_unbound_invoked_script_is_rejected_before_execution (test_long_tasks.LongTasks.test_unbound_invoked_script_is_rejected_before_execution) ... ok
+test_unchanged_artifact_operation_is_reused_but_changes_rerun (test_long_tasks.LongTasks.test_unchanged_artifact_operation_is_reused_but_changes_rerun) ... ok
+test_unchanged_failure_needs_information_and_has_cross_id_limit (test_long_tasks.LongTasks.test_unchanged_failure_needs_information_and_has_cross_id_limit) ... ok
+test_actual_native_provider_and_new_server_bundle_roundtrip (test_mcp.LiveMCP.test_actual_native_provider_and_new_server_bundle_roundtrip) ... ok
+test_cancelled_owned_comparison_cleans_up_and_stays_unknown (test_mcp.LiveMCP.test_cancelled_owned_comparison_cleans_up_and_stays_unknown) ... ok
+test_native_bundle_survives_new_server (test_mcp.LiveMCP.test_native_bundle_survives_new_server) ... ok
+test_old_connection_cannot_silently_apply_changed_workflow (test_mcp.LiveMCP.test_old_connection_cannot_silently_apply_changed_workflow) ... ok
+test_original_catalog_preserved_and_frida_actually_enumerates (test_mcp.LiveMCP.test_original_catalog_preserved_and_frida_actually_enumerates) ... ok
+test_owned_workflow_via_mcp (test_mcp.LiveMCP.test_owned_workflow_via_mcp) ... ok
+test_test_and_public_contract_edits_change_release_identity (test_qualification.Qualification.test_test_and_public_contract_edits_change_release_identity) ... ok
+test_changed_dialog_is_a_real_behavior_difference (test_web.WebComparison.test_changed_dialog_is_a_real_behavior_difference) ... ok
+test_dropdown_checkbox_storage_and_both_dialog_outcomes (test_web.WebComparison.test_dropdown_checkbox_storage_and_both_dialog_outcomes) ... ok
+test_missing_reference_observation_is_unknown (test_web.WebComparison.test_missing_reference_observation_is_unknown) ... ok
+test_same_visual_and_behavior (test_web.WebComparison.test_same_visual_and_behavior) ... FAIL
+test_undeclared_dialog_cannot_silently_dismiss_and_pass (test_web.WebComparison.test_undeclared_dialog_cannot_silently_dismiss_and_pass) ... ok
+test_wrong_behavior_is_not_hidden_by_initial_look (test_web.WebComparison.test_wrong_behavior_is_not_hidden_by_initial_look) ... ok
+test_wrong_color_does_not_claim_behavior_failure (test_web.WebComparison.test_wrong_color_does_not_claim_behavior_failure) ... ok
+test_cancellation_is_recorded_unknown (test_workflow.OwnedCase.test_cancellation_is_recorded_unknown) ... ok
+test_concurrent_record_preserves_one_revision (test_workflow.OwnedCase.test_concurrent_record_preserves_one_revision) ... ok
+test_dependency_blocks_only_affected_feature (test_workflow.OwnedCase.test_dependency_blocks_only_affected_feature) ... ok
+test_escape_and_overwrite_rejected (test_workflow.OwnedCase.test_escape_and_overwrite_rejected) ... ok
+test_explicit_check_budget_is_enforced (test_workflow.OwnedCase.test_explicit_check_budget_is_enforced) ... ok
+test_freshness_invalidates_success_after_edit (test_workflow.OwnedCase.test_freshness_invalidates_success_after_edit) ... ok
+test_independent_ordered_state_and_error (test_workflow.OwnedCase.test_independent_ordered_state_and_error) ... ok
+test_interrupted_check_cannot_retain_success (test_workflow.OwnedCase.test_interrupted_check_cannot_retain_success) ... ok
+test_legacy_case_not_silently_written (test_workflow.OwnedCase.test_legacy_case_not_silently_written) ... ok
+test_matching_crashes_are_not_success (test_workflow.OwnedCase.test_matching_crashes_are_not_success) ... ok
+test_missing_evidence_and_inferred_resolution (test_workflow.OwnedCase.test_missing_evidence_and_inferred_resolution) ... ok
+test_nested_case_discovery (test_workflow.OwnedCase.test_nested_case_discovery) ... ok
+test_no_manually_posted_pass (test_workflow.OwnedCase.test_no_manually_posted_pass) ... ok
+test_no_reused_original_identity (test_workflow.OwnedCase.test_no_reused_original_identity) ... ok
+test_normal_development_and_missing_continue (test_workflow.OwnedCase.test_normal_development_and_missing_continue) ... ok
+test_original_request_and_resume (test_workflow.OwnedCase.test_original_request_and_resume) ... ok
+test_plan_change_invalidates_success (test_workflow.OwnedCase.test_plan_change_invalidates_success) ... ok
+test_re_registered_evidence_invalidates_old_check (test_workflow.OwnedCase.test_re_registered_evidence_invalidates_old_check) ... ok
+test_same_stdout_wrong_persistence_fails (test_workflow.OwnedCase.test_same_stdout_wrong_persistence_fails) ... ok
+test_stale_revision_rejected (test_workflow.OwnedCase.test_stale_revision_rejected) ... ok
+test_supplement_retains_original_and_remaining_work (test_workflow.OwnedCase.test_supplement_retains_original_and_remaining_work) ... ok
+test_timeout_is_unknown_and_owned_process_ends (test_workflow.OwnedCase.test_timeout_is_unknown_and_owned_process_ends) ... ok
+test_two_missing_files_are_not_success (test_workflow.OwnedCase.test_two_missing_files_are_not_success) ... ok
+test_unchanged_failure_requires_new_information (test_workflow.OwnedCase.test_unchanged_failure_requires_new_information) ... ok
+test_unchanged_success_is_reused_without_another_run (test_workflow.OwnedCase.test_unchanged_success_is_reused_without_another_run) ... ok
+test_wrong_algorithm_fails (test_workflow.OwnedCase.test_wrong_algorithm_fails) ... ok
+
+======================================================================
+FAIL: test_same_visual_and_behavior (test_web.WebComparison.test_same_visual_and_behavior)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Project\reverse-next\tests_next\test_web.py", line 52, in test_same_visual_and_behavior
+    self.assertEqual(result['status'],'pass',result)
+AssertionError: 'unknown' != 'pass'
+- unknown
++ pass
+ : {'schema_version': 2, 'operation': 'independent-web-replay', 'status': 'unknown', 'scope': 'Owned counter visual, click and persistence behavior', 'plan': 'plan.json', 'plan_sha256': '7da329c726fbb9f808fb96543df52e84e4a3b1f903ff290b9d3cc83d26656166', 'engine': {'rea_enhanced/comparison.py': 'b32462303ba433413bae7c891fbcc611c21b226dba64613915fa566ef187081e', 'rea_enhanced/disk.py': 'c47848942583a41ecdf6e3db6b7340d1122df14277f2f58b6d5327c8716fd522', 'reverse_fusion/owned_process.py': '4d0f4cfc0367116b084d0ec870fde2d90f0470d6da9887d59cd47be5c96e32fd', 'rea_enhanced/web.py': '1d8fac7183634844655577c24ad701704b78912f5284834494450119cbf1b344', 'components/rea-enhanced/web-replay.mjs': '0a7251bf8cd023d51f46a7232bc28ef65068088ff5beacf4b3be603054b20a79'}, 'sources': {'original/index.html': '32263a9e70cf2def682065fc1f7a2f449a663db846eeb1891b5d92a3d41b61a8', 'candidate/index.html': '16a7fe87a4ebb13d568bb411c046833fdd6bd944466f8c2b1909dc1a8c8514e9'}, 'input_trees': {'original': {'cwd': 'original', 'files': {'index.html': '32263a9e70cf2def682065fc1f7a2f449a663db846eeb1891b5d92a3d41b61a8'}}, 'candidate': {'cwd': 'candidate', 'files': {'index.html': '16a7fe87a4ebb13d568bb411c046833fdd6bd944466f8c2b1909dc1a8c8514e9'}}}, 'cases': [{'scenario': 'click-and-reload', 'width': 390, 'step': 0, 'differences': [], 'behavior_status': 'pass', 'visual_status': 'pass', 'changed_pixel_fraction': 0.0, 'status': 'pass'}, {'scenario': 'click-and-reload', 'width': 390, 'step': 1, 'differences': [], 'behavior_status': 'pass', 'visual_status': 'pass', 'changed_pixel_fraction': 0.0, 'status': 'pass'}, {'scenario': 'click-and-reload', 'width': 390, 'step': 2, 'differences': [], 'behavior_status': 'pass', 'visual_status': 'pass', 'changed_pixel_fraction': 0.0, 'status': 'pass'}, {'scenario': 'click-and-reload', 'width': 1280, 'step': 0, 'differences': [], 'behavior_status': 'pass', 'visual_status': 'pass', 'changed_pixel_fraction': 0.0, 'status': 'pass'}, {'scenario': 'click-and-reload', 'width': 1280, 'step': 1, 'differences': [], 'behavior_status': 'pass', 'visual_status': 'pass', 'changed_pixel_fraction': 0.0, 'status': 'pass'}, {'scenario': 'click-and-reload', 'width': 1280, 'step': 2, 'differences': [], 'behavior_status': 'pass', 'visual_status': 'pass', 'changed_pixel_fraction': 0.0, 'status': 'pass'}], 'changed_inputs': [], 'browser_executable': 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe', 'browser_sha256': '5b835c10836045119334d9524e62437110e00e1bd20612c9072a0ae155f94a17', 'process': {'status': 'unknown', 'reason': "[WinError 2] 系统找不到指定的文件。: 'D:\\\\tmp\\\\tmp3i2lfgpj\\\\.rea-enhanced\\\\scratch\\\\bcda1ab6eb0b416eb7b943687733e577\\\\playwright_chromiumdev_profile-nwckMe\\\\Default\\\\Shared Dictionary'", 'exit_code': 0, 'elapsed_ms': 1811.767, 'peak_job_bytes': 492322816, 'output_truncated': False, 'memory_limit_mb': 1536, 'cleanup': 'owned Windows job closed after invocation'}, 'capture_path': 'work/first/capture.json', 'elapsed_ms': 1811.767, 'temporary_storage': {'status': 'ok', 'project_root': 'D:\\tmp\\tmp3i2lfgpj', 'policy': {'max_temporary_bytes': 4294967296, 'minimum_free_bytes': 2147483648, 'minimum_free_fraction': 0.02, 'completed_ttl_seconds': 3600, 'interrupted_ttl_seconds': 86400}, 'free_bytes': 63286140928, 'reclaimed_bytes': 126, 'total_reclaimed_bytes': 126, 'managed_temporary_bytes': 0, 'entries': [{'id': 'bcda1ab6eb0b416eb7b943687733e577', 'path': '.rea-enhanced/scratch/bcda1ab6eb0b416eb7b943687733e577', 'purpose': 'Browser comparison temporary profile', 'bytes': 126, 'state': 'reclaimed'}], 'scope': 'Registered scratch only. Evidence, products and unregistered folders are retained.'}, 'rea_native_proof': 'not-performed', 'whole_product_acceptance': 'not-established', 'limitations': ['Only declared actions/selectors/storage keys/viewport screenshots were compared.', 'Source-to-served-URL correspondence is declared by the host, not automatically authenticated.', 'No unobserved server, API, device or whole-program equivalence established.', 'Disposable browser contexts and owned process cleanup are not OS/network isolation.']}
+
+----------------------------------------------------------------------
+Ran 118 tests in 87.322s
+
+FAILED (failures=1)

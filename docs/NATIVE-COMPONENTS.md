@@ -2,7 +2,7 @@
 
 Reverse：固定领域正文、单一路由、困难方法按需读。
 
-官方REA 6.9.0：原工具schema/结果/错误/bundle保持原身份。增强REA单stdio入口保留原工具并添加四个工具。Node 24.22.1、独立Frida 17.23.2绑定固定；实际provider资格靠真实操作，不靠目录存在。
+官方REA 6.9.0：原工具schema/结果/错误/bundle保持原身份。增强REA单stdio入口保留原工具并添加五个工具。Node 24.22.1、独立Frida 17.23.2绑定固定；实际provider资格靠真实操作，不靠目录存在。
 
 增强部分：宿主原生实现、功能依据/依赖、独立进程/文件/状态和网页行为/视觉比较、新鲜度、预算与恢复。其回执不是REA官方proof。详见COMPARISON及INTEGRATION-CONTRACT。
 
