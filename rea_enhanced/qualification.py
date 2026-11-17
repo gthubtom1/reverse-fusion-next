@@ -16,7 +16,7 @@ def source_identity(root=ROOT):
         'components/reverse-core/preservation.json','components/rea-enhanced/web-replay.mjs',
         'components/rea-enhanced/provider-package.json','components/rea-enhanced/provider-package-lock.json',
         'components/rea-enhanced/provider-bindings.json','vendor/rea/manifest.json','vendor/node/manifest.json',
-        'scripts/install.ps1','pyproject.toml']
+        'scripts/install.ps1','pyproject.toml','VERSION']
     names += [p.relative_to(root).as_posix() for p in (root/'tests_next').glob('*.py')]
     names += ['AGENTS.md','RULES.md','README.md','docs/ACTIVE-DOCUMENTS.json',
               'docs/NEXT/REQUIREMENTS.md','scripts/next-clean-install.py',
@@ -56,7 +56,8 @@ def release_check(root=ROOT,require_deployed=False):
             failures.append('Independent repository clone/install qualification is missing or stale')
         versions=[tomllib.loads((root/'pyproject.toml').read_text(encoding='utf-8'))['project']['version'],
             read(root/'release/manifest.json')['version'],read(root/'components/official/manifest.json')['version'],
-            read(root/'SOURCE-MANIFEST.json')['version'],read(root/'docs/ACTIVE-DOCUMENTS.json')['version']]
+            read(root/'SOURCE-MANIFEST.json')['version'],read(root/'docs/ACTIVE-DOCUMENTS.json')['version'],
+            (root/'VERSION').read_text(encoding='utf-8').strip()]
         if any(version!=__version__ for version in versions):failures.append('Current entry versions disagree')
         for name in read(root/'docs/ACTIVE-DOCUMENTS.json')['active']:
             if not (root/name).is_file():failures.append('Active documentation missing: '+name)

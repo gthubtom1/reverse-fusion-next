@@ -98,3 +98,10 @@ browser calls, bundle export, native host implementation, independent checks, se
 artifact-bound delivery; snapshots retained. Current release-check with deployed command passed.
 Twenty requirements and sixteen audit classes now have current results. No pending implementation
 in this scoped release; arbitrary-target results remain task-specific. Final synchronization follows.
+
+
+## 2026-11-17 长任务问题实证与2.2.0修复
+
+Read the supplied reconstruction chat and actual revision351 case without editing the target. Reverse methods and official REA operated; no Craft runtime ran. Found coarse feature groups, detached external checks, repeated mutable evidence references, omitted supplements, overfrequent clean packaging and a wrong updater acceptance object. Prior engineering tests did not establish long-task/model superiority.
+
+Implemented content-addressed observation snapshots (explicit live dependencies remain supported), compact status and actionable diagnostics, optional actual project-script operation recording/cost/reuse/cancellation through the existing record tool, and declared candidate product identity. Native host tools remain available; exit zero never grants acceptance. Added15 counterexamples and exercised the new operation through the actual existing MCP entry. Focused16 tests passed; the full source-bound suite is running. Same-case status bytes fell from77422 to19718; this measures output size, not model accuracy/cost/speed. See LONG-TASK-REPAIR and LONG-TASK-CONCLUSIONS.

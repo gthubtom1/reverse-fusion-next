@@ -1,23 +1,18 @@
-# 当前状态：Reverse Fusion Next 2.1.0 已验收
+# 当前状态：Reverse Fusion Next 2.2.0
 
-独立项目：https://github.com/gthubtom1/reverse-fusion-next ，默认分支main。
-本地D:/Project/reverse-next；旧D:/Project/reverse保持冻结1.4.0且干净。
-新版不是旧项目分支。旧误发分支已在保留历史后移除，旧master未变。
+独立项目：https://github.com/gthubtom1/reverse-fusion-next ，默认分支main，仓库D:/Project/reverse-next。
+运行架构仍为Reverse方法＋官方REA＋增强层；宿主唯一推理编码，Craft不运行、Spec可选。
+一个reverse-fusion-rea MCP保留官方工具和四个增强入口，不要求每任务逐个使用组件。
 
-运行架构：Reverse方法＋增强REA；当前宿主唯一推理编码，Craft无运行依赖、Spec可选。
-当前Codex只登记一个reverse-fusion-rea，含255原REA工具及4增强工具。
-已实际卸载托管入口→确认空登记→重装，旧REA/Craft后台退役为零，无关配置字节保留。
-最终代码固定后刷新了开发期间的缓存连接，新聊天实际调用增强入口通过。
-当前旧聊天的已关闭连接不承诺热替换，使用新聊天或当前绝对CLI。
+2.1.0的安装和小型白话案例曾通过有限工程资格，但后续长任务暴露出状态脱节、粗粒度阻塞、
+历史证据覆盖、重复构建与错误验收对象。旧资格不能证明所有复杂任务稳定高效，也没有模型A/B优胜证据。
 
-固定源码81项检查通过；独立GitHub默认clone、全新venv/下载目录、公共安装器及完整81项检查再次通过，
-临时用户配置回退准确。真实官方Ghidra分析、Frida枚举、原生bundle跨进程恢复、浏览器行为与视觉、
-失败/篡改/过期/取消/清洁卸载等均有实际记录。代码、测试、公共合同与操作证据绑定。
+2.2.0修复：不可变观察/显式live依赖、紧凑状态/行动诊断、可选真实脚本执行计量和复用、
+声明候选产品身份、按变化选择验证。宿主保留工具直达和自主判断，操作退出零不是验收通过。
+详细结论见NEXT/LONG-TASK-CONCLUSIONS.md；实现完成判据和本轮验证状态见NEXT/LONG-TASK-REPAIR.md和STATUS.json。
 
-白话新聊天在另一成果目录完成自有软件分析、REA实际观察、宿主实现、独立比较、修正和交付；
-原话与补充保留，覆盖审查和交付记录新鲜。20条要求及当前证据见NEXT/ACCEPTANCE.md，
-本轮16类审查问题见NEXT/FINAL-AUDIT.md。开发恢复从NEXT/RESUME及STATUS开始。
+当前源码正在完成新资格、托管入口更新与远端同步。读取release-check当前结果，勿把旧pass记录当新版本通过。
+安装唯一入口AGENT-BOOTSTRAP.md；用户白话使用BEGINNER-GUIDE.md。现有聊天更新后需要重连或绝对CLI，
+不关闭别的聊天、目标程序或无关MCP。旧项目由用户清理，其历史基线在本仓库可追溯，不要求恢复旧目录。
 
-安装唯一入口AGENT-BOOTSTRAP.md；新手使用BEGINNER-GUIDE.md。
-具体目标仍按证据验收；本机工程与自有案例不冒称全新OS、所有provider/宿主、任意目标恢复或模型A/B胜出。
-历史1.4.0四组件要求只用于旧版追溯。
+本轮工程改进不等于任意目标完成、所有未来问题穷尽，或同模型/同工具下必然更快更强。

@@ -101,6 +101,19 @@ class LiveMCP(unittest.TestCase):
                 result=call('rf_next_case_record',{'expected_revision':result['revision'],
                     'change':{'op':'supplement','text':'完整目标保留，增加持久化验证'}})
                 self.assertEqual(len(result['supplements']),1)
+                script=project/'verify-owned.py'
+                script.write_text('from pathlib import Path\nPath("result.txt").write_text("observed")\n',encoding='utf-8')
+                result=call('rf_next_case_record',{'expected_revision':result['revision'],
+                    'change':{'op':'evidence','id':'E1','path':'verify-owned.py','authority':'static'}})
+                result=call('rf_next_case_record',{'expected_revision':result['revision'],
+                    'change':{'op':'feature','id':'F1','description':'Owned observation',
+                        'evidence':['E1'],'checks':['C1'],'dependencies':[],'review':'Actual script output; not product comparison.'}})
+                result=call('rf_next_case_record',{'expected_revision':result['revision'],
+                    'change':{'op':'execute','id':'observe','kind':'verify','features':['F1'],
+                        'argv':[sys.executable,'verify-owned.py'],'inputs':['verify-owned.py'],
+                        'artifacts':['result.txt'],'purpose':'Verify measured MCP operation','reusable':True}})
+                self.assertEqual(result['operation']['exit_code'],0)
+                self.assertFalse(result['workflow']['features']['F1']['complete'])
             self.assertEqual(client.cleanup['status'],'verified')
 
     def test_native_bundle_survives_new_server(self):

@@ -1,0 +1,16 @@
+{
+  "status": "pass",
+  "case_revision": 351,
+  "old_status_json_bytes": 77422,
+  "new_status_json_bytes": 19718,
+  "old_elapsed_seconds": 0.1058226999884937,
+  "new_elapsed_seconds": 0.1994354999915231,
+  "diagnostic_codes": [
+    "stale-evidence",
+    "unperformed-checks",
+    "review-feature-granularity",
+    "shared-mutable-evidence",
+    "review-acceptance-progress"
+  ],
+  "scope": "Read-only status serialization on the same existing case. Not a model, token-cost or task-speed benchmark."
+}

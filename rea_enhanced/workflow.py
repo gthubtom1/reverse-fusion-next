@@ -6,6 +6,8 @@ import re
 from reverse_fusion.case_bridge import dry_run_route, request_intent
 from .storage import digest, inside, locked, read, write
 from .comparison import compare, fresh
+from .operations import frozen_evidence, product_record, product_status
+from .diagnostics import inspect_case, validation_guidance, operation_summary
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -46,7 +48,10 @@ def _resolution_valid(project, case, unknown):
 
 
 def _coverage_inputs(case):
-    return {key:case[key] for key in ('original_request','supplements','objective','features','evidence','unknowns')}
+    result = {key:case[key] for key in ('original_request','supplements','objective','features','evidence','unknowns')}
+    if case.get('product'):
+        result['product'] = case['product']
+    return result
 
 
 def _coverage_valid(case):
@@ -111,6 +116,9 @@ def record(project: Path, case_root: str, change: dict, expected_revision: int):
     path = _record_path(project, case_root)
     if not isinstance(change, dict) or not isinstance(change.get('op'), str):
         raise ValueError('A structured change operation is required')
+    if change['op'] == 'execute':
+        from .operations import execute
+        return execute(project, case_root, change, expected_revision)
     with locked(path):
         case = _load(project, case_root)
         if type(expected_revision) is not int or expected_revision != case['revision']:
@@ -132,7 +140,12 @@ def record(project: Path, case_root: str, change: dict, expected_revision: int):
                 p = inside(project, change.get('path'))
                 if not p.is_file():
                     raise ValueError('Evidence file is missing')
-                case['evidence'][identity] = {'path': change['path'], 'sha256': digest(p),
+                retention = change.get('retention', 'snapshot')
+                if retention not in {'snapshot', 'live'}:
+                    raise ValueError('Evidence retention must be snapshot or live')
+                location = (frozen_evidence(project, case_root, change['path']) if retention == 'snapshot'
+                            else {'path': change['path'], 'sha256': digest(p), 'retention': 'live'})
+                case['evidence'][identity] = {**location,
                     'authority': change['authority'], 'description': str(change.get('description', '')),
                     'qualification': 'Host-supplied provenance, not automatic semantic authentication'}
             elif op == 'feature':
@@ -154,6 +167,8 @@ def record(project: Path, case_root: str, change: dict, expected_revision: int):
                     'status': 'open', 'resolution_evidence': []}
                 if change['critical'] and not change['features'] and change.get('scope') != 'case':
                     raise ValueError('Critical unknown requires affected features or explicit scope=case')
+        elif op == 'product':
+            case['product'] = product_record(project, change)
         elif op == 'refine_route':
             hint=change.get('hint')
             if not isinstance(hint,str) or not hint.strip():raise ValueError('Technical refinement requires a hint')
@@ -197,6 +212,10 @@ def record(project: Path, case_root: str, change: dict, expected_revision: int):
             if (not isinstance(summary,str) or not summary.strip() or not isinstance(artifacts,list)
                     or not artifacts or any(not isinstance(p,str) or not inside(project,p).is_file() for p in artifacts)):
                 raise ValueError('Delivery requires a summary and existing artifact files')
+            if case.get('product'):
+                product = product_status(project, case)
+                if product['status'] != 'current' or not set(product['candidate_files']).intersection(artifacts):
+                    raise ValueError('Delivery needs the current candidate product, not a reference or a changed product identity')
             case['delivery']={'summary':summary,'artifacts':{p:digest(inside(project,p)) for p in artifacts},
                 'inputs':_coverage_inputs(case),'checks':case['checks'].copy(),
                 'qualification':'Reviewed declared delivery using actual finite comparisons; not universal equivalence'}
@@ -215,11 +234,13 @@ def record(project: Path, case_root: str, change: dict, expected_revision: int):
     return status(project, case_root)
 
 
-def _readiness(project, case):
+def _readiness(project, case, evidence_state=None):
+    evidence_state = evidence_state if evidence_state is not None else {
+        ref: _evidence_valid(project, case, ref) for ref in case['evidence']}
     ready, blocked = [], {}
     for identity, feature in case['features'].items():
         reasons = []
-        if not feature['evidence'] or any(not _evidence_valid(project, case, ref) for ref in feature['evidence']):
+        if not feature['evidence'] or any(not evidence_state.get(ref, False) for ref in feature['evidence']):
             reasons.append('Missing or stale evidence')
         if not feature['checks']:
             reasons.append('No declared acceptance checks')
@@ -277,7 +298,8 @@ def _feature_inputs(case, identity):
 def status(project: Path, case_root='work/current-case'):
     project = project.resolve()
     case = _load(project, case_root)
-    ready, blocked = _readiness(project, case)
+    evidence_state = {ref: _evidence_valid(project, case, ref) for ref in case['evidence']}
+    ready, blocked = _readiness(project, case, evidence_state)
     features = {}
     for identity, feature in case['features'].items():
         checks = {}
@@ -323,22 +345,33 @@ def status(project: Path, case_root='work/current-case'):
         try:
             delivery_valid = (delivery['inputs']==_coverage_inputs(case) and delivery['checks']==case['checks']
                 and all(digest(inside(project,p))==sha for p,sha in delivery['artifacts'].items())
-                and all(_resolution_valid(project,case,u) for u in case['unknowns'].values()))
+                and all(_resolution_valid(project,case,u) for u in case['unknowns'].values())
+                and (not case.get('product') or product_status(project, case)['status'] == 'current'))
         except (OSError,ValueError):pass
     if delivery_valid:
         stage='reviewed-delivery'
         next_action='Deliver saved artifacts with finite tested scope and coverage review; preserve remaining external limitations.'
+    def brief(value):
+        return {k: v for k, v in value.items() if k not in {'inputs', 'checks'}} if value else value
     return {'status': stage, 'case_root': case_root, 'revision': case['revision'],
         'original_request': case['original_request'], 'objective': case['objective'],
         'route':{**case['route'],'required_read_paths':[str(ROOT/name) for name in case['route'].get('required_reads',[])]},
         'component_entries':{'official_rea_skill':str(ROOT/'vendor/rea/package/skills/reverse-engineer-anything/SKILL.md'),
             'enhanced_cli':[sys.executable,str(ROOT/'scripts/next-cli.py')],'writer':'current-host-native',
             'mcp_server':'reverse-fusion-rea','craft_required':False,'spec_required':False},
-        'analysis_report':analysis_report,'supplements': case['supplements'], 'features': features,
-        'ready_features': ready, 'blocked_features': blocked, 'unknowns': case['unknowns'],
+        'analysis_report':brief(analysis_report),'supplements': case['supplements'], 'features': features,
+        'ready_features': ready, 'blocked_features': blocked,
+        'unknowns': {uid: {k: v for k, v in u.items() if k != 'resolution_snapshot'} for uid, u in case['unknowns'].items()},
         'check_budget':case.get('limits',{'max_checks_per_feature':12}),
-        'coverage':{'status':coverage_state,'review':coverage},
-        'delivery':{'status':'current' if delivery_valid else 'stale' if delivery else 'not-delivered','record':delivery},
+        'coverage':{'status':coverage_state,'review':brief(coverage)},
+        'delivery':{'status':'current' if delivery_valid else 'stale' if delivery else 'not-delivered','record':brief(delivery)},
+        'product_identity': product_status(project, case),
+        'diagnostics': inspect_case(case, features, evidence_state),
+        'validation_guidance': validation_guidance(features),
+        'operations': operation_summary(case),
+        'evidence': {ref: {'path': e['path'], 'source_path': e.get('source_path', e['path']),
+                         'retention': e.get('retention', 'live'), 'current': evidence_state[ref]}
+                     for ref, e in case['evidence'].items() if not evidence_state[ref]},
         'next_action': next_action, 'whole_product_acceptance': 'host-reviewed-declared-delivery' if delivery_valid else 'not-established',
         'limitations': ['Readiness checks declared evidence, not automatic semantic understanding.',
             'Completion covers only declared features and actual finite checks.',

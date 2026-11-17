@@ -39,6 +39,21 @@ test_returned_cli_works_outside_checkout_with_colliding_module (test_final_audit
 test_shared_dependency_graph_does_not_explode_saved_inputs (test_final_audit.FinalAudit.test_shared_dependency_graph_does_not_explode_saved_inputs) ... ok
 test_missing_node_binding_makes_core_doctor_incomplete (test_inventory.Inventory.test_missing_node_binding_makes_core_doctor_incomplete) ... ok
 test_refresh_generates_current_index_without_fabricated_readiness (test_inventory.Inventory.test_refresh_generates_current_index_without_fabricated_readiness) ... ok
+test_accumulated_reports_surface_missing_integration (test_long_tasks.LongTasks.test_accumulated_reports_surface_missing_integration) ... ok
+test_changed_declared_input_is_unknown_even_on_exit_zero (test_long_tasks.LongTasks.test_changed_declared_input_is_unknown_even_on_exit_zero) ... ok
+test_default_reply_does_not_repeat_saved_qualification_inputs (test_long_tasks.LongTasks.test_default_reply_does_not_repeat_saved_qualification_inputs) ... ok
+test_external_environment_change_prevents_operation_reuse (test_long_tasks.LongTasks.test_external_environment_change_prevents_operation_reuse) ... ok
+test_live_specification_still_invalidates_when_it_changes (test_long_tasks.LongTasks.test_live_specification_still_invalidates_when_it_changes) ... ok
+test_operation_cancellation_keeps_unknown_and_actual_receipt (test_long_tasks.LongTasks.test_operation_cancellation_keeps_unknown_and_actual_receipt) ... ok
+test_overwriting_work_report_keeps_original_observation (test_long_tasks.LongTasks.test_overwriting_work_report_keeps_original_observation) ... ok
+test_product_identity_is_required_after_declaration_and_invalidates_delivery (test_long_tasks.LongTasks.test_product_identity_is_required_after_declaration_and_invalidates_delivery) ... ok
+test_reference_file_cannot_be_declared_as_candidate (test_long_tasks.LongTasks.test_reference_file_cannot_be_declared_as_candidate) ... ok
+test_successful_operation_does_not_certify_product (test_long_tasks.LongTasks.test_successful_operation_does_not_certify_product) ... ok
+test_tampered_artifact_prevents_operation_reuse (test_long_tasks.LongTasks.test_tampered_artifact_prevents_operation_reuse) ... ok
+test_tampered_snapshot_is_not_ready_and_is_named (test_long_tasks.LongTasks.test_tampered_snapshot_is_not_ready_and_is_named) ... ok
+test_unbound_invoked_script_is_rejected_before_execution (test_long_tasks.LongTasks.test_unbound_invoked_script_is_rejected_before_execution) ... ok
+test_unchanged_artifact_operation_is_reused_but_changes_rerun (test_long_tasks.LongTasks.test_unchanged_artifact_operation_is_reused_but_changes_rerun) ... ok
+test_unchanged_failure_needs_information_and_has_cross_id_limit (test_long_tasks.LongTasks.test_unchanged_failure_needs_information_and_has_cross_id_limit) ... ok
 test_actual_native_provider_and_new_server_bundle_roundtrip (test_mcp.LiveMCP.test_actual_native_provider_and_new_server_bundle_roundtrip) ... ok
 test_cancelled_owned_comparison_cleans_up_and_stays_unknown (test_mcp.LiveMCP.test_cancelled_owned_comparison_cleans_up_and_stays_unknown) ... ok
 test_native_bundle_survives_new_server (test_mcp.LiveMCP.test_native_bundle_survives_new_server) ... ok
@@ -81,6 +96,6 @@ test_unchanged_success_is_reused_without_another_run (test_workflow.OwnedCase.te
 test_wrong_algorithm_fails (test_workflow.OwnedCase.test_wrong_algorithm_fails) ... ok
 
 ----------------------------------------------------------------------
-Ran 81 tests in 81.693s
+Ran 96 tests in 94.293s
 
 OK

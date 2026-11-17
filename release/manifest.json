@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "version": "2.1.0",
+  "version": "2.2.0",
   "edition": "windows-x64-codex",
   "status": "source-bound-release-check-required",
   "requirements": "docs/NEXT/REQUIREMENTS.md",

@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "version": "2.1.0",
+  "version": "2.2.0",
   "baseline_commit": "022e61b803e41569cac1f116ebca2245b9c9b1f8",
-  "goal_status": "complete",
-  "stage": "maintenance",
+  "goal_status": "active",
+  "stage": "long-task-repair-qualification",
   "stages": {
     "S0": {
       "status": "done",
@@ -153,7 +153,7 @@
       "README.md"
     ]
   },
-  "next_action": "No pending work for the qualified 2.1.0 independent Windows x64 Codex release. For a new authorized change, preserve its goal and requalify affected source/contracts and operations.",
+  "next_action": "Qualify the generic long-task repair, preserve official tools, update the owned local entry and publish the reviewed source. Model effectiveness against a same-model/same-tool baseline remains unestablished.",
   "migration": "Final owned uninstall/empty entry/reinstall verified; legacy REA/Craft processes retired; one enhanced endpoint selected; final fresh desktop chat entry observed.",
   "limitations": [
     "Finite engineering qualification and the owned plain-language case are distinct from acceptance of arbitrary future targets.",
@@ -174,6 +174,26 @@
       "evidence/next/final-audit/plain-host.json",
       "evidence/next/final-audit/final-fresh-entry.json",
       "evidence/next/final-audit/release-check.json"
+    ],
+    "scope": "Historical 2.1.0 qualification; current repair has separate source-bound results."
+  },
+  "long_task_repair": {
+    "requirements": "docs/NEXT/LONG-TASK-REPAIR.md",
+    "status": "local-qualified-installed-remote-pending",
+    "verification": "96 full source-bound tests passed, including 15 new failure cases and actual MCP execute; local owned install/probe passed. Public clone pending.",
+    "model_effectiveness": "not-established",
+    "implemented": [
+      "immutable observation snapshots and explicit live dependencies",
+      "compact status and actionable diagnostics",
+      "optional measured project script execution and declared artifact reuse",
+      "candidate/reference identity checks",
+      "change-specific validation and host autonomy"
+    ],
+    "not_claimed": [
+      "all future targets solved",
+      "same-model task speed or quality superiority",
+      "arbitrary external script pass accepted as independent comparison",
+      "automatic discovery of unrecorded chat supplements"
     ]
   }
 }

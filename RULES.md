@@ -16,4 +16,15 @@ Actual independent replay compares declared behavior/state/files; web replay sep
 
 Report analysis, feature checks, full-goal coverage and deployment separately. finite-scope-verified is not automatic whole-product acceptance; the host must review omitted requirements. Source recovery, equivalent source and modified binaries are distinct deliveries.
 
+Use the minimum bookkeeping that preserves the actual task. The host retains direct tools and method choice.
+Split complex reconstruction into independent observable behaviors; a missing service must not block an unrelated feature.
+Evidence observations default to immutable snapshots; use retention=live for changing specifications/dependencies.
+Inspect status diagnostics for stale records or a growing gap between reports and declared checks.
+Optional record execute measures expensive project scripts, binds declared inputs/outputs, reuses explicit unchanged
+artifact operations and bounds repeated identical attempts; exit zero never grants a check pass.
+Select validation by change: source/API replay for backend work, affected UI/full-scroll scenarios for UI changes,
+package checks for integration milestones or package/runtime changes. Do not mandate clean-package/screenshot loops.
+Register candidate/reference product identities before reconstruction delivery, and verify updates keep the candidate product.
+No model-performance gain or arbitrary-target completeness follows from passing the engineering suite.
+
 Installation: docs/AGENT-BOOTSTRAP.md is the only public entry. Only owned skill/AGENTS/MCP regions may be changed. Preserve unrelated configuration and credentials. Legacy v1 installers/checkpoints/source are historical. docs/ACTIVE-DOCUMENTS.json lists current public documentation; development resumes from docs/NEXT/RESUME.md and STATUS.json.

@@ -20,6 +20,33 @@ record的change使用以下结构（每次使用status返回的最新revision）
 
 evidence authority为observed/static/inferred/designed/native-rea-bundle。resolve仅接受新鲜observed/static/native-rea-bundle；解决时绑定证据完整快照，重登记后需重新核对并resolve。coverage的source为original或supplement:1、supplement:2等，所有来源与所有feature均需映射。覆盖描述由宿主对照用户要求审查，工具不自动理解或发现漏项。deliver拒绝未审覆盖、未解决unknown、失败/失效检查或缺成果。纯分析使用deliver_analysis，无需比较或构建。
 
+新evidence默认retention=snapshot，将最多64MiB观察材料复制到case/evidence/内容摘要文件，保留source_path。
+工作文件后来被覆盖不改变历史事实；快照被篡改仍失效。活的规格/源码依赖显式加retention=live；
+旧case条目继续按原路径核对，不自动改写或把失效洗成通过。源码、二进制和运行环境的比较身份仍单独核对。
+status默认不回传coverage/delivery/unknown中的大输入快照；原始记录留case-v2.json，诊断列出需审条目。
+
+复刻交付前可登记产品身份，之后deliver要求实际候选文件且身份当前：
+
+```json
+{"op":"product","candidate_files":["candidate/main.py"],"reference_files":["original/product.exe"],"review":"候选入口和原版可执行文件分别标识交付对象；共享素材不作为身份"}
+```
+
+这只核对声明的产品文件。更新后实际启动哪个程序、运行时模块与功能仍要独立验证，不能把原版安装启动当作候选升级成功。
+
+耗时验证/打包可用同一record入口执行已有项目脚本，宿主普通工具仍保留：
+
+```json
+{"op":"execute","id":"verify-export","kind":"verify","features":["F-export"],"argv":["C:/Python/python.exe","tools/check_export.py"],"cwd":".","inputs":["tools/check_export.py","candidate/export.py"],"artifacts":["work/export-observation.json"],"purpose":"验证本次导出变化的文件和错误分支","timeout_seconds":60,"reusable":true}
+```
+
+kind为investigate/verify/visual/package；argv不经shell拼接，代码保存在声明的项目文件，输入列明实际相关代码/配置。
+保存日志、退出、耗时、清理及产物摘要；进程超时/取消/缺产物/输入执行中改变保留unknown。
+reusable仅用于明确无未绑定外部状态的verify/package操作；输入、实际运行器、声明环境和产物均不变才复用。
+同输入失败需retry_reason或改输入，三次相同操作后要求回调查，不可只改ID绕过。
+这不是依赖自动发现：外部模块、服务、设备或GUI状态变化要作为新输入，或reusable=false。
+execute绝不写入检查pass；外部脚本报告仍为观察依据，真正验收调用独立compare。
+验证按改动选：后端先接口/源码回放，UI变化再查受影响页面/完整滚动和交互，阶段集成或打包变化再整包。
+
 进程计划version=2，scope/original/candidate/scenarios/timeout_seconds。两侧argv/cwd/sources；每scenario唯一id和ordered steps；每step含stdin/args/files/expected_exit_codes（原版允许退出码）。cwd和sources是成果相对路径。每scenario分别复制两侧有限源码树，步间保留独立状态；比较stdout/stderr/exit和声明文件字节摘要。文件数量/大小、时间/内存/输出有限制，拒绝链接，清理子进程。例子见tests_next/test_workflow.py和evidence/next/s1/vertical.json。
 
 最小可运行计划如下，将两侧不同实现分别保存在original/app.py与candidate/app.py，argv中的Python路径替换为实际绝对路径：

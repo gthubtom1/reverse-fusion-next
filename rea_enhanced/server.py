@@ -36,7 +36,8 @@ TEXT={'type':'string','minLength':1}
 STRINGS={'type':'array','items':TEXT}
 CHANGE={'oneOf':[
     _change('supplement',{'text':TEXT},['text']),
-    _change('evidence',{'id':TEXT,'path':TEXT,'authority':{'enum':['observed','static','inferred','designed','native-rea-bundle']},'description':TEXT},['id','path','authority']),
+    _change('evidence',{'id':TEXT,'path':TEXT,'authority':{'enum':['observed','static','inferred','designed','native-rea-bundle']},'description':TEXT,
+                       'retention':{'enum':['snapshot','live'],'default':'snapshot'}},['id','path','authority']),
     _change('feature',{'id':TEXT,'description':TEXT,'evidence':STRINGS,'checks':STRINGS,'dependencies':STRINGS,'review':TEXT},
             ['id','description','evidence','checks','dependencies','review']),
     _change('unknown',{'id':TEXT,'question':TEXT,'critical':{'type':'boolean'},'features':STRINGS,'scope':{'enum':['features','case']}},
@@ -44,6 +45,13 @@ CHANGE={'oneOf':[
     _change('resolve',{'id':TEXT,'evidence':STRINGS},['id','evidence']),
     _change('refine_route',{'hint':TEXT,'primary':TEXT},['hint']),
     _change('deliver_analysis',{'report':TEXT,'evidence':STRINGS},['report','evidence']),
+    _change('product',{'candidate_files':STRINGS,'reference_files':STRINGS,'review':TEXT},
+            ['candidate_files','reference_files','review']),
+    _change('execute',{'id':TEXT,'kind':{'enum':['investigate','verify','visual','package']},
+        'features':STRINGS,'argv':STRINGS,'cwd':TEXT,'inputs':STRINGS,'artifacts':STRINGS,
+        'purpose':TEXT,'timeout_seconds':{'type':'number','exclusiveMinimum':0,'maximum':600},
+        'reusable':{'type':'boolean','default':False},'retry_reason':TEXT,'environment_keys':STRINGS},
+        ['id','kind','features','argv','inputs','purpose']),
     _change('budget',{'max_checks_per_feature':{'type':'integer','minimum':1,'maximum':100},'reason':TEXT},['max_checks_per_feature','reason']),
     _change('coverage',{'review':TEXT,'requirements':{'type':'array','minItems':1,'items':{
         'type':'object','properties':{'id':TEXT,'text':TEXT,'source':TEXT,'features':STRINGS},
@@ -84,7 +92,11 @@ def call_owned(name, args, cancel_event=None):
     case=args.get('case_root','work/current-case')
     if name=='rf_next_case_open':return open_case(project,args['request'],case)
     if name=='rf_next_case_status':return status(project,case)
-    if name=='rf_next_case_record':return record(project,case,args['change'],args['expected_revision'])
+    if name=='rf_next_case_record':
+        if args['change'].get('op') == 'execute':
+            from .operations import execute
+            return execute(project,case,args['change'],args['expected_revision'],cancel_event=cancel_event)
+        return record(project,case,args['change'],args['expected_revision'])
     result=run_check(project,case,args['check_id'],args['plan'],args['output'],cancel_event=cancel_event,retry_reason=args.get('retry_reason'))
     if 'comparison' not in result:return result
     receipt=result['comparison']

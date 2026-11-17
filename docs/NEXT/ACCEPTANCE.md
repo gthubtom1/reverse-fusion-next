@@ -1,4 +1,7 @@
-# Reverse Fusion Next 2.1.0 最终验收
+# Reverse Fusion Next 2.1.0 历史工程验收
+
+本表保留当时有限工程资格，不代表2.2.0长任务修复已通过。当前结论见STATUS.json、
+LONG-TASK-REPAIR.md与LONG-TASK-CONCLUSIONS.md；本轮源码变化后由release-check核对新资格。
 
 本轮20项工程要求已逐项验收，并完成独立项目发布、本机清洁部署及真实白话任务。
 旧版反复漏检的经验与16类审查发现见FINAL-AUDIT.md；失败反例、修复前记录及实际操作保留。

@@ -69,6 +69,17 @@ unproductive loops. Read `{repo}/docs/COMPARISON.md` for schemas and boundaries,
 `{repo}/docs/RECOVERY.md` for interruption and recovery. Do not shrink the request to a
 demo. Report actual tested scope, remaining requirements and concrete next steps.
 
+Keep the host's judgment and normal tools. Work on independent observable behaviors,
+with unknowns limited to affected behavior. Inspect status diagnostics when progress
+drifts. Observations default to immutable snapshots; use retention=live for changing
+specifications or dependencies. Do not re-register a historical report against a
+mutable build-current file. Use the optional record execute operation for expensive
+scripts when measured cost/reuse helps; exit zero is never acceptance. Prefer focused
+source/API replay for backend changes, affected full-scroll UI checks for UI changes,
+and package checks at integration milestones. No screenshot or clean-package loop
+is required after every edit. Register product identity before reconstruction delivery.
+Record every substantive user supplement; a follow-up is not permission to drop the goal.
+
 For installation only, follow `{repo}/docs/AGENT-BOOTSTRAP.md`. Never run inherited v1
 installers or standalone REA setup over this managed install. One owned MCP endpoint
 reverse-fusion-rea serves original tools plus enhancements. mcp-check probes the
