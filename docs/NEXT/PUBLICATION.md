@@ -10,7 +10,7 @@
 - GitHub发布页：https://github.com/gthubtom1/reverse-fusion-next/releases/tag/autonomy-20261118
 - 形式：明确标为prerelease的源码快照，不作为新的正式稳定版或GitHub Latest。
 - 原包版本元数据保留2.4.0；快照标签用于区分本轮改造，不伪装成重新通过2.4.0发布门。
-- 推送分支并建立指向main的PR；本次不自动合并main，不替换已有基线。
+- 发布操作推送分支并建立指向 `main` 的 PR，当时未合并、不替换已有基线。
 - 本机托管skill/AGENTS/MCP、运行包和凭据不改；editable源码修改影响新连接这一已有事实不变。
 
 ## 内容与验证
@@ -27,8 +27,8 @@
 
 ## 当前状态
 
-GitHub预发布已实际创建并核对：isPrerelease=true、isDraft=false，标签指向源码提交5bc870b8b7c0723641efd4080cb596ea89230f38。分支已推送，PR：https://github.com/gthubtom1/reverse-fusion-next/pull/1 ，保持打开，未自动合并main。
+GitHub 预发布已实际创建并核对：`isPrerelease=true`、`isDraft=false`，标签指向源码提交 `5bc870b8b7c0723641efd4080cb596ea89230f38`。发布时 [整合 PR](https://github.com/gthubtom1/reverse-fusion-next/pull/1) 打开；随后由 GitHub 核实已合并，`main` 的合并提交为 `5816a814bd3d032d5744de726eef5a710adb4999`（2026-11-17 21:12:29 UTC）。合并没有移动标签，也不改变预发布的运行验收结论。日常安装仍按[安装指南](../AGENT-BOOTSTRAP.md#稳定安装)固定到先前通过验收的提交。
 
 源码ZIP：reverse-fusion-next-autonomy-20261118-source.zip，8,247,938字节；SHA256：91be45c7b4c11efccd2f7e527223aac65c1acdc61001e6b7860b0e20040ac1be，与GitHub资产digest一致。SHA256SUMS.txt和source-manifest.json均上传完成。
 
-evidence/next/publication保存实际页面/标签/资产身份核对。发布后的记录提交只补充元数据，不移动已发布标签、不修改功能源码。没有部署动作；当前PR没有CI检查，Auto-fix及auto-merge均未开启。
+evidence/next/publication 保存发布当时的页面、标签和资产身份核对；其中 PR 状态和 CI 记录是发布时快照。发布后的记录提交只补充元数据，不移动已发布标签或修改功能源码。没有部署动作。

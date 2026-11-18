@@ -1,6 +1,6 @@
 # 当前状态：Reverse Fusion Next 2.4.0
 
-2026-11-18GitHub源码预发布已完成：autonomy-20261118已上线，标签指向5bc870b8b7c0723641efd4080cb596ea89230f38，源码ZIP及摘要/身份资产上传核对。分支已推送，main整合PR保持打开、未自动合并；不标稳定版或Latest，包版本元数据仍2.4.0。结果见NEXT/PUBLICATION.md及STATUS.publication；暂不部署，用户托管配置摘要未变，当前源码仅静态校验，旧运行资格不外推。
+2026-11-18 GitHub 源码预发布 `autonomy-20261118` 指向 `5bc870b8b7c0723641efd4080cb596ea89230f38`，源码 ZIP 和摘要已核对。[整合 PR](https://github.com/gthubtom1/reverse-fusion-next/pull/1) 随后已合入 `main`，标签不变。合并不等于运行验收、稳定发布或切换本机入口；包版本仍显示 `2.4.0`。日常安装按[安装指南](AGENT-BOOTSTRAP.md#稳定安装)固定到下文的已验收提交，不直接安装 `main`。详见 [发布记录](NEXT/PUBLICATION.md)。
 
 2026-11-18已按用户明确决定定档：当前最终形态冻结，转入具体问题驱动的维护，不继续泛化扩建。定档边界是“实现完成、静态校验通过、当前源码运行未验”，不是全功能运行认证或正式发布。身份/当前源码快照见NEXT/STATUS.json的final_freeze；未创建Git标签、提交、推送或切换托管入口。版本元数据仍2.4.0，仅作现有包版本，不冒充新发布资格。
 

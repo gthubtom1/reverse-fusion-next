@@ -217,7 +217,7 @@
       "README.md"
     ]
   },
-  "next_action": "GitHub commit/push/source prerelease complete. Keep main PR open pending user merge choice; no deployment, auto-merge, test run or model experiment scheduled.",
+  "next_action": "Source prerelease is complete and the integration PR is merged. Daily installation points to the previously qualified 2.4.0 snapshot. No deployment, runtime qualification, or model experiment scheduled.",
   "migration": "Current2.4.0 owned skill/AGENTS/one MCP updated; fresh registered stdio, exact package/runtime/repository versions2.4.0 and260 tools verified. Existing desktop chats may require reconnect.",
   "limitations": [
     "Finite engineering qualification and the owned plain-language case are distinct from acceptance of arbitrary future targets.",
@@ -423,7 +423,9 @@
     "document": "docs/NEXT/PUBLICATION.md",
     "deployment": "not requested; no installer or owned-entry switch",
     "runtime_validation": "not-run; static-only implementation; historical179 is not current source qualification",
-    "main_merge": "Not merged; PR open",
+    "main_merge": "Merged",
+    "main_merge_commit": "5816a814bd3d032d5744de726eef5a710adb4999",
+    "main_merged_at_utc": "2026-11-17T21:12:29Z",
     "package_version": "2.4.0 retained; not renewed release qualification",
     "source_commit": "5bc870b8b7c0723641efd4080cb596ea89230f38",
     "release_url": "https://github.com/gthubtom1/reverse-fusion-next/releases/tag/autonomy-20261118",
@@ -431,7 +433,16 @@
     "assets_uploaded": 3,
     "asset_digest_verified": true,
     "evidence": "evidence/next/publication/github.json",
-    "ci": "No checks present; Auto-fix/auto-merge off",
+    "ci": "At publication: no checks present; Auto-fix/auto-merge off",
     "pending_deployment": false
+  },
+  "onboarding_repair": {
+    "date": "2026-11-18",
+    "status": "docs-verified",
+    "stable_install": "Use clean_source_commit, not main HEAD or the shared package version number",
+    "source_preview": "Use publication.tag for source review, not a qualified installation",
+    "guide": "docs/AGENT-BOOTSTRAP.md",
+    "evidence": "GitHub PR state, main commit and prerelease tag verified; stable commit identified by evidence/next/final-audit/remote-install.json",
+    "scope": "No runtime source changes, installer run, deployment, or runtime qualification"
   }
 }

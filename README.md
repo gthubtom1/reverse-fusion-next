@@ -21,15 +21,12 @@
 每项目临时预算、跨项目按卷预留和连接内周期维护继续保留；历史未登记目录保持原样。
 架构的帮助、成本和困难目标能力依据见[本轮复核](docs/NEXT/ARCHITECTURE-REVIEW.md)。
 
-安装范围为Windows x64、Codex。将本版放在长期保留目录：
+## 安装或查看源码
 
-```powershell
-git clone https://github.com/gthubtom1/reverse-fusion-next.git D:\Project\reverse-next
-cd D:\Project\reverse-next
-powershell -NoProfile -File .\scripts\install.ps1
-```
+- **日常安装**：按[安装指南](docs/AGENT-BOOTSTRAP.md#稳定安装)使用通过运行和独立安装验收的 2.4.0 固定提交 `608170d`。支持 Windows x64、Codex，需要 Python 3.11+。已有安装先核对指南中的迁移和回退说明。
+- **查看自主版源码**：从 [GitHub 源码预发布 `autonomy-20261118`](https://github.com/gthubtom1/reverse-fusion-next/releases/tag/autonomy-20261118) 获取固定快照和 SHA256。它未通过运行验收，不是稳定安装包。
 
-需要Python 3.11+。迁移已有旧部署、隔离安装、工具发现、连接和回退均按[唯一安装入口](docs/AGENT-BOOTSTRAP.md)，不要运行历史四组件脚本。
+`main` 已包含自主版，直接克隆后运行安装器不会选中上面的已验收快照。两者包版本都显示 `2.4.0`，请用提交或标签区分。
 
 安装后在自己的软件项目目录打开Codex，用白话提出要求即可。例如：“帮我分析这里的软件，再做出功能和使用效果一样的版本。我不懂技术，需要我操作时请说清楚。”用户无需选择专业路由或复制整套技能。共享工具目录要保留；成果与证据留在当前项目。
 

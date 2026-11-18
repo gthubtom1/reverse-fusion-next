@@ -1,6 +1,8 @@
 # 从这里恢复
 
-2026-11-18GitHub交付完成：用户授权提交、推送和发布但暂不部署。autonomy-20261118源码预发布已上线，标签固定源码提交5bc870b8b7c0723641efd4080cb596ea89230f38，ZIP/摘要/身份清单均上传并核对。分支fix/independent-audit-nine已推送，main整合PR：https://github.com/gthubtom1/reverse-fusion-next/pull/1 ，保持打开，不自动合并。当前无CI检查，未启Auto-fix/auto-merge。最新结果见PUBLICATION.md、STATUS.publication及evidence/next/publication；旧“不提交/不推送”均为历史。三份用户入口摘要未变，无部署/功能测试或模型实验；当前功能仍是静态校验范围。
+2026-11-18 维护修复：GitHub 已确认[整合 PR](https://github.com/gthubtom1/reverse-fusion-next/pull/1) 合并到 `main`。公共指引将[稳定安装](../AGENT-BOOTSTRAP.md#稳定安装)固定到已验收的 `608170d`，将 `autonomy-20261118` 单列为源码预发布。只修文档渠道和状态，不改变运行代码、用户入口或历史证据。见 STATUS.onboarding_repair。
+
+2026-11-18 GitHub 交付：预发布标签 `autonomy-20261118` 固定源码提交 `5bc870b8b7c0723641efd4080cb596ea89230f38`，源码 ZIP、摘要和身份清单均上传并核对；整合 PR 在发布时保持打开，之后合并。见 [PUBLICATION.md](PUBLICATION.md)、STATUS.publication 和 evidence/next/publication。无新版部署、功能测试或模型实验；旧运行资格不外推。
 
 2026-11-18用户明确“按此定档”：当前最终形态已冻结，维护模式；没有待续优化、后台任务或自动安排的验收。权威状态为STATUS.final_freeze、FINAL-FORM.md及evidence/next/final-freeze/identity.json。当前实际工作区源码快照state/final-freeze-20261118/current-source.zip，包含未提交文件，不以HEAD替代。定档是“实现完成、静态校验通过、当前源码运行未验”，不代表发布/切换部署或模型效果证明。仅遇具体缺陷、实际任务阻碍、重复使用负担或用户明确新需求才改；不重启历史待办。未创建Git标签、提交或推送。
 

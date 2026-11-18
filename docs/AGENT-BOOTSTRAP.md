@@ -1,11 +1,27 @@
 # 唯一安装入口：Windows x64 / Codex
 
-先读CURRENT-STATE.md确认本版资格。完整核心为Reverse方法、固定Node、官方REA、独立Frida绑定和增强入口。没有Craft，不强制Spec，不启另一个模型或账号。
+## 稳定安装
 
-把本版放长期保留的独立目录；Python 3.11+，执行：
+日常安装使用[已验收的 2.4.0 源码](NEXT/STATUS.json)，固定提交 `608170da42e391f8093025b59a8245b48ed06183`。`main` 已包含未做运行验收的自主版；包版本号同为 `2.4.0`，以 Git 提交区分。只想查看自主版，去 [GitHub 源码预发布页](https://github.com/gthubtom1/reverse-fusion-next/releases/tag/autonomy-20261118) 下载源码 ZIP 和 SHA256 清单，无需安装。
+
+适用于 Windows x64 / Codex，需要 Git 和 Python 3.11+。首次安装使用一个新的长期保留目录。已有托管入口的用户先读下方迁移和回退说明，不要覆盖原目录。
 
 ```powershell
-powershell -NoProfile -File .\scripts\install.ps1
+$installRoot = 'D:\Project\reverse-next-2.4.0'
+$qualified = '608170da42e391f8093025b59a8245b48ed06183'
+if (Test-Path -LiteralPath $installRoot) { throw 'Choose a new checkout directory.' }
+git clone --no-checkout https://github.com/gthubtom1/reverse-fusion-next.git $installRoot
+if ($LASTEXITCODE -ne 0) { throw 'Clone failed.' }
+git -C $installRoot switch --detach $qualified
+if ($LASTEXITCODE -ne 0) { throw 'Could not check out the qualified source.' }
+```
+
+首次安装在同一个 PowerShell 窗口继续；运行安装器前再次核对提交：
+
+```powershell
+$actual = git -C $installRoot rev-parse HEAD
+if ($LASTEXITCODE -ne 0 -or $actual -ne $qualified) { throw 'Unexpected source commit.' }
+powershell -NoProfile -File (Join-Path $installRoot 'scripts\install.ps1')
 ```
 
 安装器创建仓库.venv和固定Python依赖，按摘要从固定来源取得Node/REA/Frida/WABT/JADX；npm按锁文件下载且不运行生命周期脚本。随后保存本机工具路径。Ghidra/Java、浏览器、设备、ILSpy和其他provider按目标需要，路径存在不等于实际操作通过；缺少工具不会冒称该类目标可验收。
@@ -23,10 +39,12 @@ REA原包的全部文件在bootstrap及doctor中和固定下载档逐一核对�
 掩盖缺失执行模块。独立Frida层在重装前实际加载，不以binding文件单独冒充可用。
 原包损坏时保留报错；仅重新提取本checkout的受托管vendor/rea/package，不能覆盖别处REA。
 
-默认只管理当前Codex的reverse-fusion用户技能、全局AGENTS托管段、一个reverse-fusion-rea MCP。保留无关配置与凭据。已有另一checkout的托管入口时显式指定旧绝对路径：
+默认只管理当前 Codex 的 `reverse-fusion` 用户技能、全局 AGENTS 托管段和一个 `reverse-fusion-rea` MCP，保留无关配置与凭据。迁移已有托管入口时，先完成上面的克隆和固定提交步骤，再在同一个 PowerShell 窗口执行下列命令（把 `-ReplaceFrom` 换成实际旧 checkout 的绝对路径）：
 
 ```powershell
-.\scripts\install.ps1 -ReplaceFrom 'D:\Project\reverse'
+$actual = git -C $installRoot rev-parse HEAD
+if ($LASTEXITCODE -ne 0 -or $actual -ne $qualified) { throw 'Unexpected source commit.' }
+powershell -NoProfile -File (Join-Path $installRoot 'scripts\install.ps1') -ReplaceFrom 'D:\Project\reverse'
 ```
 
 安装实际连接登记命令并运行目标无关操作，失败恢复旧段。输出rollback_receipt仅含托管段，保存在state/migrations。回退：仓库Python -m rea_enhanced rollback --receipt '<回执绝对路径>'。
