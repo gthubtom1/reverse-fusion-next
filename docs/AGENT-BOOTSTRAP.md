@@ -1,4 +1,6 @@
-# 唯一安装入口：Windows x64 / Codex
+# 历史安装说明：Windows x64 / Codex
+
+此页记录先前的增强 REA 安装方式，不适用于当前融合候选。查看[仓库首页](../README.md)和[隔离试用](NEXT/FUSION-CANDIDATE.md)。以下内容仅作历史追溯。
 
 先读CURRENT-STATE.md确认本版资格。完整核心为Reverse方法、固定Node、官方REA、独立Frida绑定和增强入口。没有Craft，不强制Spec，不启另一个模型或账号。
 

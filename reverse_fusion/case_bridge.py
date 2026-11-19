@@ -268,8 +268,13 @@ def request_intent(hint: str) -> str:
     Delivery intent does not establish analysis readiness or permission to code.
     """
     text = hint or ''
-    if re.fullmatch(r'\s*(?:继续(?:吧|做|分析|上次的|刚才那个项目[，,]?接着没完成的地方做)?|接着(?:做|来)?|恢复(?:上次)?|continue|resume)[。.!！\s]*', text, re.I):
+    if re.fullmatch(r'\s*(?:继续(?:吧|做|分析|上次的?|刚才那个项目[，,]?接着没完成的地方做)?|接着(?:做|来)?|恢复(?:上次)?|continue|resume)[。.!！\s]*', text, re.I):
         return 'follow-up'
+    analysis_only = (re.search(r'(?:只|仅)(?:做)?(?:静态)?(?:分析|研究|看懂)', text)
+        or re.search(r'\b(?:analysis\s+only|(?:only|just)\s+(?:analy[sz]e|inspect)|(?:analy[sz]e|inspect)\b[^.;\n]{0,80}\bonly)\b', text, re.I))
+    later_implementation = re.search(r'(?:然后|之后|随后|再|另需|还要|同时)\s*(?:独立)?(?:复刻|仿制|重新实现)|\b(?:then|subsequently|also)\s+(?:independently\s+)?(?:reconstruct|re-?implement|replicate)\b', text, re.I)
+    if analysis_only and not later_implementation:
+        return 'analysis'
     if re.search(r'(?:只|仅|先).{0,4}(?:分析|研究|看懂).{0,16}(?:不(?:要|用)?|别|暂不).{0,4}(?:复刻|还原|仿制|实现|写|开发)|(?:不要|不用|暂不|别).{0,3}(?:复刻|还原|仿制|实现|写代码)', text):
         return 'analysis'
     if re.search(r'复刻|仿制|还原.{0,12}(?:软件|程序|应用|功能|界面|行为)|照着.{0,10}(?:做|开发)|做(?:个|一[个份套])?.{0,8}一(?:模一样|样)|reconstruct|replica|re-?implement|clone.?behavior|behavio[u]?r.?equivalence', text, re.I):
@@ -419,10 +424,10 @@ def _local_route(hint: str, primary: str | None = None) -> dict[str, Any]:
         return {"status": "unavailable", "source": "local", "reason": "local router module missing", "hint": hint}
     module = module_from_spec(spec)
     sys.modules[spec.name] = module
-    spec.loader.exec_module(module)
     try:
+        spec.loader.exec_module(module)
         return module.route(hint, primary=primary).to_dict()
-    except (OSError, ValueError, json.JSONDecodeError) as exc:
+    except (OSError, ValueError, ImportError, SyntaxError, KeyError, TypeError, re.error) as exc:
         return {"status": "unavailable", "source": "local", "reason": str(exc), "hint": hint}
 
 

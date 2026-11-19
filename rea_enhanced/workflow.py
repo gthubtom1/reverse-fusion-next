@@ -4,7 +4,7 @@ import time
 import sys
 import re
 from reverse_fusion.case_bridge import dry_run_route, request_intent
-from .storage import digest, inside, locked, read, write
+from .storage import CASE_NAME, CASE_SCHEMAS, digest, inside, locked, read, read_snapshot, write
 from .comparison import compare, fresh
 from .operations import frozen_evidence, product_record, product_status
 from .diagnostics import inspect_case, validation_guidance, operation_summary
@@ -13,12 +13,12 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def _record_path(project, case_root):
-    return inside(project, case_root + '/case-v2.json')
+    return inside(project, case_root + '/' + CASE_NAME)
 
 
-def _load(project, case_root):
-    value = read(_record_path(project, case_root))
-    if (value.get('schema_version') != 2 or value.get('case_root') != case_root
+def _load(project, case_root, *, writable=False):
+    value = read(_record_path(project, case_root), writable=writable)
+    if (value.get('schema_version') not in CASE_SCHEMAS or value.get('case_root') != case_root
             or Path(value.get('project_root', '')).resolve() != project.resolve()
             or type(value.get('revision')) is not int):
         raise ValueError('Case identity/schema changed; recover the original case')
@@ -74,114 +74,286 @@ def _coverage_valid(case):
                                   for f in features.values()) and {f['requirement_source'] for f in features.values()} == sources
 
 
-def _delivery_product_valid(project, case, artifacts, selected=None):
-    if case['objective'] != 'reconstruction' and not case.get('product'):
-        return True
-    if product_status(project, case)['status'] != 'current':
-        return False
+def _check_receipt(project, case, identity, check):
+    report, checksum = read_snapshot(inside(project, check['path']))
+    current = (checksum == check.get('sha256')
+        and check.get('inputs', {}).get(identity) == _feature_inputs(case, identity)
+        and fresh(project, report))
+    return report, current
+
+
+def _credit_product_dimensions(coverage, product, dimensions, candidates, references):
+    sides = {'candidate_files': candidates}
+    if product.get('kind') != 'specification-implementation':
+        sides['reference_files'] = references
+    if any(not files or any(product[side].get(n) != h for n, h in files.items())
+           for side, files in sides.items()):
+        return
+    for dimension in dimensions:
+        matched = coverage.setdefault(dimension, {**{side: {} for side in sides}, 'pairs': set()})
+        matched['pairs'].add(tuple(tuple(sorted(files)) for files in sides.values()))
+        for side, files in sides.items():
+            matched[side].update(files)
+
+
+def _requirement_subjects(product, dimensions, coverage):
+    """Return the actual paired subjects supported across this requirement's dimensions."""
+    sides = ['candidate_files']
+    if product.get('kind') != 'specification-implementation':
+        sides.append('reference_files')
+    required = set(dimensions)
+    if not coverage or required - coverage.keys():
+        return None
+    if product.get('coverage_policy') != 'requirement-subjects-v1':
+        complete = {dim for dim, row in coverage.items() if all(row[key] == product[key] for key in sides)}
+        if complete and required <= complete:
+            return {side: sorted(product[side]) for side in sides}
+        return None
+    rows = [coverage[dim] for dim in sorted(required or coverage.keys())]
+    # Separate observations may support the same pair. A different pair cannot lend
+    # a dimension, even if two multi-file observations have the same aggregate lists.
+    if any(row['pairs'] != rows[0]['pairs'] for row in rows[1:]):
+        return None
+    return {side: sorted(rows[0][side]) for side in sides}
+
+
+def _credit_automatic_product(coverage, product, receipt):
+    from .native_verification import OPERATION
+    operation = receipt.get('operation')
+    if operation == 'independent-finite-replay':
+        observations = [('process:bounded', receipt.get('subjects', {}))]
+    elif operation == OPERATION:
+        observations = [(row['dimension'], row.get('subjects', {})) for row in receipt['cases']
+                        if row.get('status') == 'pass']
+    else:
+        # A URL observation does not authenticate which local files it served.
+        return
+    for dimension, subjects in observations:
+        _credit_product_dimensions(coverage, product, [dimension],
+                                   subjects.get('candidate', {}), subjects.get('original', {}))
+
+
+def _scoped_product(case, identity):
     product = case['product']
+    subjects = case['features'][identity].get('subjects')
+    if subjects is None:
+        return product
+    scoped = dict(product)
+    for side, names in subjects.items():
+        if not set(names).issubset(product[side]):
+            return None
+        scoped[side] = {name: product[side][name] for name in names}
+    if not scoped['reference_files'] and scoped.get('kind') != 'specification-implementation':
+        return None
+    return scoped
+
+
+def _automatic_product_coverage(project, case, identity, product):
+    coverage = {}
     if product.get('kind', 'independent-reimplementation') != 'independent-reimplementation':
-        return False
-    if not set(product['candidate_files']).issubset(artifacts):
-        return False
+        return coverage
+    for cid in case['features'][identity]['checks']:
+        try:
+            receipt, current = _check_receipt(project, case, identity, case['checks'][cid])
+            if current and receipt.get('status') == 'pass':
+                _credit_automatic_product(coverage, product, receipt)
+        except (OSError, ValueError, KeyError, TypeError, AttributeError):
+            continue
+    return coverage
+
+
+def _product_delivery_scope(project, case, artifacts, selected=None, assessments=None):
+    product = case.get('product')
+    if not product:
+        return {} if case['objective'] != 'reconstruction' else None
+    kind = product.get('kind', 'independent-reimplementation')
+    if assessments is None and kind != 'independent-reimplementation':
+        return None
+    if selected is None and product_status(project, case)['status'] != 'current':
+        return None
     required = set(case['features'] if selected is None else selected)
     pending = list(required)
     while pending:
         identity = pending.pop()
         if identity not in case['features']:
-            return False
+            return None
         for dependency in case['features'][identity]['dependencies']:
             if dependency not in required:
                 required.add(dependency)
                 pending.append(dependency)
-    for identity in required:
-        covered = {'candidate': {}, 'original': {}}
-        for cid in case['features'][identity]['checks']:
-            check = case['checks'].get(cid, {})
-            if not check.get('path'):
-                continue
-            try:
-                path = inside(project, check['path'])
-                receipt = read(path)
-                if (digest(path) != check.get('sha256') or receipt.get('status') != 'pass'
-                        or check.get('inputs', {}).get(identity) != _feature_inputs(case, identity)
-                        or not fresh(project, receipt)):
-                    continue
-                compared = {side: {tree['cwd']+'/'+name: checksum for name, checksum in tree['files'].items()}
-                            for side, tree in receipt['input_trees'].items() if side in covered}
-                # Only credit product files from a receipt that actually pairs a
-                # current candidate identity with a current reference identity.
-                if not all(any(compared.get(side, {}).get(name) == checksum
-                               for name, checksum in product[key].items())
-                           for side, key in (('candidate', 'candidate_files'), ('original', 'reference_files'))):
-                    continue
-                for side in covered:
-                    covered[side].update(compared[side])
-            except (OSError, ValueError, KeyError, TypeError):
-                continue
-        if not all(covered[side].get(name) == checksum
-                   for side, key in (('candidate', 'candidate_files'), ('original', 'reference_files'))
-                   for name, checksum in product[key].items()):
-            return False
-    return bool(required)
+    scope = {}
+    covered_files = {'candidate_files': set()}
+    if kind != 'specification-implementation':
+        covered_files['reference_files'] = set()
+    for identity in sorted(required):
+        scoped_product = _scoped_product(case, identity)
+        if scoped_product is None:
+            return None
+        feature = case['features'][identity]
+        coverage = _automatic_product_coverage(project, case, identity, scoped_product)
+        basis = 'specification' if kind == 'specification-implementation' else 'original-comparison'
+        for item in (assessments or {}).get(identity, []):
+            if item['basis'] == basis:
+                _credit_product_dimensions(coverage, scoped_product, item['dimensions'],
+                                           item['candidate_files'], item['reference_files'])
+        subjects = _requirement_subjects(scoped_product, feature.get('dimensions', []), coverage)
+        if not subjects or ('subjects' in feature and any(set(names) != set(scoped_product[side])
+                                                          for side, names in subjects.items())):
+            return None
+        scope[identity] = subjects
+        for side in covered_files:
+            covered_files[side].update(subjects[side])
+    if not scope or not covered_files['candidate_files'].issubset(artifacts):
+        return None
+    if selected is None and any(files != set(product[side]) for side, files in covered_files.items()):
+        return None
+    return scope
 
 
-def open_case(project: Path, request: str, case_root='work/current-case', recording='auto'):
+def _delivery_product_valid(project, case, artifacts, selected=None, saved=None):
+    scope = _product_delivery_scope(project, case, artifacts, selected)
+    return scope is not None and (saved or {}).get('verified_subjects', scope) == scope
+
+
+def _delivery_files(scope, artifacts):
+    verified = {p for row in scope.values() for p in row['candidate_files']}
+    return {'verified_subjects': scope, 'other_artifacts': sorted(set(artifacts) - verified)}
+
+
+DEFAULT_CASE = 'work/current-case'
+_DETAILED_CONTINUATION = re.compile(
+    r'^\s*(?:继续(?:上次的?|吧|做)?|接着(?:做)?|resume|continue)[，,：:\s]+(?=\S)', re.I)
+_CASE_CLAUSE_END = re.compile(r'[，,：:。.!！；;\n]')
+_ORIGINAL_SUBJECT = re.compile(r'^\s*(?:请(?:帮我)?\s*)?(?:整理|梳理|分析|核对|记录|复核)\s*(.+?)的')
+_EXPLICIT_SUBJECT = re.compile(r'(?:这条|本次)?补充(?:只|仅)?(?:归属(?:于)?|归|属于)\s*(.+)')
+_POSSESSIVE_SUBJECT = re.compile(r'(?:只|仅)?补充\s*(.+?)的')
+_COMPARISON_WORDING = re.compile(r'比较|对比|[与和及].*(?:差异|区别|对照)|作为.*(?:参考|对照|示例)')
+
+
+def _subject_key(text):
+    return ' '.join(text.strip().strip('「」『』“”"').casefold().split())
+
+
+def _original_subject(case):
+    text = case.get('original_request')
+    match = _ORIGINAL_SUBJECT.match(_CASE_CLAUSE_END.split(text, maxsplit=1)[0]) if isinstance(text, str) else None
+    return _subject_key(match[1]) if match else None
+
+
+def _other_supplement_targets(project, case, roots, detail):
+    """The plain-text fallback matches an owning subject to verified, indexed cases."""
+    clause = _CASE_CLAUSE_END.split(detail, maxsplit=1)[0].strip()
+    match = _EXPLICIT_SUBJECT.fullmatch(clause)
+    if not match and not _COMPARISON_WORDING.search(clause):
+        match = _POSSESSIVE_SUBJECT.match(clause)
+    subject = _subject_key(match[1]) if match else None
+    if not subject or subject == _original_subject(case):
+        return []
+
+    targets = []
+    for root in sorted(set(roots) - {case['case_root']}):
+        try:
+            other = _load(project, root)
+        except (OSError, ValueError, TypeError):
+            # A stale or unreadable peer does not supply a verified case identity.
+            continue
+        if _original_subject(other) == subject:
+            targets.append(root)
+    return targets
+
+
+def _case_target_conflict(selected, targets):
+    return {'status': 'needs-context', 'case_created': False, 'case_root': selected,
+            'reason': 'case-target-conflict', 'cases': sorted({selected, *targets}),
+            'target_case_roots': targets,
+            'next_action': 'Select the intended case_root or clarify which case owns the supplement.'}
+
+
+def _route_advice(request, primary=None):
+    result = dry_run_route(request, source='local', primary=primary)
+    available = result.get('status') == 'local-route-pass' and not result.get('missing_support')
+    return {
+        **{k: result[k] for k in ('primary_id', 'skill', 'hard_target', 'confidence', 'next_stage', 'related_routes') if k in result},
+        'status': 'advisory' if available else 'advisory-unavailable',
+        'missing_support': result.get('missing_support', []),
+        'required_reads': result.get('required_reads') or [],
+        'method_reads': result.get('method_reads') or [],
+    }
+
+
+def open_case(project: Path, request: str, case_root=None, recording='auto', *, target_case_root=None):
     project = project.resolve()
     if not isinstance(request, str) or not request.strip():
         raise ValueError('The original plain-language request is required')
-    follow_with_detail = bool(re.match(r'^\s*(?:继续(?:吧|做)?|接着(?:做)?|resume|continue)[，,：:\s]+\S', request, re.I))
-    intent = 'follow-up' if follow_with_detail else request_intent(request)
+    continuation = _DETAILED_CONTINUATION.match(request)
+    intent = 'follow-up' if continuation else request_intent(request)
     index_path = inside(project, '.rea-enhanced/cases.json')
     if recording not in {'auto', 'case', 'skip'}:
         raise ValueError('recording must be auto, case or skip')
     if recording == 'skip' or intent == 'normal-dev' and recording != 'case':
         return {'status': 'host-native', 'request': request, 'case_created': False,
             'recording': recording, 'guidance': 'Use native tools and existing reliable task records; no case or owned checker is required.'}
+    if target_case_root is not None:
+        if intent != 'follow-up':
+            raise ValueError('target_case_root is for an existing case continuation')
+        _record_path(project, target_case_root)
+        if case_root is not None and case_root != target_case_root:
+            _record_path(project, case_root)
+            return _case_target_conflict(case_root, [target_case_root])
+        case_root = target_case_root
+    explicit_root = case_root is not None
+    if not explicit_root:
+        case_root = DEFAULT_CASE
     path = _record_path(project, case_root)
-    if intent == 'follow-up' and not path.is_file():
-        index = read(index_path) if index_path.is_file() else {'case_roots': []}
-        roots = index.get('case_roots', [])
-        if not isinstance(roots, list):
-            raise ValueError('Invalid discovery index')
-        found = [name for name in roots if _record_path(project, name).is_file()]
-        if len(found) != 1:
-            return {'status': 'needs-context', 'cases': found, 'case_created': False}
-        case_root, path = found[0], _record_path(project, found[0])
-    if path.is_file():
-        existing = _load(project, case_root)
-        if intent == 'follow-up':
-            if follow_with_detail and request not in existing['supplements']:
-                return record(project, case_root, {'op':'supplement','text':request}, existing['revision'])
-            return status(project, case_root)
-        if request.strip() == existing['original_request'].strip():
-            return status(project, case_root)
-        return {'status':'needs-context','case_created':False,'case_root':case_root,
-            'original_request':existing['original_request'],'incoming_request':request,
-            'next_action':'Different goal received. Select a new case_root for a new target, or explicitly record a supplement to this case.'}
-    if intent == 'follow-up':
-        return {'status': 'needs-context', 'cases': [], 'case_created': False}
-    if (path.parent / 'case.json').exists():
-        raise ValueError('Legacy case is read-only; select a new case or explicit import')
-    route = dry_run_route(request, source='local')
-    route_available = route.get('status') == 'local-route-pass' and not route.get('missing_support')
+    if intent == 'follow-up' and not path.is_file() and (explicit_root or not index_path.is_file()):
+        return {'status': 'needs-context', 'case_root': case_root, 'cases': [], 'case_created': False}
+    advice = _route_advice(request) if intent != 'follow-up' and not path.exists() else None
     with locked(index_path):
+        index = read(index_path) if index_path.exists() else {'schema_version': 2, 'case_roots': []}
+        roots = index.get('case_roots')
+        if not isinstance(roots, list) or any(not isinstance(n, str) for n in roots):
+            raise ValueError('Invalid discovery index')
+        if intent == 'follow-up' and not explicit_root:
+            candidates = set(roots)
+            if path.is_file():
+                candidates.add(case_root)
+            if len(candidates) != 1:
+                return {'status': 'needs-context', 'cases': sorted(candidates), 'case_created': False}
+            case_root = candidates.pop()
+            path = _record_path(project, case_root)
+        if intent == 'follow-up' and not path.is_file():
+            return {'status': 'needs-context', 'case_root': case_root, 'cases': [], 'case_created': False}
         with locked(path):
-            if path.exists():
-                return status(project, case_root)
-            case = {'schema_version': 2, 'project_root': str(project), 'case_root': case_root,
-                'revision': 0, 'original_request': request, 'objective': intent, 'stage': 'analysis',
-                'route': {**{key: route.get(key) for key in ('primary_id', 'skill', 'required_reads', 'hard_target', 'method_reads')},
-                    'status': 'advisory' if route_available else 'advisory-unavailable',
-                    'missing_support': route.get('missing_support', []),
-                    'required_reads': route.get('required_reads') or [], 'method_reads': route.get('method_reads') or []},
-                'supplements': [], 'limits':{'max_checks_per_feature':12}, 'features': {}, 'evidence': {}, 'unknowns': {}, 'checks': {}, 'events': []}
-            _event(case, 'open', {'request': request})
-            write(path, case)
-            index = read(index_path) if index_path.exists() else {'schema_version': 2, 'case_roots': []}
-            index['case_roots'] = sorted(set([*index['case_roots'], case_root]))
-            write(index_path, index)
-    return status(project, case_root)
+            if path.is_file():
+                case = _load(project, case_root)
+                if intent != 'follow-up' and request.strip() != case['original_request'].strip():
+                    return {'status': 'needs-context', 'case_created': False, 'case_root': case_root,
+                            'original_request': case['original_request'], 'incoming_request': request,
+                            'next_action': 'Use a new case_root for a different goal, or explicitly record a supplement.'}
+                if continuation:
+                    targets = _other_supplement_targets(project, case, roots, request[continuation.end():])
+                    if targets:
+                        return _case_target_conflict(case_root, targets)
+                    if request not in case['supplements']:
+                        case = _load(project, case_root, writable=True)
+                        case['supplements'].append(request)
+                        _event(case, 'supplement', {'text': request})
+                        write(path, case)
+            else:
+                if (path.parent / 'case.json').exists():
+                    raise ValueError('Legacy case is read-only; select a new case or explicit import')
+                case = {'schema_version': 3, 'project_root': str(project), 'case_root': case_root,
+                    'revision': 0, 'original_request': request, 'objective': intent, 'stage': 'analysis',
+                    'route': advice or _route_advice(request), 'supplements': [],
+                    'limits': {'max_checks_per_feature': 12}, 'features': {}, 'evidence': {},
+                    'unknowns': {}, 'checks': {}, 'events': []}
+                _event(case, 'open', {'request': request})
+                write(path, case)
+            # A previous save may have committed its ledger before the index write failed.
+            if case_root not in roots:
+                index['case_roots'] = sorted(set([*roots, case_root]))
+                write(index_path, index)
+    return _case_status(project, case_root, case)
 
 
 def record(project: Path, case_root: str, change: dict, expected_revision: int):
@@ -193,7 +365,7 @@ def record(project: Path, case_root: str, change: dict, expected_revision: int):
         from .operations import execute
         return execute(project, case_root, change, expected_revision)
     with locked(path):
-        case = _load(project, case_root)
+        case = _load(project, case_root, writable=True)
         if type(expected_revision) is not int or expected_revision != case['revision']:
             raise ValueError('Stale case revision; reload before applying a change')
         op = change['op']
@@ -241,7 +413,7 @@ def record(project: Path, case_root: str, change: dict, expected_revision: int):
                 required = {'op', 'id', 'description', 'checks', 'dimensions', 'source', 'review'}
                 sources = {'original', *('supplement:'+str(i+1) for i in range(len(case['supplements'])))}
                 evaluation = change.get('evaluation', case['features'].get(identity, {}).get('evaluation', 'automatic'))
-                if (set(change)-{'evaluation'} != required or change['source'] not in sources
+                if (set(change)-{'evaluation', 'subjects'} != required or change['source'] not in sources
                         or evaluation not in {'automatic', 'host-review'}
                         or any(not isinstance(change[k], str) or not change[k].strip() for k in ('description', 'review'))
                         or any(not isinstance(change[k], list) or (not change[k] and (k == 'dimensions' or evaluation == 'automatic'))
@@ -263,6 +435,18 @@ def record(project: Path, case_root: str, change: dict, expected_revision: int):
                     'evidence': previous.get('evidence', []), 'dependencies': previous.get('dependencies', []),
                     'review': change['review'], 'requirement_source': change['source'], 'dimensions': change['dimensions'],
                     'evaluation': evaluation}
+                if 'subjects' in change:
+                    subjects = change['subjects']
+                    if (not isinstance(subjects, dict) or set(subjects) != {'candidate_files', 'reference_files'}
+                            or not subjects['candidate_files']):
+                        raise ValueError('Requirement subjects need named candidate and reference file lists')
+                    for names in subjects.values():
+                        if (not isinstance(names, list) or len(names) > 500 or
+                                any(not isinstance(n, str) for n in names) or len(set(names)) != len(names)):
+                            raise ValueError('Requirement subjects must be distinct project-relative filenames')
+                        for name in names:
+                            inside(project, name)
+                    case['features'][identity]['subjects'] = {side: sorted(names) for side, names in subjects.items()}
                 case.pop('coverage', None)
             elif op == 'feature':
                 required = {'op', 'id', 'description', 'evidence', 'checks', 'dependencies', 'review'}
@@ -289,10 +473,10 @@ def record(project: Path, case_root: str, change: dict, expected_revision: int):
         elif op == 'refine_route':
             hint=change.get('hint')
             if not isinstance(hint,str) or not hint.strip():raise ValueError('Technical refinement requires a hint')
-            route=dry_run_route(hint,source='local',primary=change.get('primary'))
-            if route['status']!='local-route-pass' or route.get('missing_support'):
+            route = _route_advice(hint, change.get('primary'))
+            if route['status'] != 'advisory':
                 raise ValueError('Refined domain is unavailable')
-            case['route']={key:route.get(key) for key in ('primary_id','skill','required_reads','hard_target','method_reads')}
+            case['route'] = route
             case['route']['refinement_hint'] = hint
         elif op == 'deliver_analysis':
             # An interim analysis report never replaces a reconstruction goal.
@@ -323,7 +507,7 @@ def record(project: Path, case_root: str, change: dict, expected_revision: int):
             case['coverage']={'requirements':rows,'review':review,'inputs':_coverage_inputs(case),
                 'qualification':'Host-reviewed mapping of full wording, not automatic discovery of omitted requirements'}
         elif op == 'deliver_reviewed':
-            from .evidence_review import review_delivery_valid, wording
+            from .evidence_review import review_delivery_scope, wording
             from .operations import file_identities
             required = {'op', 'kind', 'scope', 'features', 'summary', 'artifacts'}
             selected = change.get('features')
@@ -333,7 +517,7 @@ def record(project: Path, case_root: str, change: dict, expected_revision: int):
                     or len(set(selected)) != len(selected)
                     or not isinstance(change['summary'], str) or not change['summary'].strip()):
                 raise ValueError('Reviewed delivery needs an explicit kind, full/stage scope, selected requirements and summary')
-            current = status(project, case_root)
+            current = _case_status(project, case_root, case)
             closure, pending = set(selected), list(selected)
             while pending:
                 for dependency in case['features'][pending.pop()]['dependencies']:
@@ -351,26 +535,31 @@ def record(project: Path, case_root: str, change: dict, expected_revision: int):
                 'inputs': {f: _feature_inputs(case, f) for f in closure},
                 'assessments': {aid: case['assessments'][aid] for aid in assessment_ids},
                 'qualification': 'Explicit host-reviewed delivery; not an automatic check pass or official REA proof'}
-            if not review_delivery_valid(project, case, current['features'], saved):
+            scoped = review_delivery_scope(project, case, current['features'], saved)
+            if scoped is None:
                 raise ValueError('Reviewed delivery lacks current in-scope evidence, allowed output kind, candidate binding or required coverage')
+            saved.update(_delivery_files(scoped, artifacts))
             case['reviewed_delivery'] = saved
         elif op == 'deliver_stage':
-            current = status(project, case_root)
+            current = _case_status(project, case_root, case)
             selected, artifacts, summary = change.get('features'), change.get('artifacts'), change.get('summary')
             if (not isinstance(selected, list) or not selected
                     or any(f not in current['features'] or not current['features'][f]['complete'] or not current['features'][f]['accepted'] for f in selected)
                     or not isinstance(summary, str) or not summary.strip()
                     or not isinstance(artifacts, list) or not artifacts
                     or any(not isinstance(p, str) or not inside(project, p).is_file() for p in artifacts)
-                    or not _automatic_output_allowed(case)
-                    or not _delivery_product_valid(project, case, artifacts, selected)):
+                    or not _automatic_output_allowed(case)):
+                raise ValueError('Stage delivery needs verified selected requirements and current compared candidate artifacts')
+            scoped = _product_delivery_scope(project, case, artifacts, selected)
+            if scoped is None:
                 raise ValueError('Stage delivery needs verified selected requirements and current compared candidate artifacts')
             case['stage_delivery'] = {'summary': summary, 'features': selected, 'kind': _automatic_output_kind(case),
                 'artifacts': {p: digest(inside(project, p)) for p in artifacts},
+                **_delivery_files(scoped, artifacts),
                 'inputs': {f: _feature_inputs(case, f) for f in selected},
                 'qualification': 'Selected stage only; original wording, supplements and remaining requirements stay open'}
         elif op == 'deliver':
-            current=status(project,case_root)
+            current = _case_status(project, case_root, case)
             artifacts, summary=change.get('artifacts'),change.get('summary')
             if (not _coverage_valid(case) or not current['features']
                     or not all(f['complete'] and f['accepted'] for f in current['features'].values())
@@ -379,9 +568,11 @@ def record(project: Path, case_root: str, change: dict, expected_revision: int):
             if (not isinstance(summary,str) or not summary.strip() or not isinstance(artifacts,list)
                     or not artifacts or any(not isinstance(p,str) or not inside(project,p).is_file() for p in artifacts)):
                 raise ValueError('Delivery requires a summary and existing artifact files')
-            if not _automatic_output_allowed(case) or not _delivery_product_valid(project, case, artifacts):
+            scoped = _product_delivery_scope(project, case, artifacts)
+            if not _automatic_output_allowed(case) or scoped is None:
                 raise ValueError('Delivery needs the current compared candidate product identity and its files, not a reference or untested artifact')
             case['delivery']={'summary':summary,'kind':_automatic_output_kind(case),'artifacts':{p:digest(inside(project,p)) for p in artifacts},
+                **_delivery_files(scoped, artifacts),
                 'inputs':_coverage_inputs(case),'checks':case['checks'].copy(),
                 'qualification':'Reviewed declared delivery using actual finite comparisons; not universal equivalence'}
         elif op == 'resolve':
@@ -398,7 +589,7 @@ def record(project: Path, case_root: str, change: dict, expected_revision: int):
                   else {key: value for key, value in change.items() if key != 'op'})
         _event(case, op, detail)
         write(path, case)
-    return status(project, case_root)
+    return _case_status(project, case_root, case)
 
 
 def _readiness(project, case, evidence_state=None):
@@ -465,10 +656,13 @@ def _feature_inputs(case, identity):
 
 def status(project: Path, case_root='work/current-case'):
     project = project.resolve()
-    case = _load(project, case_root)
+    return _case_status(project, case_root, _load(project, case_root))
+
+
+def _case_status(project, case_root, case):
     evidence_state = {ref: _evidence_valid(project, case, ref) for ref in case['evidence']}
     ready, blocked = _readiness(project, case, evidence_state)
-    from .evidence_review import assessment_views, feature_review, output_goal, review_delivery_valid
+    from .evidence_review import assessment_views, feature_review, output_goal, review_delivery_scope
     external_assessments = assessment_views(project, case)
     features = {}
     for identity, feature in case['features'].items():
@@ -480,17 +674,23 @@ def status(project: Path, case_root='work/current-case'):
                 outcome='incomplete'
             elif saved:
                 try:
-                    report = read(inside(project, saved['path']))
-                    qualifies = (digest(inside(project, saved['path'])) == saved['sha256']
-                        and saved.get('inputs',{}).get(identity) == _feature_inputs(case,identity) and fresh(project, report))
+                    report, qualifies = _check_receipt(project, case, identity, saved)
                     outcome = report['status'] if qualifies else 'stale'
                     from .native_verification import dimensions
+                    measured = report.get('dimension_status', {}) if report.get('operation') == 'independent-web-replay' else {}
+                    scoped = set(feature.get('dimensions', [])) & measured.keys()
+                    if qualifies and scoped:
+                        outcomes = {measured[d] for d in scoped}
+                        outcome = 'fail' if 'fail' in outcomes else 'pass' if outcomes == {'pass'} else 'unknown'
                     verification_sources[cid] = {'path': saved['path'], 'current': qualifies,
                         'operation': report.get('operation'), 'dimensions': dimensions(report),
+                        'overall_status': report['status'], 'dimension_status': measured,
                         'native_result': report.get('rea_native_proof', 'not-performed'),
                         'native_unknown_ids': sorted({uid for row in report.get('cases', [])
                                                       for uid in row.get('native_unknown_ids', [])})}
-                    if qualifies and outcome == 'pass':
+                    if qualifies and measured:
+                        observed_dimensions.update(d for d, verdict in measured.items() if verdict == 'pass')
+                    elif qualifies and outcome == 'pass':
                         observed_dimensions.update(dimensions(report))
                 except (OSError, ValueError, KeyError):
                     outcome = 'stale'
@@ -551,7 +751,7 @@ def status(project: Path, case_root='work/current-case'):
                 and all(digest(inside(project,p))==sha for p,sha in delivery['artifacts'].items())
                 and all(_resolution_valid(project,case,u) for u in case['unknowns'].values())
                 and _automatic_output_allowed(case, delivery)
-                and _delivery_product_valid(project, case, delivery['artifacts']))
+                and _delivery_product_valid(project, case, delivery['artifacts'], saved=delivery))
         except (OSError,ValueError):pass
     if delivery_valid:
         stage='reviewed-delivery'
@@ -564,14 +764,15 @@ def status(project: Path, case_root='work/current-case'):
                                  for f in partial['features'])
                 and all(digest(inside(project, p)) == checksum for p, checksum in partial['artifacts'].items())
                 and _automatic_output_allowed(case, partial)
-                and _delivery_product_valid(project, case, partial['artifacts'], partial['features']))
+                and _delivery_product_valid(project, case, partial['artifacts'], partial['features'], partial))
         except (OSError, ValueError, KeyError, TypeError):
             pass
     if partial_valid and not delivery_valid:
         stage = 'stage-delivered'
         next_action = 'Selected stage saved; continue remaining requirements and review unmapped wording/supplements.'
     reviewed_delivery = case.get('reviewed_delivery')
-    reviewed_valid = bool(reviewed_delivery) and review_delivery_valid(project, case, features, reviewed_delivery)
+    review_scope = review_delivery_scope(project, case, features, reviewed_delivery) if reviewed_delivery else None
+    reviewed_valid = review_scope is not None and reviewed_delivery.get('verified_subjects', review_scope) == review_scope
     if reviewed_valid and not delivery_valid:
         stage = 'host-reviewed-delivery' if reviewed_delivery['scope'] == 'full' else 'host-reviewed-stage-delivery'
         next_action = 'Present the explicit output kind, host-reviewed evidence and remaining scope; no automatic/native proof is implied.'
@@ -584,11 +785,8 @@ def status(project: Path, case_root='work/current-case'):
             pass
     # Old saved route reads are projected through the current short contract without rewriting the case.
     route = dict(case['route'])
-    context = dry_run_route(route.get('refinement_hint', case['original_request']), source='local', primary=route.get('primary_id'))
-    if route.get('refinement_hint') or not route.get('method_reads'):
-        route.update({k: context[k] for k in ('required_reads', 'method_reads', 'hard_target') if k in context})
-    elif 'required_reads' in context:
-        route['required_reads'] = context['required_reads']
+    context = _route_advice(route.get('refinement_hint', case['original_request']), route.get('primary_id'))
+    route.update({k: context[k] for k in ('status', 'missing_support', 'required_reads', 'method_reads', 'hard_target') if k in context})
     def brief(value):
         return {k: v for k, v in value.items() if k not in {'inputs', 'checks'}} if value else value
     from .disk import summary as storage_summary
@@ -643,7 +841,7 @@ def run_check(project: Path, case_root: str, check_id: str, plan: str, output: s
     run_lock=inside(project,case_root+'/checks/'+check_id+'.json')
     with locked(run_lock):
         with locked(path):
-            before=_load(project,case_root)
+            before=_load(project,case_root, writable=True)
             ready,blocked=_readiness(project,before)
             affected={identity:feature for identity,feature in before['features'].items()
                       if check_id in feature['checks'] and identity in ready}
@@ -652,8 +850,8 @@ def run_check(project: Path, case_root: str, check_id: str, plan: str, output: s
             previous=before['checks'].get(check_id)
             if previous and previous.get('path'):
                 try:
-                    old=read(inside(project,previous['path']))
-                    unchanged=(digest(inside(project,previous['path']))==previous.get('sha256')
+                    old, checksum = read_snapshot(inside(project, previous['path']))
+                    unchanged=(checksum == previous.get('sha256')
                         and old.get('plan')==plan and fresh(project,old)
                         and all(previous.get('inputs',{}).get(identity)==_feature_inputs(before,identity) for identity in affected))
                 except (ValueError,OSError,KeyError):unchanged=False
@@ -676,26 +874,32 @@ def run_check(project: Path, case_root: str, check_id: str, plan: str, output: s
             result=compare(project,plan,output,cancel_event=cancel_event)
         except (OSError,ValueError) as exc:
             with locked(path):
-                case=_load(project,case_root)
+                case=_load(project,case_root, writable=True)
                 case['checks'][check_id]={'status':'interrupted','reason':str(exc)}
                 _event(case,'comparison-error',{'check':check_id,'reason':str(exc)})
                 write(path,case)
             raise
         result_name=output+'/comparison.json'
         with locked(path):
-            case=_load(project,case_root)
+            case=_load(project,case_root, writable=True)
             current_ready, _ = _readiness(project, case)
-            if (case['checks'].get(check_id, {}).get('run_id') != run_id
+            try:
+                saved_result, result_sha = read_snapshot(inside(project, result_name))
+            except (OSError, ValueError):
+                saved_result = None
+            if (saved_result != result
+                    or case['checks'].get(check_id, {}).get('run_id') != run_id
                     or any(identity not in current_ready
                            or before['checks'][check_id]['inputs'][identity] != _feature_inputs(case, identity)
                            for identity in affected)
                     or result.get('status') == 'pass' and not fresh(project, result)):
-                case['checks'][check_id]={'status':'interrupted','result':result_name,'reason':'Affected inputs or running check changed during comparison'}
+                case['checks'][check_id]={'status':'interrupted','result':result_name,
+                    'reason':'Affected inputs, saved receipt or running check changed during comparison'}
                 _event(case,'comparison-superseded',{'check':check_id,'result':result_name})
                 write(path,case)
                 return {'status':'superseded','result':result,
                     'next_action':'Reload changed case; old result preserved but not accepted.'}
-            case['checks'][check_id]={'path':result_name,'sha256':digest(inside(project,result_name)),
+            case['checks'][check_id]={'path':result_name,'sha256':result_sha,
                 'features':affected,'inputs':{identity:_feature_inputs(before,identity) for identity in affected},
                 'status':result['status']}
             _event(case,'comparison',{'check':check_id,'result':result_name,'status':result['status']})

@@ -242,8 +242,9 @@ def protected_paths(project, value):
 
 @contextmanager
 def using_paths(project, names):
-    """Protect operation inputs only while their OS lease is held."""
+    """Publish leased inputs atomically, including protection for frozen readers."""
     project = project.resolve()
+    names = list(names)
     for name in names:
         inside(project, name)
     token = uuid.uuid4().hex
@@ -251,18 +252,76 @@ def using_paths(project, names):
         with locked(_lease_path(token)):
             with locked(_path(project)):
                 value = _load(project)
-                value['uses'] = {key: use for key, use in value.get('uses', {}).items() if _busy(key)}
+                _prune_uses(value, project)
                 value['uses'][token] = {'paths': names}
+                _publish_use_protections(project, value, token, value['uses'][token])
                 _save(project, value)
             try:
                 yield
             finally:
                 with locked(_path(project)):
                     value = _load(project)
-                    value.get('uses', {}).pop(token, None)
+                    _retire_use(value, token, project)
                     _save(project, value)
     finally:
         _retire_lease(token)
+
+
+def _use_slots(project, value, token, use):
+    """Accept only exact, same-use slots beneath validated owned allocations."""
+    if (not isinstance(token, str) or len(token) != 32
+            or any(char not in '0123456789abcdef' for char in token)
+            or not isinstance(use, dict) or not isinstance(use.get('legacy_protected'), list)):
+        return set()
+    names = {name for name in use['legacy_protected'] if isinstance(name, str)}
+    slots = set()
+    for allocation, entry in value['entries'].items():
+        try:
+            tier = entry.get('tier', 'disposable')
+            if (not isinstance(allocation, str) or len(allocation) != 32
+                    or any(char not in '0123456789abcdef' for char in allocation)
+                    or tier not in TIERS
+                    or entry['path'] != '.rea-enhanced/' + TIERS[tier] + '/' + allocation
+                    or entry.get('state') not in {'active', 'completed'}
+                    or entry.get('mode') not in {'manual', 'managed'}
+                    or type(entry.get('reserve_bytes')) is not int or entry['reserve_bytes'] <= 0):
+                continue
+            name = entry['path'] + '/.rf-use-' + token
+            if name in names:
+                if project is not None:
+                    _owned(project, allocation, entry)
+                slots.add(name)
+        except (OSError, ValueError, KeyError, TypeError):
+            # Ambiguous ownership is retained, never authority to unprotect data.
+            continue
+    return slots
+
+
+def _retire_use(value, token, project=None):
+    use = value.get('uses', {}).pop(token, None)
+    value['protected'] = sorted(set(value['protected']) - _use_slots(project, value, token, use))
+
+
+def _prune_uses(value, project=None):
+    """Retire expired slots; relocation may supply its prevalidated registry only."""
+    value.setdefault('uses', {})
+    for token in list(value['uses']):
+        if not _busy(token):
+            _retire_use(value, token, project)
+
+
+def _publish_use_protections(project, value, token, use):
+    # 608170d reads only `protected`. A nonexistent descendant protects the whole
+    # allocation there, without borrowing/removing the user's explicit paths.
+    # Each use owns separate names so nested/shared uses can retire independently.
+    inputs = [inside(project, name) for name in use['paths']]
+    names = _use_slots(project, value, token, use)
+    for entry in value['entries'].values():
+        area = inside(project, entry['path'])
+        if any(area.is_relative_to(path) or path.is_relative_to(area) for path in inputs):
+            names.add(entry['path'] + '/.rf-use-' + token)
+    use['legacy_protected'] = sorted(names)
+    value['protected'] = sorted(set(value['protected']) | names)
 
 
 def unprotect(project, names):
@@ -272,7 +331,12 @@ def unprotect(project, names):
         inside(project, name)
     with locked(_path(project)):
         value = _load(project)
-        value['protected'] = sorted(set(value['protected']) - set(names))
+        internal = set()
+        for token, use in value.get('uses', {}).items():
+            if _busy(token):
+                internal.update(_use_slots(project, value, token,
+                                           {'legacy_protected': value['protected']}))
+        value['protected'] = sorted(set(value['protected']) - (set(names) - internal))
         _save(project, value)
 
 
@@ -375,13 +439,15 @@ def maintain(project, apply=True, force_completed=False, force_ids=()):
     released = []
     with locked(_path(project)):
         value = _load(project)
+        _prune_uses(value, project)
         protections = protected_paths(project, value)
         now = time.time()
         rows, reclaimed = [], 0
         for token, entry in list(value['entries'].items()):
             tier = entry.get('tier', 'disposable')
             row = {'id': token, 'path': entry['path'], 'purpose': entry['purpose'], 'bytes': 0,
-                   'tier': tier, 'declared_state': entry['state']}
+                   'tier': tier, 'declared_state': entry['state'],
+                   **_generation_info(entry)}
             try:
                 area = _owned(project, token, entry)
                 busy = _busy(token) or entry['state'] == 'active' and entry['mode'] == 'manual'
@@ -489,19 +555,56 @@ def allocate(project, purpose, rebuild, reserve_bytes=256 * MiB, mode='manual', 
             write(area / MARKER, {'owner': 'reverse-fusion-next', 'token': token, 'project_root': str(project)})
             value['entries'][token] = {'path': area.relative_to(project).as_posix(), 'purpose': purpose,
                 'rebuild': rebuild, 'reserve_bytes': reserve_bytes, 'mode': mode, 'state': 'active',
-                'tier': tier, 'created_at': time.time()}
+                'tier': tier, 'created_at': time.time(), 'generation': 1,
+                'generation_mode': 'legacy-unversioned'}
             if tier == 'reusable':
                 value['entries'][token].update(reuse_key=reuse_key, reuse_reason=reuse_reason, inputs=inputs)
+            _prune_uses(value, project)
+            for use_token, use in value['uses'].items():
+                _publish_use_protections(project, value, use_token, use)
             _save(project, value)
         except BaseException:
             if mode == 'manual':
                 _release(project, token)
             raise
     return {'id': token, 'path': str(area), 'relative_path': area.relative_to(project).as_posix(),
-            'reserve_bytes': reserve_bytes, 'state': 'active', 'tier': tier}
+            'reserve_bytes': reserve_bytes, 'state': 'active', 'tier': tier,
+            **_generation_info(value['entries'][token])}
 
 
-def complete(project, token, cleanup=True):
+def _generation_info(entry):
+    mode = entry.get('generation_mode', 'legacy-unversioned')
+    return {'generation': entry.get('generation', 1), 'generation_mode': mode,
+            'generation_limits': (
+                'Unversioned requests cannot distinguish delayed calls from the current use; '
+                'a delayed complete/reuse may affect a later use. Pass the current generation '
+                'to complete/reuse to permanently enable generation-checked mode.'
+                if mode == 'legacy-unversioned' else
+                'Complete/reuse require the current generation; omitted or stale generations are rejected.')}
+
+
+def _generation(entry, generation):
+    """Validate without mutation; successful explicit calls negotiate permanently.
+
+    Legacy clients may keep using the original allocation id across reuse. They
+    have no stale-call isolation until a complete/reuse explicitly supplies the
+    current generation. Merely returning a new generation never opts them in.
+    """
+    current = entry.get('generation', 1)
+    mode = entry.get('generation_mode', 'legacy-unversioned')
+    if type(current) is not int or current < 1:
+        raise ValueError('Invalid storage generation; preserve and inspect')
+    if mode not in {'legacy-unversioned', 'generation-checked'}:
+        raise ValueError('Invalid storage generation mode; preserve and inspect')
+    if generation is None:
+        if mode == 'generation-checked':
+            raise ValueError('Storage generation is required in generation-checked mode; echo the current generation')
+    elif type(generation) is not int or generation != current:
+        raise ValueError('Stale or invalid storage generation; retain the current use')
+    return current
+
+
+def complete(project, token, cleanup=True, generation=None):
     if type(cleanup) is not bool:
         raise ValueError('cleanup must be a boolean')
     project = project.resolve()
@@ -510,10 +613,24 @@ def complete(project, token, cleanup=True):
         if token not in value['entries']:
             raise ValueError('Unknown scratch identity')
         entry = value['entries'][token]
+        current = _generation(entry, generation)
         area = _owned(project, token, entry)
         if _busy(token):
             raise ValueError('Scratch has a running operation lease; retain until it finishes')
-        if entry.get('tier') == 'reusable':
+        changed = generation is not None and entry.get('generation_mode') != 'generation-checked'
+        if changed:
+            entry['generation_mode'] = 'generation-checked'
+        if entry['state'] == 'completed':
+            # A repeated completion is not a new production or cache review.
+            # In particular, never replace its first accepted fingerprint.
+            if entry.get('tier') == 'reusable':
+                try:
+                    _reuse_valid(project, entry, area)
+                except (OSError, ValueError, KeyError, TypeError) as exc:
+                    if not entry.get('reuse_invalid'):
+                        entry['reuse_invalid'] = 'Completed cache changed: ' + str(exc)
+                        changed = True
+        elif entry.get('tier') == 'reusable':
             # Capture the produced artifact only if the declared inputs still match
             # the allocation; a changing source must not bless an obsolete build.
             try:
@@ -522,20 +639,27 @@ def complete(project, token, cleanup=True):
             except (OSError, ValueError, KeyError, TypeError) as exc:
                 entry['reuse_invalid'] = 'Inputs unavailable at completion: ' + str(exc)
             try:
-                entry['content_sha256'] = _fingerprint(area)
+                fingerprint = _fingerprint(area)
+                if current == 1:
+                    entry['content_sha256'] = fingerprint
+                elif fingerprint != entry.get('content_sha256'):
+                    entry['reuse_invalid'] = 'Content changed during reuse; rebuild in a new allocation'
             except (OSError, ValueError) as exc:
                 entry['reuse_invalid'] = 'Content unavailable at completion: ' + str(exc)
             entry['last_used_at'] = time.time()
             entry.setdefault('reviewed_at', time.time())
-        entry.update(state='completed', completed_at=time.time())
-        _save(project, value)
+        if entry['state'] != 'completed':
+            entry.update(state='completed', completed_at=time.time())
+            changed = True
+        if changed:
+            _save(project, value)
         # Keep the registry lock until reservation retirement. Otherwise a
         # concurrent reuse could reserve this identity before we release it.
         _release(project, token)
     return maintain(project, apply=True, force_ids={token} if cleanup else ())
 
 
-def reuse(project, token):
+def reuse(project, token, generation=None):
     """Check content and declared dependencies before granting a new manual use."""
     project = project.resolve()
     with locked(_path(project)):
@@ -543,6 +667,7 @@ def reuse(project, token):
         entry = value['entries'].get(token)
         if not entry or entry.get('tier') != 'reusable':
             raise ValueError('Select a registered reusable area')
+        current = _generation(entry, generation)
         area = _owned(project, token, entry)
         if entry['state'] != 'completed' or _busy(token):
             raise ValueError('Reusable area is still active; wait until all users complete')
@@ -562,14 +687,17 @@ def reuse(project, token):
         if occupied > value['policy']['max_temporary_bytes'] or cached > value['policy']['max_reusable_bytes']:
             raise ValueError('Reuse would exceed project or reusable budget; review at a space-pressure boundary')
         _reserve(project, token, entry['reserve_bytes'], 'manual', value['policy'])
-        entry.update(state='active', last_used_at=time.time())
+        entry.update(state='active', mode='manual', generation=current + 1, last_used_at=time.time())
+        if generation is not None:
+            entry['generation_mode'] = 'generation-checked'
         try:
             _save(project, value)
         except BaseException:
             _release(project, token)
             raise
         return {'id': token, 'path': str(area), 'relative_path': entry['path'], 'tier': 'reusable',
-                'state': 'active', 'reuse_key': entry['reuse_key'], 'inputs_verified': True, 'content_verified': True}
+                'state': 'active', **_generation_info(entry), 'reuse_key': entry['reuse_key'],
+                'inputs_verified': True, 'content_verified': True}
 
 
 def promote(project, token):
@@ -737,11 +865,12 @@ def dispatch(project, action='status', **args):
                         tier=args.get('tier', 'disposable'), reuse_key=args.get('reuse_key'),
                         reuse_reason=args.get('reuse_reason'), input_paths=args.get('input_paths'))
     if action == 'complete':
-        return complete(project, args.get('id'), cleanup=args.get('cleanup', True))
+        return complete(project, args.get('id'), cleanup=args.get('cleanup', True),
+                        generation=args.get('generation'))
     if action == 'policy':
         return policy(project, args.get('policy'))
     if action == 'reuse':
-        return reuse(project, args.get('id'))
+        return reuse(project, args.get('id'), generation=args.get('generation'))
     if action == 'promote':
         return promote(project, args.get('id'))
     if action == 'review':

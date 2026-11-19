@@ -14,4 +14,4 @@ Do not turn guesses, exit zero, pixels or structure into broader verified behavi
 
 Large outputs: docs/DISK-MANAGEMENT.md. Preserve originals/evidence, justify reuse, reclaim disposable work after users stop. Protect active/referenced data and unrelated folders. Tools own descendants, not an OS sandbox.
 
-Operations: docs/AGENT-WORKFLOW.md and COMPARISON.md; methods: DOMAIN-METHODS.md. Install only via AGENT-BOOTSTRAP.md; preserve config/credentials and rollback. No old installers. Active docs: docs/ACTIVE-DOCUMENTS.json. Engineering checks do not prove model superiority or arbitrary-target success.
+Operations: docs/AGENT-WORKFLOW.md and COMPARISON.md; methods: DOMAIN-METHODS.md. Start at the repository README. Use fusion.py for the current source candidate; field.py is the retained Field profile. Preserve config/credentials and rollback. Active docs: docs/ACTIVE-DOCUMENTS.json. Engineering checks do not prove model superiority or arbitrary-target success.

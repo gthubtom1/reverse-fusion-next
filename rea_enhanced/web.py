@@ -7,7 +7,7 @@ from urllib.parse import urlsplit
 from PIL import Image,ImageChops
 from reverse_fusion.owned_process import run_owned
 from reverse_fusion.runtime import node_runtime
-from .storage import digest,inside,read,write
+from .storage import digest,inside,read_snapshot,write
 from .providers import providers,environment
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -37,10 +37,10 @@ def web_runtime_identity():
         'environment_sha256': sha256(json.dumps(inherited, sort_keys=True).encode()).hexdigest()}
 
 
-def compare_web(project,plan_name,output,cancel_event=None):
+def compare_web(project,plan_name,output,cancel_event=None,*,snapshot=None):
     from .comparison import tree,engine_identity
     project=project.resolve();plan_path=inside(project,plan_name);destination=inside(project,output)
-    plan=read(plan_path)
+    plan, plan_sha = read_snapshot(plan_path) if snapshot is None else snapshot
     expected={'version','kind','scope','original','candidate','scenarios','widths','observe','storage_keys','pixel_tolerance'}
     if set(plan)!=expected or plan['version']!=1 or plan['kind']!='web' or not isinstance(plan['scope'],str) or not plan['scope'].strip():
         raise ValueError('Web replay requires the declared version 1 finite contract')
@@ -104,7 +104,7 @@ def compare_web(project,plan_name,output,cancel_event=None):
     if destination.exists():raise ValueError('Preserve earlier runs; use a new output path')
     runtime = web_runtime_identity()
     browser, node = runtime['browser'], runtime['node']
-    plan_sha=digest(plan_path);engine=engine_identity(web=True);destination.mkdir(parents=True)
+    engine=engine_identity(web=True);destination.mkdir(parents=True)
     for side in ('original','candidate'):
         cwd=inside(project,plan[side]['cwd'])
         for name in plan[side]['sources']:
@@ -175,13 +175,18 @@ def compare_web(project,plan_name,output,cancel_event=None):
         if web_runtime_identity() != runtime:changed.append('web-runtime')
     except (OSError, ValueError, KeyError, TypeError):
         changed.append('web-runtime')
-    state=('unknown' if changed or result['status']!='observed' or result['exit_code']!=0 or captured.get('error')
-           else 'fail' if any(c['status']=='fail' for c in cases)
-           else 'unknown' if any(c['status']=='unknown' for c in cases) else 'pass')
+    run_complete = not changed and result['status'] == 'observed' and result['exit_code'] == 0 and not captured.get('error')
+    def verdict(field):
+        if not run_complete or not cases:
+            return 'unknown'
+        outcomes = {row[field] for row in cases}
+        return 'fail' if 'fail' in outcomes else 'unknown' if 'unknown' in outcomes else 'pass'
+    state = verdict('status')
     report={'schema_version':2,'operation':'independent-web-replay','status':state,'scope':plan['scope'],
         'plan':plan_name,'plan_sha256':plan_sha,'engine':engine,'sources':sources,'input_trees':trees,'cases':cases,
         'changed_inputs':changed,'browser_executable':browser,'browser_sha256':runtime['browser_sha256'],
-        'web_runtime':runtime,
+        'web_runtime':runtime, 'dimension_status': {'web:declared-behavior': verdict('behavior_status'),
+                                                    'web:pixels': verdict('visual_status')},
         'process':{k:v for k,v in result.items() if k not in {'stdout','stderr'}},
         'capture_path':output+'/capture.json','observation_files':observation_files,
         'visual_coverage':'full-page screenshots; scroll actions for lazy or nested content; at most 16 million pixels per image',

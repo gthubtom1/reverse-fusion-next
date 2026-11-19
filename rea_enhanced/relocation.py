@@ -1,13 +1,42 @@
 """Explicit relocation of a copied outcome project; never rewrite its source."""
-from contextlib import ExitStack
+from contextlib import ExitStack, contextmanager
 from pathlib import Path, PureWindowsPath
+import copy
 import json
 import time
 import uuid
 
-from reverse_fusion.file_updates import file_transaction
-from .storage import digest, inside, locked, read, write
+from reverse_fusion.file_updates import atomic_write
+from .storage import CASE_NAME, CASE_SCHEMAS, digest, inside, locked, read, write
 from . import disk
+
+
+@contextmanager
+def _transaction(paths, cases):
+    """Restore exact metadata bytes and newly written compact records on failure."""
+    originals = {path: path.read_bytes() if path.is_file() else None for path in paths}
+    records = {}
+    for case_path in cases:
+        directory = case_path.parent / 'case-records'
+        disk.no_links(directory, case_path.parent)
+        existed = directory.exists()
+        records[directory] = (existed, set(directory.iterdir()) if existed else set())
+    try:
+        yield
+    except BaseException:
+        for path, original in reversed(list(originals.items())):
+            if original is None:
+                path.unlink(missing_ok=True)
+            elif not path.is_file() or path.read_bytes() != original:
+                atomic_write(path, original)
+        for directory, (existed, existing) in records.items():
+            if directory.exists():
+                for path in set(directory.iterdir()) - existing:
+                    disk.no_links(path, directory)
+                    path.unlink()
+                if not existed and not any(directory.iterdir()):
+                    directory.rmdir()
+        raise
 
 
 def relocate(project, from_root, reason, inactive=False):
@@ -27,12 +56,12 @@ def relocate(project, from_root, reason, inactive=False):
         index = read(index_path) if index_path.exists() else {'case_roots': []}
         cases = {}
         for name in index['case_roots']:
-            path = inside(project, name+'/case-v2.json')
+            path = inside(project, name+'/'+CASE_NAME)
             disk.no_links(path, project)
             locks.enter_context(locked(inside(project, name+'/operation-run'), timeout=0))
             locks.enter_context(locked(path))
-            case = read(path)
-            if (case.get('schema_version') != 2 or case.get('project_root') != from_root
+            case = read(path, writable=True)
+            if (case.get('schema_version') not in CASE_SCHEMAS or case.get('project_root') != from_root
                     or case.get('case_root') != name):
                 raise ValueError('Copied case identity does not match the explicit old root')
             for check_id, check in case.get('checks', {}).items():
@@ -86,7 +115,7 @@ def relocate(project, from_root, reason, inactive=False):
                         'reason': reason, 'originals': backups})
         global_path = disk._global_path(project)
         locks.enter_context(locked(global_path))
-        with file_transaction([*cases, *markers, disk_path, global_path, receipt]):
+        with _transaction([*cases, *markers, disk_path, global_path, receipt], cases):
             for path, case in cases.items():
                 case['project_root'] = str(project)
                 case['checks'] = {key: {'status': 'interrupted', 'reason': 'Project relocated; compare again'}
@@ -102,7 +131,11 @@ def relocate(project, from_root, reason, inactive=False):
             for path, marker in markers.items():
                 write(path, marker)
             if registry:
-                registry.update(project_root=str(project), uses={})
+                # Retire inactive inputs together with their legacy-reader protection in the copy.
+                disk._prune_uses(registry)
+                if registry['uses']:
+                    raise ValueError('Copied storage still has an active input lease')
+                registry['project_root'] = str(project)
                 for entry in registry['entries'].values():
                     entry.update(state='completed', mode='manual', completed_at=time.time())
                     if entry.get('tier') == 'reusable':

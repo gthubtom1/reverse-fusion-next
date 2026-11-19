@@ -27,6 +27,8 @@ def main(argv=None):
     storage_parser.add_argument('--options-file', type=Path)
     release_parser=commands.add_parser('release-check')
     release_parser.add_argument('--require-deployed',action='store_true')
+    release_parser.add_argument('--engineering-run', type=Path, help='Directory of the selected engineering run')
+    release_parser.add_argument('--remote-run', type=Path, help='Directory of the selected independent installation run')
     for name in ('install','uninstall','mcp-check'):
         p=commands.add_parser(name)
         p.add_argument('--home',type=Path)
@@ -35,16 +37,20 @@ def main(argv=None):
     rollback_parser.add_argument('--receipt',type=Path,required=True)
     provider_parser=commands.add_parser('providers')
     provider_parser.add_argument('--refresh',action='store_true')
-    for name in ('open', 'record', 'status', 'compare'):
+    for name in ('open', 'record', 'status', 'compare', 'export-case'):
         p = commands.add_parser(name)
         p.add_argument('--project-root', type=Path, default=Path.cwd())
-        p.add_argument('--case-root', default='work/current-case')
+        p.add_argument('--case-root', default=None if name == 'open' else 'work/current-case')
         if name == 'open':
             p.add_argument('--request', required=True)
             p.add_argument('--recording', choices=['auto', 'case', 'skip'], default='auto')
+            p.add_argument('--target-case-root', help='Intended existing case for a continuation; must agree with --case-root if both are given.')
         if name == 'record':
             p.add_argument('--change-file', type=Path, required=True)
             p.add_argument('--revision', type=int, required=True)
+        if name == 'export-case':
+            p.add_argument('--output', required=True, help='New project-relative output directory')
+            p.add_argument('--format', choices=['inline-v2', 'compact-v3'], required=True)
         if name == 'compare':
             p.add_argument('--plan', required=True)
             p.add_argument('--output', required=True)
@@ -67,7 +73,8 @@ def main(argv=None):
             return serve()
         if args.command=='release-check':
             from .qualification import release_check
-            result=release_check(require_deployed=args.require_deployed)
+            result=release_check(require_deployed=args.require_deployed,
+                                 engineering_run=args.engineering_run, remote_run=args.remote_run)
             print(json.dumps(result,ensure_ascii=True,indent=2))
             return 0 if result['status']=='pass' else 2
         if args.command in {'bootstrap','install','uninstall','mcp-check','rollback'}:
@@ -92,13 +99,18 @@ def main(argv=None):
             from .providers import providers
             result=providers(Path(__file__).resolve().parents[1],refresh=args.refresh)
             print(json.dumps(result,ensure_ascii=True,indent=2))
-            return 0 if not result['unavailable'] else 2
+            return 0 if result['status'] == 'configured' else 2
         if args.command == 'open':
-            result = open_case(args.project_root, args.request, args.case_root, recording=args.recording)
+            result = open_case(args.project_root, args.request, args.case_root, recording=args.recording,
+                               target_case_root=args.target_case_root)
         elif args.command == 'record':
             result = record(args.project_root, args.case_root, read(args.change_file), args.revision)
         elif args.command == 'status':
             result = status(args.project_root, args.case_root)
+        elif args.command == 'export-case':
+            from .storage import export_case
+            schema_version = 2 if args.format == 'inline-v2' else 3
+            result = export_case(args.project_root, args.case_root, args.output, schema_version=schema_version)
         else:
             result = (run_check(args.project_root, args.case_root, args.check_id, args.plan, args.output,retry_reason=args.retry_reason)
                 if args.check_id else compare(args.project_root, args.plan, args.output))

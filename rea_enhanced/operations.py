@@ -65,6 +65,7 @@ def product_record(project, change):
     if not isinstance(review, str) or not review.strip():
         raise ValueError('Explain which files identify the candidate product and its reference')
     return {'candidate_files': candidates, 'reference_files': references, 'review': review, 'kind': kind,
+            'coverage_policy': 'requirement-subjects-v1',
             'qualification': 'Declared product files only; runtime launch and update identity require actual checks'}
 
 
@@ -158,7 +159,7 @@ def execute(project, case_root, change, expected_revision, cancel_event=None):
     from .disk import using_paths
     with locked(inside(project, case_root + '/operation-run')), using_paths(project, [*inputs, *artifacts]):
         with locked(path):
-            case = _load(project, case_root)
+            case = _load(project, case_root, writable=True)
             if type(expected_revision) is not int or expected_revision != case['revision']:
                 raise ValueError('Stale case revision; reload before starting an operation')
             if any(f not in case['features'] for f in features):
@@ -248,7 +249,7 @@ def execute(project, case_root, change, expected_revision, cancel_event=None):
         name = output + '/operation.json'
         write(inside(project, name), receipt)
         with locked(path):
-            case = _load(project, case_root)
+            case = _load(project, case_root, writable=True)
             case.setdefault('operations', {})[identity] = {'receipt': name, 'sha256': digest(inside(project, name)),
                 'signature': signature, 'status': receipt['status'], 'exit_code': receipt.get('exit_code'),
                 'kind': kind, 'features': features, 'elapsed_seconds': receipt['elapsed_seconds']}

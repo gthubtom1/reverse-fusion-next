@@ -33,6 +33,27 @@ def verify_rea_archive(root, archive):
     return failures
 
 
+def prepare_rea_package(root, archive):
+    """Publish a complete verified package; interruptions leave the live path absent."""
+    overlay = root/'vendor/rea'
+    package = overlay/'package'
+    if package.exists():
+        changed = verify_rea_archive(root, archive)
+        if changed:
+            raise ValueError('Original REA package differs from verified archive; existing damage/partial extraction '
+                             'has no atomic-preparation ownership proof and is preserved; restore managed package before retry: '
+                             + ', '.join(changed[:8]))
+        return
+    overlay.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix='.rea-prepare-', dir=overlay) as temporary:
+        staging = Path(temporary)
+        extract(archive, staging/'vendor/rea')
+        changed = verify_rea_archive(staging, archive)
+        if changed:
+            raise ValueError('Prepared REA package differs from verified archive: '+', '.join(changed[:8]))
+        os.replace(staging/'vendor/rea/package', package)
+
+
 def download_asset(url, temporary):
     """Use bounded ranges when advertised; every archive still needs its full pin."""
     chunk_size = 1024 * 1024
@@ -173,9 +194,7 @@ def bootstrap(root):
     algorithm, value = rea_pin['integrity'].split('-',1)
     rea_archive = acquire(rea_pin['source'], cache/'rea.tgz', algorithm, base64.b64decode(value).hex())
     package = root/'vendor/rea/package'
-    if not (package/'scripts/rea.mjs').is_file(): extract(rea_archive, root/'vendor/rea')
-    changed=verify_rea_archive(root,rea_archive)
-    if changed:raise ValueError('Original REA package differs from verified archive; restore managed package before retry: '+', '.join(changed[:8]))
+    prepare_rea_package(root, rea_archive)
     for name, expected in rea_pin['method_files_sha256'].items():
         if digest(root/'vendor/rea'/name) != expected: raise ValueError('Official REA method changed: '+name)
     overlay = root/'vendor/rea'

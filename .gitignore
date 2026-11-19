@@ -43,3 +43,10 @@ vendor/jadx-headless-mcp/**
 !vendor/jadx-headless-mcp/0.7.1/
 !vendor/jadx-headless-mcp/0.7.1/manifest.json
 !state/.gitkeep
+
+# Keep local build archives, nested test copies and transcript data out of Git.
+/outputs/
+/evidence/next/field-117-user-audit/upstream-intake/intake-*/
+/evidence/next/pi-simulation-20261119/conversation/
+/evidence/next/layered-20261119/candidate-1.1.17/replica-current/work/
+/evidence/next/layered-20261119/candidate-1.1.17/replica-current/visual-review/work/
