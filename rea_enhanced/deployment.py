@@ -9,9 +9,9 @@ import json
 import os
 from pathlib import Path
 import re
+import tempfile
 import tomllib
 import uuid
-from reverse_fusion.file_updates import atomic_write, file_transaction
 from reverse_fusion.global_adapter import (adapter_paths, agents_block, _agents_region,
     _updated_agents, _block_repository)
 from .storage import locked, read, write
@@ -19,6 +19,143 @@ from .storage import locked, read, write
 BEGIN=b'# reverse-fusion:mcp:begin'
 END=b'# reverse-fusion:mcp:end'
 ROOT=Path(__file__).resolve().parents[1]
+
+
+def _payload(path):
+    return path.read_bytes() if path.is_file() else None
+
+
+class _ConcurrentCommit(ValueError):
+    """A non-cooperating writer raced the commit; its actual bytes are retained."""
+    def __init__(self, path, backup):
+        self.backup = str(backup)
+        super().__init__('Concurrent configuration save detected during replacement: '
+                         +str(path)+'; displaced bytes retained at '+str(backup))
+
+
+def _replace_windows(path, temporary, backup):
+    import ctypes
+    from ctypes import wintypes
+    replace = ctypes.WinDLL('kernel32', use_last_error=True).ReplaceFileW
+    replace.argtypes = [wintypes.LPCWSTR, wintypes.LPCWSTR, wintypes.LPCWSTR,
+                       wintypes.DWORD, wintypes.LPVOID, wintypes.LPVOID]
+    replace.restype = wintypes.BOOL
+    if not replace(str(path), str(temporary), str(backup), 0, None, None):
+        raise ctypes.WinError(ctypes.get_last_error())
+
+
+def _replace_checked(path, expected, data):
+    """Stage first, then check the preimage immediately before replacing it.
+
+    The install lock coordinates our writers. Other editors are not lock-aware;
+    a changed preimage is a conflict, never a reason to restore a stale full file.
+    """
+    temporary = None;backup = None;retain_backup = False
+    try:
+        if data is not None:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            with tempfile.NamedTemporaryFile(dir=path.parent, prefix='.rf-update-', delete=False) as stream:
+                temporary = Path(stream.name)
+                stream.write(data)
+                stream.flush()
+                os.fsync(stream.fileno())
+        if _payload(path) != expected:
+            raise ValueError('Concurrent configuration save detected before replacement: '+str(path))
+        if os.name == 'nt' and expected is not None:
+            # ReplaceFile records the actual displaced preimage atomically.
+            # This also detects saves in the final check-to-replace window.
+            with tempfile.NamedTemporaryFile(dir=path.parent, prefix='.rf-previous-', delete=False) as stream:
+                backup = Path(stream.name)
+            backup.unlink()
+            retain_backup = True
+            try:
+                if data is None:
+                    os.rename(path, backup)
+                else:
+                    _replace_windows(path, temporary, backup)
+                if backup.read_bytes() != expected:
+                    raise _ConcurrentCommit(path, backup)
+                retain_backup = False
+            except OSError:
+                if backup.exists():
+                    retain_backup = True
+                    raise _ConcurrentCommit(path, backup)
+                raise
+        elif data is None:
+            path.unlink(missing_ok=True)
+        elif os.name == 'nt':
+            # Windows rename fails if another writer creates this absent path.
+            try:os.rename(temporary, path)
+            except FileExistsError as exc:
+                raise ValueError('Concurrent configuration save detected before creation: '+str(path)) from exc
+        else:
+            os.replace(temporary, path)
+    finally:
+        if temporary is not None:
+            temporary.unlink(missing_ok=True)
+        if backup is not None and not retain_backup:
+            backup.unlink(missing_ok=True)
+
+
+def _restore_record(path, payload, region, replacement=b''):
+    remaining=payload[:region['start']]+payload[region['end']:]
+    return {'path':str(path),'owned':base64.b64encode(payload[region['start']:region['end']]).decode(),
+        'replacement':base64.b64encode(replacement).decode(),'offset':region['start'],
+        'remaining_size':len(remaining),'remaining_sha256':sha256(remaining).hexdigest()}
+
+
+def _restore_owned(snapshot, receipt, root):
+    """Undo owned-region removals without restoring an unrelated full-file snapshot."""
+    conflicts=[];backups=[]
+    for kind,record in reversed(list(snapshot['files'].items())):
+        try:
+            path=Path(record['path']);state=_payload(path);payload=state or b''
+            desired=base64.b64decode(record['owned']);replacement=base64.b64decode(record['replacement'])
+            try:region=_region(kind,payload,current_owner=root)
+            except ValueError:
+                region=_region(kind,payload,legacy_owner=snapshot.get('previous_repository'))
+            actual=payload[region['start']:region['end']] if region else b''
+            if actual==desired:continue
+            if actual!=replacement:
+                raise ValueError('Owned entry changed during recovery')
+            if region:
+                data=payload[:region['start']]+desired+payload[region['end']:]
+            else:
+                # A changed residual is retained. Only an unchanged original
+                # prefix/suffix identifies where the removed fragment belongs.
+                size=record['remaining_size'];checksum=record['remaining_sha256']
+                starts=[]
+                for start in {0,len(payload)-size}:
+                    if start>=0 and sha256(payload[start:start+size]).hexdigest()==checksum:
+                        starts.append(start)
+                if size==0:starts=[0]
+                if len(starts)!=1 or record['offset']>size:
+                    raise ValueError('Unrelated configuration changed at the recovery anchor')
+                offset=starts[0]+record['offset']
+                data=payload[:offset]+desired+payload[offset:]
+            restored=_region(kind,data,current_owner=root)
+            if not restored or data[restored['start']:restored['end']]!=desired:
+                raise ValueError('Restored ownership span differs')
+            _replace_checked(path,state,data)
+        except (OSError,ValueError) as exc:
+            conflicts.append(kind)
+            if isinstance(exc,_ConcurrentCommit):backups.append(exc.backup)
+    if conflicts:
+        snapshot['recovery_conflicts']=conflicts
+        if backups:snapshot.setdefault('conflict_backups',[]).extend(backups)
+        write(receipt,snapshot)
+        raise ValueError('Owned-entry recovery has configuration conflicts; retry recovery receipt: '+str(receipt))
+    snapshot['status']='restored';snapshot.pop('recovery_conflicts',None)
+    write(receipt,snapshot)
+
+
+def _restore_receipt(root, records, previous_repository=None, lock_path=None):
+    snapshot={'schema_version':2,'repository':str(root),'status':'prepared',
+        'operation':'restore-owned-entries','files':records,'previous_repository':previous_repository}
+    if lock_path:snapshot['lock_path']=str(lock_path)
+    receipt=root/'state/migrations'/(uuid.uuid4().hex+'.json')
+    write(receipt,snapshot)
+    return receipt,snapshot
 
 
 def skill_text(root):
@@ -163,6 +300,7 @@ def _render(root, separator, existed):
 def probe(root=ROOT,home=None):
     from reverse_fusion.mcp_probe import StdioMcp,catalog
     from .providers import environment
+    from .server import RUNTIME_META
     path=_paths(home)['config'];payload=path.read_bytes();region=_mcp_region(payload,current_owner=root)
     if not region or region['owner']!=root.resolve():raise ValueError('Selected checkout is not the registered MCP owner')
     entries=tomllib.loads(payload.decode('utf-8-sig'))['mcp_servers']
@@ -179,6 +317,7 @@ def probe(root=ROOT,home=None):
             observed[name]=result
     if client.cleanup.get('status')!='verified':raise ValueError('MCP child cleanup not verified')
     report={'status':'pass','repository':str(root),'registered':entry,'server':identity['serverInfo'],
+        'runtime':identity.get('_meta',{}).get(RUNTIME_META),
         'tools':len(tools),'operations':observed,'cleanup':client.cleanup,
         'scope':'Actual registered stdio connection and target-free calls, not desktop hot reload or all provider operations'}
     write(root/'state/next-mcp-check.json',report)
@@ -206,7 +345,8 @@ def install(root=ROOT, home=None, replace_from=None, check=True):
     root=root.resolve();paths=_paths(home);allowed={root}
     if replace_from:allowed.add(Path(replace_from).resolve())
     with locked(paths['config'].parent/'reverse-fusion-install.json'):
-        originals={k:p.read_bytes() if p.is_file() else b'' for k,p in paths.items()}
+        original_states={k:_payload(p) for k,p in paths.items()}
+        originals={k:value if value is not None else b'' for k,value in original_states.items()}
         skill_owner=_skill_owner(originals['skill']) if originals['skill'] else None
         agents_region=_region('agents',originals['agents'])
         current_owner=root if skill_owner==root and agents_region and agents_region.get('owner')==root else None
@@ -223,33 +363,49 @@ def install(root=ROOT, home=None, replace_from=None, check=True):
         if not current and any(k in servers for k in ('reverse-fusion-rea','reverse-fusion-craft')):
             raise ValueError('Conflicting unmanaged MCP registration')
         fragment=_render(root,current['separator'] if current else int(bool(config) and not config.endswith(b'\n')),
-                         current['existed'] if current else paths['config'].is_file())
+                         current['existed'] if current else original_states['config'] is not None)
         updated={'skill':skill_text(root).encode(),
-            'agents':_updated_agents(originals['agents'],agents_block(root),root,original_existed=paths['agents'].is_file()),
+            'agents':_updated_agents(originals['agents'],agents_block(root),root,original_existed=original_states['agents'] is not None),
             'config':config[:current['start']]+fragment+config[current['end']:] if current else config+fragment}
         snapshot={'schema_version':2,'repository':str(root),'status':'prepared','files':{},
             'previous_repository':str(Path(replace_from).resolve()) if replace_from else None}
         for kind,after in updated.items():
             before=originals[kind];b=regions[kind];a=_region(kind,after)
-            snapshot['files'][kind]={'path':str(paths[kind]),'file_existed':paths[kind].is_file(),
+            snapshot['files'][kind]={'path':str(paths[kind]),'file_existed':original_states[kind] is not None,
                 'before':base64.b64encode(before[b['start']:b['end']] if b else b'').decode(),
                 'after_sha256':sha256(after[a['start']:a['end']]).hexdigest()}
             if kind=='config':snapshot['files'][kind]['after_registration']=registration(root)
         receipt=root/'state/migrations'/(uuid.uuid4().hex+'.json')
         write(receipt,snapshot)
+        applied=[]
         try:
-            for kind,data in updated.items():atomic_write(paths[kind],data)
+            for kind,data in updated.items():
+                _replace_checked(paths[kind],original_states[kind],data)
+                applied.append(kind)
             checked=probe(root,home) if check else {'status':'not-run'}
         except Exception as exc:
-            for kind,p in paths.items():
-                current_payload=p.read_bytes() if p.is_file() else b''
-                if current_payload==originals[kind]:continue
-                region=_region(kind,current_payload,replace_from,root)
-                if not region or sha256(current_payload[region['start']:region['end']]).hexdigest()!=snapshot['files'][kind]['after_sha256']:
-                    raise ValueError('Deployment interrupted and owned entry changed; use prepared recovery receipt: '+str(receipt)) from exc
-                restored=current_payload[:region['start']]+base64.b64decode(snapshot['files'][kind]['before'])+current_payload[region['end']:]
-                if restored or snapshot['files'][kind]['file_existed']:atomic_write(p,restored)
-                else:p.unlink(missing_ok=True)
+            conflicts=[];backups=[]
+            for kind in reversed(applied):
+                p=paths[kind]
+                try:
+                    current_state=_payload(p);current_payload=current_state or b''
+                    if current_state==original_states[kind]:continue
+                    region=_region(kind,current_payload,replace_from,root)
+                    if not region or sha256(current_payload[region['start']:region['end']]).hexdigest()!=snapshot['files'][kind]['after_sha256']:
+                        raise ValueError('Owned entry changed')
+                    restored=current_payload[:region['start']]+base64.b64decode(snapshot['files'][kind]['before'])+current_payload[region['end']:]
+                    _replace_checked(p,current_state,restored if restored or snapshot['files'][kind]['file_existed'] else None)
+                except (OSError,ValueError) as recovery_error:
+                    conflicts.append(kind)
+                    if isinstance(recovery_error,_ConcurrentCommit):backups.append(recovery_error.backup)
+            if isinstance(exc,_ConcurrentCommit):backups.append(exc.backup)
+            if backups:snapshot['conflict_backups']=backups
+            if conflicts:
+                snapshot['recovery_conflicts']=conflicts;write(receipt,snapshot)
+                raise ValueError('Deployment interrupted with configuration conflicts; use prepared recovery receipt: '+str(receipt)) from exc
+            if isinstance(exc,_ConcurrentCommit):
+                write(receipt,snapshot)
+                raise ValueError(str(exc)+'; use prepared recovery receipt: '+str(receipt)) from exc
             snapshot.update(status='failed-restored',error_type=type(exc).__name__);write(receipt,snapshot)
             raise ValueError('Deployment connection failed; previous owned entries restored: '+str(exc)) from exc
         snapshot['status']='installed';write(receipt,snapshot)
@@ -276,17 +432,27 @@ def uninstall(root=ROOT,home=None):
             metadata=agents_region.get('metadata')
             if not metadata or _agents_digest(agents_region['block'])!=metadata['block_sha256']:
                 raise ValueError('Owned AGENTS instructions changed; preserve them for review')
-        updated={}
+        updated={};records={}
         for kind,payload in originals.items():
             region=regions[kind]
             if region:
                 updated[kind]=payload[:region['start']]+payload[region['end']:]
-        with file_transaction(paths.values()):
+                records[kind]=_restore_record(paths[kind],payload,region)
+        receipt,snapshot=_restore_receipt(root,records,lock_path=paths['config'].parent/'reverse-fusion-install.json')
+        try:
             for kind,payload in updated.items():
                 existed=regions[kind].get('existed',False)
-                if payload or existed:atomic_write(paths[kind],payload)
-                else:paths[kind].unlink(missing_ok=True)
+                _replace_checked(paths[kind],originals[kind],payload if payload or existed else None)
+            snapshot['status']='uninstalled';write(receipt,snapshot)
+        except Exception as exc:
+            snapshot['status']='prepared'
+            try:_restore_owned(snapshot,receipt,root)
+            except (OSError,ValueError) as recovery_error:
+                raise ValueError('Uninstall interrupted; recover owned entries with receipt: '+str(receipt)
+                    +': '+str(recovery_error)) from exc
+            raise
         return {'status':'uninstalled','repository':str(root),'removed_owned_regions':sorted(updated),
+            'recovery_receipt':str(receipt),
             'unrelated_before_sha256':{k:sha256(v[:regions[k]['start']]+v[regions[k]['end']:] if regions[k] else v).hexdigest()
                                       for k,v in originals.items() if k!='skill'},
             'scope':'Owned entries only; runtime/source retained for recovery. Existing desktop connections require closing/reconnecting.'}
@@ -296,26 +462,56 @@ def rollback(receipt,root=ROOT):
     snapshot=read(Path(receipt));root=root.resolve()
     if snapshot.get('repository')!=str(root) or snapshot.get('status') not in {'installed','prepared'}:
         raise ValueError('Recovery receipt is not an active transaction from this checkout')
-    records=snapshot['files'];paths=[Path(r['path']) for r in records.values()]
-    with locked(paths[-1].parent/'reverse-fusion-install.json'):
-        outputs={}
+    records=snapshot['files']
+    lock_path=(Path(snapshot['lock_path']) if snapshot.get('lock_path')
+               else Path(records['config']['path']).parent/'reverse-fusion-install.json')
+    with locked(lock_path):
+        if snapshot.get('operation')=='restore-owned-entries':
+            _restore_owned(snapshot,Path(receipt),root)
+            return {'status':'restored','receipt':str(receipt),'scope':'Owned entries restored; current unrelated bytes retained'}
+        outputs={};restore_records={}
         for kind,record in records.items():
-            path=Path(record['path']);payload=path.read_bytes() if path.is_file() else b''
+            path=Path(record['path']);current_state=_payload(path);payload=current_state or b''
             # Original entries in a partially written transaction use the old owner.
             # An installed enhanced entry can be recognized after Codex drops comments.
-            selected=root if snapshot['status']=='installed' else None
-            region=_region(kind,payload,snapshot.get('previous_repository'),selected)
-            if snapshot['status']=='prepared':
+            selected=root
+            try:
+                region=_region(kind,payload,snapshot.get('previous_repository'),selected)
+            except ValueError:
+                if snapshot['status']!='prepared' and not snapshot.get('rollback_in_progress'):raise
+                region=_region(kind,payload,snapshot.get('previous_repository'))
+            if snapshot['status']=='prepared' or snapshot.get('rollback_in_progress'):
                 before=base64.b64decode(record['before'])
                 if (region and payload[region['start']:region['end']]==before) or (not region and not before):continue
             semantic_config=(kind=='config' and region and region.get('adopted')=='enhanced-exact'
                 and record.get('after_registration')==registration(root))
             if not region or (sha256(payload[region['start']:region['end']]).hexdigest()!=record['after_sha256'] and not semantic_config):
                 raise ValueError('Owned entry changed after installation; preserve it for review')
-            outputs[path]=(payload[:region['start']]+base64.b64decode(record['before'])+payload[region['end']:],record['file_existed'])
-        with file_transaction([*paths, Path(receipt)]):
-            for path,(data,existed) in outputs.items():
-                if not data and not existed:path.unlink()
-                else:atomic_write(path,data)
-            snapshot['status']='rolled-back';write(Path(receipt),snapshot)
+            outputs[path]=(current_state,payload[:region['start']]+base64.b64decode(record['before'])+payload[region['end']:],record['file_existed'])
+            restore_records[kind]=_restore_record(path,payload,region,base64.b64decode(record['before']))
+        # A partial rollback stays resumable. Never use a full-file transaction
+        # restore: it could erase an unrelated save made after this read.
+        previous_snapshot=dict(snapshot)
+        snapshot['rollback_in_progress']=True;write(Path(receipt),snapshot)
+        try:
+            for path,(expected,data,existed) in outputs.items():
+                _replace_checked(path,expected,data if data or existed else None)
+        except (OSError,ValueError) as exc:
+            if isinstance(exc,_ConcurrentCommit):
+                snapshot.setdefault('conflict_backups',[]).append(exc.backup);write(Path(receipt),snapshot)
+            raise ValueError('Rollback interrupted; current bytes retained; retry recovery receipt: '+str(receipt)+': '+str(exc)) from exc
+        snapshot.pop('rollback_in_progress',None)
+        snapshot['status']='rolled-back'
+        try:write(Path(receipt),snapshot)
+        except (OSError,ValueError) as exc:
+            # Terminal receipt failure has the old transactional contract:
+            # restore the installed owned fragments, retaining external saves.
+            recovery,recovery_snapshot=_restore_receipt(root,restore_records,snapshot.get('previous_repository'),lock_path)
+            try:
+                _restore_owned(recovery_snapshot,recovery,root)
+                write(Path(receipt),previous_snapshot)
+            except (OSError,ValueError) as recovery_error:
+                raise ValueError('Rollback receipt failed; recover installed entries with receipt: '+str(recovery)
+                    +': '+str(recovery_error)) from exc
+            raise
     return {'status':'rolled-back','receipt':str(receipt),'scope':'Owned regions restored; current unrelated bytes retained'}

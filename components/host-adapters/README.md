@@ -1,19 +1,10 @@
 # Host adapters
 
-The repository exposes one host-neutral CLI and shared Reverse/REA/Spec/Craft
-core. The selected host supplies reasoning with its existing account and model.
+`fusion.py` attaches the current Windows source candidate to Codex, Pi,
+Claude Code and OpenCode. `review/` supplies shared guides; the Fusion skill
+and service live in [fusion-kit](../fusion-kit/). The installer includes the
+selected Reverse Skills references and their license, and pins official REA.
 
-Codex `install --apply --client codex` writes a managed user-level skill and
-marked global instruction block pointing to the shared checkout, plus owned official REA and Craft-engine MCP registrations. `mcp-check` verifies the actual configured stdio commands; desktop reload/tool discovery is separate. Pi/Claude use
-`connect --client <host> --project-root <outcome-project> --apply` for a thin
-project skill, instruction file and connection receipt. Installing the shared
-core alone does not connect every outcome project. Connection/removal preserves
-unrelated user instructions and does not change credentials, providers or model
-settings. See [host project connection](../../docs/HOST-PROJECT-CONNECTION.md).
-
-Adapter completion requires checking the host's actual entry, skill discovery,
-tool invocation, project paths and official Spec layout. Shared-core full use
-is qualified by representative Codex/Pi runs; a logged-in full-model run is not
-required for every adapter. Optional handshake and actual model-use observations
-remain separately reported at their observed scope. An unperformed model run
-does not imply an incomplete adapter or a successful runtime invocation.
+See the [repository entry](../../README.md) and the [isolated trial](../../docs/NEXT/FUSION-CANDIDATE.md).
+`field.py` retains the older Field profile. The original Codex edition has a
+separate [historical publication record](../../docs/NEXT/PUBLICATION.md).

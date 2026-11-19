@@ -14,10 +14,11 @@ from . import __version__
 from .workflow import open_case, record, status, run_check
 from reverse_fusion.mcp_process import McpProcess
 from .providers import environment as launch_environment
-from .storage import digest
-from reverse_fusion.runtime import node_runtime
+from .health import node_identity
+from .storage import digest, inside, read
 
 ROOT = Path(__file__).resolve().parents[1]
+RUNTIME_META = 'reverse-fusion-next/runtime'
 BASE = {'type':'object','properties':{'project_root':{'type':'string','description':'Absolute outcome-project directory'},
     'case_root':{'type':'string','default':'work/current-case'}},'required':['project_root'],'additionalProperties':False}
 
@@ -41,7 +42,9 @@ CHANGE={'oneOf':[
     _change('feature',{'id':TEXT,'description':TEXT,'evidence':STRINGS,'checks':STRINGS,'dependencies':STRINGS,'review':TEXT},
             ['id','description','evidence','checks','dependencies','review']),
     _change('requirement',{'id':TEXT,'description':TEXT,'checks':STRINGS,'dimensions':STRINGS,
-        'source':TEXT,'review':TEXT,'evaluation':{'enum':['automatic','host-review'],'default':'automatic'}},
+        'source':TEXT,'review':TEXT,'evaluation':{'enum':['automatic','host-review'],'default':'automatic'},
+        'subjects':{'type':'object','properties':{'candidate_files':STRINGS,'reference_files':STRINGS},
+                    'required':['candidate_files','reference_files'],'additionalProperties':False}},
         ['id','description','checks','dimensions','source','review']),
     _change('checkpoint',{'note':TEXT,'next_action':TEXT,'paths':STRINGS},['note','next_action']),
     _change('output_goal',{'kinds':{'type':'array','minItems':1,'items':{'enum':[
@@ -83,7 +86,8 @@ CHANGE={'oneOf':[
 
 TOOLS = [
     _tool('rf_next_case_open','Optional goal memory. Use native host records when sufficient; skip creates no case, case explicitly opts in. Route hints are advisory.',
-          {'request':{'type':'string'},'recording':{'enum':['auto','case','skip'],'default':'auto'}},['request']),
+          {'request':{'type':'string'},'case_root':{'type':'string','description':'Explicit case location. Omit to discover the only existing case on continuation.'},
+           'recording':{'enum':['auto','case','skip'],'default':'auto'}},['request']),
     _tool('rf_next_case_status','Read optional task memory, acceptance diagnostics, automatic checks and separately labeled external host reviews. Readiness never forbids native investigation or editing.',{},[]),
     _tool('rf_next_case_record','Optional checkpoint, requirement, external evidence assessment or explicit output agreement/delivery. Optimistic revisions; host review never writes automatic/native pass.',
           {'change':CHANGE,'expected_revision':{'type':'integer','minimum':1}},['change','expected_revision']),
@@ -93,6 +97,7 @@ TOOLS = [
           {'action':{'enum':['status','sweep','allocate','complete','policy','protect','unprotect','review','reuse','promote'],'default':'status'},
            'purpose':TEXT,'rebuild':TEXT,'reserve_bytes':{'type':'integer','minimum':1},'id':TEXT,
            'cleanup':{'type':'boolean','default':True},
+           'generation':{'type':'integer','minimum':1,'description':'Echo the allocation or reuse generation to bind complete/reuse to that use.'},
            'tier':{'enum':['persistent','reusable','disposable'],'default':'disposable'},
            'reuse_key':TEXT,'reuse_reason':TEXT,'input_paths':STRINGS,
            'boundary':{'enum':['operation-end','verification-end','stage-change','task-end','space-pressure','resume']},
@@ -134,7 +139,7 @@ def call_owned(name, args, cancel_event=None):
     if name=='rf_next_storage':
         from .disk import dispatch
         return dispatch(project, **{k:v for k,v in args.items() if k not in {'project_root','case_root'}})
-    if name=='rf_next_case_open':return open_case(project,args['request'],case,recording=args.get('recording','auto'))
+    if name=='rf_next_case_open':return open_case(project,args['request'],args.get('case_root'),recording=args.get('recording','auto'))
     if name=='rf_next_case_status':return status(project,case)
     if name=='rf_next_case_record':
         if not isinstance(args['change'], dict) or not isinstance(args['change'].get('op'), str):
@@ -152,14 +157,27 @@ def call_owned(name, args, cancel_event=None):
         'workflow':result['workflow'],'rea_native_proof':receipt.get('rea_native_proof','not-performed')}
 
 
+def startup_runtime(root):
+    identity = node_identity(root, enforce_prepared=True)
+    entry = inside(root / 'vendor/rea', read(root / 'vendor/rea/manifest.json')['entry'])
+    if not identity['configured'] or not entry.is_file():
+        raise ValueError('Install the pinned REA runtime in this checkout first')
+    entry_sha = digest(entry)
+    if identity['prepared'] and entry_sha != read(root / 'state/rea-runtime.json').get('official_entry_sha256'):
+        raise ValueError('Selected REA entry differs from the prepared installation')
+    return {
+        'node': identity['node'], 'runtime_source': identity['runtime_source'],
+        'node_sha256': identity['node_sha256'], 'node_pin_status': identity['status'],
+        'official_entry': str(entry), 'official_entry_sha256': entry_sha,
+    }
+
+
 def serve():
     loaded_identity=connection_identity()
-    node,_=node_runtime(ROOT)
-    entry=ROOT/'vendor/rea/package/scripts/rea.mjs'
-    if not node or not entry.is_file():raise ValueError('Install the pinned REA runtime in this checkout first')
+    runtime = startup_runtime(ROOT)
     environment=launch_environment(ROOT)
     environment.update(REA_MCP_INPUT_SCHEMA_PROFILE='compact',REA_MCP_OUTPUT_SCHEMA_PROFILE='compact')
-    owner=McpProcess([node,str(entry),'mcp'],cwd=ROOT,env=environment)
+    owner=McpProcess([runtime['node'],runtime['official_entry'],'mcp'],cwd=ROOT,env=environment)
     upstream=owner.process
     output_lock, input_lock, pending_lock = threading.Lock(), threading.Lock(), threading.Lock()
     pending={}
@@ -185,6 +203,7 @@ def serve():
                     if kind=='initialize':
                         original=result.get('serverInfo',{})
                         result['serverInfo']={'name':'rea-enhanced','version':__version__}
+                        result.setdefault('_meta', {})[RUNTIME_META] = runtime
                         result['instructions']=result.get('instructions','')+'\nOriginal REA tools and Evidence are unchanged. rf_next_* is optional task memory/check support, not a required tool order. Use native/other suitable tools directly. Readiness is acceptance guidance only. External host-reviewed results are distinct from automatic/native proof. Upstream: '+str(original.get('name'))+' '+str(original.get('version'))
                     elif kind=='tools/list:first':
                         if any(t['name'] in NAMES for t in result.get('tools',[])):

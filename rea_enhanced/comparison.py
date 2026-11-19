@@ -7,7 +7,7 @@ import re
 import sys
 from hashlib import sha256
 from reverse_fusion.owned_process import run_owned
-from .storage import digest, inside, read, write
+from .storage import digest, inside, read_snapshot, write
 
 
 def launch_environment(plan):
@@ -30,11 +30,11 @@ def replay_executable(argv, cwd):
 
 
 def replay_entry(argv, cwd, sources):
-    """Recognize the actual program entry, not an arbitrary filename argument."""
+    """Identify the argv position and path of the actual program entry."""
     executable = replay_executable(argv, cwd)
     stem = executable.stem.lower()
     if executable in sources:
-        return executable
+        return 0, executable
     python = bool(re.fullmatch(r'python(?:w|[0-9]+(?:\.[0-9]+)*)?', stem))
     if not python and stem not in {'node', 'nodejs'}:
         # Exact copies of the host interpreter are used by runtime-identity
@@ -58,7 +58,7 @@ def replay_entry(argv, cwd, sources):
     entry = entry.resolve()
     if entry not in sources:
         raise ValueError('Actual interpreter script entry must be a declared source')
-    return entry
+    return index, entry
 
 
 def process_identity(sides, plan):
@@ -189,10 +189,13 @@ def engine_identity(web=False):
     return {name:digest(root/name) for name in names}
 
 
-def compare(project: Path, plan_name: str, output: str, cancel_event=None) -> dict:
+def compare(project: Path, plan_name: str, output: str, cancel_event=None, *, finite_only=False) -> dict:
     from .disk import using_paths
     project = project.resolve()
-    plan = read(inside(project, plan_name))
+    snapshot = read_snapshot(inside(project, plan_name))
+    plan, _ = snapshot
+    if finite_only and 'kind' in plan:
+        raise ValueError('Use a finite local replay plan without a kind field.')
     if any(not isinstance(plan.get(side), dict) or not isinstance(plan[side].get('cwd'), str)
            for side in ('original', 'candidate')):
         raise ValueError('Comparison needs two declared source directories')
@@ -201,19 +204,18 @@ def compare(project: Path, plan_name: str, output: str, cancel_event=None) -> di
         inside(project, plan.get('bundle'))
         protected.append(plan['bundle'])
     with using_paths(project, protected):
-        return _compare(project, plan_name, output, cancel_event)
+        if plan.get('kind') == 'rea':
+            from .native_verification import compare_native
+            return compare_native(project, plan_name, output, cancel_event=cancel_event, snapshot=snapshot)
+        if plan.get('kind') == 'web':
+            from .web import compare_web
+            return compare_web(project, plan_name, output, cancel_event=cancel_event, snapshot=snapshot)
+        return _compare(project, plan_name, output, snapshot, cancel_event)
 
 
-def _compare(project: Path, plan_name: str, output: str, cancel_event=None) -> dict:
-    project = project.resolve()
+def _compare(project: Path, plan_name: str, output: str, snapshot, cancel_event=None) -> dict:
     plan_path, destination = inside(project, plan_name), inside(project, output)
-    plan = read(plan_path)
-    if plan.get('kind') == 'rea':
-        from .native_verification import compare_native
-        return compare_native(project, plan_name, output, cancel_event=cancel_event)
-    if plan.get('kind') == 'web':
-        from .web import compare_web
-        return compare_web(project,plan_name,output,cancel_event=cancel_event)
+    plan, plan_sha = snapshot
     sides = validate_plan(project, plan, destination)
     if sum(len(s['steps']) for s in plan['scenarios']) > 200:
         raise ValueError('At most 200 steps per replay')
@@ -224,9 +226,18 @@ def _compare(project: Path, plan_name: str, output: str, cancel_event=None) -> d
                 raise ValueError('Replay argv references another project area')
     if destination.exists():
         raise ValueError('Preserve previous runs; choose a new output path')
-    plan_sha = digest(plan_path)
     engine=engine_identity()
     launch=process_identity(sides,plan)
+    subjects = {}
+    for side, conf in sides.items():
+        argv = [launch[side]['path'], *conf['config']['argv'][1:]]
+        conf['entry_index'], entry = replay_entry(argv, conf['cwd'], {inside(project, name) for name in conf['sources']})
+        conf['entry'] = entry.relative_to(conf['cwd']).as_posix()
+        name = conf['config']['cwd'] + '/' + conf['entry']
+        checksum = conf['tree'].get(conf['entry'])
+        if not checksum or checksum != conf['sources'].get(name):
+            raise ValueError('Replay entry changed while binding source identity')
+        subjects[side] = {name: checksum}
     from .disk import workspace, MiB
     destination.mkdir(parents=True)
     cleanup = []
@@ -253,14 +264,20 @@ def _compare(project: Path, plan_name: str, output: str, cancel_event=None) -> d
                     for side, conf in sides.items():
                         area = places[side]
                         argv = []
+                        copied_entry = area / conf['entry']
                         for index_arg, arg in enumerate(conf['config']['argv']):
                             p = Path(launch[side]['path']) if index_arg == 0 else Path(arg)
-                            if p.is_absolute() and p.resolve().is_relative_to(conf['cwd']):
+                            if index_arg == conf['entry_index']:
+                                arg = str(copied_entry)
+                            elif p.is_absolute() and p.resolve().is_relative_to(conf['cwd']):
                                 arg = str(area / p.resolve().relative_to(conf['cwd']))
                             elif index_arg == 0:
                                 arg = str(p)
                             argv.append(arg)
                         try:
+                            if (copied_entry.resolve() != copied_entry or
+                                    digest(copied_entry) != conf['tree'][conf['entry']]):
+                                raise ValueError('Replay copy no longer matches the bound entry for '+side)
                             temp = str(scratch['path'] / ('temp-' + side))
                             environment = {**launch_environment(plan), 'TEMP': temp, 'TMP': temp, 'TMPDIR': temp}
                             run = run_owned([*argv, *step['args']], cwd=area, stdin=step['stdin'].encode('utf-8'),
@@ -326,12 +343,14 @@ def _compare(project: Path, plan_name: str, output: str, cancel_event=None) -> d
         if process_identity(sides,plan)!=launch:changed.append('process-runtime')
     except (OSError,ValueError):changed.append('process-runtime')
     expected_count = sum(len(s['steps']) for s in plan['scenarios'])
-    status = ('unknown' if failure or changed or len(results) != expected_count or any(r['status'] == 'unknown' for r in results)
+    shared_entry = set(subjects['original'].values()) == set(subjects['candidate'].values())
+    status = ('unknown' if failure or changed or shared_entry or len(results) != expected_count or any(r['status'] == 'unknown' for r in results)
               else 'fail' if any(r['status'] == 'fail' for r in results) else 'pass')
     result = {'schema_version': 2, 'operation': 'independent-finite-replay', 'status': status,
         'scope': plan['scope'], 'plan': plan_name, 'plan_sha256': plan_sha,
         'sources': {name: value for conf in sides.values() for name, value in conf['sources'].items()},
-        'engine':engine, 'process_runtime':launch,
+        'engine': engine, 'process_runtime': launch, 'subjects': subjects,
+        'entry_identity': 'shared entry bytes; independent implementations unverified' if shared_entry else 'distinct executed entry bytes',
         'input_trees': {side: {'cwd': conf['config']['cwd'], 'files': conf['tree']} for side, conf in sides.items()},
         'cases': results, 'changed_inputs': changed, 'failure': failure,
         'storage': {'cleanup': cleanup, 'working_copies': 'owned scratch; reclaimed after each scenario',
@@ -354,7 +373,8 @@ def fresh(project: Path, result: dict) -> bool:
             return False
         if result.get('browser_executable') and digest(Path(result['browser_executable']))!=result['browser_sha256']:
             return False
-        if digest(inside(project, result['plan'])) != result['plan_sha256']:
+        plan, plan_sha = read_snapshot(inside(project, result['plan']))
+        if plan_sha != result['plan_sha256']:
             return False
         for conf in result['input_trees'].values():
             if tree(inside(project, conf['cwd'])) != conf['files']:
@@ -364,7 +384,17 @@ def fresh(project: Path, result: dict) -> bool:
             if result.get('web_runtime') != web_runtime_identity():
                 return False
             files = result.get('observation_files', {})
-            if result.get('capture_path') not in files or not any('/screens/' in p for p in files):
+            capture_path = result.get('capture_path')
+            if capture_path not in files:
+                return False
+            capture, capture_sha = read_snapshot(inside(project, capture_path))
+            if capture_sha != files[capture_path]:
+                return False
+            screens = {(Path(capture_path).parent / row['screenshot']).as_posix()
+                       for row in capture['records'] if row.get('screenshot')}
+            if set(files) != screens | {capture_path}:
+                return False
+            if not screens and result.get('dimension_status', {}).get('web:pixels') != 'unknown':
                 return False
             if any(digest(inside(project, name)) != checksum for name, checksum in files.items()):
                 return False
@@ -381,7 +411,6 @@ def fresh(project: Path, result: dict) -> bool:
                     if observed.get('snapshot') and digest(inside(project, observed['snapshot'])) != observed['sha256']:
                         return False
         if result.get('operation') == 'independent-finite-replay':
-            plan = read(inside(project,result['plan']))
             sides = {side:{'config':plan[side],'cwd':inside(project,plan[side]['cwd'])}
                      for side in ('original','candidate')}
             if result.get('process_runtime') != process_identity(sides,plan):

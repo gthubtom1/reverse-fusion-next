@@ -6,7 +6,7 @@ arbitrary tool format, infer behavior from filenames, or manufacture check passe
 import re
 import time
 from .storage import digest, inside
-from .operations import file_identities, frozen_evidence, identifier, product_status
+from .operations import file_identities, frozen_evidence, identifier
 
 OUTPUT_KINDS = {'analysis-report', 'independent-reimplementation',
                 'specification-implementation', 'modified-original'}
@@ -123,7 +123,23 @@ def assessment_views(project, case):
 
 def feature_review(case, identity, current_views, checks, automatic_dimensions):
     feature = case['features'][identity]
-    applicable = {key: value for key, value in current_views.items() if identity in value['features']}
+    from .workflow import _scoped_product
+    product = _scoped_product(case, identity) if case.get('product') else None
+    def applies(key, view):
+        if identity not in view['features']:
+            return False
+        if feature.get('dimensions') and set(feature['dimensions']).isdisjoint(view['dimensions']):
+            return False
+        if not product:
+            return not case.get('product')
+        saved = case['assessments'][key]
+        for side in ('candidate_files', 'reference_files'):
+            if side == 'reference_files' and product.get('kind') == 'specification-implementation':
+                continue
+            if any(product[side].get(name) != checksum for name, checksum in saved[side].items()):
+                return False
+        return True
+    applicable = {key: value for key, value in current_views.items() if applies(key, value)}
     active = {key: value for key, value in applicable.items() if value['current']}
     dimensions = set(automatic_dimensions)
     for value in active.values():
@@ -142,17 +158,17 @@ def feature_review(case, identity, current_views, checks, automatic_dimensions):
         'qualification': 'Host semantic review, separate from automatic verification'}
 
 
-def review_delivery_valid(project, case, current, saved):
-    from .workflow import _coverage_valid, _delivery_product_valid, _feature_inputs, _resolution_valid
+def review_delivery_scope(project, case, current, saved):
+    from .workflow import _coverage_valid, _feature_inputs, _product_delivery_scope, _resolution_valid
     try:
         selected = saved['features']
         if (saved['kind'] not in output_goal(case)['kinds'] or saved['wording'] != wording(case)
                 or saved['output_goal'] != case.get('output_goal')
                 or saved['product'] != case.get('product') or not selected
                 or saved['artifacts'] != file_identities(project, list(saved['artifacts']))):
-            return False
+            return None
         if saved['scope'] == 'full' and (set(selected) != set(case['features']) or not _coverage_valid(case)):
-            return False
+            return None
         closure, pending = set(), list(selected)
         while pending:
             identity = pending.pop()
@@ -161,61 +177,29 @@ def review_delivery_valid(project, case, current, saved):
             closure.add(identity)
             pending.extend(case['features'][identity]['dependencies'])
         if any(not current[f]['accepted'] or saved['inputs'].get(f) != _feature_inputs(case, f) for f in closure):
-            return False
+            return None
         for unknown in case['unknowns'].values():
-            if (saved['scope'] == 'full' or unknown.get('scope') == 'case'
-                    or closure.intersection(unknown['features'])) and not _resolution_valid(project, case, unknown):
-                return False
-        candidate_required = saved['kind'] != 'analysis-report'
-        if candidate_required:
-            if product_status(project, case)['status'] != 'current':
-                return False
-            product = case['product']
-            if product.get('kind', 'independent-reimplementation') != saved['kind']:
-                return False
-            if not set(product['candidate_files']).issubset(saved['artifacts']):
-                return False
-        else:
-            product = None
+            relevant = unknown.get('scope') == 'case' or closure.intersection(unknown['features'])
+            if (saved['scope'] == 'full' or unknown['critical'] and relevant) and not _resolution_valid(project, case, unknown):
+                return None
+        reviews = {}
         for identity in closure:
-            paired_automatic = candidate_required and _delivery_product_valid(project, case, saved['artifacts'], [identity])
-            if paired_automatic and current[identity]['complete']:
-                continue
-            matched = {'candidate_files': {}, 'reference_files': {}}
-            covered = set(current[identity]['verified_dimensions']) if paired_automatic else set()
-            if paired_automatic:
-                matched = {side: dict(product[side]) for side in matched}
+            reviews[identity] = []
             for aid in current[identity]['external_review']['assessment_ids']:
                 item = case['assessments'][aid]
                 if saved['assessments'].get(aid) != item or not assessment_current(project, case, item) or item['review_outcome'] != 'pass':
-                    return False
-                if saved['kind'] == 'independent-reimplementation' and item['basis'] != 'original-comparison':
-                    continue
-                if saved['kind'] == 'specification-implementation' and item['basis'] != 'specification':
-                    continue
-                if saved['kind'] == 'modified-original' and item['basis'] != 'original-comparison':
-                    continue
-                if product:
-                    if not all(product['candidate_files'].get(n) == h for n, h in item['candidate_files'].items()):
-                        continue
-                    if item['basis'] == 'original-comparison' and not all(
-                            product['reference_files'].get(n) == h for n, h in item['reference_files'].items()):
-                        continue
-                    if not item['candidate_files']:
-                        continue
-                covered.update(item['dimensions'])
-                for side in matched:
-                    matched[side].update(item[side])
-            if not set(case['features'][identity].get('dimensions', [])) <= covered:
-                return False
-            if not covered:
-                return False
-            if product:
-                if any(matched['candidate_files'].get(n) != h for n, h in product['candidate_files'].items()):
-                    return False
-                if saved['kind'] == 'independent-reimplementation' and any(
-                        matched['reference_files'].get(n) != h for n, h in product['reference_files'].items()):
-                    return False
-        return True
+                    return None
+                reviews[identity].append(item)
+            if saved['kind'] == 'analysis-report':
+                covered = {dim for item in reviews[identity] for dim in item['dimensions']}
+                if not covered or not set(case['features'][identity].get('dimensions', [])) <= covered:
+                    return None
+        if saved['kind'] == 'analysis-report':
+            return {}
+        product = case.get('product')
+        if not product or product.get('kind', 'independent-reimplementation') != saved['kind']:
+            return None
+        return _product_delivery_scope(project, case, saved['artifacts'],
+                                       selected if saved['scope'] == 'stage' else None, reviews)
     except (OSError, ValueError, KeyError, TypeError):
-        return False
+        return None

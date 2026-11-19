@@ -7,7 +7,7 @@ import time
 from reverse_fusion.mcp_probe import StdioMcp
 from reverse_fusion.runtime import node_runtime
 from .providers import environment
-from .storage import digest, inside, read, write
+from .storage import digest, inside, read, read_snapshot, write
 
 ROOT = Path(__file__).resolve().parents[1]
 OPERATION = 'rea-verified-claims'
@@ -64,11 +64,13 @@ def source_bindings(project, plan, destination=None):
 def bind_claims(project, bundle, claims, bindings):
     """Bind the verifier-selected sources, not arbitrary records elsewhere in a bundle."""
     records = {r['evidence_id']: r for r in bundle['records']}
+    subjects = []
     used = {'original': set(), 'candidate': set()}
-    expected_by_side = {side: {str(inside(project, conf['cwd']+'/'+name)): checksum
+    expected_by_side = {side: {str(inside(project, conf['cwd']+'/'+name)): (conf['cwd']+'/'+name, checksum)
                               for name, checksum in conf['files'].items()}
                         for side, conf in bindings.items()}
     for claim in claims:
+        selected = {'original': {}, 'candidate': {}}
         for side, field in (('original', 'left_evidence_ids'), ('candidate', 'right_evidence_ids')):
             ids = claim[field]
             if not ids:
@@ -87,8 +89,11 @@ def bind_claims(project, bundle, claims, bindings):
                     if not executable.is_absolute() or len(expected) != 1:
                         raise ValueError('Behavioral binding supports one absolute captured executable per side; other source dependencies need independent observations')
                     path = str(executable.resolve())
-                    checksum = expected.get(path)
-                    if (not checksum or manifest['selected_executable_sha256'] != checksum
+                    entry = expected.get(path)
+                    if not entry:
+                        raise ValueError('Native capture executable is outside the declared '+side)
+                    _, checksum = entry
+                    if (manifest['selected_executable_sha256'] != checksum
                             or manifest['executable_sha256'] != checksum
                             or scenario.get('executable_sha256') != checksum
                             or manifest['executable_identity']['state'] != 'path_metadata_unchanged'
@@ -101,17 +106,22 @@ def bind_claims(project, bundle, claims, bindings):
                     if not isinstance(subject, dict):
                         raise ValueError('Structural source needs a native artifact subject')
                     path = str(Path(subject['local_path']).resolve())
-                    if expected.get(path) != subject['digest']['sha256']:
+                    entry = expected.get(path)
+                    if not entry or entry[1] != subject['digest']['sha256']:
                         raise ValueError('Native claim subject is not the current '+side+' identity')
+                name, checksum = entry
+                selected[side][name] = checksum
                 used[side].add(path)
+        subjects.append(selected)
     for side, conf in bindings.items():
         if used[side] != {str(inside(project, conf['cwd']+'/'+name)) for name in conf['files']}:
             raise ValueError('Declared native source has no selected comparison claim')
+    return subjects
 
 
-def compare_native(project, plan_name, output, cancel_event=None):
+def compare_native(project, plan_name, output, cancel_event=None, *, snapshot=None):
     plan_path, destination = inside(project, plan_name), inside(project, output)
-    plan = read(plan_path)
+    plan, plan_sha = read_snapshot(plan_path) if snapshot is None else snapshot
     required = {'version', 'kind', 'scope', 'bundle', 'specification', 'original', 'candidate', 'timeout_seconds'}
     if (set(plan) != required or type(plan['version']) is not int or plan['version'] != 2
             or plan['kind'] != 'rea' or not isinstance(plan['scope'], str) or not plan['scope'].strip()
@@ -121,7 +131,7 @@ def compare_native(project, plan_name, output, cancel_event=None):
         raise ValueError('Preserve previous runs; choose a new output path')
     bindings = source_bindings(project, plan, destination)
     bundle_path = inside(project, plan['bundle'])
-    bundle_sha, plan_sha = digest(bundle_path), digest(plan_path)
+    bundle_sha = digest(bundle_path)
     if bundle_path.is_relative_to(destination) or plan_path.is_relative_to(destination):
         raise ValueError('Input records must be outside the output directory')
     runtime = runtime_identity()
@@ -171,11 +181,12 @@ def compare_native(project, plan_name, output, cancel_event=None):
             requested = plan['specification']['claims']
             if len(claims) != len(requested) or {c['claim_id'] for c in claims} != {c['claim_id'] for c in requested}:
                 raise ValueError('Native verification omitted requested claims')
-            bind_claims(project, output_bundle, claims, bindings)
+            subjects = bind_claims(project, output_bundle, claims, bindings)
             result['cases'] = [{'scenario': c['claim_id'], 'step': 0, 'status': c['status'],
                 'dimension': c['kind']+':'+c['dimension'], 'differences': c['limitations'],
-                'native_unknown_ids': c['unknown_ids'], 'evidence_id': c['comparison_evidence_id']}
-                for c in claims]
+                'native_unknown_ids': c['unknown_ids'], 'evidence_id': c['comparison_evidence_id'],
+                'subjects': selected}
+                for c, selected in zip(claims, subjects, strict=True)]
             write(destination/'native-response.json', {'initialize': initialized, 'import': imported, 'verify': verified})
             result['observation_files'] = {p.relative_to(project).as_posix(): digest(p)
                 for p in (native_output, destination/'native-response.json')}
@@ -200,9 +211,9 @@ def compare_native(project, plan_name, output, cancel_event=None):
 def fresh_native(project, result):
     if result['adapter_sha256'] != digest(Path(__file__)) or result['native_runtime'] != runtime_identity():
         return False
-    if digest(inside(project, result['plan'])) != result['plan_sha256'] or digest(inside(project, result['bundle'])) != result['bundle_sha256']:
+    plan, plan_sha = read_snapshot(inside(project, result['plan']))
+    if plan_sha != result['plan_sha256'] or digest(inside(project, result['bundle'])) != result['bundle_sha256']:
         return False
-    plan = read(inside(project, result['plan']))
     if source_bindings(project, plan) != result['input_trees']:
         return False
     proof = result['rea_native_proof']

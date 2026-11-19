@@ -1,6 +1,14 @@
 {
   "schema_version": 2,
   "version": "2.4.0",
+  "version_role": "retained-core",
+  "source_candidate": {
+    "version": "0.1.0-rc.3",
+    "entry": "fusion.py",
+    "profile": "components/fusion-kit/profile.json",
+    "service": "components/fusion-kit/service.py",
+    "scope": "isolated Windows local-analysis candidate; retained components are not all registered"
+  },
   "project": "reverse-fusion-next",
   "components": [
     {
@@ -48,7 +56,16 @@
       "kind": "owned-adapter",
       "source": "reverse-fusion",
       "commit": "local",
-      "role": "portable host detection and lifecycle commands"
+      "role": "owned host registration and removal for the Windows x64 evidence-review profile",
+      "entry": "scripts/review-host.py",
+      "hosts": ["codex", "pi", "claude", "opencode"],
+      "official_rea_profile_commands": ["evidence-import", "compare"],
+      "seep_reference": {
+        "source": "https://github.com/angusdevgo/Seep-Reverse-Lab",
+        "commit": "1ea9399ccb4dd8db5849a5ff62d963bf4abbe35e",
+        "contribution": "separate host wiring from tool preparation; guide for reading existing Flutter observations",
+        "runtime_installed": false
+      }
     },
     {
       "id": "rea-enhanced",

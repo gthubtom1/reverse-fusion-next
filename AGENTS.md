@@ -1,6 +1,6 @@
 # Reverse + enhanced REA: independent next-generation development
 
-Read docs/NEXT/RESUME.md, REQUIREMENTS.md, PLAN.md, STATUS.json and DECISIONS.md before work.
+Start at README.md for the current Fusion source candidate. For maintenance read docs/NEXT/RESUME.md, docs/NEXT/REQUIREMENTS.md, docs/NEXT/STATUS.json and docs/NEXT/DECISIONS.md. Field and earlier qualification records apply only to their recorded revisions.
 
 - This independent checkout supersedes the inherited 1.4.0 mandatory Craft/Spec architecture.
 - The retired D:/Project/reverse baseline is historical; do not recreate it or run its installers.
